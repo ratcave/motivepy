@@ -469,6 +469,7 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int_______to_py;
 struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py;
+struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py;
 
 /* "cfunc.to_py":29
  * 
@@ -485,6 +486,11 @@ struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int_______to_py {
 struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py {
   PyObject_HEAD
   double (*__pyx_v_f)(void);
+};
+
+struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py {
+  PyObject_HEAD
+  bool (*__pyx_v_f)(void);
 };
 
 
@@ -658,23 +664,29 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 /* Module declarations from 'native' */
 static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_int_______to_py = 0;
 static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_double_______to_py = 0;
+static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_bool_______to_py = 0;
 static PyObject *__Pyx_CFunc_int_______to_py(int (*)(void)); /*proto*/
 static PyObject *__Pyx_CFunc_double_______to_py(double (*)(void)); /*proto*/
+static PyObject *__Pyx_CFunc_bool_______to_py(bool (*)(void)); /*proto*/
 #define __Pyx_MODULE_NAME "native"
 int __pyx_module_is_main_native = 0;
 
 /* Implementation of 'native' */
 static PyObject *__pyx_pf_11cfunc_dot_to_py_27__Pyx_CFunc_int_______to_py_wrap(PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_wrap(PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap(PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int_______to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_double_______to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static char __pyx_k_main[] = "__main__";
 static char __pyx_k_test[] = "__test__";
 static char __pyx_k_wrap[] = "wrap";
 static char __pyx_k_cfunc_to_py[] = "cfunc.to_py";
 static char __pyx_k_stringsource[] = "stringsource";
+static char __pyx_k_Pyx_CFunc_bool_______to_py_loc[] = "__Pyx_CFunc_bool_______to_py.<locals>.wrap";
 static char __pyx_k_Pyx_CFunc_double_______to_py_l[] = "__Pyx_CFunc_double_______to_py.<locals>.wrap";
 static char __pyx_k_Pyx_CFunc_int_______to_py_loca[] = "__Pyx_CFunc_int_______to_py.<locals>.wrap";
+static PyObject *__pyx_n_s_Pyx_CFunc_bool_______to_py_loc;
 static PyObject *__pyx_n_s_Pyx_CFunc_double_______to_py_l;
 static PyObject *__pyx_n_s_Pyx_CFunc_int_______to_py_loca;
 static PyObject *__pyx_n_s_cfunc_to_py;
@@ -684,6 +696,7 @@ static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_wrap;
 static PyObject *__pyx_codeobj_;
 static PyObject *__pyx_codeobj__2;
+static PyObject *__pyx_codeobj__3;
 
 /* "cfunc.to_py":30
  * @cname("__Pyx_CFunc_int_______to_py")
@@ -969,6 +982,148 @@ static PyObject *__Pyx_CFunc_double_______to_py(double (*__pyx_v_f)(void)) {
   return __pyx_r;
 }
 
+/* "cfunc.to_py":30
+ * @cname("__Pyx_CFunc_bool_______to_py")
+ * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):
+ *     def wrap():             # <<<<<<<<<<<<<<
+ *         """wrap() -> 'bool'"""
+ *         return f()
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap[] = "wrap() -> 'bool'";
+static PyMethodDef __pyx_mdef_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap = {"wrap", (PyCFunction)__pyx_pw_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap, METH_NOARGS, __pyx_doc_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap};
+static PyObject *__pyx_pw_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("wrap (wrapper)", 0);
+  __pyx_r = __pyx_pf_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap(__pyx_self);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap(PyObject *__pyx_self) {
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *__pyx_cur_scope;
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *__pyx_outer_scope;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  bool __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("wrap", 0);
+  __pyx_outer_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *) __Pyx_CyFunction_GetClosure(__pyx_self);
+  __pyx_cur_scope = __pyx_outer_scope;
+
+  /* "cfunc.to_py":32
+ *     def wrap():
+ *         """wrap() -> 'bool'"""
+ *         return f()             # <<<<<<<<<<<<<<
+ *     return wrap
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_cur_scope->__pyx_v_f(); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "cfunc.to_py":30
+ * @cname("__Pyx_CFunc_bool_______to_py")
+ * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):
+ *     def wrap():             # <<<<<<<<<<<<<<
+ *         """wrap() -> 'bool'"""
+ *         return f()
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_bool_______to_py.wrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "cfunc.to_py":29
+ * 
+ * @cname("__Pyx_CFunc_bool_______to_py")
+ * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):             # <<<<<<<<<<<<<<
+ *     def wrap():
+ *         """wrap() -> 'bool'"""
+ */
+
+static PyObject *__Pyx_CFunc_bool_______to_py(bool (*__pyx_v_f)(void)) {
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *__pyx_cur_scope;
+  PyObject *__pyx_v_wrap = 0;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__Pyx_CFunc_bool_______to_py", 0);
+  __pyx_cur_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *)__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py(__pyx_ptype___pyx_scope_struct____Pyx_CFunc_bool_______to_py, __pyx_empty_tuple, NULL);
+  if (unlikely(!__pyx_cur_scope)) {
+    __Pyx_RefNannyFinishContext();
+    return 0;
+  }
+  __Pyx_GOTREF(__pyx_cur_scope);
+  __pyx_cur_scope->__pyx_v_f = __pyx_v_f;
+
+  /* "cfunc.to_py":30
+ * @cname("__Pyx_CFunc_bool_______to_py")
+ * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):
+ *     def wrap():             # <<<<<<<<<<<<<<
+ *         """wrap() -> 'bool'"""
+ *         return f()
+ */
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap, 0, __pyx_n_s_Pyx_CFunc_bool_______to_py_loc, ((PyObject*)__pyx_cur_scope), __pyx_n_s_cfunc_to_py, __pyx_d, ((PyObject *)__pyx_codeobj__3)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_wrap = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "cfunc.to_py":33
+ *         """wrap() -> 'bool'"""
+ *         return f()
+ *     return wrap             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_wrap);
+  __pyx_r = __pyx_v_wrap;
+  goto __pyx_L0;
+
+  /* "cfunc.to_py":29
+ * 
+ * @cname("__Pyx_CFunc_bool_______to_py")
+ * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):             # <<<<<<<<<<<<<<
+ *     def wrap():
+ *         """wrap() -> 'bool'"""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_bool_______to_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_wrap);
+  __Pyx_DECREF(((PyObject *)__pyx_cur_scope));
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 static struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int_______to_py *__pyx_freelist___pyx_scope_struct____Pyx_CFunc_int_______to_py[8];
 static int __pyx_freecount___pyx_scope_struct____Pyx_CFunc_int_______to_py = 0;
 
@@ -1131,6 +1286,87 @@ static PyTypeObject __pyx_scope_struct____Pyx_CFunc_double_______to_py = {
   #endif
 };
 
+static struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *__pyx_freelist___pyx_scope_struct____Pyx_CFunc_bool_______to_py[8];
+static int __pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py = 0;
+
+static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py)))) {
+    o = (PyObject*)__pyx_freelist___pyx_scope_struct____Pyx_CFunc_bool_______to_py[--__pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py];
+    memset(o, 0, sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py));
+    (void) PyObject_INIT(o, t);
+  } else {
+    o = (*t->tp_alloc)(t, 0);
+    if (unlikely(!o)) return 0;
+  }
+  return o;
+}
+
+static void __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_bool_______to_py(PyObject *o) {
+  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py)))) {
+    __pyx_freelist___pyx_scope_struct____Pyx_CFunc_bool_______to_py[__pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py++] = ((struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *)o);
+  } else {
+    (*Py_TYPE(o)->tp_free)(o);
+  }
+}
+
+static PyTypeObject __pyx_scope_struct____Pyx_CFunc_bool_______to_py = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "native.__pyx_scope_struct____Pyx_CFunc_bool_______to_py", /*tp_name*/
+  sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_bool_______to_py, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #else
+  0, /*reserved*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  0, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
 static PyMethodDef __pyx_methods[] = {
   {0, 0, 0, 0}
 };
@@ -1154,6 +1390,7 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
+  {&__pyx_n_s_Pyx_CFunc_bool_______to_py_loc, __pyx_k_Pyx_CFunc_bool_______to_py_loc, sizeof(__pyx_k_Pyx_CFunc_bool_______to_py_loc), 0, 0, 1, 1},
   {&__pyx_n_s_Pyx_CFunc_double_______to_py_l, __pyx_k_Pyx_CFunc_double_______to_py_l, sizeof(__pyx_k_Pyx_CFunc_double_______to_py_l), 0, 0, 1, 1},
   {&__pyx_n_s_Pyx_CFunc_int_______to_py_loca, __pyx_k_Pyx_CFunc_int_______to_py_loca, sizeof(__pyx_k_Pyx_CFunc_int_______to_py_loca), 0, 0, 1, 1},
   {&__pyx_n_s_cfunc_to_py, __pyx_k_cfunc_to_py, sizeof(__pyx_k_cfunc_to_py), 0, 0, 1, 1},
@@ -1180,6 +1417,7 @@ static int __Pyx_InitCachedConstants(void) {
  */
   __pyx_codeobj_ = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -1188,7 +1426,7 @@ static int __Pyx_InitCachedConstants(void) {
 }
 
 static int __Pyx_InitGlobals(void) {
-  if (__Pyx_InitStrings(__pyx_string_tab) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  if (__Pyx_InitStrings(__pyx_string_tab) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -1217,17 +1455,17 @@ PyMODINIT_FUNC PyInit_native(void)
   }
   #endif
   __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit_native(void)", 0);
-  if ( __Pyx_check_binary_version() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if ( __Pyx_check_binary_version() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #ifdef __Pyx_CyFunction_USED
-  if (__Pyx_CyFunction_init() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__Pyx_CyFunction_init() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
   #ifdef __Pyx_FusedFunction_USED
-  if (__pyx_FusedFunction_init() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__pyx_FusedFunction_init() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
   #ifdef __Pyx_Generator_USED
-  if (__pyx_Generator_init() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__pyx_Generator_init() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
   /*--- Library function declarations ---*/
   /*--- Threads initialization code ---*/
@@ -1242,34 +1480,34 @@ PyMODINIT_FUNC PyInit_native(void)
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
-  if (unlikely(!__pyx_m)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_d = PyModule_GetDict(__pyx_m); if (unlikely(!__pyx_d)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_m)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_d = PyModule_GetDict(__pyx_m); if (unlikely(!__pyx_d)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   Py_INCREF(__pyx_d);
-  __pyx_b = PyImport_AddModule(__Pyx_BUILTIN_MODULE_NAME); if (unlikely(!__pyx_b)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_b = PyImport_AddModule(__Pyx_BUILTIN_MODULE_NAME); if (unlikely(!__pyx_b)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #if CYTHON_COMPILING_IN_PYPY
   Py_INCREF(__pyx_b);
   #endif
-  if (PyObject_SetAttrString(__pyx_m, "__builtins__", __pyx_b) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  if (PyObject_SetAttrString(__pyx_m, "__builtins__", __pyx_b) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   /*--- Initialize various global constants etc. ---*/
-  if (unlikely(__Pyx_InitGlobals() < 0)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(__Pyx_InitGlobals() < 0)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
-  if (__Pyx_init_sys_getdefaultencoding_params() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__Pyx_init_sys_getdefaultencoding_params() < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
   if (__pyx_module_is_main_native) {
-    if (PyObject_SetAttrString(__pyx_m, "__name__", __pyx_n_s_main) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    if (PyObject_SetAttrString(__pyx_m, "__name__", __pyx_n_s_main) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
   #if PY_MAJOR_VERSION >= 3
   {
-    PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (!PyDict_GetItemString(modules, "native")) {
-      if (unlikely(PyDict_SetItemString(modules, "native", __pyx_m) < 0)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (unlikely(PyDict_SetItemString(modules, "native", __pyx_m) < 0)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
   }
   #endif
   /*--- Builtin init code ---*/
-  if (unlikely(__Pyx_InitCachedBuiltins() < 0)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(__Pyx_InitCachedBuiltins() < 0)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   /*--- Constants init code ---*/
-  if (unlikely(__Pyx_InitCachedConstants() < 0)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(__Pyx_InitCachedConstants() < 0)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   /*--- Global init code ---*/
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
@@ -1280,39 +1518,54 @@ PyMODINIT_FUNC PyInit_native(void)
   if (PyType_Ready(&__pyx_scope_struct____Pyx_CFunc_double_______to_py) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_scope_struct____Pyx_CFunc_double_______to_py.tp_print = 0;
   __pyx_ptype___pyx_scope_struct____Pyx_CFunc_double_______to_py = &__pyx_scope_struct____Pyx_CFunc_double_______to_py;
+  if (PyType_Ready(&__pyx_scope_struct____Pyx_CFunc_bool_______to_py) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_scope_struct____Pyx_CFunc_bool_______to_py.tp_print = 0;
+  __pyx_ptype___pyx_scope_struct____Pyx_CFunc_bool_______to_py = &__pyx_scope_struct____Pyx_CFunc_bool_______to_py;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
   /*--- Function import code ---*/
   /*--- Execution code ---*/
 
-  /* "native.pyx":1
- * #include "cnative.pxd"             # <<<<<<<<<<<<<<
+  /* "native.pyx":4
  * 
- * from libcpp cimport bool
+ * 
+ * from libcpp cimport bool             # <<<<<<<<<<<<<<
+ * 
+ * 
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "cfunc.to_py":29
  * 
- * @cname("__Pyx_CFunc_double_______to_py")
- * cdef object __Pyx_CFunc_double_______to_py(double (*f)() except *):             # <<<<<<<<<<<<<<
+ * @cname("__Pyx_CFunc_bool_______to_py")
+ * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):             # <<<<<<<<<<<<<<
  *     def wrap():
- *         """wrap() -> float"""
+ *         """wrap() -> 'bool'"""
  */
 
   /*--- Wrapped vars code ---*/
   {
     PyObject* wrapped = __Pyx_CFunc_int_______to_py(TT_FrameMarkerCount);
-    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 7; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyObject_SetAttrString(__pyx_m, "TT_FrameMarkerCount", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 7; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_FrameMarkerCount", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  }
+  {
+    PyObject* wrapped = __Pyx_CFunc_int_______to_py(TT_Initialize);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_Initialize", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  }
+  {
+    PyObject* wrapped = __Pyx_CFunc_bool_______to_py(TT_CreateCameraGroup);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 13; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_CreateCameraGroup", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 13; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
   {
     PyObject* wrapped = __Pyx_CFunc_double_______to_py(TT_FrameTimeStamp);
-    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyObject_SetAttrString(__pyx_m, "TT_FrameTimeStamp", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_FrameTimeStamp", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
 
   goto __pyx_L0;
