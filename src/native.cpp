@@ -468,8 +468,8 @@ static const char *__pyx_f[] = {
 
 /*--- Type declarations ---*/
 struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int_______to_py;
-struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py;
-struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py;
+struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py;
+struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py;
 
 /* "cfunc.to_py":29
  * 
@@ -483,14 +483,14 @@ struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int_______to_py {
   int (*__pyx_v_f)(void);
 };
 
-struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py {
+struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py {
   PyObject_HEAD
-  double (*__pyx_v_f)(void);
+  int (*__pyx_v_f)(char const *);
 };
 
-struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py {
+struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py {
   PyObject_HEAD
-  bool (*__pyx_v_f)(void);
+  int (*__pyx_v_f)(int);
 };
 
 
@@ -648,11 +648,11 @@ static void __Pyx_AddTraceback(const char *funcname, int c_line,
 
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
+static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
+
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
 static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
-
-static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
 static int __Pyx_check_binary_version(void);
 
@@ -663,40 +663,46 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'native' */
 static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_int_______to_py = 0;
-static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_double_______to_py = 0;
-static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_bool_______to_py = 0;
+static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py = 0;
+static PyTypeObject *__pyx_ptype___pyx_scope_struct____Pyx_CFunc_int____int___to_py = 0;
 static PyObject *__Pyx_CFunc_int_______to_py(int (*)(void)); /*proto*/
-static PyObject *__Pyx_CFunc_double_______to_py(double (*)(void)); /*proto*/
-static PyObject *__Pyx_CFunc_bool_______to_py(bool (*)(void)); /*proto*/
+static PyObject *__Pyx_CFunc_int____const__char_______to_py(int (*)(char const *)); /*proto*/
+static PyObject *__Pyx_CFunc_int____int___to_py(int (*)(int)); /*proto*/
 #define __Pyx_MODULE_NAME "native"
 int __pyx_module_is_main_native = 0;
 
 /* Implementation of 'native' */
 static PyObject *__pyx_pf_11cfunc_dot_to_py_27__Pyx_CFunc_int_______to_py_wrap(PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_wrap(PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap(PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_wrap(PyObject *__pyx_self, char const *__pyx_v_filename); /* proto */
+static PyObject *__pyx_pf_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_wrap(PyObject *__pyx_self, int __pyx_v_cameraIndex); /* proto */
 static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int_______to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_double_______to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int____int___to_py(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static char __pyx_k_main[] = "__main__";
 static char __pyx_k_test[] = "__test__";
 static char __pyx_k_wrap[] = "wrap";
+static char __pyx_k_filename[] = "filename";
+static char __pyx_k_cameraIndex[] = "cameraIndex";
 static char __pyx_k_cfunc_to_py[] = "cfunc.to_py";
 static char __pyx_k_stringsource[] = "stringsource";
-static char __pyx_k_Pyx_CFunc_bool_______to_py_loc[] = "__Pyx_CFunc_bool_______to_py.<locals>.wrap";
-static char __pyx_k_Pyx_CFunc_double_______to_py_l[] = "__Pyx_CFunc_double_______to_py.<locals>.wrap";
+static char __pyx_k_Pyx_CFunc_int____const__char[] = "__Pyx_CFunc_int____const__char_______to_py.<locals>.wrap";
 static char __pyx_k_Pyx_CFunc_int_______to_py_loca[] = "__Pyx_CFunc_int_______to_py.<locals>.wrap";
-static PyObject *__pyx_n_s_Pyx_CFunc_bool_______to_py_loc;
-static PyObject *__pyx_n_s_Pyx_CFunc_double_______to_py_l;
+static char __pyx_k_Pyx_CFunc_int____int___to_py_l[] = "__Pyx_CFunc_int____int___to_py.<locals>.wrap";
 static PyObject *__pyx_n_s_Pyx_CFunc_int_______to_py_loca;
+static PyObject *__pyx_n_s_Pyx_CFunc_int____const__char;
+static PyObject *__pyx_n_s_Pyx_CFunc_int____int___to_py_l;
+static PyObject *__pyx_n_s_cameraIndex;
 static PyObject *__pyx_n_s_cfunc_to_py;
+static PyObject *__pyx_n_s_filename;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_kp_s_stringsource;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_wrap;
 static PyObject *__pyx_codeobj_;
-static PyObject *__pyx_codeobj__2;
+static PyObject *__pyx_tuple__2;
+static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_codeobj__3;
+static PyObject *__pyx_codeobj__5;
 
 /* "cfunc.to_py":30
  * @cname("__Pyx_CFunc_int_______to_py")
@@ -841,69 +847,82 @@ static PyObject *__Pyx_CFunc_int_______to_py(int (*__pyx_v_f)(void)) {
 }
 
 /* "cfunc.to_py":30
- * @cname("__Pyx_CFunc_double_______to_py")
- * cdef object __Pyx_CFunc_double_______to_py(double (*f)() except *):
- *     def wrap():             # <<<<<<<<<<<<<<
- *         """wrap() -> float"""
- *         return f()
+ * @cname("__Pyx_CFunc_int____const__char_______to_py")
+ * cdef object __Pyx_CFunc_int____const__char_______to_py(int (*f)(const char *) except *):
+ *     def wrap(const char * filename):             # <<<<<<<<<<<<<<
+ *         """wrap(filename: 'const char *') -> 'int'"""
+ *         return f(filename)
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_1wrap(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_wrap[] = "wrap() -> float";
-static PyMethodDef __pyx_mdef_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_1wrap = {"wrap", (PyCFunction)__pyx_pw_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_1wrap, METH_NOARGS, __pyx_doc_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_wrap};
-static PyObject *__pyx_pw_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_1wrap(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_1wrap(PyObject *__pyx_self, PyObject *__pyx_arg_filename); /*proto*/
+static char __pyx_doc_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_wrap[] = "wrap(filename: 'const char *') -> 'int'";
+static PyMethodDef __pyx_mdef_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_1wrap = {"wrap", (PyCFunction)__pyx_pw_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_1wrap, METH_O, __pyx_doc_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_wrap};
+static PyObject *__pyx_pw_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_1wrap(PyObject *__pyx_self, PyObject *__pyx_arg_filename) {
+  char const *__pyx_v_filename;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("wrap (wrapper)", 0);
-  __pyx_r = __pyx_pf_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_wrap(__pyx_self);
+  assert(__pyx_arg_filename); {
+    __pyx_v_filename = __Pyx_PyObject_AsString(__pyx_arg_filename); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_int____const__char_______to_py.wrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_wrap(__pyx_self, ((char const *)__pyx_v_filename));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_wrap(PyObject *__pyx_self) {
-  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py *__pyx_cur_scope;
-  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py *__pyx_outer_scope;
+static PyObject *__pyx_pf_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_wrap(PyObject *__pyx_self, char const *__pyx_v_filename) {
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py *__pyx_cur_scope;
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py *__pyx_outer_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  double __pyx_t_1;
+  int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("wrap", 0);
-  __pyx_outer_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py *) __Pyx_CyFunction_GetClosure(__pyx_self);
+  __pyx_outer_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py *) __Pyx_CyFunction_GetClosure(__pyx_self);
   __pyx_cur_scope = __pyx_outer_scope;
 
   /* "cfunc.to_py":32
- *     def wrap():
- *         """wrap() -> float"""
- *         return f()             # <<<<<<<<<<<<<<
+ *     def wrap(const char * filename):
+ *         """wrap(filename: 'const char *') -> 'int'"""
+ *         return f(filename)             # <<<<<<<<<<<<<<
  *     return wrap
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_f(); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_cur_scope->__pyx_v_f(__pyx_v_filename); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
   /* "cfunc.to_py":30
- * @cname("__Pyx_CFunc_double_______to_py")
- * cdef object __Pyx_CFunc_double_______to_py(double (*f)() except *):
- *     def wrap():             # <<<<<<<<<<<<<<
- *         """wrap() -> float"""
- *         return f()
+ * @cname("__Pyx_CFunc_int____const__char_______to_py")
+ * cdef object __Pyx_CFunc_int____const__char_______to_py(int (*f)(const char *) except *):
+ *     def wrap(const char * filename):             # <<<<<<<<<<<<<<
+ *         """wrap(filename: 'const char *') -> 'int'"""
+ *         return f(filename)
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_double_______to_py.wrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_int____const__char_______to_py.wrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -913,14 +932,14 @@ static PyObject *__pyx_pf_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_wra
 
 /* "cfunc.to_py":29
  * 
- * @cname("__Pyx_CFunc_double_______to_py")
- * cdef object __Pyx_CFunc_double_______to_py(double (*f)() except *):             # <<<<<<<<<<<<<<
- *     def wrap():
- *         """wrap() -> float"""
+ * @cname("__Pyx_CFunc_int____const__char_______to_py")
+ * cdef object __Pyx_CFunc_int____const__char_______to_py(int (*f)(const char *) except *):             # <<<<<<<<<<<<<<
+ *     def wrap(const char * filename):
+ *         """wrap(filename: 'const char *') -> 'int'"""
  */
 
-static PyObject *__Pyx_CFunc_double_______to_py(double (*__pyx_v_f)(void)) {
-  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py *__pyx_cur_scope;
+static PyObject *__Pyx_CFunc_int____const__char_______to_py(int (*__pyx_v_f)(char const *)) {
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py *__pyx_cur_scope;
   PyObject *__pyx_v_wrap = 0;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -928,8 +947,8 @@ static PyObject *__Pyx_CFunc_double_______to_py(double (*__pyx_v_f)(void)) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__Pyx_CFunc_double_______to_py", 0);
-  __pyx_cur_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py *)__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_double_______to_py(__pyx_ptype___pyx_scope_struct____Pyx_CFunc_double_______to_py, __pyx_empty_tuple, NULL);
+  __Pyx_RefNannySetupContext("__Pyx_CFunc_int____const__char_______to_py", 0);
+  __pyx_cur_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py *)__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py(__pyx_ptype___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py, __pyx_empty_tuple, NULL);
   if (unlikely(!__pyx_cur_scope)) {
     __Pyx_RefNannyFinishContext();
     return 0;
@@ -938,20 +957,20 @@ static PyObject *__Pyx_CFunc_double_______to_py(double (*__pyx_v_f)(void)) {
   __pyx_cur_scope->__pyx_v_f = __pyx_v_f;
 
   /* "cfunc.to_py":30
- * @cname("__Pyx_CFunc_double_______to_py")
- * cdef object __Pyx_CFunc_double_______to_py(double (*f)() except *):
- *     def wrap():             # <<<<<<<<<<<<<<
- *         """wrap() -> float"""
- *         return f()
+ * @cname("__Pyx_CFunc_int____const__char_______to_py")
+ * cdef object __Pyx_CFunc_int____const__char_______to_py(int (*f)(const char *) except *):
+ *     def wrap(const char * filename):             # <<<<<<<<<<<<<<
+ *         """wrap(filename: 'const char *') -> 'int'"""
+ *         return f(filename)
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_11cfunc_dot_to_py_30__Pyx_CFunc_double_______to_py_1wrap, 0, __pyx_n_s_Pyx_CFunc_double_______to_py_l, ((PyObject*)__pyx_cur_scope), __pyx_n_s_cfunc_to_py, __pyx_d, ((PyObject *)__pyx_codeobj__2)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_11cfunc_dot_to_py_42__Pyx_CFunc_int____const__char_______to_py_1wrap, 0, __pyx_n_s_Pyx_CFunc_int____const__char, ((PyObject*)__pyx_cur_scope), __pyx_n_s_cfunc_to_py, __pyx_d, ((PyObject *)__pyx_codeobj__3)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_wrap = __pyx_t_1;
   __pyx_t_1 = 0;
 
   /* "cfunc.to_py":33
- *         """wrap() -> float"""
- *         return f()
+ *         """wrap(filename: 'const char *') -> 'int'"""
+ *         return f(filename)
  *     return wrap             # <<<<<<<<<<<<<<
  * 
  * 
@@ -963,16 +982,16 @@ static PyObject *__Pyx_CFunc_double_______to_py(double (*__pyx_v_f)(void)) {
 
   /* "cfunc.to_py":29
  * 
- * @cname("__Pyx_CFunc_double_______to_py")
- * cdef object __Pyx_CFunc_double_______to_py(double (*f)() except *):             # <<<<<<<<<<<<<<
- *     def wrap():
- *         """wrap() -> float"""
+ * @cname("__Pyx_CFunc_int____const__char_______to_py")
+ * cdef object __Pyx_CFunc_int____const__char_______to_py(int (*f)(const char *) except *):             # <<<<<<<<<<<<<<
+ *     def wrap(const char * filename):
+ *         """wrap(filename: 'const char *') -> 'int'"""
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_double_______to_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_int____const__char_______to_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_wrap);
@@ -983,69 +1002,82 @@ static PyObject *__Pyx_CFunc_double_______to_py(double (*__pyx_v_f)(void)) {
 }
 
 /* "cfunc.to_py":30
- * @cname("__Pyx_CFunc_bool_______to_py")
- * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):
- *     def wrap():             # <<<<<<<<<<<<<<
- *         """wrap() -> 'bool'"""
- *         return f()
+ * @cname("__Pyx_CFunc_int____int___to_py")
+ * cdef object __Pyx_CFunc_int____int___to_py(int (*f)(int) except *):
+ *     def wrap(int cameraIndex):             # <<<<<<<<<<<<<<
+ *         """wrap(cameraIndex: 'int') -> 'int'"""
+ *         return f(cameraIndex)
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap[] = "wrap() -> 'bool'";
-static PyMethodDef __pyx_mdef_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap = {"wrap", (PyCFunction)__pyx_pw_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap, METH_NOARGS, __pyx_doc_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap};
-static PyObject *__pyx_pw_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_1wrap(PyObject *__pyx_self, PyObject *__pyx_arg_cameraIndex); /*proto*/
+static char __pyx_doc_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_wrap[] = "wrap(cameraIndex: 'int') -> 'int'";
+static PyMethodDef __pyx_mdef_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_1wrap = {"wrap", (PyCFunction)__pyx_pw_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_1wrap, METH_O, __pyx_doc_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_wrap};
+static PyObject *__pyx_pw_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_1wrap(PyObject *__pyx_self, PyObject *__pyx_arg_cameraIndex) {
+  int __pyx_v_cameraIndex;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("wrap (wrapper)", 0);
-  __pyx_r = __pyx_pf_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap(__pyx_self);
+  assert(__pyx_arg_cameraIndex); {
+    __pyx_v_cameraIndex = __Pyx_PyInt_As_int(__pyx_arg_cameraIndex); if (unlikely((__pyx_v_cameraIndex == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_int____int___to_py.wrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_wrap(__pyx_self, ((int)__pyx_v_cameraIndex));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap(PyObject *__pyx_self) {
-  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *__pyx_cur_scope;
-  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *__pyx_outer_scope;
+static PyObject *__pyx_pf_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_wrap(PyObject *__pyx_self, int __pyx_v_cameraIndex) {
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py *__pyx_cur_scope;
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py *__pyx_outer_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  bool __pyx_t_1;
+  int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("wrap", 0);
-  __pyx_outer_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *) __Pyx_CyFunction_GetClosure(__pyx_self);
+  __pyx_outer_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py *) __Pyx_CyFunction_GetClosure(__pyx_self);
   __pyx_cur_scope = __pyx_outer_scope;
 
   /* "cfunc.to_py":32
- *     def wrap():
- *         """wrap() -> 'bool'"""
- *         return f()             # <<<<<<<<<<<<<<
+ *     def wrap(int cameraIndex):
+ *         """wrap(cameraIndex: 'int') -> 'int'"""
+ *         return f(cameraIndex)             # <<<<<<<<<<<<<<
  *     return wrap
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_f(); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_cur_scope->__pyx_v_f(__pyx_v_cameraIndex); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
   /* "cfunc.to_py":30
- * @cname("__Pyx_CFunc_bool_______to_py")
- * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):
- *     def wrap():             # <<<<<<<<<<<<<<
- *         """wrap() -> 'bool'"""
- *         return f()
+ * @cname("__Pyx_CFunc_int____int___to_py")
+ * cdef object __Pyx_CFunc_int____int___to_py(int (*f)(int) except *):
+ *     def wrap(int cameraIndex):             # <<<<<<<<<<<<<<
+ *         """wrap(cameraIndex: 'int') -> 'int'"""
+ *         return f(cameraIndex)
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_bool_______to_py.wrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_int____int___to_py.wrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1055,14 +1087,14 @@ static PyObject *__pyx_pf_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_wrap(
 
 /* "cfunc.to_py":29
  * 
- * @cname("__Pyx_CFunc_bool_______to_py")
- * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):             # <<<<<<<<<<<<<<
- *     def wrap():
- *         """wrap() -> 'bool'"""
+ * @cname("__Pyx_CFunc_int____int___to_py")
+ * cdef object __Pyx_CFunc_int____int___to_py(int (*f)(int) except *):             # <<<<<<<<<<<<<<
+ *     def wrap(int cameraIndex):
+ *         """wrap(cameraIndex: 'int') -> 'int'"""
  */
 
-static PyObject *__Pyx_CFunc_bool_______to_py(bool (*__pyx_v_f)(void)) {
-  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *__pyx_cur_scope;
+static PyObject *__Pyx_CFunc_int____int___to_py(int (*__pyx_v_f)(int)) {
+  struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py *__pyx_cur_scope;
   PyObject *__pyx_v_wrap = 0;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1070,8 +1102,8 @@ static PyObject *__Pyx_CFunc_bool_______to_py(bool (*__pyx_v_f)(void)) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__Pyx_CFunc_bool_______to_py", 0);
-  __pyx_cur_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *)__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py(__pyx_ptype___pyx_scope_struct____Pyx_CFunc_bool_______to_py, __pyx_empty_tuple, NULL);
+  __Pyx_RefNannySetupContext("__Pyx_CFunc_int____int___to_py", 0);
+  __pyx_cur_scope = (struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py *)__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int____int___to_py(__pyx_ptype___pyx_scope_struct____Pyx_CFunc_int____int___to_py, __pyx_empty_tuple, NULL);
   if (unlikely(!__pyx_cur_scope)) {
     __Pyx_RefNannyFinishContext();
     return 0;
@@ -1080,20 +1112,20 @@ static PyObject *__Pyx_CFunc_bool_______to_py(bool (*__pyx_v_f)(void)) {
   __pyx_cur_scope->__pyx_v_f = __pyx_v_f;
 
   /* "cfunc.to_py":30
- * @cname("__Pyx_CFunc_bool_______to_py")
- * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):
- *     def wrap():             # <<<<<<<<<<<<<<
- *         """wrap() -> 'bool'"""
- *         return f()
+ * @cname("__Pyx_CFunc_int____int___to_py")
+ * cdef object __Pyx_CFunc_int____int___to_py(int (*f)(int) except *):
+ *     def wrap(int cameraIndex):             # <<<<<<<<<<<<<<
+ *         """wrap(cameraIndex: 'int') -> 'int'"""
+ *         return f(cameraIndex)
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_11cfunc_dot_to_py_28__Pyx_CFunc_bool_______to_py_1wrap, 0, __pyx_n_s_Pyx_CFunc_bool_______to_py_loc, ((PyObject*)__pyx_cur_scope), __pyx_n_s_cfunc_to_py, __pyx_d, ((PyObject *)__pyx_codeobj__3)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_11cfunc_dot_to_py_30__Pyx_CFunc_int____int___to_py_1wrap, 0, __pyx_n_s_Pyx_CFunc_int____int___to_py_l, ((PyObject*)__pyx_cur_scope), __pyx_n_s_cfunc_to_py, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_wrap = __pyx_t_1;
   __pyx_t_1 = 0;
 
   /* "cfunc.to_py":33
- *         """wrap() -> 'bool'"""
- *         return f()
+ *         """wrap(cameraIndex: 'int') -> 'int'"""
+ *         return f(cameraIndex)
  *     return wrap             # <<<<<<<<<<<<<<
  * 
  * 
@@ -1105,16 +1137,16 @@ static PyObject *__Pyx_CFunc_bool_______to_py(bool (*__pyx_v_f)(void)) {
 
   /* "cfunc.to_py":29
  * 
- * @cname("__Pyx_CFunc_bool_______to_py")
- * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):             # <<<<<<<<<<<<<<
- *     def wrap():
- *         """wrap() -> 'bool'"""
+ * @cname("__Pyx_CFunc_int____int___to_py")
+ * cdef object __Pyx_CFunc_int____int___to_py(int (*f)(int) except *):             # <<<<<<<<<<<<<<
+ *     def wrap(int cameraIndex):
+ *         """wrap(cameraIndex: 'int') -> 'int'"""
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_bool_______to_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cfunc.to_py.__Pyx_CFunc_int____int___to_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_wrap);
@@ -1205,14 +1237,14 @@ static PyTypeObject __pyx_scope_struct____Pyx_CFunc_int_______to_py = {
   #endif
 };
 
-static struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py *__pyx_freelist___pyx_scope_struct____Pyx_CFunc_double_______to_py[8];
-static int __pyx_freecount___pyx_scope_struct____Pyx_CFunc_double_______to_py = 0;
+static struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py *__pyx_freelist___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py[8];
+static int __pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py = 0;
 
-static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_double_______to_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   PyObject *o;
-  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_double_______to_py > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py)))) {
-    o = (PyObject*)__pyx_freelist___pyx_scope_struct____Pyx_CFunc_double_______to_py[--__pyx_freecount___pyx_scope_struct____Pyx_CFunc_double_______to_py];
-    memset(o, 0, sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py));
+  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py)))) {
+    o = (PyObject*)__pyx_freelist___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py[--__pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py];
+    memset(o, 0, sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py));
     (void) PyObject_INIT(o, t);
   } else {
     o = (*t->tp_alloc)(t, 0);
@@ -1221,20 +1253,20 @@ static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_double_______to_py
   return o;
 }
 
-static void __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_double_______to_py(PyObject *o) {
-  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_double_______to_py < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py)))) {
-    __pyx_freelist___pyx_scope_struct____Pyx_CFunc_double_______to_py[__pyx_freecount___pyx_scope_struct____Pyx_CFunc_double_______to_py++] = ((struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py *)o);
+static void __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py(PyObject *o) {
+  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py)))) {
+    __pyx_freelist___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py[__pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py++] = ((struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py *)o);
   } else {
     (*Py_TYPE(o)->tp_free)(o);
   }
 }
 
-static PyTypeObject __pyx_scope_struct____Pyx_CFunc_double_______to_py = {
+static PyTypeObject __pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py = {
   PyVarObject_HEAD_INIT(0, 0)
-  "native.__pyx_scope_struct____Pyx_CFunc_double_______to_py", /*tp_name*/
-  sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_double_______to_py), /*tp_basicsize*/
+  "native.__pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py", /*tp_name*/
+  sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_double_______to_py, /*tp_dealloc*/
+  __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -1271,7 +1303,7 @@ static PyTypeObject __pyx_scope_struct____Pyx_CFunc_double_______to_py = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new___pyx_scope_struct____Pyx_CFunc_double_______to_py, /*tp_new*/
+  __pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -1286,14 +1318,14 @@ static PyTypeObject __pyx_scope_struct____Pyx_CFunc_double_______to_py = {
   #endif
 };
 
-static struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *__pyx_freelist___pyx_scope_struct____Pyx_CFunc_bool_______to_py[8];
-static int __pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py = 0;
+static struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py *__pyx_freelist___pyx_scope_struct____Pyx_CFunc_int____int___to_py[8];
+static int __pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____int___to_py = 0;
 
-static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int____int___to_py(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   PyObject *o;
-  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py)))) {
-    o = (PyObject*)__pyx_freelist___pyx_scope_struct____Pyx_CFunc_bool_______to_py[--__pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py];
-    memset(o, 0, sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py));
+  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____int___to_py > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py)))) {
+    o = (PyObject*)__pyx_freelist___pyx_scope_struct____Pyx_CFunc_int____int___to_py[--__pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____int___to_py];
+    memset(o, 0, sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py));
     (void) PyObject_INIT(o, t);
   } else {
     o = (*t->tp_alloc)(t, 0);
@@ -1302,20 +1334,20 @@ static PyObject *__pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py(P
   return o;
 }
 
-static void __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_bool_______to_py(PyObject *o) {
-  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py)))) {
-    __pyx_freelist___pyx_scope_struct____Pyx_CFunc_bool_______to_py[__pyx_freecount___pyx_scope_struct____Pyx_CFunc_bool_______to_py++] = ((struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py *)o);
+static void __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_int____int___to_py(PyObject *o) {
+  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____int___to_py < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py)))) {
+    __pyx_freelist___pyx_scope_struct____Pyx_CFunc_int____int___to_py[__pyx_freecount___pyx_scope_struct____Pyx_CFunc_int____int___to_py++] = ((struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py *)o);
   } else {
     (*Py_TYPE(o)->tp_free)(o);
   }
 }
 
-static PyTypeObject __pyx_scope_struct____Pyx_CFunc_bool_______to_py = {
+static PyTypeObject __pyx_scope_struct____Pyx_CFunc_int____int___to_py = {
   PyVarObject_HEAD_INIT(0, 0)
-  "native.__pyx_scope_struct____Pyx_CFunc_bool_______to_py", /*tp_name*/
-  sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_bool_______to_py), /*tp_basicsize*/
+  "native.__pyx_scope_struct____Pyx_CFunc_int____int___to_py", /*tp_name*/
+  sizeof(struct __pyx_obj___pyx_scope_struct____Pyx_CFunc_int____int___to_py), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_bool_______to_py, /*tp_dealloc*/
+  __pyx_tp_dealloc___pyx_scope_struct____Pyx_CFunc_int____int___to_py, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -1352,7 +1384,7 @@ static PyTypeObject __pyx_scope_struct____Pyx_CFunc_bool_______to_py = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new___pyx_scope_struct____Pyx_CFunc_bool_______to_py, /*tp_new*/
+  __pyx_tp_new___pyx_scope_struct____Pyx_CFunc_int____int___to_py, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -1390,10 +1422,12 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_n_s_Pyx_CFunc_bool_______to_py_loc, __pyx_k_Pyx_CFunc_bool_______to_py_loc, sizeof(__pyx_k_Pyx_CFunc_bool_______to_py_loc), 0, 0, 1, 1},
-  {&__pyx_n_s_Pyx_CFunc_double_______to_py_l, __pyx_k_Pyx_CFunc_double_______to_py_l, sizeof(__pyx_k_Pyx_CFunc_double_______to_py_l), 0, 0, 1, 1},
   {&__pyx_n_s_Pyx_CFunc_int_______to_py_loca, __pyx_k_Pyx_CFunc_int_______to_py_loca, sizeof(__pyx_k_Pyx_CFunc_int_______to_py_loca), 0, 0, 1, 1},
+  {&__pyx_n_s_Pyx_CFunc_int____const__char, __pyx_k_Pyx_CFunc_int____const__char, sizeof(__pyx_k_Pyx_CFunc_int____const__char), 0, 0, 1, 1},
+  {&__pyx_n_s_Pyx_CFunc_int____int___to_py_l, __pyx_k_Pyx_CFunc_int____int___to_py_l, sizeof(__pyx_k_Pyx_CFunc_int____int___to_py_l), 0, 0, 1, 1},
+  {&__pyx_n_s_cameraIndex, __pyx_k_cameraIndex, sizeof(__pyx_k_cameraIndex), 0, 0, 1, 1},
   {&__pyx_n_s_cfunc_to_py, __pyx_k_cfunc_to_py, sizeof(__pyx_k_cfunc_to_py), 0, 0, 1, 1},
+  {&__pyx_n_s_filename, __pyx_k_filename, sizeof(__pyx_k_filename), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_kp_s_stringsource, __pyx_k_stringsource, sizeof(__pyx_k_stringsource), 0, 0, 1, 0},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -1416,8 +1450,14 @@ static int __Pyx_InitCachedConstants(void) {
  *         return f()
  */
   __pyx_codeobj_ = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_n_s_filename, __pyx_n_s_filename); if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__2);
+  __Pyx_GIVEREF(__pyx_tuple__2);
+  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__2, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_n_s_cameraIndex, __pyx_n_s_cameraIndex); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_wrap, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -1515,12 +1555,12 @@ PyMODINIT_FUNC PyInit_native(void)
   if (PyType_Ready(&__pyx_scope_struct____Pyx_CFunc_int_______to_py) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_scope_struct____Pyx_CFunc_int_______to_py.tp_print = 0;
   __pyx_ptype___pyx_scope_struct____Pyx_CFunc_int_______to_py = &__pyx_scope_struct____Pyx_CFunc_int_______to_py;
-  if (PyType_Ready(&__pyx_scope_struct____Pyx_CFunc_double_______to_py) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_scope_struct____Pyx_CFunc_double_______to_py.tp_print = 0;
-  __pyx_ptype___pyx_scope_struct____Pyx_CFunc_double_______to_py = &__pyx_scope_struct____Pyx_CFunc_double_______to_py;
-  if (PyType_Ready(&__pyx_scope_struct____Pyx_CFunc_bool_______to_py) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_scope_struct____Pyx_CFunc_bool_______to_py.tp_print = 0;
-  __pyx_ptype___pyx_scope_struct____Pyx_CFunc_bool_______to_py = &__pyx_scope_struct____Pyx_CFunc_bool_______to_py;
+  if (PyType_Ready(&__pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py.tp_print = 0;
+  __pyx_ptype___pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py = &__pyx_scope_struct____Pyx_CFunc_int____const__char_______to_py;
+  if (PyType_Ready(&__pyx_scope_struct____Pyx_CFunc_int____int___to_py) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_scope_struct____Pyx_CFunc_int____int___to_py.tp_print = 0;
+  __pyx_ptype___pyx_scope_struct____Pyx_CFunc_int____int___to_py = &__pyx_scope_struct____Pyx_CFunc_int____int___to_py;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
   /*--- Function import code ---*/
@@ -1540,32 +1580,52 @@ PyMODINIT_FUNC PyInit_native(void)
 
   /* "cfunc.to_py":29
  * 
- * @cname("__Pyx_CFunc_bool_______to_py")
- * cdef object __Pyx_CFunc_bool_______to_py(bool (*f)() except *):             # <<<<<<<<<<<<<<
- *     def wrap():
- *         """wrap() -> 'bool'"""
+ * @cname("__Pyx_CFunc_int____int___to_py")
+ * cdef object __Pyx_CFunc_int____int___to_py(int (*f)(int) except *):             # <<<<<<<<<<<<<<
+ *     def wrap(int cameraIndex):
+ *         """wrap(cameraIndex: 'int') -> 'int'"""
  */
 
   /*--- Wrapped vars code ---*/
   {
-    PyObject* wrapped = __Pyx_CFunc_int_______to_py(TT_FrameMarkerCount);
-    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyObject_SetAttrString(__pyx_m, "TT_FrameMarkerCount", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    PyObject* wrapped = __Pyx_CFunc_int_______to_py(TT_CameraCount);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 21; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_CameraCount", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 21; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  }
+  {
+    PyObject* wrapped = __Pyx_CFunc_int____const__char_______to_py(TT_LoadCalibration);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 12; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_LoadCalibration", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 12; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  }
+  {
+    PyObject* wrapped = __Pyx_CFunc_int____const__char_______to_py(TT_AddRigidBodies);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_AddRigidBodies", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
   {
     PyObject* wrapped = __Pyx_CFunc_int_______to_py(TT_Initialize);
-    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyObject_SetAttrString(__pyx_m, "TT_Initialize", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_Initialize", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
   {
-    PyObject* wrapped = __Pyx_CFunc_bool_______to_py(TT_CreateCameraGroup);
-    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 13; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyObject_SetAttrString(__pyx_m, "TT_CreateCameraGroup", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 13; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    PyObject* wrapped = __Pyx_CFunc_int____const__char_______to_py(TT_LoadRigidBodies);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_LoadRigidBodies", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
   {
-    PyObject* wrapped = __Pyx_CFunc_double_______to_py(TT_FrameTimeStamp);
-    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyObject_SetAttrString(__pyx_m, "TT_FrameTimeStamp", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    PyObject* wrapped = __Pyx_CFunc_int_______to_py(TT_Shutdown);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 10; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_Shutdown", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 10; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  }
+  {
+    PyObject* wrapped = __Pyx_CFunc_int____const__char_______to_py(TT_SaveRigidBodies);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_SaveRigidBodies", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  }
+  {
+    PyObject* wrapped = __Pyx_CFunc_int____int___to_py(TT_CameraIntensity);
+    if (unlikely(!wrapped)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyObject_SetAttrString(__pyx_m, "TT_CameraIntensity", wrapped) < 0) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
 
   goto __pyx_L0;
@@ -2379,32 +2439,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
     }
 }
 
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
-    const long neg_one = (long) -1, const_zero = 0;
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(long) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-        }
-    } else {
-        if (sizeof(long) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(long),
-                                     little, !is_unsigned);
-    }
-}
-
 #define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)       \
     {                                                                     \
         func_type value = func_value;                                     \
@@ -2425,111 +2459,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
   #include "longintrepr.h"
  #endif
 #endif
-
-static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
-    const long neg_one = (long) -1, const_zero = 0;
-    const int is_unsigned = neg_one > const_zero;
-#if PY_MAJOR_VERSION < 3
-    if (likely(PyInt_Check(x))) {
-        if (sizeof(long) < sizeof(long)) {
-            __PYX_VERIFY_RETURN_INT(long, long, PyInt_AS_LONG(x))
-        } else {
-            long val = PyInt_AS_LONG(x);
-            if (is_unsigned && unlikely(val < 0)) {
-                goto raise_neg_overflow;
-            }
-            return (long) val;
-        }
-    } else
-#endif
-    if (likely(PyLong_Check(x))) {
-        if (is_unsigned) {
-#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
- #if CYTHON_USE_PYLONG_INTERNALS
-            switch (Py_SIZE(x)) {
-                case  0: return 0;
-                case  1: __PYX_VERIFY_RETURN_INT(long, digit, ((PyLongObject*)x)->ob_digit[0]);
-            }
- #endif
-#endif
-#if CYTHON_COMPILING_IN_CPYTHON
-            if (unlikely(Py_SIZE(x) < 0)) {
-                goto raise_neg_overflow;
-            }
-#else
-            {
-                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
-                if (unlikely(result < 0))
-                    return (long) -1;
-                if (unlikely(result == 1))
-                    goto raise_neg_overflow;
-            }
-#endif
-            if (sizeof(long) <= sizeof(unsigned long)) {
-                __PYX_VERIFY_RETURN_INT(long, unsigned long, PyLong_AsUnsignedLong(x))
-            } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT(long, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
-            }
-        } else {
-#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
- #if CYTHON_USE_PYLONG_INTERNALS
-            switch (Py_SIZE(x)) {
-                case  0: return 0;
-                case  1: __PYX_VERIFY_RETURN_INT(long,  digit, +(((PyLongObject*)x)->ob_digit[0]));
-                case -1: __PYX_VERIFY_RETURN_INT(long, sdigit, -(sdigit) ((PyLongObject*)x)->ob_digit[0]);
-            }
- #endif
-#endif
-            if (sizeof(long) <= sizeof(long)) {
-                __PYX_VERIFY_RETURN_INT(long, long, PyLong_AsLong(x))
-            } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT(long, PY_LONG_LONG, PyLong_AsLongLong(x))
-            }
-        }
-        {
-#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
-            PyErr_SetString(PyExc_RuntimeError,
-                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
-#else
-            long val;
-            PyObject *v = __Pyx_PyNumber_Int(x);
- #if PY_MAJOR_VERSION < 3
-            if (likely(v) && !PyLong_Check(v)) {
-                PyObject *tmp = v;
-                v = PyNumber_Long(tmp);
-                Py_DECREF(tmp);
-            }
- #endif
-            if (likely(v)) {
-                int one = 1; int is_little = (int)*(unsigned char *)&one;
-                unsigned char *bytes = (unsigned char *)&val;
-                int ret = _PyLong_AsByteArray((PyLongObject *)v,
-                                              bytes, sizeof(val),
-                                              is_little, !is_unsigned);
-                Py_DECREF(v);
-                if (likely(!ret))
-                    return val;
-            }
-#endif
-            return (long) -1;
-        }
-    } else {
-        long val;
-        PyObject *tmp = __Pyx_PyNumber_Int(x);
-        if (!tmp) return (long) -1;
-        val = __Pyx_PyInt_As_long(tmp);
-        Py_DECREF(tmp);
-        return val;
-    }
-raise_overflow:
-    PyErr_SetString(PyExc_OverflowError,
-        "value too large to convert to long");
-    return (long) -1;
-raise_neg_overflow:
-    PyErr_SetString(PyExc_OverflowError,
-        "can't convert negative value to long");
-    return (long) -1;
-}
 
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {
     const int neg_one = (int) -1, const_zero = 0;
@@ -2634,6 +2563,137 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to int");
     return (int) -1;
+}
+
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
+    const long neg_one = (long) -1, const_zero = 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(long) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+        }
+    } else {
+        if (sizeof(long) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(long),
+                                     little, !is_unsigned);
+    }
+}
+
+static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
+    const long neg_one = (long) -1, const_zero = 0;
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if (sizeof(long) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(long, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (long) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
+ #if CYTHON_USE_PYLONG_INTERNALS
+            switch (Py_SIZE(x)) {
+                case  0: return 0;
+                case  1: __PYX_VERIFY_RETURN_INT(long, digit, ((PyLongObject*)x)->ob_digit[0]);
+            }
+ #endif
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+#else
+            {
+                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                if (unlikely(result < 0))
+                    return (long) -1;
+                if (unlikely(result == 1))
+                    goto raise_neg_overflow;
+            }
+#endif
+            if (sizeof(long) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT(long, unsigned long, PyLong_AsUnsignedLong(x))
+            } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT(long, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+            }
+        } else {
+#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
+ #if CYTHON_USE_PYLONG_INTERNALS
+            switch (Py_SIZE(x)) {
+                case  0: return 0;
+                case  1: __PYX_VERIFY_RETURN_INT(long,  digit, +(((PyLongObject*)x)->ob_digit[0]));
+                case -1: __PYX_VERIFY_RETURN_INT(long, sdigit, -(sdigit) ((PyLongObject*)x)->ob_digit[0]);
+            }
+ #endif
+#endif
+            if (sizeof(long) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT(long, long, PyLong_AsLong(x))
+            } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT(long, PY_LONG_LONG, PyLong_AsLongLong(x))
+            }
+        }
+        {
+#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
+            PyErr_SetString(PyExc_RuntimeError,
+                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
+#else
+            long val;
+            PyObject *v = __Pyx_PyNumber_Int(x);
+ #if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+ #endif
+            if (likely(v)) {
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                int ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                              bytes, sizeof(val),
+                                              is_little, !is_unsigned);
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+#endif
+            return (long) -1;
+        }
+    } else {
+        long val;
+        PyObject *tmp = __Pyx_PyNumber_Int(x);
+        if (!tmp) return (long) -1;
+        val = __Pyx_PyInt_As_long(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to long");
+    return (long) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to long");
+    return (long) -1;
 }
 
 static int __Pyx_check_binary_version(void) {
