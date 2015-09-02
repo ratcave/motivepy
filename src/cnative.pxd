@@ -111,7 +111,7 @@ cdef extern from "NPTrackingTools.h":
                                 int threshold, int intensity)
     bool   TT_SetCameraFrameRate(int cameraIndex, int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()
     int    TT_CameraVideoType(int cameraIndex)
-    int    TT_CameraFrameRate(int cameraIndex)                                      # frames/sec
+    int    TT_CameraFrameRate(int cameraIndex)                                      #frames/sec
     int    TT_CameraExposure(int cameraIndex)
     int    TT_CameraThreshold(int cameraIndex)
     int    TT_CameraIntensity(int cameraIndex)
@@ -167,7 +167,7 @@ cdef extern from "NPTrackingTools.h":
     ##void     TT_DetachListener(cTTAPIListener* listener)
 
 
-##This can be added to the actual python functions in native.pyx calling the stuff defined here
+##The decoding explanation below can be added to the actual python functions in native.pyx
 #RESULT PROCESSING     ========================================================================================-----
 #TTAPI   const char *TT_GetResultString(NPRESULT result) #Return Plain Text Message
 #define NPRESULT_SUCCESS                0             //== Successful Result ================================-------
