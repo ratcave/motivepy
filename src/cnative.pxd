@@ -41,7 +41,6 @@ cdef extern from "NPTrackingTools.h":
     float  TT_FrameMarkerZ(int index)                                              #Returns Z Coord of Marker
     ##Core::cUID TT_FrameMarkerLabel(int index)                                          #Returns Label of Marker
     double TT_FrameTimeStamp()                                                     #Time Stamp of Frame (seconds)
-    ##here not sure about the C++ function argument &operator accessibility in python
     bool   TT_FrameCameraCentroid(int index, int cameraIndex, float &x, float &y)  #TT_FrameCameraCentroid returns true if the camera is contributing to this 3D marker.  It also returns the location of the 2D centroid that is reconstructing to this 3D marker ##through changing the x and y values
     void   TT_FlushCameraQueues()                                                  #In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers), and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues() to catch up before calling TT_Update(). Ideally, after calling TT_FlushCameraQueues() you'll want to not call it again until after TT_Update() returns NPRESULT_SUCCESS
 
