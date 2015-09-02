@@ -606,19 +606,29 @@ static PyObject *__pyx_pf_6native_34frame_marker_z(CYTHON_UNUSED PyObject *__pyx
 static PyObject *__pyx_pf_6native_36frame_time_stamp(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_6native_38frame_camera_centroid(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_index, int __pyx_v_cameraIndex); /* proto */
 static PyObject *__pyx_pf_6native_40flush_camera_queues(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_6native_42set_camera_settings(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_camindex, PyObject *__pyx_v_videotype, PyObject *__pyx_v_exposure, PyObject *__pyx_v_threshold, PyObject *__pyx_v_intensity); /* proto */
-static PyObject *__pyx_pf_6native_44set_camera_group(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_camindex, PyObject *__pyx_v_camgroupindex); /* proto */
+static PyObject *__pyx_pf_6native_42is_rigid_body_tracked(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_index); /* proto */
+static PyObject *__pyx_pf_6native_44rigid_body_location(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_index); /* proto */
+static PyObject *__pyx_pf_6native_46set_camera_settings(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_camindex, PyObject *__pyx_v_videotype, PyObject *__pyx_v_exposure, PyObject *__pyx_v_threshold, PyObject *__pyx_v_intensity); /* proto */
+static PyObject *__pyx_pf_6native_48set_camera_group(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_camindex, PyObject *__pyx_v_camgroupindex); /* proto */
 static char __pyx_k_x[] = "x";
 static char __pyx_k_y[] = "y";
-static char __pyx_k_xp[] = "xp";
-static char __pyx_k_yp[] = "yp";
+static char __pyx_k_z[] = "z";
+static char __pyx_k_No[] = "No";
+static char __pyx_k_qw[] = "qw";
+static char __pyx_k_qx[] = "qx";
+static char __pyx_k_qy[] = "qy";
+static char __pyx_k_qz[] = "qz";
+static char __pyx_k_Yes[] = "Yes";
 static char __pyx_k_end[] = "end";
+static char __pyx_k_yaw[] = "yaw";
 static char __pyx_k_Vash[] = "Vash";
 static char __pyx_k_file[] = "file";
 static char __pyx_k_main[] = "__main__";
 static char __pyx_k_port[] = "port";
+static char __pyx_k_roll[] = "roll";
 static char __pyx_k_test[] = "__test__";
 static char __pyx_k_index[] = "index";
+static char __pyx_k_pitch[] = "pitch";
 static char __pyx_k_print[] = "print";
 static char __pyx_k_author[] = "__author__";
 static char __pyx_k_buffer[] = "buffer";
@@ -656,27 +666,37 @@ static char __pyx_k_set_camera_group[] = "set camera group";
 static char __pyx_k_load_rigid_bodies[] = "load_rigid_bodies";
 static char __pyx_k_rigid_bodies_file[] = "rigid_bodies_file";
 static char __pyx_k_save_rigid_bodies[] = "save_rigid_bodies";
-static char __pyx_k_2D_y_position_is_d[] = "\n 2D y-position is %d";
+static char __pyx_k_2D_y_position_is_f[] = "\n 2D y-position is %f";
 static char __pyx_k_frame_marker_count[] = "frame_marker_count";
 static char __pyx_k_set_camera_group_2[] = "set_camera_group";
 static char __pyx_k_flush_camera_queues[] = "flush_camera_queues";
+static char __pyx_k_rigid_body_location[] = "rigid_body_location";
 static char __pyx_k_set_camera_settings[] = "set_camera_settings";
 static char __pyx_k_update_single_frame[] = "update_single_frame";
 static char __pyx_k_frame_camera_centroid[] = "frame_camera_centroid";
+static char __pyx_k_is_rigid_body_tracked[] = "is_rigid_body_tracked";
 static char __pyx_k_load_calibration_from_memory[] = "load_calibration_from_memory";
-static char __pyx_k_2D_x_position_as_seen_from_came[] = "\n \n 2D x-position as seen from camera %i is %d";
+static char __pyx_k_Yaw_is_f_pitch_is_f_roll_is_f[] = "Yaw is %f, pitch is %f, roll is %f.";
+static char __pyx_k_2D_x_position_as_seen_from_came[] = "\n \n 2D x-position as seen from camera %i is %f";
 static char __pyx_k_Argument_should_be_buffername_i[] = "Argument should be buffername, i.e. a string literal";
 static char __pyx_k_Argument_should_be_filename_i_e[] = "Argument should be filename, i.e. a string literal";
-static char __pyx_k_C_Users_ratcave_Desktop_OptiTrac[] = "C:\\Users\\ratcave\\Desktop\\OptiTrackPythonWrap\\Cython\\motivepy\\src\\native.pyx";
+static char __pyx_k_The_position_of_rigid_body_i_is[] = "The position of rigid body %i is x=%f, y=%f, z=%f. \n";
+static char __pyx_k_C_Users_nico_Desktop_OptiTrackPy[] = "C:\\Users\\nico\\Desktop\\OptiTrackPythonWrap\\motivepy\\src\\native.pyx";
 static char __pyx_k_Camera_is_not_contributing_to_th[] = "Camera is not contributing to the 3D position of this marker";
+static char __pyx_k_Orientation_in_quaternions_is_qx[] = "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n";
 static PyObject *__pyx_kp_s_2D_x_position_as_seen_from_came;
-static PyObject *__pyx_kp_s_2D_y_position_is_d;
+static PyObject *__pyx_kp_s_2D_y_position_is_f;
 static PyObject *__pyx_kp_s_Argument_should_be_buffername_i;
 static PyObject *__pyx_kp_s_Argument_should_be_filename_i_e;
-static PyObject *__pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac;
+static PyObject *__pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy;
 static PyObject *__pyx_kp_s_Camera_is_not_contributing_to_th;
 static PyObject *__pyx_n_s_Flushed;
+static PyObject *__pyx_n_s_No;
+static PyObject *__pyx_kp_s_Orientation_in_quaternions_is_qx;
+static PyObject *__pyx_kp_s_The_position_of_rigid_body_i_is;
 static PyObject *__pyx_n_s_Vash;
+static PyObject *__pyx_kp_s_Yaw_is_f_pitch_is_f_roll_is_f;
+static PyObject *__pyx_n_s_Yes;
 static PyObject *__pyx_n_s_add_rigid_bodies;
 static PyObject *__pyx_n_s_author;
 static PyObject *__pyx_n_s_buffer;
@@ -700,6 +720,7 @@ static PyObject *__pyx_n_s_frame_time_stamp;
 static PyObject *__pyx_n_s_index;
 static PyObject *__pyx_n_s_initialize;
 static PyObject *__pyx_n_s_intensity;
+static PyObject *__pyx_n_s_is_rigid_body_tracked;
 static PyObject *__pyx_n_s_load_bodies_file;
 static PyObject *__pyx_n_s_load_calibration;
 static PyObject *__pyx_n_s_load_calibration_from_memory;
@@ -707,11 +728,18 @@ static PyObject *__pyx_n_s_load_project;
 static PyObject *__pyx_n_s_load_rigid_bodies;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_native;
+static PyObject *__pyx_n_s_pitch;
 static PyObject *__pyx_n_s_port;
 static PyObject *__pyx_n_s_print;
 static PyObject *__pyx_n_s_project_file;
+static PyObject *__pyx_n_s_qw;
+static PyObject *__pyx_n_s_qx;
+static PyObject *__pyx_n_s_qy;
+static PyObject *__pyx_n_s_qz;
 static PyObject *__pyx_n_s_rigid_bodies_file;
+static PyObject *__pyx_n_s_rigid_body_location;
 static PyObject *__pyx_n_s_rigid_filename;
+static PyObject *__pyx_n_s_roll;
 static PyObject *__pyx_n_s_save_project;
 static PyObject *__pyx_n_s_save_rigid_bodies;
 static PyObject *__pyx_kp_s_set_camera_group;
@@ -727,9 +755,9 @@ static PyObject *__pyx_n_s_update;
 static PyObject *__pyx_n_s_update_single_frame;
 static PyObject *__pyx_n_s_videotype;
 static PyObject *__pyx_n_s_x;
-static PyObject *__pyx_n_s_xp;
 static PyObject *__pyx_n_s_y;
-static PyObject *__pyx_n_s_yp;
+static PyObject *__pyx_n_s_yaw;
+static PyObject *__pyx_n_s_z;
 static PyObject *__pyx_codeobj_;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__5;
@@ -747,6 +775,8 @@ static PyObject *__pyx_tuple__30;
 static PyObject *__pyx_tuple__33;
 static PyObject *__pyx_tuple__36;
 static PyObject *__pyx_tuple__38;
+static PyObject *__pyx_tuple__40;
+static PyObject *__pyx_tuple__42;
 static PyObject *__pyx_codeobj__2;
 static PyObject *__pyx_codeobj__4;
 static PyObject *__pyx_codeobj__6;
@@ -769,6 +799,8 @@ static PyObject *__pyx_codeobj__34;
 static PyObject *__pyx_codeobj__35;
 static PyObject *__pyx_codeobj__37;
 static PyObject *__pyx_codeobj__39;
+static PyObject *__pyx_codeobj__41;
+static PyObject *__pyx_codeobj__43;
 
 /* "native.pyx":9
  * 
@@ -2389,8 +2421,6 @@ static PyObject *__pyx_pw_6native_39frame_camera_centroid(PyObject *__pyx_self, 
 static PyObject *__pyx_pf_6native_38frame_camera_centroid(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_index, int __pyx_v_cameraIndex) {
   float __pyx_v_x;
   float __pyx_v_y;
-  CYTHON_UNUSED float *__pyx_v_xp;
-  CYTHON_UNUSED float *__pyx_v_yp;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -2405,43 +2435,25 @@ static PyObject *__pyx_pf_6native_38frame_camera_centroid(CYTHON_UNUSED PyObject
   /* "native.pyx":104
  *        It also returns the location of the 2D centroid that is reconstructing to this 3D marker"""
  *     cdef float x,y
- *     xp=&x             # <<<<<<<<<<<<<<
- *     yp=&y
- *     if TT_FrameCameraCentroid(index,cameraIndex, x, y):
- */
-  __pyx_v_xp = (&__pyx_v_x);
-
-  /* "native.pyx":105
- *     cdef float x,y
- *     xp=&x
- *     yp=&y             # <<<<<<<<<<<<<<
- *     if TT_FrameCameraCentroid(index,cameraIndex, x, y):
- *     #assert TT_FrameCameraCentroid(index,cameraIndex, x, y), "Camera is not contributing to the 3D position of this marker"
- */
-  __pyx_v_yp = (&__pyx_v_y);
-
-  /* "native.pyx":106
- *     xp=&x
- *     yp=&y
  *     if TT_FrameCameraCentroid(index,cameraIndex, x, y):             # <<<<<<<<<<<<<<
- *     #assert TT_FrameCameraCentroid(index,cameraIndex, x, y), "Camera is not contributing to the 3D position of this marker"
- *         print "\n \n 2D x-position as seen from camera %i is %d" % (cameraIndex, x)
+ *         print "\n \n 2D x-position as seen from camera %i is %f" % (cameraIndex, x)
+ *         print "\n 2D y-position is %f" % y
  */
   __pyx_t_1 = (TT_FrameCameraCentroid(__pyx_v_index, __pyx_v_cameraIndex, __pyx_v_x, __pyx_v_y) != 0);
   if (__pyx_t_1) {
 
-    /* "native.pyx":108
+    /* "native.pyx":105
+ *     cdef float x,y
  *     if TT_FrameCameraCentroid(index,cameraIndex, x, y):
- *     #assert TT_FrameCameraCentroid(index,cameraIndex, x, y), "Camera is not contributing to the 3D position of this marker"
- *         print "\n \n 2D x-position as seen from camera %i is %d" % (cameraIndex, x)             # <<<<<<<<<<<<<<
- *         print "\n 2D y-position is %d" % y
+ *         print "\n \n 2D x-position as seen from camera %i is %f" % (cameraIndex, x)             # <<<<<<<<<<<<<<
+ *         print "\n 2D y-position is %f" % y
  *     else:
  */
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_cameraIndex); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_cameraIndex); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_GIVEREF(__pyx_t_2);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
@@ -2449,38 +2461,38 @@ static PyObject *__pyx_pf_6native_38frame_camera_centroid(CYTHON_UNUSED PyObject
     PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
     __pyx_t_2 = 0;
     __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyString_Format(__pyx_kp_s_2D_x_position_as_seen_from_came, __pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyString_Format(__pyx_kp_s_2D_x_position_as_seen_from_came, __pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (__Pyx_PrintOne(0, __pyx_t_3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (__Pyx_PrintOne(0, __pyx_t_3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "native.pyx":109
- *     #assert TT_FrameCameraCentroid(index,cameraIndex, x, y), "Camera is not contributing to the 3D position of this marker"
- *         print "\n \n 2D x-position as seen from camera %i is %d" % (cameraIndex, x)
- *         print "\n 2D y-position is %d" % y             # <<<<<<<<<<<<<<
+    /* "native.pyx":106
+ *     if TT_FrameCameraCentroid(index,cameraIndex, x, y):
+ *         print "\n \n 2D x-position as seen from camera %i is %f" % (cameraIndex, x)
+ *         print "\n 2D y-position is %f" % y             # <<<<<<<<<<<<<<
  *     else:
  *         print "Camera is not contributing to the 3D position of this marker"
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_y); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_y); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_2D_y_position_is_d, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_2D_y_position_is_f, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (__Pyx_PrintOne(0, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (__Pyx_PrintOne(0, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     goto __pyx_L3;
   }
   /*else*/ {
 
-    /* "native.pyx":111
- *         print "\n 2D y-position is %d" % y
+    /* "native.pyx":108
+ *         print "\n 2D y-position is %f" % y
  *     else:
  *         print "Camera is not contributing to the 3D position of this marker"             # <<<<<<<<<<<<<<
+ * 
  * def flush_camera_queues():
- *     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
  */
-    if (__Pyx_PrintOne(0, __pyx_kp_s_Camera_is_not_contributing_to_th) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (__Pyx_PrintOne(0, __pyx_kp_s_Camera_is_not_contributing_to_th) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_L3:;
 
@@ -2507,9 +2519,9 @@ static PyObject *__pyx_pf_6native_38frame_camera_centroid(CYTHON_UNUSED PyObject
   return __pyx_r;
 }
 
-/* "native.pyx":112
- *     else:
+/* "native.pyx":110
  *         print "Camera is not contributing to the 3D position of this marker"
+ * 
  * def flush_camera_queues():             # <<<<<<<<<<<<<<
  *     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
  *     and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues()
@@ -2538,7 +2550,7 @@ static PyObject *__pyx_pf_6native_40flush_camera_queues(CYTHON_UNUSED PyObject *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flush_camera_queues", 0);
 
-  /* "native.pyx":117
+  /* "native.pyx":115
  *     to catch up before calling TT_Update(). Ideally, after calling TT_FlushCameraQueues() you'll want to not
  *     call it again until after TT_Update() returns 0"""
  *     TT_FlushCameraQueues()             # <<<<<<<<<<<<<<
@@ -2547,18 +2559,18 @@ static PyObject *__pyx_pf_6native_40flush_camera_queues(CYTHON_UNUSED PyObject *
  */
   TT_FlushCameraQueues();
 
-  /* "native.pyx":118
+  /* "native.pyx":116
  *     call it again until after TT_Update() returns 0"""
  *     TT_FlushCameraQueues()
  *     print "Flushed"             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  if (__Pyx_PrintOne(0, __pyx_n_s_Flushed) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__Pyx_PrintOne(0, __pyx_n_s_Flushed) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "native.pyx":112
- *     else:
+  /* "native.pyx":110
  *         print "Camera is not contributing to the 3D position of this marker"
+ * 
  * def flush_camera_queues():             # <<<<<<<<<<<<<<
  *     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
  *     and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues()
@@ -2576,7 +2588,292 @@ static PyObject *__pyx_pf_6native_40flush_camera_queues(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "native.pyx":131
+/* "native.pyx":120
+ * 
+ * #RIGID BODY CONTROL
+ * def is_rigid_body_tracked(int index):             # <<<<<<<<<<<<<<
+ *     """Is rigid body currently tracked"""
+ *     if TT_IsRigidBodyTracked(index):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6native_43is_rigid_body_tracked(PyObject *__pyx_self, PyObject *__pyx_arg_index); /*proto*/
+static char __pyx_doc_6native_42is_rigid_body_tracked[] = "Is rigid body currently tracked";
+static PyMethodDef __pyx_mdef_6native_43is_rigid_body_tracked = {"is_rigid_body_tracked", (PyCFunction)__pyx_pw_6native_43is_rigid_body_tracked, METH_O, __pyx_doc_6native_42is_rigid_body_tracked};
+static PyObject *__pyx_pw_6native_43is_rigid_body_tracked(PyObject *__pyx_self, PyObject *__pyx_arg_index) {
+  int __pyx_v_index;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("is_rigid_body_tracked (wrapper)", 0);
+  assert(__pyx_arg_index); {
+    __pyx_v_index = __Pyx_PyInt_As_int(__pyx_arg_index); if (unlikely((__pyx_v_index == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("native.is_rigid_body_tracked", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6native_42is_rigid_body_tracked(__pyx_self, ((int)__pyx_v_index));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6native_42is_rigid_body_tracked(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_index) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("is_rigid_body_tracked", 0);
+
+  /* "native.pyx":122
+ * def is_rigid_body_tracked(int index):
+ *     """Is rigid body currently tracked"""
+ *     if TT_IsRigidBodyTracked(index):             # <<<<<<<<<<<<<<
+ *         print "Yes"
+ *     else:
+ */
+  __pyx_t_1 = (TT_IsRigidBodyTracked(__pyx_v_index) != 0);
+  if (__pyx_t_1) {
+
+    /* "native.pyx":123
+ *     """Is rigid body currently tracked"""
+ *     if TT_IsRigidBodyTracked(index):
+ *         print "Yes"             # <<<<<<<<<<<<<<
+ *     else:
+ *         print "No"
+ */
+    if (__Pyx_PrintOne(0, __pyx_n_s_Yes) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    goto __pyx_L3;
+  }
+  /*else*/ {
+
+    /* "native.pyx":125
+ *         print "Yes"
+ *     else:
+ *         print "No"             # <<<<<<<<<<<<<<
+ * 
+ * def rigid_body_location(int index):
+ */
+    if (__Pyx_PrintOne(0, __pyx_n_s_No) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __pyx_L3:;
+
+  /* "native.pyx":120
+ * 
+ * #RIGID BODY CONTROL
+ * def is_rigid_body_tracked(int index):             # <<<<<<<<<<<<<<
+ *     """Is rigid body currently tracked"""
+ *     if TT_IsRigidBodyTracked(index):
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("native.is_rigid_body_tracked", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "native.pyx":127
+ *         print "No"
+ * 
+ * def rigid_body_location(int index):             # <<<<<<<<<<<<<<
+ *     cdef float *x,*y,*z,*qx,*qy,*qz,*qw,*yaw,*pitch,*roll
+ *     TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6native_45rigid_body_location(PyObject *__pyx_self, PyObject *__pyx_arg_index); /*proto*/
+static PyMethodDef __pyx_mdef_6native_45rigid_body_location = {"rigid_body_location", (PyCFunction)__pyx_pw_6native_45rigid_body_location, METH_O, 0};
+static PyObject *__pyx_pw_6native_45rigid_body_location(PyObject *__pyx_self, PyObject *__pyx_arg_index) {
+  int __pyx_v_index;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("rigid_body_location (wrapper)", 0);
+  assert(__pyx_arg_index); {
+    __pyx_v_index = __Pyx_PyInt_As_int(__pyx_arg_index); if (unlikely((__pyx_v_index == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("native.rigid_body_location", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6native_44rigid_body_location(__pyx_self, ((int)__pyx_v_index));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6native_44rigid_body_location(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_index) {
+  float *__pyx_v_x;
+  float *__pyx_v_y;
+  float *__pyx_v_z;
+  float *__pyx_v_qx;
+  float *__pyx_v_qy;
+  float *__pyx_v_qz;
+  float *__pyx_v_qw;
+  float *__pyx_v_yaw;
+  float *__pyx_v_pitch;
+  float *__pyx_v_roll;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("rigid_body_location", 0);
+
+  /* "native.pyx":129
+ * def rigid_body_location(int index):
+ *     cdef float *x,*y,*z,*qx,*qy,*qz,*qw,*yaw,*pitch,*roll
+ *     TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)             # <<<<<<<<<<<<<<
+ *     print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (x[0], y[0], z[0])
+ *     print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx[0], qy[0], qz[0], qw[0])
+ */
+  TT_RigidBodyLocation(__pyx_v_index, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_qx, __pyx_v_qy, __pyx_v_qz, __pyx_v_qw, __pyx_v_yaw, __pyx_v_pitch, __pyx_v_roll);
+
+  /* "native.pyx":130
+ *     cdef float *x,*y,*z,*qx,*qy,*qz,*qw,*yaw,*pitch,*roll
+ *     TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)
+ *     print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (x[0], y[0], z[0])             # <<<<<<<<<<<<<<
+ *     print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx[0], qy[0], qz[0], qw[0])
+ *     print "Yaw is %f, pitch is %f, roll is %f." % (yaw[0], pitch[0], roll[0])
+ */
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_x[0])); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyFloat_FromDouble((__pyx_v_y[0])); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyFloat_FromDouble((__pyx_v_z[0])); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_t_3);
+  __pyx_t_1 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyString_Format(__pyx_kp_s_The_position_of_rigid_body_i_is, __pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (__Pyx_PrintOne(0, __pyx_t_3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+  /* "native.pyx":131
+ *     TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)
+ *     print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (x[0], y[0], z[0])
+ *     print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx[0], qy[0], qz[0], qw[0])             # <<<<<<<<<<<<<<
+ *     print "Yaw is %f, pitch is %f, roll is %f." % (yaw[0], pitch[0], roll[0])
+ * 
+ */
+  __pyx_t_3 = PyFloat_FromDouble((__pyx_v_qx[0])); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = PyFloat_FromDouble((__pyx_v_qy[0])); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_2 = PyFloat_FromDouble((__pyx_v_qz[0])); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_qw[0])); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = PyTuple_New(4); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_1);
+  __pyx_t_3 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyString_Format(__pyx_kp_s_Orientation_in_quaternions_is_qx, __pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (__Pyx_PrintOne(0, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "native.pyx":132
+ *     print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (x[0], y[0], z[0])
+ *     print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx[0], qy[0], qz[0], qw[0])
+ *     print "Yaw is %f, pitch is %f, roll is %f." % (yaw[0], pitch[0], roll[0])             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_yaw[0])); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = PyFloat_FromDouble((__pyx_v_pitch[0])); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = PyFloat_FromDouble((__pyx_v_roll[0])); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_t_2);
+  __pyx_t_1 = 0;
+  __pyx_t_5 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyString_Format(__pyx_kp_s_Yaw_is_f_pitch_is_f_roll_is_f, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (__Pyx_PrintOne(0, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "native.pyx":127
+ *         print "No"
+ * 
+ * def rigid_body_location(int index):             # <<<<<<<<<<<<<<
+ *     cdef float *x,*y,*z,*qx,*qy,*qz,*qw,*yaw,*pitch,*roll
+ *     TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("native.rigid_body_location", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "native.pyx":143
  * 
  * 
  * def set_camera_settings(camindex, videotype, exposure, threshold, intensity):             # <<<<<<<<<<<<<<
@@ -2585,9 +2882,9 @@ static PyObject *__pyx_pf_6native_40flush_camera_queues(CYTHON_UNUSED PyObject *
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6native_43set_camera_settings(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6native_43set_camera_settings = {"set_camera_settings", (PyCFunction)__pyx_pw_6native_43set_camera_settings, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6native_43set_camera_settings(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6native_47set_camera_settings(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_6native_47set_camera_settings = {"set_camera_settings", (PyCFunction)__pyx_pw_6native_47set_camera_settings, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6native_47set_camera_settings(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_camindex = 0;
   PyObject *__pyx_v_videotype = 0;
   PyObject *__pyx_v_exposure = 0;
@@ -2622,26 +2919,26 @@ static PyObject *__pyx_pw_6native_43set_camera_settings(PyObject *__pyx_self, Py
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_videotype)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_exposure)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_threshold)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_intensity)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_camera_settings") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_camera_settings") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -2660,20 +2957,20 @@ static PyObject *__pyx_pw_6native_43set_camera_settings(PyObject *__pyx_self, Py
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("set_camera_settings", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("native.set_camera_settings", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6native_42set_camera_settings(__pyx_self, __pyx_v_camindex, __pyx_v_videotype, __pyx_v_exposure, __pyx_v_threshold, __pyx_v_intensity);
+  __pyx_r = __pyx_pf_6native_46set_camera_settings(__pyx_self, __pyx_v_camindex, __pyx_v_videotype, __pyx_v_exposure, __pyx_v_threshold, __pyx_v_intensity);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6native_42set_camera_settings(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_camindex, PyObject *__pyx_v_videotype, PyObject *__pyx_v_exposure, PyObject *__pyx_v_threshold, PyObject *__pyx_v_intensity) {
+static PyObject *__pyx_pf_6native_46set_camera_settings(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_camindex, PyObject *__pyx_v_videotype, PyObject *__pyx_v_exposure, PyObject *__pyx_v_threshold, PyObject *__pyx_v_intensity) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -2687,7 +2984,7 @@ static PyObject *__pyx_pf_6native_42set_camera_settings(CYTHON_UNUSED PyObject *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_camera_settings", 0);
 
-  /* "native.pyx":132
+  /* "native.pyx":144
  * 
  * def set_camera_settings(camindex, videotype, exposure, threshold, intensity):
  *     return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)             # <<<<<<<<<<<<<<
@@ -2695,18 +2992,18 @@ static PyObject *__pyx_pf_6native_42set_camera_settings(CYTHON_UNUSED PyObject *
  * def set_camera_group(camindex, camgroupindex):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_camindex); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_v_videotype); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_exposure); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_threshold); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_intensity); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_6 = __Pyx_PyBool_FromLong(TT_SetCameraSettings(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4, __pyx_t_5)); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_camindex); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_v_videotype); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_exposure); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_threshold); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_intensity); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = __Pyx_PyBool_FromLong(TT_SetCameraSettings(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4, __pyx_t_5)); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_r = __pyx_t_6;
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "native.pyx":131
+  /* "native.pyx":143
  * 
  * 
  * def set_camera_settings(camindex, videotype, exposure, threshold, intensity):             # <<<<<<<<<<<<<<
@@ -2725,7 +3022,7 @@ static PyObject *__pyx_pf_6native_42set_camera_settings(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "native.pyx":134
+/* "native.pyx":146
  *     return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)
  * 
  * def set_camera_group(camindex, camgroupindex):             # <<<<<<<<<<<<<<
@@ -2734,9 +3031,9 @@ static PyObject *__pyx_pf_6native_42set_camera_settings(CYTHON_UNUSED PyObject *
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6native_45set_camera_group(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6native_45set_camera_group = {"set_camera_group", (PyCFunction)__pyx_pw_6native_45set_camera_group, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6native_45set_camera_group(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6native_49set_camera_group(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_6native_49set_camera_group = {"set_camera_group", (PyCFunction)__pyx_pw_6native_49set_camera_group, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6native_49set_camera_group(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_camindex = 0;
   PyObject *__pyx_v_camgroupindex = 0;
   int __pyx_lineno = 0;
@@ -2765,11 +3062,11 @@ static PyObject *__pyx_pw_6native_45set_camera_group(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_camgroupindex)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("set_camera_group", 1, 2, 2, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("set_camera_group", 1, 2, 2, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_camera_group") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_camera_group") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -2782,20 +3079,20 @@ static PyObject *__pyx_pw_6native_45set_camera_group(PyObject *__pyx_self, PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("set_camera_group", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("set_camera_group", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("native.set_camera_group", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6native_44set_camera_group(__pyx_self, __pyx_v_camindex, __pyx_v_camgroupindex);
+  __pyx_r = __pyx_pf_6native_48set_camera_group(__pyx_self, __pyx_v_camindex, __pyx_v_camgroupindex);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6native_44set_camera_group(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_camindex, PyObject *__pyx_v_camgroupindex) {
+static PyObject *__pyx_pf_6native_48set_camera_group(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_camindex, PyObject *__pyx_v_camgroupindex) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -2805,24 +3102,24 @@ static PyObject *__pyx_pf_6native_44set_camera_group(CYTHON_UNUSED PyObject *__p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_camera_group", 0);
 
-  /* "native.pyx":135
+  /* "native.pyx":147
  * 
  * def set_camera_group(camindex, camgroupindex):
  *     TT_SetCameraGroup(camindex, camgroupindex)             # <<<<<<<<<<<<<<
  *     print "set camera group"
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_camindex); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_v_camgroupindex); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_camindex); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_v_camgroupindex); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   TT_SetCameraGroup(__pyx_t_1, __pyx_t_2);
 
-  /* "native.pyx":136
+  /* "native.pyx":148
  * def set_camera_group(camindex, camgroupindex):
  *     TT_SetCameraGroup(camindex, camgroupindex)
  *     print "set camera group"             # <<<<<<<<<<<<<<
  */
-  if (__Pyx_PrintOne(0, __pyx_kp_s_set_camera_group) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__Pyx_PrintOne(0, __pyx_kp_s_set_camera_group) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "native.pyx":134
+  /* "native.pyx":146
  *     return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)
  * 
  * def set_camera_group(camindex, camgroupindex):             # <<<<<<<<<<<<<<
@@ -2866,13 +3163,18 @@ static struct PyModuleDef __pyx_moduledef = {
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_2D_x_position_as_seen_from_came, __pyx_k_2D_x_position_as_seen_from_came, sizeof(__pyx_k_2D_x_position_as_seen_from_came), 0, 0, 1, 0},
-  {&__pyx_kp_s_2D_y_position_is_d, __pyx_k_2D_y_position_is_d, sizeof(__pyx_k_2D_y_position_is_d), 0, 0, 1, 0},
+  {&__pyx_kp_s_2D_y_position_is_f, __pyx_k_2D_y_position_is_f, sizeof(__pyx_k_2D_y_position_is_f), 0, 0, 1, 0},
   {&__pyx_kp_s_Argument_should_be_buffername_i, __pyx_k_Argument_should_be_buffername_i, sizeof(__pyx_k_Argument_should_be_buffername_i), 0, 0, 1, 0},
   {&__pyx_kp_s_Argument_should_be_filename_i_e, __pyx_k_Argument_should_be_filename_i_e, sizeof(__pyx_k_Argument_should_be_filename_i_e), 0, 0, 1, 0},
-  {&__pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_k_C_Users_ratcave_Desktop_OptiTrac, sizeof(__pyx_k_C_Users_ratcave_Desktop_OptiTrac), 0, 0, 1, 0},
+  {&__pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_k_C_Users_nico_Desktop_OptiTrackPy, sizeof(__pyx_k_C_Users_nico_Desktop_OptiTrackPy), 0, 0, 1, 0},
   {&__pyx_kp_s_Camera_is_not_contributing_to_th, __pyx_k_Camera_is_not_contributing_to_th, sizeof(__pyx_k_Camera_is_not_contributing_to_th), 0, 0, 1, 0},
   {&__pyx_n_s_Flushed, __pyx_k_Flushed, sizeof(__pyx_k_Flushed), 0, 0, 1, 1},
+  {&__pyx_n_s_No, __pyx_k_No, sizeof(__pyx_k_No), 0, 0, 1, 1},
+  {&__pyx_kp_s_Orientation_in_quaternions_is_qx, __pyx_k_Orientation_in_quaternions_is_qx, sizeof(__pyx_k_Orientation_in_quaternions_is_qx), 0, 0, 1, 0},
+  {&__pyx_kp_s_The_position_of_rigid_body_i_is, __pyx_k_The_position_of_rigid_body_i_is, sizeof(__pyx_k_The_position_of_rigid_body_i_is), 0, 0, 1, 0},
   {&__pyx_n_s_Vash, __pyx_k_Vash, sizeof(__pyx_k_Vash), 0, 0, 1, 1},
+  {&__pyx_kp_s_Yaw_is_f_pitch_is_f_roll_is_f, __pyx_k_Yaw_is_f_pitch_is_f_roll_is_f, sizeof(__pyx_k_Yaw_is_f_pitch_is_f_roll_is_f), 0, 0, 1, 0},
+  {&__pyx_n_s_Yes, __pyx_k_Yes, sizeof(__pyx_k_Yes), 0, 0, 1, 1},
   {&__pyx_n_s_add_rigid_bodies, __pyx_k_add_rigid_bodies, sizeof(__pyx_k_add_rigid_bodies), 0, 0, 1, 1},
   {&__pyx_n_s_author, __pyx_k_author, sizeof(__pyx_k_author), 0, 0, 1, 1},
   {&__pyx_n_s_buffer, __pyx_k_buffer, sizeof(__pyx_k_buffer), 0, 0, 1, 1},
@@ -2896,6 +3198,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_index, __pyx_k_index, sizeof(__pyx_k_index), 0, 0, 1, 1},
   {&__pyx_n_s_initialize, __pyx_k_initialize, sizeof(__pyx_k_initialize), 0, 0, 1, 1},
   {&__pyx_n_s_intensity, __pyx_k_intensity, sizeof(__pyx_k_intensity), 0, 0, 1, 1},
+  {&__pyx_n_s_is_rigid_body_tracked, __pyx_k_is_rigid_body_tracked, sizeof(__pyx_k_is_rigid_body_tracked), 0, 0, 1, 1},
   {&__pyx_n_s_load_bodies_file, __pyx_k_load_bodies_file, sizeof(__pyx_k_load_bodies_file), 0, 0, 1, 1},
   {&__pyx_n_s_load_calibration, __pyx_k_load_calibration, sizeof(__pyx_k_load_calibration), 0, 0, 1, 1},
   {&__pyx_n_s_load_calibration_from_memory, __pyx_k_load_calibration_from_memory, sizeof(__pyx_k_load_calibration_from_memory), 0, 0, 1, 1},
@@ -2903,11 +3206,18 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_load_rigid_bodies, __pyx_k_load_rigid_bodies, sizeof(__pyx_k_load_rigid_bodies), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_native, __pyx_k_native, sizeof(__pyx_k_native), 0, 0, 1, 1},
+  {&__pyx_n_s_pitch, __pyx_k_pitch, sizeof(__pyx_k_pitch), 0, 0, 1, 1},
   {&__pyx_n_s_port, __pyx_k_port, sizeof(__pyx_k_port), 0, 0, 1, 1},
   {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
   {&__pyx_n_s_project_file, __pyx_k_project_file, sizeof(__pyx_k_project_file), 0, 0, 1, 1},
+  {&__pyx_n_s_qw, __pyx_k_qw, sizeof(__pyx_k_qw), 0, 0, 1, 1},
+  {&__pyx_n_s_qx, __pyx_k_qx, sizeof(__pyx_k_qx), 0, 0, 1, 1},
+  {&__pyx_n_s_qy, __pyx_k_qy, sizeof(__pyx_k_qy), 0, 0, 1, 1},
+  {&__pyx_n_s_qz, __pyx_k_qz, sizeof(__pyx_k_qz), 0, 0, 1, 1},
   {&__pyx_n_s_rigid_bodies_file, __pyx_k_rigid_bodies_file, sizeof(__pyx_k_rigid_bodies_file), 0, 0, 1, 1},
+  {&__pyx_n_s_rigid_body_location, __pyx_k_rigid_body_location, sizeof(__pyx_k_rigid_body_location), 0, 0, 1, 1},
   {&__pyx_n_s_rigid_filename, __pyx_k_rigid_filename, sizeof(__pyx_k_rigid_filename), 0, 0, 1, 1},
+  {&__pyx_n_s_roll, __pyx_k_roll, sizeof(__pyx_k_roll), 0, 0, 1, 1},
   {&__pyx_n_s_save_project, __pyx_k_save_project, sizeof(__pyx_k_save_project), 0, 0, 1, 1},
   {&__pyx_n_s_save_rigid_bodies, __pyx_k_save_rigid_bodies, sizeof(__pyx_k_save_rigid_bodies), 0, 0, 1, 1},
   {&__pyx_kp_s_set_camera_group, __pyx_k_set_camera_group, sizeof(__pyx_k_set_camera_group), 0, 0, 1, 0},
@@ -2923,9 +3233,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_update_single_frame, __pyx_k_update_single_frame, sizeof(__pyx_k_update_single_frame), 0, 0, 1, 1},
   {&__pyx_n_s_videotype, __pyx_k_videotype, sizeof(__pyx_k_videotype), 0, 0, 1, 1},
   {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
-  {&__pyx_n_s_xp, __pyx_k_xp, sizeof(__pyx_k_xp), 0, 0, 1, 1},
   {&__pyx_n_s_y, __pyx_k_y, sizeof(__pyx_k_y), 0, 0, 1, 1},
-  {&__pyx_n_s_yp, __pyx_k_yp, sizeof(__pyx_k_yp), 0, 0, 1, 1},
+  {&__pyx_n_s_yaw, __pyx_k_yaw, sizeof(__pyx_k_yaw), 0, 0, 1, 1},
+  {&__pyx_n_s_z, __pyx_k_z, sizeof(__pyx_k_z), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
@@ -2943,7 +3253,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     """initialize library"""
  *     return TT_Initialize()
  */
-  __pyx_codeobj_ = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_initialize, 9, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj_ = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_initialize, 9, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 9; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":13
  *     return TT_Initialize()
@@ -2952,7 +3262,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     """shutdown library"""
  *     return TT_Shutdown()
  */
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_shutdown, 13, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 13; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_shutdown, 13, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 13; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":18
  * 
@@ -2964,7 +3274,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__3 = PyTuple_Pack(1, __pyx_n_s_calib_filename); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_load_calibration, 18, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_load_calibration, 18, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":23
  *     return TT_LoadCalibration(calib_filename)
@@ -2976,7 +3286,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_load_bodies_file); if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_load_rigid_bodies, 23, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_load_rigid_bodies, 23, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":28
  *     return TT_LoadRigidBodies(load_bodies_file)
@@ -2988,7 +3298,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__7 = PyTuple_Pack(1, __pyx_n_s_rigid_filename); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_save_rigid_bodies, 28, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_save_rigid_bodies, 28, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":33
  *     return TT_SaveRigidBodies(rigid_filename)
@@ -3000,7 +3310,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__9 = PyTuple_Pack(1, __pyx_n_s_rigid_bodies_file); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_add_rigid_bodies, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_add_rigid_bodies, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":38
  *     return TT_AddRigidBodies(rigid_bodies_file)
@@ -3012,7 +3322,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__11 = PyTuple_Pack(1, __pyx_n_s_project_file); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_load_project, 38, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_load_project, 38, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":43
  *     return TT_LoadProject(project_file)
@@ -3024,7 +3334,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__13 = PyTuple_Pack(1, __pyx_n_s_project_file); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_save_project, 43, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_save_project, 43, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":48
  *     return TT_SaveProject(project_file)
@@ -3036,7 +3346,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__15 = PyTuple_Pack(3, __pyx_n_s_buffername, __pyx_n_s_buffersize, __pyx_n_s_buffer); if (unlikely(!__pyx_tuple__15)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__15);
   __Pyx_GIVEREF(__pyx_tuple__15);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_load_calibration_from_memory, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_load_calibration_from_memory, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":53
  *     return TT_LoadCalibrationFromMemory(buffer,buffersize)
@@ -3045,7 +3355,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     """Process incoming camera data"""
  *     return TT_Update()
  */
-  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_update, 53, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_update, 53, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":57
  *     return TT_Update()
@@ -3054,7 +3364,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     """Process incoming camera data"""
  *     return TT_UpdateSingleFrame()
  */
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_update_single_frame, 57, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_update_single_frame, 57, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":63
  * 
@@ -3066,7 +3376,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__19 = PyTuple_Pack(2, __pyx_n_s_enabled, __pyx_n_s_enabled); if (unlikely(!__pyx_tuple__19)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_stream_trackd, 63, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_stream_trackd, 63, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":68
  *     return TT_StreamTrackd(enabled)
@@ -3078,7 +3388,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__21 = PyTuple_Pack(2, __pyx_n_s_enabled, __pyx_n_s_port); if (unlikely(!__pyx_tuple__21)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_stream_vrpn, 68, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_stream_vrpn, 68, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":74
  *     return TT_StreamVRPN(enabled, port)
@@ -3090,7 +3400,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__23 = PyTuple_Pack(2, __pyx_n_s_enabled, __pyx_n_s_enabled); if (unlikely(!__pyx_tuple__23)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__23);
   __Pyx_GIVEREF(__pyx_tuple__23);
-  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_stream_np, 74, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_stream_np, 74, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":80
  * 
@@ -3099,7 +3409,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     """Returns Frame Markers Count"""
  *     return TT_FrameMarkerCount()
  */
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_frame_marker_count, 80, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_frame_marker_count, 80, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":84
  *     return TT_FrameMarkerCount()
@@ -3111,7 +3421,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__26 = PyTuple_Pack(2, __pyx_n_s_index, __pyx_n_s_index); if (unlikely(!__pyx_tuple__26)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_frame_marker_x, 84, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_frame_marker_x, 84, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":88
  *     return TT_FrameMarkerX(index)
@@ -3123,7 +3433,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__28 = PyTuple_Pack(2, __pyx_n_s_index, __pyx_n_s_index); if (unlikely(!__pyx_tuple__28)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__28);
   __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_frame_marker_y, 88, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_frame_marker_y, 88, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":92
  *     return TT_FrameMarkerY(index)
@@ -3135,7 +3445,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__30 = PyTuple_Pack(2, __pyx_n_s_index, __pyx_n_s_index); if (unlikely(!__pyx_tuple__30)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__30);
   __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_frame_marker_z, 92, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_frame_marker_z, 92, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":96
  *     return TT_FrameMarkerZ(index)
@@ -3144,7 +3454,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     """Time Stamp of Frame (seconds"""
  *     return TT_FrameTimeStamp()
  */
-  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_frame_time_stamp, 96, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_frame_time_stamp, 96, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":100
  *     return TT_FrameTimeStamp()
@@ -3153,43 +3463,67 @@ static int __Pyx_InitCachedConstants(void) {
  *     """Returns true if the camera is contributing to this 3D marker.
  *        It also returns the location of the 2D centroid that is reconstructing to this 3D marker"""
  */
-  __pyx_tuple__33 = PyTuple_Pack(6, __pyx_n_s_index, __pyx_n_s_cameraIndex, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_xp, __pyx_n_s_yp); if (unlikely(!__pyx_tuple__33)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__33 = PyTuple_Pack(4, __pyx_n_s_index, __pyx_n_s_cameraIndex, __pyx_n_s_x, __pyx_n_s_y); if (unlikely(!__pyx_tuple__33)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__33);
   __Pyx_GIVEREF(__pyx_tuple__33);
-  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_frame_camera_centroid, 100, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(2, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_frame_camera_centroid, 100, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "native.pyx":112
- *     else:
+  /* "native.pyx":110
  *         print "Camera is not contributing to the 3D position of this marker"
+ * 
  * def flush_camera_queues():             # <<<<<<<<<<<<<<
  *     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
  *     and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues()
  */
-  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_flush_camera_queues, 112, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_flush_camera_queues, 110, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "native.pyx":131
+  /* "native.pyx":120
+ * 
+ * #RIGID BODY CONTROL
+ * def is_rigid_body_tracked(int index):             # <<<<<<<<<<<<<<
+ *     """Is rigid body currently tracked"""
+ *     if TT_IsRigidBodyTracked(index):
+ */
+  __pyx_tuple__36 = PyTuple_Pack(2, __pyx_n_s_index, __pyx_n_s_index); if (unlikely(!__pyx_tuple__36)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__36);
+  __Pyx_GIVEREF(__pyx_tuple__36);
+  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_is_rigid_body_tracked, 120, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "native.pyx":127
+ *         print "No"
+ * 
+ * def rigid_body_location(int index):             # <<<<<<<<<<<<<<
+ *     cdef float *x,*y,*z,*qx,*qy,*qz,*qw,*yaw,*pitch,*roll
+ *     TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)
+ */
+  __pyx_tuple__38 = PyTuple_Pack(12, __pyx_n_s_index, __pyx_n_s_index, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_z, __pyx_n_s_qx, __pyx_n_s_qy, __pyx_n_s_qz, __pyx_n_s_qw, __pyx_n_s_yaw, __pyx_n_s_pitch, __pyx_n_s_roll); if (unlikely(!__pyx_tuple__38)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__38);
+  __Pyx_GIVEREF(__pyx_tuple__38);
+  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(1, 0, 12, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_rigid_body_location, 127, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "native.pyx":143
  * 
  * 
  * def set_camera_settings(camindex, videotype, exposure, threshold, intensity):             # <<<<<<<<<<<<<<
  *     return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)
  * 
  */
-  __pyx_tuple__36 = PyTuple_Pack(5, __pyx_n_s_camindex, __pyx_n_s_videotype, __pyx_n_s_exposure, __pyx_n_s_threshold, __pyx_n_s_intensity); if (unlikely(!__pyx_tuple__36)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__36);
-  __Pyx_GIVEREF(__pyx_tuple__36);
-  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(5, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_set_camera_settings, 131, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__40 = PyTuple_Pack(5, __pyx_n_s_camindex, __pyx_n_s_videotype, __pyx_n_s_exposure, __pyx_n_s_threshold, __pyx_n_s_intensity); if (unlikely(!__pyx_tuple__40)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__40);
+  __Pyx_GIVEREF(__pyx_tuple__40);
+  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(5, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_set_camera_settings, 143, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "native.pyx":134
+  /* "native.pyx":146
  *     return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)
  * 
  * def set_camera_group(camindex, camgroupindex):             # <<<<<<<<<<<<<<
  *     TT_SetCameraGroup(camindex, camgroupindex)
  *     print "set camera group"
  */
-  __pyx_tuple__38 = PyTuple_Pack(2, __pyx_n_s_camindex, __pyx_n_s_camgroupindex); if (unlikely(!__pyx_tuple__38)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__38);
-  __Pyx_GIVEREF(__pyx_tuple__38);
-  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_ratcave_Desktop_OptiTrac, __pyx_n_s_set_camera_group_2, 134, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__42 = PyTuple_Pack(2, __pyx_n_s_camindex, __pyx_n_s_camgroupindex); if (unlikely(!__pyx_tuple__42)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__42);
+  __Pyx_GIVEREF(__pyx_tuple__42);
+  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_set_camera_group_2, 146, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -3537,40 +3871,64 @@ PyMODINIT_FUNC PyInit_native(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_frame_camera_centroid, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "native.pyx":112
- *     else:
+  /* "native.pyx":110
  *         print "Camera is not contributing to the 3D position of this marker"
+ * 
  * def flush_camera_queues():             # <<<<<<<<<<<<<<
  *     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
  *     and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues()
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_41flush_camera_queues, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_41flush_camera_queues, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_flush_camera_queues, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_flush_camera_queues, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "native.pyx":131
+  /* "native.pyx":120
+ * 
+ * #RIGID BODY CONTROL
+ * def is_rigid_body_tracked(int index):             # <<<<<<<<<<<<<<
+ *     """Is rigid body currently tracked"""
+ *     if TT_IsRigidBodyTracked(index):
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_43is_rigid_body_tracked, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_is_rigid_body_tracked, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "native.pyx":127
+ *         print "No"
+ * 
+ * def rigid_body_location(int index):             # <<<<<<<<<<<<<<
+ *     cdef float *x,*y,*z,*qx,*qy,*qz,*qw,*yaw,*pitch,*roll
+ *     TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_45rigid_body_location, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_rigid_body_location, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "native.pyx":143
  * 
  * 
  * def set_camera_settings(camindex, videotype, exposure, threshold, intensity):             # <<<<<<<<<<<<<<
  *     return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_43set_camera_settings, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_47set_camera_settings, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_set_camera_settings, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_set_camera_settings, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "native.pyx":134
+  /* "native.pyx":146
  *     return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)
  * 
  * def set_camera_group(camindex, camgroupindex):             # <<<<<<<<<<<<<<
  *     TT_SetCameraGroup(camindex, camgroupindex)
  *     print "set camera group"
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_45set_camera_group, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_49set_camera_group, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_set_camera_group_2, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_set_camera_group_2, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "native.pyx":1

@@ -101,11 +101,9 @@ def frame_camera_centroid(int index, int cameraIndex):
     """Returns true if the camera is contributing to this 3D marker.
        It also returns the location of the 2D centroid that is reconstructing to this 3D marker"""
     cdef float x,y
-    xp=&x
-    yp=&y
     if TT_FrameCameraCentroid(index,cameraIndex, x, y):
-        print "\n \n 2D x-position as seen from camera %i is %d" % (cameraIndex, x)
-        print "\n 2D y-position is %d" % y
+        print "\n \n 2D x-position as seen from camera %i is %f" % (cameraIndex, x)
+        print "\n 2D y-position is %f" % y
     else:
         print "Camera is not contributing to the 3D position of this marker"
         
@@ -118,6 +116,20 @@ def flush_camera_queues():
     print "Flushed"
 
 
+#RIGID BODY CONTROL
+def is_rigid_body_tracked(int index):
+    """Is rigid body currently tracked"""
+    if TT_IsRigidBodyTracked(index):
+        print "Yes"
+    else:
+        print "No"
+
+def rigid_body_location(int index):
+    cdef float *x,*y,*z,*qx,*qy,*qz,*qw,*yaw,*pitch,*roll
+    TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)
+    print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (x[0], y[0], z[0])
+    print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx[0], qy[0], qz[0], qw[0])
+    print "Yaw is %f, pitch is %f, roll is %f." % (yaw[0], pitch[0], roll[0])
 
 
 
