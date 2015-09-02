@@ -103,11 +103,12 @@ def frame_camera_centroid(int index, int cameraIndex):
     cdef float x,y
     xp=&x
     yp=&y
-    return TT_FrameCameraCentroid(index,cameraIndex, x, y)
-    assert TT_FrameCameraCentroid(index,cameraIndex, x, y), "Camera is not contributing to the 3D position of this marker"
-    print "\n \n 2D x-position as seen from camera %i is %d" % (cameraIndex, x)
-    print "\n 2D y-position is %d" % y
-
+    if TT_FrameCameraCentroid(index,cameraIndex, x, y):
+        print "\n \n 2D x-position as seen from camera %i is %d" % (cameraIndex, x)
+        print "\n 2D y-position is %d" % y
+    else:
+        print "Camera is not contributing to the 3D position of this marker"
+        
 def flush_camera_queues():
     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
     and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues()
