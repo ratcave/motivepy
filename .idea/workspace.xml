@@ -34,21 +34,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="native.pyx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="native.pyx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/native.pyx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.54565704">
-              <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+            <state vertical-scroll-proportion="-14.473684">
+              <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cnative.pxd" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cnative.pxd" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cnative.pxd">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="3" selection-start-line="48" selection-start-column="3" selection-end-line="51" selection-end-column="100" />
+            <state vertical-scroll-proportion="0.41648108">
+              <caret line="70" column="4" selection-start-line="70" selection-start-column="4" selection-end-line="71" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -574,18 +574,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cnative.pxd">
+    <entry file="file://$PROJECT_DIR$/src/native.pyx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="3" selection-start-line="48" selection-start-column="3" selection-end-line="51" selection-end-column="100" />
+        <state vertical-scroll-proportion="-14.473684">
+          <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/native.pyx">
+    <entry file="file://$PROJECT_DIR$/src/cnative.pxd">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54565704">
-          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.41648108">
+          <caret line="70" column="4" selection-start-line="70" selection-start-column="4" selection-end-line="71" selection-end-column="70" />
           <folding />
         </state>
       </provider>

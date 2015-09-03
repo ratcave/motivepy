@@ -97,10 +97,9 @@ def frame_time_stamp():
     """Time Stamp of Frame (seconds"""
     return TT_FrameTimeStamp()
 
-def frame_camera_centroid(int index, int cameraIndex):
+def frame_camera_centroid(int index, int cameraIndex, float x, float y):
     """Returns true if the camera is contributing to this 3D marker.
        It also returns the location of the 2D centroid that is reconstructing to this 3D marker"""
-    cdef float x,y
     if TT_FrameCameraCentroid(index,cameraIndex, x, y):
         print "\n \n 2D x-position as seen from camera %i is %f" % (cameraIndex, x)
         print "\n 2D y-position is %f" % y
@@ -117,6 +116,27 @@ def flush_camera_queues():
 
 
 #RIGID BODY CONTROL
+def set_rigid_body_user_data(int index, int ID):
+    """Set RigidBodies User Data"""
+    TT_SetRigidBodyUserData(index,ID)
+    print "Set"
+
+def rigid_body_user_data(int index):
+    """Get RigidBodies User Data"""
+    print "Rigid body ID: %i" %  TT_RigidBodyUserData(index)
+
+def rigid_body_name(int index):
+    """Returns RigidBody Name"""
+    print "%s" % TT_RigidBodyName(index)
+
+def set_rigid_body_enabled(int index, bool enabled):
+    """Set tracking """
+    TT_SetRigidBodyEnabled(index, enabled)
+
+def rigid_body_enabled(int index):
+    """Get tracking"""
+    return TT_RigidBodyEnabled(index)
+
 def is_rigid_body_tracked(int index):
     """Is rigid body currently tracked"""
     if TT_IsRigidBodyTracked(index):
@@ -124,12 +144,75 @@ def is_rigid_body_tracked(int index):
     else:
         print "No"
 
-def rigid_body_location(int index):
-    cdef float *x,*y,*z,*qx,*qy,*qz,*qw,*yaw,*pitch,*roll
-    TT_RigidBodyLocation(index,  x, y, z,  qx, qy, qz, qw,  yaw, pitch, roll)
-    print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (x[0], y[0], z[0])
-    print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx[0], qy[0], qz[0], qw[0])
-    print "Yaw is %f, pitch is %f, roll is %f." % (yaw[0], pitch[0], roll[0])
+def rigid_body_location(int index, float x, float y, float z,
+                        float qx, float qy, float qz, float qw,
+                        float yaw, float pitch, float roll):
+    """##Not sure if this function sets or gets the location.
+    If it returns values different from the ones you entered,
+    the function gets the location as computed by Motive.
+    Otherwise it is for manually setting the location."""
+    TT_RigidBodyLocation(index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
+    print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (x, y, z)
+    print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx, qy, qz, qw)
+    print "Yaw is %f, pitch is %f, roll is %f." % (yaw, pitch, roll)
+
+def rigid_body_translate_pivot(int index, float x, float y, float z):
+    """Rigid Body Pivot-Point Translation: Sets a translation offset for the centroid of the rigid body.
+    Reported values for the location of the rigid body, as well as the 3D visualization, will be shifted
+    by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters. """
+    return   TT_RigidBodyTranslatePivot(index, x, y, z)
+
+def rigid_body_reset_orientation(int index):
+    """Reset orientation to match the current tracked orientation
+    of the rigid body"""
+    TT_RigidBodyResetOrientation(index)
+
+def clear_rigid_body_list():
+    """Clear all rigid bodies"""
+    TT_ClearRigidBodyList()
+    print "Cleared"
+
+def remove_rigid_body(int index):
+    """Remove single rigid body"""
+    return TT_RemoveRigidBody(index)
+
+def rigid_body_marker_count(int index):
+    """Get marker count"""
+    return TT_RigidBodyMarkerCount(index)
+
+def rigid_body_marker(int rigidIndex, int markerIndex, float x, float y, float z):
+    """Get rigid body marker.
+    ##Not sure if this function sets or gets the location.
+    If it returns values different from the ones you entered,
+    the function gets the location as computed by Motive.
+    Otherwise it is for manually setting the location."""
+    TT_RigidBodyMarker(rigidIndex, markerIndex, &x, &y, &z)
+    print "The position of rigid body's %i marker %i, is x=%f, y=%f, z=%f. \n" % (rigidIndex, markerIndex, x, y, z)
+
+def rigid_body_point_cloud_marker(int rigidIndex, int markerIndex, bool tracked, float x, float y, float z):
+    """ Get corresponding point cloud marker
+    If tracked is false, there is no corresponding point cloud marker.
+    """
+    TT_RigidBodyPointCloudMarker(rigidIndex, markerIndex, tracked, x, y, z)
+    if tracked:
+        print "The point cloud markers position is x=%f, y=%f, z=%f" % (x,y,z)
+    else:
+        print "There is no corresponding point cloud marker"
+
+def create_rigid_body(str name, int id, int markerCount, markerList):
+    """Create a rigid body based on the marker count and marker list provided.
+    The marker list is expected to contain a list of marker coordinates in the order:
+    x1,y1,z1,x2,y2,z2,...xN,yN,zN."""
+    cdef float markerListp[1000]
+    assert len(markerList)<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
+    for i in markerList:
+        markerListp[i]=markerList[i]
+
+    return TT_CreateRigidBody(name, id,markerCount, markerListp)
+
+
+
+
 
 
 
