@@ -93,9 +93,9 @@ def frame_marker_z(int index):
     """Returns Z Coord of Marker"""
     return TT_FrameMarkerZ(index)
 
-def frame_marker_list(int fmarker, int lmarker):
+def frame_marker_list():
     marker_list=[]
-    for i in range(fmarker,lmarker+1):
+    for i in range(0,frame_marker_count()):
         marker_list.append(frame_marker_x(i))
         marker_list.append(frame_marker_y(i))
         marker_list.append(frame_marker_z(i))
@@ -158,7 +158,10 @@ def rigid_body_location(int index, float x, float y, float z,
     """##Not sure if this function sets or gets the location.
     If it returns values different from the ones you entered,
     the function gets the location as computed by Motive.
-    Otherwise it is for manually setting the location."""
+    Otherwise it is for manually setting the location.
+    Update: So far this function only returns nonsense values.
+            Maybe I have to initialize the variables in the function as c variables
+            so that correct addresses are given to the function..."""
     TT_RigidBodyLocation(index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
     print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (index, x, y, z)
     print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx, qy, qz, qw)
@@ -193,7 +196,8 @@ def rigid_body_marker(int rigidIndex, int markerIndex, float x, float y, float z
     ##Not sure if this function sets or gets the location.
     If it returns values different from the ones you entered,
     the function gets the location as computed by Motive.
-    Otherwise it is for manually setting the location."""
+    Otherwise it is for manually setting the location.
+    Update: If the function only returns gibberish, see rigid body location."""
     TT_RigidBodyMarker(rigidIndex, markerIndex, &x, &y, &z)
     print "The position of rigid body's %i marker %i, is x=%f, y=%f, z=%f. \n" % (rigidIndex, markerIndex, x, y, z)
 
@@ -218,19 +222,245 @@ def create_rigid_body(str name, int id, int markerCount, markerList):
 
     return TT_CreateRigidBody(name, id, markerCount, markerListp)
 
+def software_build():
+    """Software Release Build"""
+    return TT_BuildNumber()
 
 
+#CAMERA GROUP SUPPORT
+def camera_group_count():
+    """Returns number of camera groups"""
+    return TT_CameraGroupCount()
 
+def create_camera_group():
+    """Add an additional group"""
+    if TT_CreateCameraGroup():
+        print "True"
+    else:
+        print "False"
 
+def remove_camera_group(int index):
+    """Remove a camera group (must be empty)"""
+    if TT_RemoveCameraGroup(index):
+        print "Removed"
+    else:
+        print "Error, could not remove. Check if group is empty"
 
+def cameras_group(int index):
+    """Returns Camera's camera group index"""
+    return TT_CamerasGroup(index)
 
+def set_group_shutter_delay(int groupIndex, int microseconds):
+    """Set camera group's shutter delay"""
+    TT_SetGroupShutterDelay(groupIndex, microseconds)
+    print "Set"
 
+def set_camera_group(int cameraIndex, int cameraGroupIndex):
+    """Move camera to camera group"""
+    TT_SetCameraGroup(cameraIndex, cameraGroupIndex)
+    print "Set"
 
+#MARKER SIZE SETTINGS
+def set_camera_group_reconstruction(int groupIndex, bool enable):
+    return TT_SetCameraGroupReconstruction(groupIndex, enable)
 
+def set_enabled_filterswitch(bool enabled):
+    return TT_SetEnabledFilterSwitch(enabled)
 
-def set_camera_settings(camindex, videotype, exposure, threshold, intensity):
+def is_filter_switch_enabled():
+    if TT_IsFilterSwitchEnabled():
+        print "True"
+    else:
+        print "False"
+
+#POINT CLOUD INTERFACE
+def camera_count():
+    """Returns Camera Count"""
+    return TT_CameraCount()
+
+def camera_x_location(int index):
+    """Returns Camera's X Coord"""
+    return TT_CameraXLocation(index)
+
+def camera_y_location(int index):
+    """Returns Camera's Y Coord"""
+    return TT_CameraYLocation(index)
+
+def camera_z_location(int index):
+    """Returns Camera's Z Coord"""
+    return TT_CameraZLocation(index)
+
+def camera_orientation_matrix(int camera, int index):
+    """Orientation"""
+    return TT_CameraOrientationMatrix(camera, index)
+
+def camera_name(int index):
+    """Returns Camera Name"""
+    print TT_CameraName(index)
+
+def camera_marker_count(int cameraIndex):
+    """Camera's 2D Marker Count"""
+    return TT_CameraMarkerCount(cameraIndex)
+
+def camera_marker(int cameraIndex, int markerIndex, float x, float y):
+    """CameraMarker fetches the 2D centroid location of the marker as seen by the camera"""
+    if TT_CameraMarker(cameraIndex, markerIndex, x, y):
+        print "The 2D location of marker %i is x=%f, y=%f" % (markerIndex, x, y)
+    else:
+        print "Error or no marker"
+
+def camera_pixel_resolution(int cameraIndex, int width, int height):
+    if TT_CameraPixelResolution(cameraIndex, width, height):
+        print "Pixel resolution for camera %i is width=%f, height=%f" %(cameraIndex, width, height)
+    else:
+        print "Error"
+
+def set_camera_settings(int camindex, int videotype, int exposure, int threshold, int intensity):
+    """Set camera settings.  This function allows you to set the camera's video mode, exposure, threshold,
+    and illumination settings.
+    VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode.
+    Exposure: Valid values are:  1-480.
+    Threshold: Valid values are: 0-255.
+    Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)"""
     return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)
 
-def set_camera_group(camindex, camgroupindex):
-    TT_SetCameraGroup(camindex, camgroupindex)
-    print "set camera group"
+def set_camera_frame_rate(int cameraIndex, int frameRate):
+    """Set the frame rate for the given zero based camera index.
+    Returns true if the operation was successful and false otherwise.
+    If the operation fails, check that the camera index is valid and
+    that devices have been initialized with TT_Initialize()"""
+    if TT_SetCameraFrameRate(cameraIndex, frameRate):
+        print "Set"
+    else:
+        print "Error. Not set"
+
+
+#Get camera settings for a given camera index. A negative return value indicates the value was not
+#available. This usually means that either the camera index is not valid or devices have not been
+#initialized with TT_Initialize()
+def camera_frame_rate(int cameraIndex):
+    """frames/sec"""
+    return TT_CameraFrameRate(cameraIndex)
+
+def camera_exposure(int cameraIndex):
+    return TT_CameraExposure(cameraIndex)
+
+def camera_threshold(int cameraIndex):
+    return TT_CameraThreshold(cameraIndex)
+
+def camera_intensity(int cameraIndex):
+    return TT_CameraIntensity(cameraIndex)
+
+def camera_temperature(int cameraIndex):
+    return TT_CameraTemperature(cameraIndex)
+
+def camera_ring_light_temperature(int cameraIndex):
+    return  TT_CameraRinglightTemperature(cameraIndex)
+
+
+#Camera's Full Frame Grayscale Decimation
+def camera_grayscale_decimation(int cameraIndex):
+    return  TT_CameraGrayscaleDecimation(cameraIndex)
+
+def set_camera_grayscale_decimation(int cameraIndex, int value):
+    if TT_SetCameraGrayscaleDecimation(cameraIndex, value):
+        print "Set"
+    else:
+        print "Error. Not set"
+
+
+#Toggle Camera Extended Options
+def set_camera_filter_switch(int cameraIndex, bool enableIRFilter):
+    if TT_SetCameraFilterSwitch(cameraIndex,enableIRFilter):
+        print "Set"
+    else:
+        print "Error. Possibly the camera does not have an IR filter"
+
+def set_camera_agc(int cameraIndex, bool enableAutomaticGainControl):
+    if TT_SetCameraAGC(cameraIndex, enableAutomaticGainControl):
+        print "Set"
+    else:
+        print "Error. Possibly the camera does not have AGC"
+
+def set_camera_aec(int cameraIndex, bool enableAutomaticExposureControl):
+    if TT_SetCameraAEC(cameraIndex, enableAutomaticExposureControl):
+        print "Set"
+    else:
+        print "Error. Possibly the camera does not have AEC"
+
+def set_camera_high_power(int cameraIndex, bool enableHighPowerMode):
+    if TT_SetCameraHighPower(cameraIndex, enableHighPowerMode):
+        print "Set"
+    else:
+        print "Error. Possibly the camera does not have HighPowerMode"
+
+def set_camera_mjpeg_high_quality(int cameraIndex, int mjpegQuality):
+    if TT_SetCameraMJPEGHighQuality(cameraIndex, mjpegQuality):
+        print "Set"
+    else:
+        print "Error. Possibly the camera does not have HighQuality for MJPEG"
+
+
+#Camera Imager Gain
+def camera_imager_gain(int cameraIndex):
+    return  TT_CameraImagerGain(cameraIndex)
+
+def camera_imager_gain_levels(int cameraIndex):
+    return  TT_CameraImagerGainLevels(cameraIndex)
+
+def set_camera_imager_gain(int cameraIndex, int value):
+    TT_SetCameraImagerGain(cameraIndex, value)
+    print "Set"
+
+
+#Camera Illumination
+def is_continuous_ir_available(int cameraIndex):
+    if TT_IsContinuousIRAvailable(cameraIndex):
+        print "Yes"
+    else:
+        print "No"
+
+def continuous_ir(int cameraIndex):
+    if TT_ContinuousIR(cameraIndex):
+        print "On"
+    else:
+        print "Off"
+
+def set_continous_ir(int cameraIndex, bool enable):
+    TT_SetContinuousIR(cameraIndex, enable)
+    print "Set"
+
+##def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
+##    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
+##    print "Set"
+
+
+#Camera Masking
+def camera_mask(int cameraIndex, buffername, int bufferSize):
+    assert type (buffername) is str, "Argument should be buffername, i.e. a string literal"
+    cdef unsigned char * buffer=buffername
+    if TT_CameraMask(cameraIndex, buffer, bufferSize):
+        print "Mask exists"
+    else:
+        print "Mask does not exist"
+
+def set_camera_mask(int cameraIndex, buffername, int bufferSize):
+    assert type (buffername) is str, "Argument should be buffername, i.e. a string literal"
+    cdef unsigned char * buffer=buffername
+    if TT_SetCameraMask(cameraIndex, buffer, bufferSize):
+        print "Set"
+    else:
+        print "Error. Not set"
+
+def clear_camera_mask(int cameraIndex):
+    if TT_ClearCameraMask(cameraIndex):
+        print "Cleared"
+    else:
+        print "Not cleared"
+
+def camera_mask_info(int cameraIndex, int blockingMaskWidth, int blockingMaskHeight, int blockingMaskGrid):
+    if TT_CameraMaskInfo(cameraIndex, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
+        print "Camera %i blocking masks width:%f, height:%f, grid:%f" % (cameraIndex, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid)
+    else:
+        print "Error. Possibly no mask for this camera"
+

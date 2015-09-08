@@ -104,12 +104,12 @@ cdef extern from "NPTrackingTools.h":
     float  TT_CameraZLocation(int index)                                            #Returns Camera's Z Coord
     float  TT_CameraOrientationMatrix(int camera, int index)                        #Orientation
     const char* TT_CameraName(int index)                                            #Returns Camera Name
-    int    TT_CameraMarkerCount(int cameraIndex)                                    #Camera's 2D Marker Count     ##cpdef bool   TT_CameraMarker(int cameraIndex, int markerIndex, float &x, float &y)    #CameraMarker fetches the 2D centroid location of the marker as seen by the camera.
+    int    TT_CameraMarkerCount(int cameraIndex)                                    #Camera's 2D Marker Count
+    bool   TT_CameraMarker(int cameraIndex, int markerIndex, float &x, float &y)    #CameraMarker fetches the 2D centroid location of the marker as seen by the camera.
     bool   TT_CameraPixelResolution(int cameraIndex, int &width, int &height)
     bool   TT_SetCameraSettings(int cameraIndex, int videoType, int exposure,       #VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode. Exposure: Valid values are:  1-480. Threshold: Valid values are: 0-255. Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)
                                 int threshold, int intensity)
-    bool   TT_SetCameraFrameRate(int cameraIndex, int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()
-    int    TT_CameraVideoType(int cameraIndex)
+    bool   TT_SetCameraFrameRate(int cameraIndex, int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()   int    TT_CameraVideoType(int cameraIndex)
     int    TT_CameraFrameRate(int cameraIndex)                                      #frames/sec
     int    TT_CameraExposure(int cameraIndex)
     int    TT_CameraThreshold(int cameraIndex)
@@ -133,7 +133,7 @@ cdef extern from "NPTrackingTools.h":
     bool   TT_ClearCameraMask(int cameraIndex)
     bool   TT_SetCameraMask(int cameraIndex, unsigned char * buffer, int bufferSize)
     bool   TT_CameraMask(int cameraIndex, unsigned char * buffer, int bufferSize)
-    bool   TT_CameraMaskInfo(int cameraIndex, int &blockingMaskWidth, int &blockingMaskHeight, int &blockingMaskGrid);
+    bool   TT_CameraMaskInfo(int cameraIndex, int &blockingMaskWidth, int &blockingMaskHeight, int &blockingMaskGrid)
     int    TT_CameraID(int cameraIndex)
     bool   TT_CameraFrameBuffer(int cameraIndex, int bufferPixelWidth, int bufferPixelHeight,      #Fetch the camera's frame buffer.  This function fills the provided buffer with an image of what is in the camera view. The resulting image depends on what video mode the camera is in.  If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
                                 int bufferByteSpan, int bufferPixelBitDepth, unsigned char *buffer)
