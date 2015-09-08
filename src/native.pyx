@@ -205,13 +205,10 @@ def create_rigid_body(str name, int id, int markerCount, markerList):
     x1,y1,z1,x2,y2,z2,...xN,yN,zN."""
     cdef float markerListp[1000]
     assert len(markerList)<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
-    for i in markerList:
+    for i in range(0,len(markerList)):
         markerListp[i]=markerList[i]
 
-    return TT_CreateRigidBody(name, id,markerCount, markerListp)
-
-
-
+    return TT_CreateRigidBody(name, id, markerCount, markerListp)
 
 
 
