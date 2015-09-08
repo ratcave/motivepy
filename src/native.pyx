@@ -93,6 +93,14 @@ def frame_marker_z(int index):
     """Returns Z Coord of Marker"""
     return TT_FrameMarkerZ(index)
 
+def frame_marker_list(int fmarker, int lmarker):
+    marker_list=[]
+    for i in range(fmarker,lmarker+1):
+        marker_list.append(frame_marker_x(i))
+        marker_list.append(frame_marker_y(i))
+        marker_list.append(frame_marker_z(i))
+    return marker_list
+
 def frame_time_stamp():
     """Time Stamp of Frame (seconds"""
     return TT_FrameTimeStamp()
@@ -152,7 +160,7 @@ def rigid_body_location(int index, float x, float y, float z,
     the function gets the location as computed by Motive.
     Otherwise it is for manually setting the location."""
     TT_RigidBodyLocation(index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
-    print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (x, y, z)
+    print "The position of rigid body %i is x=%f, y=%f, z=%f. \n" % (index, x, y, z)
     print "Orientation in quaternions is qx=%f, qy=%f, qz=%f, qw=%f. \n" % (qx, qy, qz, qw)
     print "Yaw is %f, pitch is %f, roll is %f." % (yaw, pitch, roll)
 
