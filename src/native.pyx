@@ -113,7 +113,28 @@ def frame_camera_centroid(int index, int cameraIndex, float x, float y):
         print "\n 2D y-position is %f" % y
     else:
         print "Camera is not contributing to the 3D position of this marker"
-        
+
+def camera_frame_buffer(int cameraIndex, int bufferPixelWidth, int bufferPixelHeight,
+                        int bufferByteSpan, int bufferPixelBitDepth, buffername):
+    """Fetch the camera's frame buffer.
+    This function fills the provided buffer with an image of what is in the camera view.
+    The resulting image depends on what video mode the camera is in.
+    If the camera is in grayscale mode, for example, a grayscale image is returned from this call."""
+    assert type (buffername) is str, "Argument should be buffername, i.e. a string literal"
+    cdef unsigned char * buffer=buffername
+    if TT_CameraFrameBuffer(cameraIndex,bufferPixelWidth,bufferPixelHeight,bufferByteSpan,bufferPixelBitDepth,buffer):
+        print "Frame buffered"
+    else:
+        print "Error. Frame could not be buffered"
+
+def camera_frame_buffer_save_as_bmp(int cameraIndex, str filename):
+    """Save camera's frame buffer as a BMP image file"""
+    assert type(filename) is str, "Argument should be filename, i.e. a string literal"
+    if TT_CameraFrameBufferSaveAsBMP(cameraIndex, filename):
+        print "Saved buffer as image file"
+    else:
+        print "Error. Could not save buffer"
+
 def flush_camera_queues():
     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
     and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues()
@@ -335,9 +356,9 @@ def set_camera_frame_rate(int cameraIndex, int frameRate):
         print "Error. Not set"
 
 
-#Get camera settings for a given camera index. A negative return value indicates the value was not
-#available. This usually means that either the camera index is not valid or devices have not been
-#initialized with TT_Initialize()
+#Get Camera Settings For A Given Camera Index. A Negative Return Value Indicates The Value Was Not
+#Available. This Usually Means That Either The Camera Index Is Not Valid Or Devices Have Not Been
+#Initialized With TT_Initialize()
 def camera_frame_rate(int cameraIndex):
     """frames/sec"""
     return TT_CameraFrameRate(cameraIndex)
@@ -358,7 +379,7 @@ def camera_ring_light_temperature(int cameraIndex):
     return  TT_CameraRinglightTemperature(cameraIndex)
 
 
-#Camera's Full Frame Grayscale Decimation
+#CAMERA'S FULL GRAYSCALE DECIMATION
 def camera_grayscale_decimation(int cameraIndex):
     return  TT_CameraGrayscaleDecimation(cameraIndex)
 
@@ -369,7 +390,7 @@ def set_camera_grayscale_decimation(int cameraIndex, int value):
         print "Error. Not set"
 
 
-#Toggle Camera Extended Options
+#TOGGLE CAMERA EXTENDED OPTIONS
 def set_camera_filter_switch(int cameraIndex, bool enableIRFilter):
     if TT_SetCameraFilterSwitch(cameraIndex,enableIRFilter):
         print "Set"
@@ -401,7 +422,7 @@ def set_camera_mjpeg_high_quality(int cameraIndex, int mjpegQuality):
         print "Error. Possibly the camera does not have HighQuality for MJPEG"
 
 
-#Camera Imager Gain
+#CAMERA IMAGER GAIN
 def camera_imager_gain(int cameraIndex):
     return  TT_CameraImagerGain(cameraIndex)
 
@@ -413,7 +434,7 @@ def set_camera_imager_gain(int cameraIndex, int value):
     print "Set"
 
 
-#Camera Illumination
+#CAMERA ILLUMINATION
 def is_continuous_ir_available(int cameraIndex):
     if TT_IsContinuousIRAvailable(cameraIndex):
         print "Yes"
@@ -435,7 +456,7 @@ def set_continous_ir(int cameraIndex, bool enable):
 ##    print "Set"
 
 
-#Camera Masking
+#CAMERA MASKING
 def camera_mask(int cameraIndex, buffername, int bufferSize):
     assert type (buffername) is str, "Argument should be buffername, i.e. a string literal"
     cdef unsigned char * buffer=buffername
@@ -463,4 +484,77 @@ def camera_mask_info(int cameraIndex, int blockingMaskWidth, int blockingMaskHei
         print "Camera %i blocking masks width:%f, height:%f, grid:%f" % (cameraIndex, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid)
     else:
         print "Error. Possibly no mask for this camera"
+
+#CAMERA ID
+def camera_id(int cameraIndex):
+    return TT_CameraID(cameraIndex)
+
+#CAMERA DISTORTION
+def camera_undistort_2d_point(int cameraIndex, float x, float y):
+    """The 2D centroids the camera reports are distorted by the lens.  To remove the distortion call
+    CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
+    to a distorted point call CameraDistort2DPoint."""
+    TT_CameraUndistort2DPoint(cameraIndex, x, y)
+    print "Undistorted"
+
+def camera_distort_2d_point(int cameraIndex, float x, float y):
+    """The 2D centroids the camera reports are distorted by the lens.  To remove the distortion call
+    CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
+    to a distorted point call CameraDistort2DPoint."""
+    TT_CameraDistort2DPoint(cameraIndex, x, y)
+    print "Distort"
+
+def camera_ray(int cameraIndex, float x, float y,
+               float rayStartX, float rayStartY, float rayStartZ,
+               float rayEndX,   float rayEndY,   float rayEndZ):
+    """Takes an undistorted 2D centroid and return a camera ray in the world coordinate system."""
+    if TT_CameraRay(cameraIndex, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
+        print "Ray Xstart=%f, Xend=%f, Ystart=%f, Yend=%f, Zstart=%f, Zend=%f" % (rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ)
+    else:
+        print "Error"
+
+def camera_model(int cameraIndex, float x, float y, float z,                   #Camera Position
+                                  orientation,                                 #Orientation (3x3 matrix)
+                                  float principleX, float principleY,          #Lens center (in pixels)
+                                  float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
+                                  float kc1, float kc2, float kc3,             #Barrel distortion coefficients
+                                  float tangential0, float tangential1):       #Tangential distortion
+    """Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
+    with parameters compatible with the OpenCV intrinsic model. """
+    cdef float orientationp[9]
+    for i in range(0,9):
+        orientationp[i]=orientation[i]
+    if TT_CameraModel(cameraIndex, x, y, z,orientationp,principleX, principleY,
+                     focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
+       print "Set"
+    else:
+       print "Error. Could not set parameters"
+
+#ADDITIONAL FUNCTIONALITY
+def camera_backproject(int cameraIndex, float x, float y, float z, float cameraX, float cameraY):
+    """Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera,
+       it will return where the point would land on the imager of that camera in to 2D space.
+       This basically locates where in the camera's FOV a 3D point would be located.
+    """
+    TT_CameraBackproject(cameraIndex, x, y, z, cameraX, cameraY)
+    print "Point in camera 2D space: x=%f, y=%f" % (cameraX, cameraY)
+
+def set_frame_id_based_timing(bool enable):
+    if TT_SetFrameIDBasedTiming(enable):
+        print "Set"
+    else:
+        print "Not set"
+
+def set_suppress_out_of_order(bool enable):
+    if TT_SetSuppressOutOfOrder(enable):
+        print "Set"
+    else:
+        print "Not set"
+
+def orient_tracking_bar(float positionX, float positionY, float positionZ,
+                        float orientationX, float orientationY, float orientationZ, float orientationW):
+    return TT_OrientTrackingBar(positionX, positionY, positionZ,
+                                orientationX, orientationY, orientationZ, orientationW)
+
+
 
