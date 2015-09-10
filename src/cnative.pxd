@@ -109,7 +109,8 @@ cdef extern from "NPTrackingTools.h":
     bool   TT_CameraPixelResolution(int cameraIndex, int &width, int &height)
     bool   TT_SetCameraSettings(int cameraIndex, int videoType, int exposure,       #VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode. Exposure: Valid values are:  1-480. Threshold: Valid values are: 0-255. Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)
                                 int threshold, int intensity)
-    bool   TT_SetCameraFrameRate(int cameraIndex, int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()   int    TT_CameraVideoType(int cameraIndex)
+    bool   TT_SetCameraFrameRate(int cameraIndex, int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()
+    int    TT_CameraVideoType(int cameraIndex)
     int    TT_CameraFrameRate(int cameraIndex)                                      #frames/sec
     int    TT_CameraExposure(int cameraIndex)
     int    TT_CameraThreshold(int cameraIndex)
@@ -164,24 +165,3 @@ cdef extern from "NPTrackingTools.h":
     ##void     TT_DetachRigidBodySolutionTest(int index, cRigidBodySolutionTest* test)
     ##void     TT_AttachListener(cTTAPIListener* listener)
     ##void     TT_DetachListener(cTTAPIListener* listener)
-
-
-##The decoding explanation below can be added to the actual python functions in native.pyx
-#RESULT PROCESSING     ========================================================================================-----
-#TTAPI   const char *TT_GetResultString(NPRESULT result) #Return Plain Text Message
-#define NPRESULT_SUCCESS                0             //== Successful Result ================================-------
-#define NPRESULT_FILENOTFOUND           1             //== File Not Found ===================================-------
-#define NPRESULT_LOADFAILED             2             //== Load Failed ======================================-------
-#define NPRESULT_FAILED                 3             //== Failed ===========================================-------
-#define NPRESULT_INVALIDFILE            8             //== Invalid File =====================================-------
-#define NPRESULT_INVALIDCALFILE         9             //== Invalid Calibration File =========================-------
-#define NPRESULT_UNABLETOINITIALIZE     10            //== Unable To Initialize =============================-------
-#define NPRESULT_INVALIDLICENSE         11            //== Invalid License ==================================-------
-#define NPRESULT_NOFRAMEAVAILABLE       14            //== No Frames Available ==============================-------
-
-#CAMERA VIDEO TYPE DEFINITIONS     ==========================================================================-------
-#define NPVIDEOTYPE_SEGMENT   0
-#define NPVIDEOTYPE_GRAYSCALE 1
-#define NPVIDEOTYPE_OBJECT    2
-#define NPVIDEOTYPE_PRECISION 4
-#define NPVIDEOTYPE_MJPEG     6
