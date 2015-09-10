@@ -322,17 +322,176 @@ def camera_count():
     """Returns Camera Count"""
     return TT_CameraCount()
 
-def camera_x_location(int cameraIndex):
-    """Returns Camera's X Coord"""
-    return TT_CameraXLocation(cameraIndex)
 
-def camera_y_location(int cameraIndex):
-    """Returns Camera's Y Coord"""
-    return TT_CameraYLocation(cameraIndex)
+class Camera(object):
+    def __init__(self,cameraIndex):
+        self.index=cameraIndex
 
-def camera_z_location(int cameraIndex):
-    """Returns Camera's Z Coord"""
-    return TT_CameraZLocation(cameraIndex)
+    @property
+    @check_cam_setting
+    def frame_rate(self):
+        """frames/sec (int)"""
+        return TT_CameraFrameRate(self.index)
+
+    @frame_rate.setter
+    def frame_rate(self, value):
+        if not TT_SetCameraFrameRate(self.index, value):
+            raise Exception("Could Not Set Frame Rate. Check Camera Index And Initialize With TT_Initialize()")
+
+    @property
+    @check_cam_setting
+    def grayscale_decimation(int cameraIndex):
+        return  TT_CameraGrayscaleDecimation(cameraIndex)
+
+    @grayscale_decimation.setter
+    def grayscale_decimation(self, value):
+        if not TT_SetCameraGrayscaleDecimation(self.index, value):
+            raise Exception("Could Not Set Decimation")
+
+    @property
+    @check_cam_setting
+    def imager_gain(self):
+        return  TT_CameraImagerGain(self.index)
+
+    @imager_gain.setter
+    def imager_gain(self, value):
+        levels=TT_CameraImagerGainLevels(self.value)
+        assert value<=levels, "Maximum Gain Level is {0}".format(levels)
+        TT_SetCameraImagerGain(self.index, value)
+
+    @property
+    def continuous_ir(self):
+        assert TT_IsContinuousIRAvailable(self.index), "Camera {0} Does Not Support Continuous IR".format(self.index)
+        return TT_ContinuousIR(self.index)
+
+    @continuous_ir.setter
+    def continuous_ir(self, bool value):
+        TT_SetContinuousIR(self.index, value)
+
+##def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
+##    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
+##    print "Set"
+
+#Properties Without Simple Setter (If Not Here Maybe In Camera Class)
+    @property
+    def name(self):
+        """Camera Name (str)"""
+        return TT_CameraName(self.index)
+
+    @property
+    @check_cam_setting
+    def id(self):
+        return TT_CameraID(self.index)
+
+    @property
+    def x_location(self):
+        """Returns Camera's X Coord"""
+        return TT_CameraXLocation(self.index)
+
+    @property
+    def y_location(self):
+        """Returns Camera's Y Coord"""
+        return TT_CameraYLocation(self.index)
+
+    @property
+    def z_location(self):
+        """Returns Camera's Z Coord"""
+        return TT_CameraZLocation(self.index)
+
+    def camera_model(self, int cameraIndex, float x, float y, float z,  #Camera Position
+                           orientation,                                 #Orientation (3x3 matrix)
+                           float principleX, float principleY,          #Lens center (in pixels)
+                           float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
+                           float kc1, float kc2, float kc3,             #Barrel distortion coefficients
+                           float tangential0, float tangential1):       #Tangential distortion
+        """Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
+        with parameters compatible with the OpenCV intrinsic model. """
+        cdef float orientationp[9]
+        for i in range(0,9):
+          orientationp[i]=orientation[i]
+        if not TT_CameraModel(cameraIndex, x, y, z,orientationp,principleX, principleY,
+                              focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
+            raise Exception("Could Not Set Parameters")
+
+    @property
+    @check_cam_setting
+    def video_type(self):
+        return TT_CameraVideoType(self.index)
+
+    @property
+    @check_cam_setting
+    def exposure(self):
+        return TT_CameraExposure(self.index)
+
+    @property
+    @check_cam_setting
+    def threshold(self):
+        return TT_CameraThreshold(self.index)
+
+    @property
+    @check_cam_setting
+    def intensity(self):
+        return TT_CameraIntensity(self.index)
+
+    def set_camera_settings(self, int videotype, int exposure, int threshold, int intensity):
+        """Set camera settings.  This function allows you to set the camera's video mode, exposure, threshold,
+        and illumination settings.
+        VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode.
+        Exposure: Valid values are:  1-480.
+        Threshold: Valid values are: 0-255.
+        Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)"""
+        return TT_SetCameraSettings(self.index, videotype, exposure, threshold, intensity)
+
+    @property
+    @check_cam_setting
+    def camera_imager_gain_levels(self):
+        return  TT_CameraImagerGainLevels(self.index)
+
+    @property
+    def is_continuous_ir_available(self):
+        return TT_IsContinuousIRAvailable(self.index)
+
+    @property
+    @check_cam_setting
+    def camera_temperature(self):
+        return TT_CameraTemperature(self.index)
+
+    @property
+    @check_cam_setting
+    def camera_ring_light_temperature(self):
+        return  TT_CameraRinglightTemperature(self.index)
+
+
+
+    @property
+    def camera_marker_count(self):
+        """Camera's 2D Marker Count"""
+        return TT_CameraMarkerCount(self.index)
+
+
+#Functions To Set Camera Property Value, But W\O Possibility To Get Value
+
+    def set_camera_filter_switch(self, bool enableIRFilter):
+        if not TT_SetCameraFilterSwitch(self.index, enableIRFilter):
+            raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
+
+    def set_camera_agc(self, bool enableAutomaticGainControl):
+        if not TT_SetCameraAGC(self.index, enableAutomaticGainControl):
+            raise Exception("Could Not Enable AGC. Possibly Camera Has No AGC")
+
+    def set_camera_aec(self, bool enableAutomaticExposureControl):
+        if not TT_SetCameraAEC(self.index, enableAutomaticExposureControl):
+            raise Exception("Could Not Enable AEC. Possibly Camera Has No AEC")
+
+    def set_camera_high_power(self, bool enableHighPowerMode):
+        if not TT_SetCameraHighPower(self.index, enableHighPowerMode):
+            raise Exception("Could Not Enable HighPowerMode. Possibly Camera Has No HighPowerMode")
+
+    def set_camera_mjpeg_high_quality(self, int mjpegQuality):
+        if not TT_SetCameraMJPEGHighQuality(self.index, mjpegQuality):
+            raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")
+
+
 
 def camera_orientation_matrix(int camera, int index):
     """Orientation
@@ -340,13 +499,7 @@ def camera_orientation_matrix(int camera, int index):
          a float (the return value) can be matrix..."""
     return TT_CameraOrientationMatrix(camera, index)
 
-def camera_name(int cameraIndex):
-    """Returns Camera Name"""
-    print TT_CameraName(cameraIndex)
 
-def camera_marker_count(int cameraIndex):
-    """Camera's 2D Marker Count"""
-    return TT_CameraMarkerCount(cameraIndex)
 
 def camera_marker(int cameraIndex, int markerIndex, float x, float y):
     """CameraMarker fetches the 2D centroid location of the marker as seen by the camera"""
@@ -360,113 +513,6 @@ def camera_pixel_resolution(int cameraIndex, int width, int height):
         print "Pixel resolution for camera {0} is width={1}, height={2}".format(cameraIndex, width, height)
     else:
         raise Exception
-
-def set_camera_settings(int camindex, int videotype, int exposure, int threshold, int intensity):
-    """Set camera settings.  This function allows you to set the camera's video mode, exposure, threshold,
-    and illumination settings.
-    VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode.
-    Exposure: Valid values are:  1-480.
-    Threshold: Valid values are: 0-255.
-    Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)"""
-    return TT_SetCameraSettings(camindex, videotype, exposure, threshold, intensity)
-
-def set_camera_frame_rate(int cameraIndex, int frameRate):
-    """Set the frame rate for the given zero based camera index.
-    Returns true if the operation was successful and false otherwise.
-    If the operation fails, check that the camera index is valid and
-    that devices have been initialized with TT_Initialize()"""
-    if not TT_SetCameraFrameRate(cameraIndex, frameRate):
-        raise Exception("Could Not Set Frame Rate. Check Camera Index And Initialize With TT_Initialize()")
-
-@check_cam_setting
-def camera_frame_rate(int cameraIndex):
-    """frames/sec"""
-    return TT_CameraFrameRate(cameraIndex)
-
-@check_cam_setting
-def  camera_video_type(int cameraIndex):
-    return TT_CameraVideoType(cameraIndex)
-
-@check_cam_setting
-def camera_exposure(int cameraIndex):
-    return TT_CameraExposure(cameraIndex)
-
-@check_cam_setting
-def camera_threshold(int cameraIndex):
-    return TT_CameraThreshold(cameraIndex)
-
-@check_cam_setting
-def camera_intensity(int cameraIndex):
-    return TT_CameraIntensity(cameraIndex)
-
-@check_cam_setting
-def camera_temperature(int cameraIndex):
-    return TT_CameraTemperature(cameraIndex)
-
-@check_cam_setting
-def camera_ring_light_temperature(int cameraIndex):
-    return  TT_CameraRinglightTemperature(cameraIndex)
-
-
-#CAMERA'S FULL GRAYSCALE DECIMATION
-@check_cam_setting
-def camera_grayscale_decimation(int cameraIndex):
-    return  TT_CameraGrayscaleDecimation(cameraIndex)
-
-def set_camera_grayscale_decimation(int cameraIndex, int value):
-    if not TT_SetCameraGrayscaleDecimation(cameraIndex, value):
-        raise Exception("Could Not Set Decimation")
-
-
-#TOGGLE CAMERA EXTENDED OPTIONS
-def set_camera_filter_switch(int cameraIndex, bool enableIRFilter):
-    if not TT_SetCameraFilterSwitch(cameraIndex,enableIRFilter):
-        raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
-
-def set_camera_agc(int cameraIndex, bool enableAutomaticGainControl):
-    if not TT_SetCameraAGC(cameraIndex, enableAutomaticGainControl):
-        raise Exception("Could Not Enable AGC. Possibly Camera Has No AGC")
-
-def set_camera_aec(int cameraIndex, bool enableAutomaticExposureControl):
-    if not TT_SetCameraAEC(cameraIndex, enableAutomaticExposureControl):
-        raise Exception("Could Not Enable AEC. Possibly Camera Has No AEC")
-
-def set_camera_high_power(int cameraIndex, bool enableHighPowerMode):
-    if not TT_SetCameraHighPower(cameraIndex, enableHighPowerMode):
-        raise Exception("Could Not Enable HighPowerMode. Possibly Camera Has No HighPowerMode")
-
-def set_camera_mjpeg_high_quality(int cameraIndex, int mjpegQuality):
-    if not TT_SetCameraMJPEGHighQuality(cameraIndex, mjpegQuality):
-        raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")
-
-
-#CAMERA IMAGER GAIN
-@check_cam_setting
-def camera_imager_gain(int cameraIndex):
-    return  TT_CameraImagerGain(cameraIndex)
-
-@check_cam_setting
-def camera_imager_gain_levels(int cameraIndex):
-    return  TT_CameraImagerGainLevels(cameraIndex)
-
-def set_camera_imager_gain(int cameraIndex, int value):
-    TT_SetCameraImagerGain(cameraIndex, value)
-
-
-#CAMERA ILLUMINATION
-def is_continuous_ir_available(int cameraIndex):
-    return TT_IsContinuousIRAvailable(cameraIndex)
-
-def continuous_ir(int cameraIndex):
-    return TT_ContinuousIR(cameraIndex)
-
-def set_continous_ir(int cameraIndex, bool enable):
-    TT_SetContinuousIR(cameraIndex, enable)
-
-##def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
-##    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
-##    print "Set"
-
 
 #CAMERA MASKING
 def camera_mask(int cameraIndex, buffername, int bufferSize):
@@ -491,10 +537,7 @@ def camera_mask_info(int cameraIndex, int blockingMaskWidth, int blockingMaskHei
     else:
         raise Exception("Possibly Camera {0} Has No Mask".format(cameraIndex))
 
-#CAMERA ID
-@check_cam_setting
-def camera_id(int cameraIndex):
-    return TT_CameraID(cameraIndex)
+
 
 #CAMERA DISTORTION
 def camera_undistort_2d_point(int cameraIndex, float x, float y):
@@ -518,20 +561,7 @@ def camera_ray(int cameraIndex, float x, float y,
     else:
         raise Exception
 
-def camera_model(int cameraIndex, float x, float y, float z,                   #Camera Position
-                                  orientation,                                 #Orientation (3x3 matrix)
-                                  float principleX, float principleY,          #Lens center (in pixels)
-                                  float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
-                                  float kc1, float kc2, float kc3,             #Barrel distortion coefficients
-                                  float tangential0, float tangential1):       #Tangential distortion
-    """Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
-    with parameters compatible with the OpenCV intrinsic model. """
-    cdef float orientationp[9]
-    for i in range(0,9):
-        orientationp[i]=orientation[i]
-    if not TT_CameraModel(cameraIndex, x, y, z,orientationp,principleX, principleY,
-                          focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
-       raise Exception("Could Not Set Parameters")
+
 
 #ADDITIONAL FUNCTIONALITY
 def camera_backproject(int cameraIndex, float x, float y, float z, float cameraX, float cameraY):
