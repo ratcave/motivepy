@@ -324,7 +324,7 @@ def camera_count():
 
 
 class Camera(object):
-    def __init__(self,cameraIndex):
+    def __init__(self, cameraIndex):
         self.index=cameraIndex
 
     @property
@@ -389,7 +389,7 @@ class Camera(object):
         return TT_CameraXLocation(self.index)
 
     @property
-    def y_location(self):
+    def y_location_z(self):
         """Returns Camera's Y Coord"""
         return TT_CameraYLocation(self.index)
 
@@ -398,18 +398,18 @@ class Camera(object):
         """Returns Camera's Z Coord"""
         return TT_CameraZLocation(self.index)
 
-    def camera_model(self, int cameraIndex, float x, float y, float zs,  #Camera Position
-                           orientation,                                 #Orientation (3x3 matrix)
-                           float principleX, float principleY,          #Lens center (in pixels)
-                           float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
-                           float kc1, float kc2, float kc3,             #Barrel distortion coefficients
-                           float tangential0, float tangential1):       #Tangential distortion
+    def model(self, int cameraIndex, float x, float y, float z,  #Camera Position
+                    orientation,                                 #Orientation (3x3 matrix)
+                    float principleX, float principleY,          #Lens center (in pixels)
+                    float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
+                    float kc1, float kc2, float kc3,             #Barrel distortion coefficients
+                    float tangential0, float tangential1):       #Tangential distortion
         """Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
         with parameters compatible with the OpenCV intrinsic model. """
         cdef float orientationp[9]
         for i in range(0,9):
           orientationp[i]=orientation[i]
-        if not TT_CameraModel(cameraIndex, x, y, z,orientationp,principleX, principleY,
+        if not TT_CameraModel(cameraIndex, x, y, z, orientationp, principleX, principleY,
                               focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
             raise Exception("Could Not Set Parameters")
 
@@ -433,7 +433,7 @@ class Camera(object):
     def intensity(self):
         return TT_CameraIntensity(self.index)
 
-    def set_camera_settings(self, int videotype, int exposure, int threshold, int intensity):
+    def set_settings(self, int videotype, int exposure, int threshold, int intensity):
         """Set camera settings.  This function allows you to set the camera's video mode, exposure, threshold,
         and illumination settings.
         VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode.
@@ -444,7 +444,7 @@ class Camera(object):
 
     @property
     @check_cam_setting
-    def camera_imager_gain_levels(self):
+    def imager_gain_levels(self):
         return  TT_CameraImagerGainLevels(self.index)
 
     @property
@@ -453,51 +453,49 @@ class Camera(object):
 
     @property
     @check_cam_setting
-    def camera_temperature(self):
+    def temperature(self):
         return TT_CameraTemperature(self.index)
 
     @property
     @check_cam_setting
-    def camera_ring_light_temperature(self):
+    def ring_light_temperature(self):
         return  TT_CameraRinglightTemperature(self.index)
 
 
 
     @property
-    def camera_marker_count(self):
+    def marker_count(self):
         """Camera's 2D Marker Count"""
         return TT_CameraMarkerCount(self.index)
 
 
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
 
-    def set_camera_filter_switch(self, bool enableIRFilter):
+    def set_filter_switch(self, bool enableIRFilter):
         if not TT_SetCameraFilterSwitch(self.index, enableIRFilter):
             raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
 
-    def set_camera_agc(self, bool enableAutomaticGainControl):
+    def set_agc(self, bool enableAutomaticGainControl):
         if not TT_SetCameraAGC(self.index, enableAutomaticGainControl):
             raise Exception("Could Not Enable AGC. Possibly Camera Has No AGC")
 
-    def set_camera_aec(self, bool enableAutomaticExposureControl):
+    def set_aec(self, bool enableAutomaticExposureControl):
         if not TT_SetCameraAEC(self.index, enableAutomaticExposureControl):
             raise Exception("Could Not Enable AEC. Possibly Camera Has No AEC")
 
-    def set_camera_high_power(self, bool enableHighPowerMode):
+    def set_high_power(self, bool enableHighPowerMode):
         if not TT_SetCameraHighPower(self.index, enableHighPowerMode):
             raise Exception("Could Not Enable HighPowerMode. Possibly Camera Has No HighPowerMode")
 
-    def set_camera_mjpeg_high_quality(self, int mjpegQuality):
+    def set_mjpeg_high_quality(self, int mjpegQuality):
         if not TT_SetCameraMJPEGHighQuality(self.index, mjpegQuality):
             raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")
 
 
 
-def camera_orientation_matrix(int camera, int index):
-    """Orientation
-       ##Not sure what camera and index stand for, and how
-         a float (the return value) can be matrix..."""
-    return TT_CameraOrientationMatrix(camera, index)
+def orientation_matrix(int cameraIndex, int matrixIndex):
+    """Orientation"""
+    return TT_CameraOrientationMatrix(cameraIndex, matrixIndex)
 
 
 
