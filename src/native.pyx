@@ -492,11 +492,9 @@ class Camera(object):
             raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")
 
 
-
 def orientation_matrix(int cameraIndex, int matrixIndex):
     """Orientation"""
     return TT_CameraOrientationMatrix(cameraIndex, matrixIndex)
-
 
 
 def camera_marker(int cameraIndex, int markerIndex, float x, float y):
