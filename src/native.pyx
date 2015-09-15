@@ -389,7 +389,7 @@ class Camera(object):
         return TT_CameraXLocation(self.index)
 
     @property
-    def y_location_z(self):
+    def y_location(self):
         """Returns Camera's Y Coord"""
         return TT_CameraYLocation(self.index)
 
