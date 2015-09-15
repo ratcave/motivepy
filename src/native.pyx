@@ -494,9 +494,8 @@ class Camera(object):
 
 
 def camera_orientation_matrix(int camera, int index):
-    """Orientation
-       ##Not sure what camera and index stand for, and how
-         a float (the return value) can be matrix..."""
+    """Orientation (Not sure what camera and index stand for, and how a float (the return value) can be matrix..."""
+    # TODO: Test out function and find out what it does.
     return TT_CameraOrientationMatrix(camera, index)
 
 
