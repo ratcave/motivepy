@@ -398,7 +398,7 @@ class Camera(object):
         """Returns Camera's Z Coord"""
         return TT_CameraZLocation(self.index)
 
-    def camera_model(self, int cameraIndex, float x, float y, float z,  #Camera Position
+    def camera_model(self, int cameraIndex, float x, float y, float zs,  #Camera Position
                            orientation,                                 #Orientation (3x3 matrix)
                            float principleX, float principleY,          #Lens center (in pixels)
                            float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
