@@ -143,30 +143,6 @@ def frame_time_stamp():
     """Time Stamp of Frame (seconds"""
     return TT_FrameTimeStamp()
 
-def frame_camera_centroid(int markerIndex, int cameraIndex, float x, float y):
-    """Returns true if the camera is contributing to this 3D marker.
-       It also returns the location of the 2D centroid that is reconstructing to this 3D marker"""
-    if TT_FrameCameraCentroid(markerIndex,cameraIndex, x, y):
-        print "Camera {0} sees 2D x-position={1}, y-position={2}".format(cameraIndex, x, y)
-    else:
-        raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
-
-def camera_frame_buffer(int cameraIndex, int bufferPixelWidth, int bufferPixelHeight,
-                        int bufferByteSpan, int bufferPixelBitDepth, buffername):
-    """Fetch the camera's frame buffer.
-    This function fills the provided buffer with an image of what is in the camera view.
-    The resulting image depends on what video mode the camera is in.
-    If the camera is in grayscale mode, for example, a grayscale image is returned from this call."""
-    assert isinstance(buffername,str), "Buffername Needs To Be String"
-    cdef unsigned char * buffer=buffername
-    if not TT_CameraFrameBuffer(cameraIndex,bufferPixelWidth,bufferPixelHeight,bufferByteSpan,bufferPixelBitDepth,buffer):
-        raise BufferError("Camera Frame Could Not Be Buffered")
-
-def camera_frame_buffer_save_as_bmp(int cameraIndex, str filename):
-    """Save camera's frame buffer as a BMP image file"""
-    if not TT_CameraFrameBufferSaveAsBMP(cameraIndex, filename):
-        raise IOError("Camera Frame Buffer Not Successfully Saved To Filename: {0}.".format(filename))
-
 def flush_camera_queues():
     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
     and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues()
@@ -190,118 +166,119 @@ def remove_camera_group(int groupIndex):
     if not TT_RemoveCameraGroup(groupIndex):
         raise Exception("Could Not Remove. Check If Group Empty")
 
-def cameras_group(int cameraIndex):
-    """Returns Camera's camera group index"""
-    return TT_CamerasGroup(cameraIndex)
-
 def set_group_shutter_delay(int groupIndex, int microseconds):
     """Set camera group's shutter delay"""
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
-def set_camera_group(int cameraIndex, int groupIndex):
-    """Move camera to camera group"""
-    TT_SetCameraGroup(cameraIndex, groupIndex)
-
 
 #RIGID BODY CONTROL
-def set_rigid_body_user_data(int rigidIndex, int ID):
-    """Set RigidBodies User Data"""
-    TT_SetRigidBodyUserData(rigidIndex,ID)
-
-def rigid_body_user_data(int rigidIndex):
-    """Get RigidBodies User Data"""
-    print "Rigid body ID: {0}".format(TT_RigidBodyUserData(rigidIndex))
-
-def rigid_body_name(int rigidIndex):
-    """Returns RigidBody Name"""
-    print "{0}".format(TT_RigidBodyName(rigidIndex))
-
-def set_rigid_body_enabled(int rigidIndex, bool enabled):
-    """Set tracking """
-    TT_SetRigidBodyEnabled(rigidIndex, enabled)
-
-def rigid_body_enabled(int rigidIndex):
-    """Get tracking"""
-    return TT_RigidBodyEnabled(rigidIndex)
-
-def is_rigid_body_tracked(int rigidIndex):
-    """Is rigid body currently tracked"""
-    return TT_IsRigidBodyTracked(rigidIndex)
-
-def rigid_body_location(int rigidIndex, float x, float y, float z,
-                        float qx, float qy, float qz, float qw,
-                        float yaw, float pitch, float roll):
-    """##Not sure if this function sets or gets the location.
-    If it returns values different from the ones you entered,
-    the function gets the location as computed by Motive.
-    Otherwise it is for manually setting the location.
-    Update: So far this function only returns nonsense values.
-            Maybe I have to initialize the variables in the function as c variables
-            so that correct addresses are given to the function..."""
-    TT_RigidBodyLocation(rigidIndex,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
-    print "The position of rigid body {0} is x={1}, y={2}, z={3}. \n".format(rigidIndex, x, y, z)
-    print "Orientation in quaternions is qx={0}, qy={1}, qz={2}, qw={3}. \n".format(qx, qy, qz, qw)
-    print "Yaw is {0}, pitch is {1}, roll is {2}.".format(yaw, pitch, roll)
-
 @check_npresult
-def rigid_body_translate_pivot(int rigidIndex, float x, float y, float z):
-    """Rigid Body Pivot-Point Translation: Sets a translation offset for the centroid of the rigid body.
-    Reported values for the location of the rigid body, as well as the 3D visualization, will be shifted
-    by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters. """
-    return   TT_RigidBodyTranslatePivot(rigidIndex, x, y, z)
+def create(str name, int id, int markerCount, markerList):
+     """Create a rigid body based on the marker count and marker list provided.
+     The marker list is expected to contain a list of marker coordinates in the order:
+     x1,y1,z1,x2,y2,z2,...xN,yN,zN."""
+     cdef float markerListp[1000]
+     assert len(markerList)<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
+     for i in range(0,len(markerList)):
+         markerListp[i]=markerList[i]
+     return TT_CreateRigidBody(name, id, markerCount, markerListp)
 
-def rigid_body_reset_orientation(int rigidIndex):
-    """Reset orientation to match the current tracked orientation
-    of the rigid body"""
-    TT_RigidBodyResetOrientation(rigidIndex)
 
-def clear_rigid_body_list():
-    """Clear all rigid bodies"""
-    TT_ClearRigidBodyList()
+class RigidBody(object):
+    def __init__(self, rigidIndex):
+        self.index=rigidIndex
 
-@check_npresult
-def remove_rigid_body(int rigidIndex):
-    """Remove single rigid body"""
-    return TT_RemoveRigidBody(rigidIndex)
+    @property
+    def user_data(self):
+        """Get RigidBodies User Data"""
+        print "Rigid body ID: {0}".format(TT_RigidBodyUserData(self.index))
 
-def rigid_body_marker_count(rigidIndex):
-    """Get marker count"""
-    return TT_RigidBodyMarkerCount(rigidIndex)
+    @user_data.setter
+    def user_data(self,value):
+        """ (int index) """
+        return TT_SetRigidBodyUserData(self.index,value)
 
-def rigid_body_marker(int rigidIndex, int markerIndex, float x, float y, float z):
-    """Get rigid body marker.
-    ##Not sure if this function sets or gets the location.
-    If it returns values different from the ones you entered,
-    the function gets the location as computed by Motive.
-    Otherwise it is for manually setting the location.
-    Update: If the function only returns gibberish, see rigid body location."""
-    TT_RigidBodyMarker(rigidIndex, markerIndex, &x, &y, &z)
-    print "The position of rigid body's {0} marker {1}, is x={2}, y={3}, z={4}. \n".format(rigidIndex, markerIndex, x, y, z)
+    @property
+    def tracking_enabled(self):
+        """Get tracking (bool)"""
+        return TT_RigidBodyEnabled(self.index)
 
-def rigid_body_point_cloud_marker(int rigidIndex, int markerIndex, bool tracked, float x, float y, float z):
-    """ Get corresponding point cloud marker
-    If tracked is false, there is no corresponding point cloud marker.
-    """
-    TT_RigidBodyPointCloudMarker(rigidIndex, markerIndex, tracked, x, y, z)
-    if tracked:
-        print "The point cloud markers position is x={0}, y={1}, z={2}".format(x,y,z)
-    else:
-        raise Exception("No Corresponding Point Cloud Marker")
+    @tracking_enabled.setter
+    def tracking_enabled(self, value):
+        TT_SetRigidBodyEnabled(self.index, value)
 
-@check_npresult
-def create_rigid_body(str name, int id, int markerCount, markerList):
-    """Create a rigid body based on the marker count and marker list provided.
-    The marker list is expected to contain a list of marker coordinates in the order:
-    x1,y1,z1,x2,y2,z2,...xN,yN,zN."""
-    cdef float markerListp[1000]
-    assert len(markerList)<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
-    for i in range(0,len(markerList)):
-        markerListp[i]=markerList[i]
-    return TT_CreateRigidBody(name, id, markerCount, markerListp)
+#Properties Without Simple Setter (If Not Here Maybe In Camera Class)
+    @property
+    def name(self):
+        """Returns RigidBody Name"""
+        print "{0}".format(TT_RigidBodyName(self.index))
 
-def software_build():
-    """Software Release Build"""
-    return TT_BuildNumber()
+    @property
+    def is_tracked(self):
+        """Is rigid body currently tracked"""
+        return TT_IsRigidBodyTracked(self.index)
+
+    @property
+    def marker_count(self):
+        """Get marker count"""
+        return TT_RigidBodyMarkerCount(self.index)
+
+    def point_cloud_marker(self, int markerIndex, bool tracked, float x, float y, float z):
+        """ Get corresponding point cloud marker
+        If tracked is false, there is no corresponding point cloud marker.
+        """
+        TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
+        if tracked:
+            print "The point cloud markers position is x={0}, y={1}, z={2}".format(x,y,z)
+        else:
+            raise Exception("No Corresponding Point Cloud Marker")
+
+    def location(self, float x, float y, float z,
+                       float qx, float qy, float qz, float qw,
+                       float yaw, float pitch, float roll):
+        """##Not sure if this function sets or gets the location.
+        If it returns values different from the ones you entered,
+        the function gets the location as computed by Motive.
+        Otherwise it is for manually setting the location.
+        Update: So far this function only returns nonsense values.
+                Maybe I have to initialize the variables in the function as c variables
+                so that correct addresses are given to the function..."""
+        TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
+        print "The position of rigid body {0} is x={1}, y={2}, z={3}. \n".format(self.index, x, y, z)
+        print "Orientation in quaternions is qx={0}, qy={1}, qz={2}, qw={3}. \n".format(qx, qy, qz, qw)
+        print "Yaw is {0}, pitch is {1}, roll is {2}.".format(yaw, pitch, roll)
+
+    def marker(self, int markerIndex, float x, float y, float z):
+        """Get rigid body marker.
+        ##Not sure if this function sets or gets the location.
+        If it returns values different from the ones you entered,
+        the function gets the location as computed by Motive.
+        Otherwise it is for manually setting the location.
+        Update: If the function only returns gibberish, see rigid body location."""
+        TT_RigidBodyMarker(self.index, markerIndex, &x, &y, &z)
+        print "The position of rigid body's {0} marker {1}, is x={2}, y={3}, z={4}. \n".format(self.index, markerIndex, x, y, z)
+
+    @check_npresult
+    def translate_pivot(self, float x, float y, float z):
+        """Rigid Body Pivot-Point Translation: Sets a translation offset for the centroid of the rigid body.
+        Reported values for the location of the rigid body, as well as the 3D visualization, will be shifted
+        by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters. """
+        return   TT_RigidBodyTranslatePivot(self.index, x, y, z)
+
+    def reset_orientation(self):
+        """Reset orientation to match the current tracked orientation
+        of the rigid body"""
+        TT_RigidBodyResetOrientation(self.index)
+
+#Functions To Set Rigid Body Property Value, But W\O Possibility To Get Value
+    def clear_list(self):
+        """Clear all rigid bodies"""
+        TT_ClearRigidBodyList()
+
+    @check_npresult
+    def remove(self):
+        """Remove single rigid body"""
+        return TT_RemoveRigidBody(self.index)
 
 
 #MARKER SIZE SETTINGS
@@ -328,6 +305,15 @@ class Camera(object):
         self.index=cameraIndex
 
     @property
+    def group(self):
+        """Camera's camera group index (int)"""
+        return TT_CamerasGroup(self.index)
+
+    @group.setter
+    def group(self,value):
+        return TT_SetCameraGroup(self.index, value)
+
+    @property
     @check_cam_setting
     def frame_rate(self):
         """frames/sec (int)"""
@@ -340,8 +326,9 @@ class Camera(object):
 
     @property
     @check_cam_setting
-    def grayscale_decimation(int cameraIndex):
-        return  TT_CameraGrayscaleDecimation(cameraIndex)
+    def grayscale_decimation(self):
+        """ (int) """
+        return  TT_CameraGrayscaleDecimation(self.index)
 
     @grayscale_decimation.setter
     def grayscale_decimation(self, value):
@@ -351,6 +338,8 @@ class Camera(object):
     @property
     @check_cam_setting
     def imager_gain(self):
+        """ (int)
+        """
         return  TT_CameraImagerGain(self.index)
 
     @imager_gain.setter
@@ -361,6 +350,8 @@ class Camera(object):
 
     @property
     def continuous_ir(self):
+        """ (int)
+        """
         assert TT_IsContinuousIRAvailable(self.index), "Camera {0} Does Not Support Continuous IR".format(self.index)
         return TT_ContinuousIR(self.index)
 
@@ -375,7 +366,7 @@ class Camera(object):
 #Properties Without Simple Setter (If Not Here Maybe In Camera Class)
     @property
     def name(self):
-        """Camera Name (str)"""
+        """Camera Name"""
         return TT_CameraName(self.index)
 
     @property
@@ -398,18 +389,24 @@ class Camera(object):
         """Returns Camera's Z Coord"""
         return TT_CameraZLocation(self.index)
 
-    def model(self, int cameraIndex, float x, float y, float z,  #Camera Position
-                    orientation,                                 #Orientation (3x3 matrix)
-                    float principleX, float principleY,          #Lens center (in pixels)
-                    float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
-                    float kc1, float kc2, float kc3,             #Barrel distortion coefficients
-                    float tangential0, float tangential1):       #Tangential distortion
+    def orientation_matrix(self, int matrixIndex):
+        """Orientation
+        ## according to TT_CameraModel() the orientation matrix
+        is a 3x3 matrix."""
+        return TT_CameraOrientationMatrix(self.index, matrixIndex)
+
+    def model(self, float x, float y, float z,  #Camera Position
+              orientation,                                 #Orientation (3x3 matrix)
+              float principleX, float principleY,          #Lens center (in pixels)
+              float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
+              float kc1, float kc2, float kc3,             #Barrel distortion coefficients
+              float tangential0, float tangential1):       #Tangential distortion
         """Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
         with parameters compatible with the OpenCV intrinsic model. """
         cdef float orientationp[9]
         for i in range(0,9):
           orientationp[i]=orientation[i]
-        if not TT_CameraModel(cameraIndex, x, y, z, orientationp, principleX, principleY,
+        if not TT_CameraModel(self.index, x, y, z, orientationp, principleX, principleY,
                               focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
             raise Exception("Could Not Set Parameters")
 
@@ -461,16 +458,101 @@ class Camera(object):
     def ring_light_temperature(self):
         return  TT_CameraRinglightTemperature(self.index)
 
-
-
     @property
     def marker_count(self):
         """Camera's 2D Marker Count"""
         return TT_CameraMarkerCount(self.index)
 
+    #CAMERA MASKING
+    def mask(self, buffername, int bufferSize):
+        assert isinstance(buffername,str), "Buffername Needs To Be String"
+        cdef unsigned char * buffer=buffername
+        return TT_CameraMask(self.index, buffer, bufferSize)
+
+    def set_mask(self, buffername, int bufferSize):
+        assert isinstance(buffername,str), "Buffername Needs To Be String"
+        cdef unsigned char * buffer=buffername
+        if not TT_SetCameraMask(self.index, buffer, bufferSize):
+            raise Exception("Could Not Set Mask")
+
+    def mask_info(self, int blockingMaskWidth, int blockingMaskHeight, int blockingMaskGrid):
+        if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
+            print "Camera {0} blocking masks width:{1}, height:{2}, grid:{3}".format(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid)
+        else:
+            raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
+
+    def clear_mask(self):
+        if not TT_ClearCameraMask(self.index):
+            raise Exception("Could Not Clear Mask")
+
+    #CAMERA DISTORTION
+    def camera_undistort_2d_point(self, float x, float y):
+        """The 2D centroids the camera reports are distorted by the lens.  To remove the distortion, call
+        CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
+        to a distorted point call CameraDistort2DPoint."""
+        TT_CameraUndistort2DPoint(self.index, x, y)
+
+    def camera_distort_2d_point(self, float x, float y):
+        """The 2D centroids the camera reports are distorted by the lens.  To remove the distortion, call
+        CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
+        to a distorted point call CameraDistort2DPoint."""
+        TT_CameraDistort2DPoint(self.index, x, y)
+
+    def marker(self, int markerIndex, float x, float y):
+        """CameraMarker fetches the 2D centroid location of the marker as seen by the camera"""
+        if TT_CameraMarker(self.index, markerIndex, x, y):
+            print "The 2D location of marker {0} is x={1}, y={2}".format(markerIndex, x, y)
+        else:
+            raise Exception("Could Not Fetch Location. Possibly Marker {0} Is Not Seen By Camera".format(markerIndex))
+
+    def pixel_resolution(self, int width, int height):
+        if TT_CameraPixelResolution(self.index, width, height):
+            print "Pixel resolution for camera {0} is width={1}, height={2}".format(self.index, width, height)
+        else:
+            raise Exception
+
+    def backproject(self, float x, float y, float z, float cameraX, float cameraY):
+        """Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera,
+        it will return where the point would land on the imager of that camera in to 2D space.
+        This basically locates where in the camera's FOV a 3D point would be located.
+        """
+        TT_CameraBackproject(self.index, x, y, z, cameraX, cameraY)
+        print "Point in camera 2D space: x={0}, y={1}".format(cameraX, cameraY)
+
+    def ray(self, float x, float y,
+            float rayStartX, float rayStartY, float rayStartZ,
+            float rayEndX,   float rayEndY,   float rayEndZ):
+        """Takes an undistorted 2D centroid and return a camera ray in the world coordinate system."""
+        if TT_CameraRay(self.index, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
+            print "Ray Xstart={0}, Xend={1}, Ystart={2}, Yend={3}, Zstart={4}, Zend={5}".format(rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ)
+        else:
+            raise Exception
+
+    def frame_centroid(int markerIndex, self, float x, float y):
+        """Returns true if the camera is contributing to this 3D marker.
+        It also returns the location of the 2D centroid that is reconstructing to this 3D marker"""
+        if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
+            print "Camera {0} sees 2D x-position={1}, y-position={2}".format(self.index, x, y)
+        else:
+            raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
+
+    def frame_buffer(self, int bufferPixelWidth, int bufferPixelHeight,
+                     int bufferByteSpan, int bufferPixelBitDepth, buffername):
+        """Fetch the camera's frame buffer.
+        This function fills the provided buffer with an image of what is in the camera view.
+        The resulting image depends on what video mode the camera is in.
+        If the camera is in grayscale mode, for example, a grayscale image is returned from this call."""
+        assert isinstance(buffername,str), "Buffername Needs To Be String"
+        cdef unsigned char * buffer=buffername
+        if not TT_CameraFrameBuffer(self.index, bufferPixelWidth, bufferPixelHeight, bufferByteSpan, bufferPixelBitDepth, buffer):
+            raise BufferError("Camera Frame Could Not Be Buffered")
+
+    def frame_buffer_save_as_bmp(self, str filename):
+        """Save camera's frame buffer as a BMP image file"""
+        if not TT_CameraFrameBufferSaveAsBMP(self.index, filename):
+            raise IOError("Camera Frame Buffer Not Successfully Saved To Filename: {0}.".format(filename))
 
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
-
     def set_filter_switch(self, bool enableIRFilter):
         if not TT_SetCameraFilterSwitch(self.index, enableIRFilter):
             raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
@@ -492,82 +574,8 @@ class Camera(object):
             raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")
 
 
-def orientation_matrix(int cameraIndex, int matrixIndex):
-    """Orientation"""
-    return TT_CameraOrientationMatrix(cameraIndex, matrixIndex)
-
-
-def camera_marker(int cameraIndex, int markerIndex, float x, float y):
-    """CameraMarker fetches the 2D centroid location of the marker as seen by the camera"""
-    if TT_CameraMarker(cameraIndex, markerIndex, x, y):
-        print "The 2D location of marker {0} is x={1}, y={2}".format(markerIndex, x, y)
-    else:
-        raise Exception("Could Not Fetch Location. Possibly Marker {0} Is Not Seen By Camera".format(markerIndex))
-
-def camera_pixel_resolution(int cameraIndex, int width, int height):
-    if TT_CameraPixelResolution(cameraIndex, width, height):
-        print "Pixel resolution for camera {0} is width={1}, height={2}".format(cameraIndex, width, height)
-    else:
-        raise Exception
-
-#CAMERA MASKING
-def camera_mask(int cameraIndex, buffername, int bufferSize):
-    assert isinstance(buffername,str), "Buffername Needs To Be String"
-    cdef unsigned char * buffer=buffername
-    return TT_CameraMask(cameraIndex, buffer, bufferSize)
-
-
-def set_camera_mask(int cameraIndex, buffername, int bufferSize):
-    assert isinstance(buffername,str), "Buffername Needs To Be String"
-    cdef unsigned char * buffer=buffername
-    if not TT_SetCameraMask(cameraIndex, buffer, bufferSize):
-        raise Exception("Could Not Set Mask")
-
-def clear_camera_mask(int cameraIndex):
-    if not TT_ClearCameraMask(cameraIndex):
-        raise Exception("Could Not Clear Mask")
-
-def camera_mask_info(int cameraIndex, int blockingMaskWidth, int blockingMaskHeight, int blockingMaskGrid):
-    if TT_CameraMaskInfo(cameraIndex, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
-        print "Camera {0} blocking masks width:{1}, height:{2}, grid:{3}".format(cameraIndex, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid)
-    else:
-        raise Exception("Possibly Camera {0} Has No Mask".format(cameraIndex))
-
-
-
-#CAMERA DISTORTION
-def camera_undistort_2d_point(int cameraIndex, float x, float y):
-    """The 2D centroids the camera reports are distorted by the lens.  To remove the distortion call
-    CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
-    to a distorted point call CameraDistort2DPoint."""
-    TT_CameraUndistort2DPoint(cameraIndex, x, y)
-
-def camera_distort_2d_point(int cameraIndex, float x, float y):
-    """The 2D centroids the camera reports are distorted by the lens.  To remove the distortion call
-    CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
-    to a distorted point call CameraDistort2DPoint."""
-    TT_CameraDistort2DPoint(cameraIndex, x, y)
-
-def camera_ray(int cameraIndex, float x, float y,
-               float rayStartX, float rayStartY, float rayStartZ,
-               float rayEndX,   float rayEndY,   float rayEndZ):
-    """Takes an undistorted 2D centroid and return a camera ray in the world coordinate system."""
-    if TT_CameraRay(cameraIndex, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
-        print "Ray Xstart={0}, Xend={1}, Ystart={2}, Yend={3}, Zstart={4}, Zend={5}".format(rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ)
-    else:
-        raise Exception
-
-
 
 #ADDITIONAL FUNCTIONALITY
-def camera_backproject(int cameraIndex, float x, float y, float z, float cameraX, float cameraY):
-    """Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera,
-       it will return where the point would land on the imager of that camera in to 2D space.
-       This basically locates where in the camera's FOV a 3D point would be located.
-    """
-    TT_CameraBackproject(cameraIndex, x, y, z, cameraX, cameraY)
-    print "Point in camera 2D space: x={0}, y={1}".format(cameraX, cameraY)
-
 def set_frame_id_based_timing(bool enable):
     return TT_SetFrameIDBasedTiming(enable)
 
@@ -580,5 +588,6 @@ def orient_tracking_bar(float positionX, float positionY, float positionZ,
     return TT_OrientTrackingBar(positionX, positionY, positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
-
-
+def software_build():
+    """Software Release Build"""
+    return TT_BuildNumber()
