@@ -287,7 +287,7 @@ def set_camera_group_reconstruction(int groupIndex, bool enable):
     return TT_SetCameraGroupReconstruction(groupIndex, enable)
 
 @check_npresult
-def set_enabled_filterswitch(bool enabled):
+def set_enabled_filter_switch(bool enabled):
     return TT_SetEnabledFilterSwitch(enabled)
 
 def is_filter_switch_enabled():
@@ -344,8 +344,7 @@ class Camera(object):
 
     @imager_gain.setter
     def imager_gain(self, value):
-        levels=TT_CameraImagerGainLevels(self.value)
-        assert value<=levels, "Maximum Gain Level is {0}".format(levels)
+        assert value<=8, "Maximum Gain Level is 8"
         TT_SetCameraImagerGain(self.index, value)
 
     @property
@@ -439,10 +438,10 @@ class Camera(object):
         Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)"""
         return TT_SetCameraSettings(self.index, videotype, exposure, threshold, intensity)
 
-    @property
-    @check_cam_setting
-    def imager_gain_levels(self):
-        return  TT_CameraImagerGainLevels(self.index)
+    ##@property
+    ##@check_cam_setting
+    ##def imager_gain_levels(self):
+    ##    return  TT_CameraImagerGainLevels(self.index)  ##for some reason function always returns 0
 
     @property
     def is_continuous_ir_available(self):
@@ -486,13 +485,13 @@ class Camera(object):
             raise Exception("Could Not Clear Mask")
 
     #CAMERA DISTORTION
-    def camera_undistort_2d_point(self, float x, float y):
+    def undistort_2d_point(self, float x, float y):
         """The 2D centroids the camera reports are distorted by the lens.  To remove the distortion, call
         CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
         to a distorted point call CameraDistort2DPoint."""
         TT_CameraUndistort2DPoint(self.index, x, y)
 
-    def camera_distort_2d_point(self, float x, float y):
+    def distort_2d_point(self, float x, float y):
         """The 2D centroids the camera reports are distorted by the lens.  To remove the distortion, call
         CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
         to a distorted point call CameraDistort2DPoint."""
@@ -554,6 +553,7 @@ class Camera(object):
 
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
     def set_filter_switch(self, bool enableIRFilter):
+        """True: IRFilter, False: VisibleLight"""
         if not TT_SetCameraFilterSwitch(self.index, enableIRFilter):
             raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
 
