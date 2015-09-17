@@ -173,7 +173,7 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
 
 #RIGID BODY CONTROL
 @check_npresult
-def create(str name, int id, int markerCount, markerList):
+def create_rigid_body(str name, int id, int markerCount, markerList):
      """Create a rigid body based on the marker count and marker list provided.
      The marker list is expected to contain a list of marker coordinates in the order:
      x1,y1,z1,x2,y2,z2,...xN,yN,zN."""
@@ -223,10 +223,14 @@ class RigidBody(object):
         """Get marker count"""
         return TT_RigidBodyMarkerCount(self.index)
 
-    def point_cloud_marker(self, int markerIndex, bool tracked, float x, float y, float z):
+    def point_cloud_marker(self, int markerIndex):
         """ Get corresponding point cloud marker
         If tracked is false, there is no corresponding point cloud marker.
         """
+        cdef bool tracked=True
+        cdef float x=0
+        cdef float y=0
+        cdef float z=0
         TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
         if tracked:
             print "The point cloud markers position is x={0}, y={1}, z={2}".format(x,y,z)
@@ -248,13 +252,13 @@ class RigidBody(object):
         print "Orientation in quaternions is qx={0}, qy={1}, qz={2}, qw={3}. \n".format(qx, qy, qz, qw)
         print "Yaw is {0}, pitch is {1}, roll is {2}.".format(yaw, pitch, roll)
 
-    def marker(self, int markerIndex, float x, float y, float z):
+    def marker(self, int markerIndex):
         """Get rigid body marker.
-        ##Not sure if this function sets or gets the location.
-        If it returns values different from the ones you entered,
-        the function gets the location as computed by Motive.
-        Otherwise it is for manually setting the location.
-        Update: If the function only returns gibberish, see rigid body location."""
+        ##This function gets the location.
+        """
+        cdef float x=0
+        cdef float y=0
+        cdef float z=0
         TT_RigidBodyMarker(self.index, markerIndex, &x, &y, &z)
         print "The position of rigid body's {0} marker {1}, is x={2}, y={3}, z={4}. \n".format(self.index, markerIndex, x, y, z)
 
@@ -474,7 +478,10 @@ class Camera(object):
         if not TT_SetCameraMask(self.index, buffer, bufferSize):
             raise Exception("Could Not Set Mask")
 
-    def mask_info(self, int blockingMaskWidth, int blockingMaskHeight, int blockingMaskGrid):
+    def mask_info(self):
+        cdef int blockingMaskWidth=0
+        cdef int blockingMaskHeight=0
+        cdef int blockingMaskGrid=0
         if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
             print "Camera {0} blocking masks width:{1}, height:{2}, grid:{3}".format(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid)
         else:
@@ -497,39 +504,51 @@ class Camera(object):
         to a distorted point call CameraDistort2DPoint."""
         TT_CameraDistort2DPoint(self.index, x, y)
 
-    def marker(self, int markerIndex, float x, float y):
+    def marker(self, int markerIndex):
         """CameraMarker fetches the 2D centroid location of the marker as seen by the camera"""
+        cdef float x=0
+        cdef float y=0
         if TT_CameraMarker(self.index, markerIndex, x, y):
             print "The 2D location of marker {0} is x={1}, y={2}".format(markerIndex, x, y)
         else:
             raise Exception("Could Not Fetch Location. Possibly Marker {0} Is Not Seen By Camera".format(markerIndex))
 
-    def pixel_resolution(self, int width, int height):
+    def pixel_resolution(self):
+        cdef int width=0
+        cdef int height=0
         if TT_CameraPixelResolution(self.index, width, height):
             print "Pixel resolution for camera {0} is width={1}, height={2}".format(self.index, width, height)
         else:
             raise Exception
 
-    def backproject(self, float x, float y, float z, float cameraX, float cameraY):
+    def backproject(self, float x, float y, float z):
         """Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera,
         it will return where the point would land on the imager of that camera in to 2D space.
         This basically locates where in the camera's FOV a 3D point would be located.
         """
+        cdef float cameraX=0
+        cdef float cameraY=0
         TT_CameraBackproject(self.index, x, y, z, cameraX, cameraY)
         print "Point in camera 2D space: x={0}, y={1}".format(cameraX, cameraY)
 
-    def ray(self, float x, float y,
-            float rayStartX, float rayStartY, float rayStartZ,
-            float rayEndX,   float rayEndY,   float rayEndZ):
+    def ray(self, float x, float y):
         """Takes an undistorted 2D centroid and return a camera ray in the world coordinate system."""
+        cdef float rayStartX=0
+        cdef float rayStartY=0
+        cdef float rayStartZ=0
+        cdef float rayEndX=0
+        cdef float rayEndY=0
+        cdef float rayEndZ=0
         if TT_CameraRay(self.index, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
             print "Ray Xstart={0}, Xend={1}, Ystart={2}, Yend={3}, Zstart={4}, Zend={5}".format(rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ)
         else:
             raise Exception
 
-    def frame_centroid(int markerIndex, self, float x, float y):
+    def frame_centroid(self, int markerIndex):
         """Returns true if the camera is contributing to this 3D marker.
         It also returns the location of the 2D centroid that is reconstructing to this 3D marker"""
+        cdef float x=0
+        cdef float y=0
         if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
             print "Camera {0} sees 2D x-position={1}, y-position={2}".format(self.index, x, y)
         else:
