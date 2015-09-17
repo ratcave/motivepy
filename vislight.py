@@ -6,8 +6,8 @@ import Tkinter, tkFileDialog
 
 root = Tkinter.Tk()
 root.withdraw()
-project_file=tkFileDialog.askopenfilename(title='Choose a project file to load: ', filetypes=[('motive projectfiles', '*.ttp')])
-
+project_file_u=tkFileDialog.askopenfilename(title='Choose a project file to load: ', filetypes=[('motive projectfiles', '*.ttp')])
+project_file = project_file_u.encode("ascii")
 m.initialize()
 m.load_project(project_file)
 
@@ -23,7 +23,7 @@ for i in range(0, m.camera_count()):
         cam.set_filter_switch(False)
 
     else:
-        cam.set_settings(0, m.exposure, m.threshold, m.intensity)
+        cam.set_settings(0, cam.exposure, cam.threshold, cam.intensity)
 
 m.save_project(project_file)
 m.shutdown()
