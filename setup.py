@@ -13,5 +13,6 @@ native = Extension(
 setup(
     name="motive",
     ext_modules=cythonize(native),
-    packages=["motive"]
+    packages=["motive"],
+    scripts=['scripts/vislight.py']
 )
