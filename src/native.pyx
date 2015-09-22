@@ -172,6 +172,8 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
 
 
 #RIGID BODY CONTROL
+rigidBodyCount=0
+
 @check_npresult
 def create_rigid_body(str name, int id, int markerCount, markerList):
      """Create a rigid body based on the marker count and marker list provided.
@@ -181,11 +183,15 @@ def create_rigid_body(str name, int id, int markerCount, markerList):
      assert len(markerList)<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
      for i in range(0,len(markerList)):
          markerListp[i]=markerList[i]
+     if (TT_CreateRigidBody(name, id, markerCount, markerListp)==0):
+         global rigidBodyCount
+         rigidBodyCount=rigidBodyCount+1
      return TT_CreateRigidBody(name, id, markerCount, markerListp)
 
 
 class RigidBody(object):
     def __init__(self, rigidIndex):
+        assert rigidIndex<rigidBodyCount, "There Are Only {0} Rigid Bodies".format(rigidBodyCount)
         self.index=rigidIndex
 
     @property
@@ -278,10 +284,15 @@ class RigidBody(object):
     def clear_list(self):
         """Clear all rigid bodies"""
         TT_ClearRigidBodyList()
+        global rigidBodyCount
+        rigidBodyCount=0
 
     @check_npresult
     def remove(self):
         """Remove single rigid body"""
+        if (TT_RemoveRigidBody(self.index)==0):
+            global rigidBodyCount
+            rigidBodyCount=rigidBodyCount-1
         return TT_RemoveRigidBody(self.index)
 
 
@@ -306,6 +317,7 @@ def camera_count():
 
 class Camera(object):
     def __init__(self, cameraIndex):
+        assert cameraIndex<camera_count(), "There Are Only {0} Cameras".format(camera_count())
         self.index=cameraIndex
 
     @property
