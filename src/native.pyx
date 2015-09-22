@@ -174,6 +174,10 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
 #RIGID BODY CONTROL
 rigidBodyCount=0
 
+def rigidBody_count():
+    """returns number of rigid bodies"""
+    return rigidBodyCount
+
 @check_npresult
 def create_rigid_body(str name, int id, int markerCount, markerList):
      """Create a rigid body based on the marker count and marker list provided.
@@ -187,6 +191,20 @@ def create_rigid_body(str name, int id, int markerCount, markerList):
          global rigidBodyCount
          rigidBodyCount=rigidBodyCount+1
      return TT_CreateRigidBody(name, id, markerCount, markerListp)
+
+@check_npresult
+def remove_rigid_body(int rigidIndex):
+    """Remove single rigid body"""
+    if (TT_RemoveRigidBody(rigidIndex)==0):
+        global rigidBodyCount
+        rigidBodyCount=rigidBodyCount-1
+    return TT_RemoveRigidBody(rigidIndex)
+
+def clear_rigid_body_list():
+        """Clear all rigid bodies"""
+        TT_ClearRigidBodyList()
+        global rigidBodyCount
+        rigidBodyCount=0
 
 
 class RigidBody(object):
@@ -266,7 +284,7 @@ class RigidBody(object):
         cdef float y=0
         cdef float z=0
         TT_RigidBodyMarker(self.index, markerIndex, &x, &y, &z)
-        print "The position of rigid body's {0} marker {1}, is x={2}, y={3}, z={4}. \n".format(self.index, markerIndex, x, y, z)
+        print "The position of rigid body {0} marker {1}, is x={2}, y={3}, z={4}. \n".format(TT_RigidBodyName(self.index), markerIndex, x, y, z)
 
     @check_npresult
     def translate_pivot(self, float x, float y, float z):
@@ -280,20 +298,6 @@ class RigidBody(object):
         of the rigid body"""
         TT_RigidBodyResetOrientation(self.index)
 
-#Functions To Set Rigid Body Property Value, But W\O Possibility To Get Value
-    def clear_list(self):
-        """Clear all rigid bodies"""
-        TT_ClearRigidBodyList()
-        global rigidBodyCount
-        rigidBodyCount=0
-
-    @check_npresult
-    def remove(self):
-        """Remove single rigid body"""
-        if (TT_RemoveRigidBody(self.index)==0):
-            global rigidBodyCount
-            rigidBodyCount=rigidBodyCount-1
-        return TT_RemoveRigidBody(self.index)
 
 
 #MARKER SIZE SETTINGS
