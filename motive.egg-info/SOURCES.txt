@@ -4,5 +4,6 @@ motive.egg-info/PKG-INFO
 motive.egg-info/SOURCES.txt
 motive.egg-info/dependency_links.txt
 motive.egg-info/top_level.txt
+scripts/showmarkers.py
 scripts/vislight.py
 src/native.cpp

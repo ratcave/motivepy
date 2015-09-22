@@ -14,5 +14,5 @@ setup(
     name="motive",
     ext_modules=cythonize(native),
     packages=["motive"],
-    scripts=['scripts/vislight.py']
+    scripts=['scripts/vislight.py', 'scripts/showmarkers.py']
 )
