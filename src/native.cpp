@@ -812,7 +812,7 @@ static PyObject *__pyx_pf_6native_32frame_marker_count(CYTHON_UNUSED PyObject *_
 static PyObject *__pyx_pf_6native_34frame_marker_x(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_markerIndex); /* proto */
 static PyObject *__pyx_pf_6native_36frame_marker_y(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_markerIndex); /* proto */
 static PyObject *__pyx_pf_6native_38frame_marker_z(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_markerIndex); /* proto */
-static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_6native_40frame_markers(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_6native_42frame_time_stamp(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_6native_44flush_camera_queues(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_pf_6native_46camera_group_count(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
@@ -947,6 +947,7 @@ static char __pyx_k_IOError[] = "IOError";
 static char __pyx_k_cameraX[] = "cameraX";
 static char __pyx_k_cameraY[] = "cameraY";
 static char __pyx_k_enabled[] = "enabled";
+static char __pyx_k_markers[] = "markers";
 static char __pyx_k_prepare[] = "__prepare__";
 static char __pyx_k_rayEndX[] = "rayEndX";
 static char __pyx_k_rayEndY[] = "rayEndY";
@@ -1006,7 +1007,6 @@ static char __pyx_k_imager_gain[] = "imager_gain";
 static char __pyx_k_markerCount[] = "markerCount";
 static char __pyx_k_markerIndex[] = "markerIndex";
 static char __pyx_k_markerListp[] = "markerListp";
-static char __pyx_k_marker_list[] = "marker_list";
 static char __pyx_k_matrixIndex[] = "matrixIndex";
 static char __pyx_k_orientation[] = "orientation";
 static char __pyx_k_stream_vrpn[] = "stream_vrpn";
@@ -1035,6 +1035,7 @@ static char __pyx_k_set_settings[] = "set_settings";
 static char __pyx_k_Camera___init[] = "Camera.__init__";
 static char __pyx_k_Camera_marker[] = "Camera.marker";
 static char __pyx_k_continuous_ir[] = "continuous_ir";
+static char __pyx_k_frame_markers[] = "frame_markers";
 static char __pyx_k_stream_trackd[] = "stream_trackd";
 static char __pyx_k_Camera_set_aec[] = "Camera.set_aec";
 static char __pyx_k_Camera_set_agc[] = "Camera.set_agc";
@@ -1084,7 +1085,6 @@ static char __pyx_k_blockingMaskWidth[] = "blockingMaskWidth";
 static char __pyx_k_bufferPixelHeight[] = "bufferPixelHeight";
 static char __pyx_k_check_cam_setting[] = "check_cam_setting";
 static char __pyx_k_create_rigid_body[] = "create_rigid_body";
-static char __pyx_k_frame_marker_list[] = "frame_marker_list";
 static char __pyx_k_load_rigid_bodies[] = "load_rigid_bodies";
 static char __pyx_k_remove_rigid_body[] = "remove_rigid_body";
 static char __pyx_k_reset_orientation[] = "reset_orientation";
@@ -1345,10 +1345,10 @@ static PyObject *__pyx_n_s_frame_buffer;
 static PyObject *__pyx_n_s_frame_buffer_save_as_bmp;
 static PyObject *__pyx_n_s_frame_centroid;
 static PyObject *__pyx_n_s_frame_marker_count;
-static PyObject *__pyx_n_s_frame_marker_list;
 static PyObject *__pyx_n_s_frame_marker_x;
 static PyObject *__pyx_n_s_frame_marker_y;
 static PyObject *__pyx_n_s_frame_marker_z;
+static PyObject *__pyx_n_s_frame_markers;
 static PyObject *__pyx_n_s_frame_rate;
 static PyObject *__pyx_n_s_frame_time_stamp;
 static PyObject *__pyx_n_s_func;
@@ -1383,7 +1383,7 @@ static PyObject *__pyx_n_s_markerIndex;
 static PyObject *__pyx_n_s_markerList;
 static PyObject *__pyx_n_s_markerListp;
 static PyObject *__pyx_n_s_marker_count;
-static PyObject *__pyx_n_s_marker_list;
+static PyObject *__pyx_n_s_markers;
 static PyObject *__pyx_n_s_mask;
 static PyObject *__pyx_n_s_mask_info;
 static PyObject *__pyx_n_s_matrixIndex;
@@ -3714,7 +3714,7 @@ static PyObject *__pyx_pf_6native_38frame_marker_z(CYTHON_UNUSED PyObject *__pyx
  *     """Returns Z Coord of Marker"""
  *     return TT_FrameMarkerZ(markerIndex)             # <<<<<<<<<<<<<<
  * 
- * def frame_marker_list():
+ * def frame_markers():
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = PyFloat_FromDouble(TT_FrameMarkerZ(__pyx_v_markerIndex)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -3745,27 +3745,27 @@ static PyObject *__pyx_pf_6native_38frame_marker_z(CYTHON_UNUSED PyObject *__pyx
 /* "native.pyx":134
  *     return TT_FrameMarkerZ(markerIndex)
  * 
- * def frame_marker_list():             # <<<<<<<<<<<<<<
- *     marker_list=[]
+ * def frame_markers():             # <<<<<<<<<<<<<<
+ *     markers=[]
  *     for i in range(0,frame_marker_count()):
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6native_41frame_marker_list(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_6native_41frame_marker_list = {"frame_marker_list", (PyCFunction)__pyx_pw_6native_41frame_marker_list, METH_NOARGS, 0};
-static PyObject *__pyx_pw_6native_41frame_marker_list(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_6native_41frame_markers(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_6native_41frame_markers = {"frame_markers", (PyCFunction)__pyx_pw_6native_41frame_markers, METH_NOARGS, 0};
+static PyObject *__pyx_pw_6native_41frame_markers(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("frame_marker_list (wrapper)", 0);
-  __pyx_r = __pyx_pf_6native_40frame_marker_list(__pyx_self);
+  __Pyx_RefNannySetupContext("frame_markers (wrapper)", 0);
+  __pyx_r = __pyx_pf_6native_40frame_markers(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__pyx_self) {
-  PyObject *__pyx_v_marker_list = NULL;
+static PyObject *__pyx_pf_6native_40frame_markers(CYTHON_UNUSED PyObject *__pyx_self) {
+  PyObject *__pyx_v_markers = NULL;
   PyObject *__pyx_v_i = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3780,26 +3780,26 @@ static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("frame_marker_list", 0);
+  __Pyx_RefNannySetupContext("frame_markers", 0);
 
   /* "native.pyx":135
  * 
- * def frame_marker_list():
- *     marker_list=[]             # <<<<<<<<<<<<<<
+ * def frame_markers():
+ *     markers=[]             # <<<<<<<<<<<<<<
  *     for i in range(0,frame_marker_count()):
- *         marker_list.append(frame_marker_x(i))
+ *         markers.append(frame_marker_x(i))
  */
   __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_marker_list = ((PyObject*)__pyx_t_1);
+  __pyx_v_markers = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "native.pyx":136
- * def frame_marker_list():
- *     marker_list=[]
+ * def frame_markers():
+ *     markers=[]
  *     for i in range(0,frame_marker_count()):             # <<<<<<<<<<<<<<
- *         marker_list.append(frame_marker_x(i))
- *         marker_list.append(frame_marker_y(i))
+ *         markers.append(frame_marker_x(i))
+ *         markers.append(frame_marker_y(i))
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_frame_marker_count); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
@@ -3876,11 +3876,11 @@ static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__
     __pyx_t_1 = 0;
 
     /* "native.pyx":137
- *     marker_list=[]
+ *     markers=[]
  *     for i in range(0,frame_marker_count()):
- *         marker_list.append(frame_marker_x(i))             # <<<<<<<<<<<<<<
- *         marker_list.append(frame_marker_y(i))
- *         marker_list.append(frame_marker_z(i))
+ *         markers.append(frame_marker_x(i))             # <<<<<<<<<<<<<<
+ *         markers.append(frame_marker_y(i))
+ *         markers.append(frame_marker_z(i))
  */
     __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_frame_marker_x); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
@@ -3909,15 +3909,15 @@ static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_marker_list, __pyx_t_1); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_markers, __pyx_t_1); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
     /* "native.pyx":138
  *     for i in range(0,frame_marker_count()):
- *         marker_list.append(frame_marker_x(i))
- *         marker_list.append(frame_marker_y(i))             # <<<<<<<<<<<<<<
- *         marker_list.append(frame_marker_z(i))
- *     return marker_list
+ *         markers.append(frame_marker_x(i))
+ *         markers.append(frame_marker_y(i))             # <<<<<<<<<<<<<<
+ *         markers.append(frame_marker_z(i))
+ *     return markers
  */
     __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_frame_marker_y); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
@@ -3946,14 +3946,14 @@ static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_marker_list, __pyx_t_1); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_markers, __pyx_t_1); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
     /* "native.pyx":139
- *         marker_list.append(frame_marker_x(i))
- *         marker_list.append(frame_marker_y(i))
- *         marker_list.append(frame_marker_z(i))             # <<<<<<<<<<<<<<
- *     return marker_list
+ *         markers.append(frame_marker_x(i))
+ *         markers.append(frame_marker_y(i))
+ *         markers.append(frame_marker_z(i))             # <<<<<<<<<<<<<<
+ *     return markers
  * 
  */
     __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_frame_marker_z); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -3983,36 +3983,36 @@ static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_marker_list, __pyx_t_1); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_markers, __pyx_t_1); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
     /* "native.pyx":136
- * def frame_marker_list():
- *     marker_list=[]
+ * def frame_markers():
+ *     markers=[]
  *     for i in range(0,frame_marker_count()):             # <<<<<<<<<<<<<<
- *         marker_list.append(frame_marker_x(i))
- *         marker_list.append(frame_marker_y(i))
+ *         markers.append(frame_marker_x(i))
+ *         markers.append(frame_marker_y(i))
  */
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "native.pyx":140
- *         marker_list.append(frame_marker_y(i))
- *         marker_list.append(frame_marker_z(i))
- *     return marker_list             # <<<<<<<<<<<<<<
+ *         markers.append(frame_marker_y(i))
+ *         markers.append(frame_marker_z(i))
+ *     return markers             # <<<<<<<<<<<<<<
  * 
  * def frame_time_stamp():
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_marker_list);
-  __pyx_r = __pyx_v_marker_list;
+  __Pyx_INCREF(__pyx_v_markers);
+  __pyx_r = __pyx_v_markers;
   goto __pyx_L0;
 
   /* "native.pyx":134
  *     return TT_FrameMarkerZ(markerIndex)
  * 
- * def frame_marker_list():             # <<<<<<<<<<<<<<
- *     marker_list=[]
+ * def frame_markers():             # <<<<<<<<<<<<<<
+ *     markers=[]
  *     for i in range(0,frame_marker_count()):
  */
 
@@ -4023,10 +4023,10 @@ static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("native.frame_marker_list", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("native.frame_markers", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_marker_list);
+  __Pyx_XDECREF(__pyx_v_markers);
   __Pyx_XDECREF(__pyx_v_i);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -4034,7 +4034,7 @@ static PyObject *__pyx_pf_6native_40frame_marker_list(CYTHON_UNUSED PyObject *__
 }
 
 /* "native.pyx":142
- *     return marker_list
+ *     return markers
  * 
  * def frame_time_stamp():             # <<<<<<<<<<<<<<
  *     """Time Stamp of Frame (seconds"""
@@ -4080,7 +4080,7 @@ static PyObject *__pyx_pf_6native_42frame_time_stamp(CYTHON_UNUSED PyObject *__p
   goto __pyx_L0;
 
   /* "native.pyx":142
- *     return marker_list
+ *     return markers
  * 
  * def frame_time_stamp():             # <<<<<<<<<<<<<<
  *     """Time Stamp of Frame (seconds"""
@@ -13651,10 +13651,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_frame_buffer_save_as_bmp, __pyx_k_frame_buffer_save_as_bmp, sizeof(__pyx_k_frame_buffer_save_as_bmp), 0, 0, 1, 1},
   {&__pyx_n_s_frame_centroid, __pyx_k_frame_centroid, sizeof(__pyx_k_frame_centroid), 0, 0, 1, 1},
   {&__pyx_n_s_frame_marker_count, __pyx_k_frame_marker_count, sizeof(__pyx_k_frame_marker_count), 0, 0, 1, 1},
-  {&__pyx_n_s_frame_marker_list, __pyx_k_frame_marker_list, sizeof(__pyx_k_frame_marker_list), 0, 0, 1, 1},
   {&__pyx_n_s_frame_marker_x, __pyx_k_frame_marker_x, sizeof(__pyx_k_frame_marker_x), 0, 0, 1, 1},
   {&__pyx_n_s_frame_marker_y, __pyx_k_frame_marker_y, sizeof(__pyx_k_frame_marker_y), 0, 0, 1, 1},
   {&__pyx_n_s_frame_marker_z, __pyx_k_frame_marker_z, sizeof(__pyx_k_frame_marker_z), 0, 0, 1, 1},
+  {&__pyx_n_s_frame_markers, __pyx_k_frame_markers, sizeof(__pyx_k_frame_markers), 0, 0, 1, 1},
   {&__pyx_n_s_frame_rate, __pyx_k_frame_rate, sizeof(__pyx_k_frame_rate), 0, 0, 1, 1},
   {&__pyx_n_s_frame_time_stamp, __pyx_k_frame_time_stamp, sizeof(__pyx_k_frame_time_stamp), 0, 0, 1, 1},
   {&__pyx_n_s_func, __pyx_k_func, sizeof(__pyx_k_func), 0, 0, 1, 1},
@@ -13689,7 +13689,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_markerList, __pyx_k_markerList, sizeof(__pyx_k_markerList), 0, 0, 1, 1},
   {&__pyx_n_s_markerListp, __pyx_k_markerListp, sizeof(__pyx_k_markerListp), 0, 0, 1, 1},
   {&__pyx_n_s_marker_count, __pyx_k_marker_count, sizeof(__pyx_k_marker_count), 0, 0, 1, 1},
-  {&__pyx_n_s_marker_list, __pyx_k_marker_list, sizeof(__pyx_k_marker_list), 0, 0, 1, 1},
+  {&__pyx_n_s_markers, __pyx_k_markers, sizeof(__pyx_k_markers), 0, 0, 1, 1},
   {&__pyx_n_s_mask, __pyx_k_mask, sizeof(__pyx_k_mask), 0, 0, 1, 1},
   {&__pyx_n_s_mask_info, __pyx_k_mask_info, sizeof(__pyx_k_mask_info), 0, 0, 1, 1},
   {&__pyx_n_s_matrixIndex, __pyx_k_matrixIndex, sizeof(__pyx_k_matrixIndex), 0, 0, 1, 1},
@@ -14316,17 +14316,17 @@ static int __Pyx_InitCachedConstants(void) {
   /* "native.pyx":134
  *     return TT_FrameMarkerZ(markerIndex)
  * 
- * def frame_marker_list():             # <<<<<<<<<<<<<<
- *     marker_list=[]
+ * def frame_markers():             # <<<<<<<<<<<<<<
+ *     markers=[]
  *     for i in range(0,frame_marker_count()):
  */
-  __pyx_tuple__63 = PyTuple_Pack(2, __pyx_n_s_marker_list, __pyx_n_s_i); if (unlikely(!__pyx_tuple__63)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__63 = PyTuple_Pack(2, __pyx_n_s_markers, __pyx_n_s_i); if (unlikely(!__pyx_tuple__63)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__63);
   __Pyx_GIVEREF(__pyx_tuple__63);
-  __pyx_codeobj__64 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__63, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_frame_marker_list, 134, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__64)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__64 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__63, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_nico_Desktop_OptiTrackPy, __pyx_n_s_frame_markers, 134, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__64)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "native.pyx":142
- *     return marker_list
+ *     return markers
  * 
  * def frame_time_stamp():             # <<<<<<<<<<<<<<
  *     """Time Stamp of Frame (seconds"""
@@ -16085,17 +16085,17 @@ PyMODINIT_FUNC PyInit_native(void)
   /* "native.pyx":134
  *     return TT_FrameMarkerZ(markerIndex)
  * 
- * def frame_marker_list():             # <<<<<<<<<<<<<<
- *     marker_list=[]
+ * def frame_markers():             # <<<<<<<<<<<<<<
+ *     markers=[]
  *     for i in range(0,frame_marker_count()):
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_41frame_marker_list, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6native_41frame_markers, NULL, __pyx_n_s_native); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_frame_marker_list, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_frame_markers, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "native.pyx":142
- *     return marker_list
+ *     return markers
  * 
  * def frame_time_stamp():             # <<<<<<<<<<<<<<
  *     """Time Stamp of Frame (seconds"""

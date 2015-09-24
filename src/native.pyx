@@ -131,13 +131,13 @@ def frame_marker_z(int markerIndex):
     """Returns Z Coord of Marker"""
     return TT_FrameMarkerZ(markerIndex)
 
-def frame_marker_list():
-    marker_list=[]
+def frame_markers():
+    markers=[]
     for i in range(0,frame_marker_count()):
-        marker_list.append(frame_marker_x(i))
-        marker_list.append(frame_marker_y(i))
-        marker_list.append(frame_marker_z(i))
-    return marker_list
+        markers.append(frame_marker_x(i))
+        markers.append(frame_marker_y(i))
+        markers.append(frame_marker_z(i))
+    return markers
 
 def frame_time_stamp():
     """Time Stamp of Frame (seconds"""
