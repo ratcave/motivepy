@@ -366,10 +366,11 @@ def camera_count():
     """Returns Camera Count"""
     return TT_CameraCount()
 
-def create_cams():
+def return_cams():
     """Initiate all cameras as python objects,
     where camera #k is cam[k-1]"""
     cam=[Camera(cameraIndex) for cameraIndex in range(camera_count())]
+    return cam
 
 
 class Camera(object):
