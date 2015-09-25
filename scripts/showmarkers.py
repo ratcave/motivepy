@@ -15,20 +15,37 @@ m.initialize()
 m.load_project(project_file)
 
 while m.frame_marker_count()==0:
-    time.sleep(1)
-    m.update_single_frame()
+    try:
+        m.update_single_frame()
+        print "Got Frame With {0} Markers".format(m.frame_marker_count())
+    except RuntimeWarning:
+        print "No Frame Available Error (And {0} Markers). Trying Again...".format(m.frame_marker_count())
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-
-markers=m.frame_markers()
-
-for i in range(0,m.frame_marker_count()):
-        ax.scatter(markers[3*i], markers[3*i+1], markers[3*i+2])
-
 ax.set_xlabel('X Label')
 ax.set_ylabel('Y Label')
 ax.set_zlabel('Z Label')
-
-m.shutdown()
 plt.show()
+
+while True:
+    try:
+        m.update_single_frame()
+        print "Got Frame With {0} Markers".format(m.frame_marker_count())
+        markers=m.frame_markers()
+        for i in range(0,m.frame_marker_count()):
+            ax.scatter(markers[i][0], markers[i][1], markers[i][2])
+    except RuntimeWarning:
+        print "No Frame Available Error (And {0} Markers). Trying Again...".format(m.frame_marker_count()
+
+    #for i in range (0,m.rigidBody_count()):
+    #    rmarkers=markers()
+    #    for k in
+
+
+
+
+
+
+
+

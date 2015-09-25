@@ -134,13 +134,27 @@ def frame_marker_z(int markerIndex):
 def frame_markers():
     markers=[]
     for i in range(0,frame_marker_count()):
-        markers.append(frame_marker_x(i))
-        markers.append(frame_marker_y(i))
-        markers.append(frame_marker_z(i))
+        nest_markers=[]
+        nest_markers.append(frame_marker_x(i))
+        nest_markers.append(frame_marker_y(i))
+        nest_markers.append(frame_marker_z(i))
+        markers.append(nest_markers)
     return markers
 
+def unident_markers():
+    markers=frame_markers()
+    unimarkers=[]
+    for i in range (0,rigidBody_count()):
+        imarkers=rigidBody_markers(i)
+        for k in imarkers:
+            if not k in markers:
+                unimarkers.append(k)
+    return unimarkers
+
+
+
 def frame_time_stamp():
-    """Time Stamp of Frame (seconds"""
+    """Time Stamp of Frame (seconds)"""
     return TT_FrameTimeStamp()
 
 def flush_camera_queues():
@@ -159,7 +173,7 @@ def camera_group_count():
 def create_camera_group():
     """Add an additional group"""
     if not TT_CreateCameraGroup():
-        print Exception("Could Not Create Camera Group")
+        raise Exception("Could Not Create Camera Group")
 
 def remove_camera_group(int groupIndex):
     """Remove a camera group (must be empty)"""
@@ -186,7 +200,9 @@ def create_rigid_body(str name, int id, int markerCount, markerList):
      cdef float markerListp[1000]
      assert len(markerList)<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
      for i in range(0,len(markerList)):
-         markerListp[i]=markerList[i]
+         markerListp[3*i]=markerList[i][0]
+         markerListp[3*i+1]=markerList[i][1]
+         markerListp[3*i+2]=markerList[i][2]
      if (TT_CreateRigidBody(name, id, markerCount, markerListp)==0):
          global rigidBodyCount
          rigidBodyCount=rigidBodyCount+1
@@ -209,13 +225,13 @@ def clear_rigid_body_list():
 
 class RigidBody(object):
     def __init__(self, rigidIndex):
-        assert rigidIndex<rigidBodyCount, "There Are Only {0} Rigid Bodies".format(rigidBodyCount)
+        assert 0<=rigidIndex<rigidBodyCount, "There Are Only {0} Rigid Bodies".format(rigidBodyCount)
         self.index=rigidIndex
 
     @property
     def user_data(self):
         """Get RigidBodies User Data"""
-        print "Rigid body ID: {0}".format(TT_RigidBodyUserData(self.index))
+        return "Rigid body ID: {0}".format(TT_RigidBodyUserData(self.index))
 
     @user_data.setter
     def user_data(self,value):
@@ -235,7 +251,7 @@ class RigidBody(object):
     @property
     def name(self):
         """Returns RigidBody Name"""
-        print "{0}".format(TT_RigidBodyName(self.index))
+        return "{0}".format(TT_RigidBodyName(self.index))
 
     @property
     def is_tracked(self):
@@ -257,7 +273,7 @@ class RigidBody(object):
         cdef float z=0
         TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
         if tracked:
-            print "The point cloud markers position is x={0}, y={1}, z={2}".format(x,y,z)
+            return "The point cloud markers position is x={0}, y={1}, z={2}".format(x,y,z)
         else:
             raise Exception("No Corresponding Point Cloud Marker")
 
@@ -272,9 +288,9 @@ class RigidBody(object):
                 Maybe I have to initialize the variables in the function as c variables
                 so that correct addresses are given to the function..."""
         TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
-        print "The position of rigid body {0} is x={1}, y={2}, z={3}. \n".format(self.index, x, y, z)
-        print "Orientation in quaternions is qx={0}, qy={1}, qz={2}, qw={3}. \n".format(qx, qy, qz, qw)
-        print "Yaw is {0}, pitch is {1}, roll is {2}.".format(yaw, pitch, roll)
+        return "The position of rigid body {0} is x={1}, y={2}, z={3}. \n".format(self.index, x, y, z)
+        return "Orientation in quaternions is qx={0}, qy={1}, qz={2}, qw={3}. \n".format(qx, qy, qz, qw)
+        return "Yaw is {0}, pitch is {1}, roll is {2}.".format(yaw, pitch, roll)
 
     def marker(self, int markerIndex):
         """Get rigid body marker.
@@ -284,7 +300,24 @@ class RigidBody(object):
         cdef float y=0
         cdef float z=0
         TT_RigidBodyMarker(self.index, markerIndex, &x, &y, &z)
-        print "The position of rigid body {0} marker {1}, is x={2}, y={3}, z={4}. \n".format(TT_RigidBodyName(self.index), markerIndex, x, y, z)
+        return "The position of rigid body {0} marker {1}, is x={2}, y={3}, z={4}. \n".format(TT_RigidBodyName(self.index), markerIndex, x, y, z)
+
+    def markers(self):
+        """Get list of rigid body marker position"""
+        mcount=TT_RigidBodyMarkerCount(self.index)
+        markers=[]
+        cdef float x=0
+        cdef float y=0
+        cdef float z=0
+        for i in range(0,mcount):
+            TT_RigidBodyMarker(self.index, i, &x, &y, &z)
+            nest_markers=[]
+            nest_markers.append(x)
+            nest_markers.append(y)
+            nest_markers.append(z)
+            markers.append(nest_markers)
+        return markers
+
 
     @check_npresult
     def translate_pivot(self, float x, float y, float z):
@@ -298,6 +331,21 @@ class RigidBody(object):
         of the rigid body"""
         TT_RigidBodyResetOrientation(self.index)
 
+def rigidBody_markers(rigidIndex):
+    """Get list of any rigid body marker position"""
+    mcount=TT_RigidBodyMarkerCount(rigidIndex)
+    markers=[]
+    cdef float x=0
+    cdef float y=0
+    cdef float z=0
+    for i in range(0,mcount):
+        TT_RigidBodyMarker(rigidIndex, i, &x, &y, &z)
+        nest_markers=[]
+        nest_markers.append(x)
+        nest_markers.append(y)
+        nest_markers.append(z)
+        markers.append(nest_markers)
+    return markers
 
 
 #MARKER SIZE SETTINGS
@@ -317,6 +365,11 @@ def is_filter_switch_enabled():
 def camera_count():
     """Returns Camera Count"""
     return TT_CameraCount()
+
+def create_cams():
+    """Initiate all cameras as python objects,
+    where camera #k is cam[k-1]"""
+    cam=[Camera(cameraIndex) for cameraIndex in range(camera_count())]
 
 
 class Camera(object):
@@ -432,7 +485,8 @@ class Camera(object):
     @property
     @check_cam_setting
     def video_type(self):
-        return TT_CameraVideoType(self.index)
+        dict={0:"Segment Mode", 1:"Grayscale Mode", 2:"Object Mode", 3:"Precision Mode", 4:"MJPEG Mode"}
+        return dict[TT_CameraVideoType(self.index)]
 
     @property
     @check_cam_setting
@@ -499,7 +553,7 @@ class Camera(object):
         cdef int blockingMaskHeight=0
         cdef int blockingMaskGrid=0
         if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
-            print "Camera {0} blocking masks width:{1}, height:{2}, grid:{3}".format(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid)
+            return "Camera {0} blocking masks width:{1}, height:{2}, grid:{3}".format(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid)
         else:
             raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
 
@@ -525,7 +579,7 @@ class Camera(object):
         cdef float x=0
         cdef float y=0
         if TT_CameraMarker(self.index, markerIndex, x, y):
-            print "The 2D location of marker {0} is x={1}, y={2}".format(markerIndex, x, y)
+            return "The 2D location of marker {0} is x={1}, y={2}".format(markerIndex, x, y)
         else:
             raise Exception("Could Not Fetch Location. Possibly Marker {0} Is Not Seen By Camera".format(markerIndex))
 
@@ -533,7 +587,7 @@ class Camera(object):
         cdef int width=0
         cdef int height=0
         if TT_CameraPixelResolution(self.index, width, height):
-            print "Pixel resolution for camera {0} is width={1}, height={2}".format(self.index, width, height)
+            return "Pixel resolution for camera {0} is width={1}, height={2}".format(self.index, width, height)
         else:
             raise Exception
 
@@ -545,7 +599,7 @@ class Camera(object):
         cdef float cameraX=0
         cdef float cameraY=0
         TT_CameraBackproject(self.index, x, y, z, cameraX, cameraY)
-        print "Point in camera 2D space: x={0}, y={1}".format(cameraX, cameraY)
+        return "Point in camera 2D space: x={0}, y={1}".format(cameraX, cameraY)
 
     def ray(self, float x, float y):
         """Takes an undistorted 2D centroid and return a camera ray in the world coordinate system."""
@@ -556,7 +610,7 @@ class Camera(object):
         cdef float rayEndY=0
         cdef float rayEndZ=0
         if TT_CameraRay(self.index, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
-            print "Ray Xstart={0}, Xend={1}, Ystart={2}, Yend={3}, Zstart={4}, Zend={5}".format(rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ)
+            return "Ray Xstart={0}, Xend={1}, Ystart={2}, Yend={3}, Zstart={4}, Zend={5}".format(rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ)
         else:
             raise Exception
 
@@ -566,7 +620,7 @@ class Camera(object):
         cdef float x=0
         cdef float y=0
         if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
-            print "Camera {0} sees 2D x-position={1}, y-position={2}".format(self.index, x, y)
+            return "Camera {0} sees 2D x-position={1}, y-position={2}".format(self.index, x, y)
         else:
             raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
 
