@@ -144,11 +144,13 @@ def frame_markers():
 def unident_markers():
     markers=frame_markers()
     unimarkers=[]
+    imarkers=[]
     for i in range (0,rigidBody_count()):
-        imarkers=rigidBody_markers(i)
-        for k in imarkers:
-            if not k in markers:
-                unimarkers.append(k)
+        for ik in rigidBody_markers(i):
+            imarkers.append(ik)
+    for k in markers:
+        if k not in imarkers:
+           unimarkers.append(k)
     return unimarkers
 
 
@@ -193,12 +195,15 @@ def rigidBody_count():
     return rigidBodyCount
 
 @check_npresult
-def create_rigid_body(str name, int id, int markerCount, markerList):
-     """Create a rigid body based on the marker count and marker list provided.
+def create_rigid_body(str name, markerList):
+     """
      The marker list is expected to contain a list of marker coordinates in the order:
-     x1,y1,z1,x2,y2,z2,...xN,yN,zN."""
+     x1,y1,z1,x2,y2,z2,...xN,yN,zN.
+     """
+     id = rigidBody_count()-1
      cdef float markerListp[1000]
-     assert len(markerList)<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
+     markerCount=len(markerList)
+     assert markerCount<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
      for i in range(0,len(markerList)):
          markerListp[3*i]=markerList[i][0]
          markerListp[3*i+1]=markerList[i][1]

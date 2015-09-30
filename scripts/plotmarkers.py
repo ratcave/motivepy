@@ -1,3 +1,6 @@
+__author__ = 'ratcave'
+
+
 __author__ = 'nico'
 
 
@@ -27,25 +30,30 @@ ax = fig.add_subplot(111, projection='3d')
 plt.ion()
 plt.show()
 last_time=time.time()
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+am=array(m.frame_markers())
+the_plot=ax.plot(am[:,0], am[:,1], am[:,2], 'bo')
+plt.draw()
 
 while True:
     try:
         if m.frame_marker_count()>0:
-            ax.clear()
-            ax.set_xlabel('X Label')
-            ax.set_ylabel('Y Label')
-            ax.set_zlabel('Z Label')
+
             update_time=time.time()
             try:
                 ax.set_title("Update Rate: {0} fps".format(1./(update_time-last_time)))
             except ZeroDivisionError:
                 pass
             last_time=update_time
-            am=array(m.frame_markers())
-            #amx, amy, amz = am[:,0], am[:,1], am[:,2]
-            ax.scatter(am[:,0], am[:,1], am[:,2])
-            plt.draw()
 
+            am=array(m.frame_markers())
+            for plot in the_plot:
+                plot.set_xdata(am[:,0])
+                plot.set_ydata(am[:,1])
+
+            plt.draw()
 
         m.update_single_frame()
         print "Got Frame With {0} Markers".format(m.frame_marker_count())
