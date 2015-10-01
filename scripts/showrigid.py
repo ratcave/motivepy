@@ -15,12 +15,12 @@ project_file = project_file_u.encode("ascii")
 m.initialize()
 m.load_project(project_file)
 
-while m.frame_marker_count()==0:
-    try:
-        m.update_single_frame()
-        print "Got Frame With {0} Markers".format(m.frame_marker_count())
-    except RuntimeWarning:
-        print "No Frame Available Error (And {0} Markers). Trying Again...".format(m.frame_marker_count())
+# while m.frame_marker_count()==0:
+#     try:
+#         m.update_single_frame()
+#         print "Got Frame With {0} Markers".format(m.frame_marker_count())
+#     except RuntimeWarning:
+#         print "No Frame Available Error (And {0} Markers). Trying Again...".format(m.frame_marker_count())
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')

@@ -28,7 +28,7 @@ def block_for_frame(secs_to_timeout=1):
     """Decorator to Continually calls a function until it stops raising a RuntimeWarning until timeout."""
     import time
     def decorator_fun(func):
-        def wrapper(, *args, **kwargs):
+        def wrapper(*args, **kwargs):
             end_time = time.time() + secs_to_timeout
             while time.time() < end_time:
                 try:
