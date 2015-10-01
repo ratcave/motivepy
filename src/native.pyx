@@ -493,10 +493,11 @@ class Camera(object):
     @property
     @check_cam_setting
     def video_type(self):
-        """Video Type value (int) and its name."""
+        """Video Type value (int) and its name.:
+        {0: "Segment Mode", 1: "Grayscale Mode", 2: "Object Mode", 3: "Precision Mode", 4: "MJPEG Mode"}"""
         vidtypes = {0: "Segment Mode", 1: "Grayscale Mode", 2: "Object Mode", 3: "Precision Mode", 4: "MJPEG Mode"}
         value = TT_CameraVideoType(self.index)
-        return value, vidtypes[value]
+        return value
 
     @video_type.setter
     def video_type(self, value):
