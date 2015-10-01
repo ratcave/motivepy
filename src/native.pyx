@@ -29,7 +29,6 @@ def block_for_frame(secs_to_timeout=1):
     import time
     def decorator_fun(func):
         def wrapper(, *args, **kwargs):
-
             end_time = time.time() + secs_to_timeout
             while time.time() < end_time:
                 try:
