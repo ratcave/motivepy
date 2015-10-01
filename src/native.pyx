@@ -122,15 +122,15 @@ def update_single_frame():
 #DATA STREAMING
 @check_npresult
 def stream_trackd(bool enabled):
-    """Start/stop Trackd Stream
+    """Start/stop Trackd Stream.
        TrackD Streaming Engine: Streams rigid body data via the Trackd protocol"""
     return TT_StreamTrackd(enabled)
 
 @check_npresult
-def stream_vrpn(bool enabled, int port):
-    """Start/stop VRPN Stream
+def stream_vrpn(bool enabled, int port=3883):
+    """Start/stop VRPN Stream.
        VRPN Streaming Engine: Streams rigid body data via the VRPN protocol.
-       VRPN Broadcast Port: Specifies the broadcast port for VRPN streaming. (Default: 3883)"""
+       VRPN Broadcast Port: Specifies the broadcast port for VRPN streaming."""
     return TT_StreamVRPN(enabled, port)
 
 @check_npresult
