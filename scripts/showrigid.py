@@ -28,21 +28,23 @@ plt.ion()
 plt.show()
 last_time=time.time()
 
+crown=m.RigidBody(0)
 while True:
     try:
         if m.frame_marker_count()>0:
+            crown.reset_orientation()
             ax.clear()
-            ax.set_xlabel('X Label')
-            ax.set_ylabel('Y Label')
-            ax.set_zlabel('Z Label')
+            ax.set_xlabel('X')
+            ax.set_ylabel('Y')
+            ax.set_zlabel('Z')
             update_time=time.time()
             try:
                 ax.set_title("Update Rate: {0} fps".format(1./(update_time-last_time)))
             except ZeroDivisionError:
                 pass
             last_time=update_time
-            am=array(m.frame_markers())
-            ax.scatter(am[:,0], am[:,1], am[:,2]) #list of x position of every marker, y position of every marker, z position of every marker
+            am=array(m.rigidBody_markers(0))
+            ax.scatter( am[:,0], am[:,1], am[:,2]) #list of x position of every marker, y position of every marker, z position of every marker
             plt.draw()
 
 

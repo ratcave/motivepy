@@ -141,16 +141,23 @@ def frame_markers():
         markers.append(nest_markers)
     return markers
 
-def unident_markers():
+def unident_markers(int rigidBody_count):
+    """
+    returns a list of all markers which
+    are not in rigid Bodies
+    """
     markers=frame_markers()
     unimarkers=[]
     imarkers=[]
-    for i in range (0,rigidBody_count()):
+    for i in range (0,rigidBody_count):
         for ik in rigidBody_markers(i):
-            imarkers.append(ik)
+           imarkers.append(ik)
+           print "{}\n".format(ik)
+        print '\n{}\n\n'.format(imarkers)
     for k in markers:
         if k not in imarkers:
            unimarkers.append(k)
+           print '{}\n'.format(k)
     return unimarkers
 
 
@@ -230,7 +237,7 @@ def clear_rigid_body_list():
 
 class RigidBody(object):
     def __init__(self, rigidIndex):
-        assert 0<=rigidIndex<rigidBodyCount, "There Are Only {0} Rigid Bodies".format(rigidBodyCount)
+        #assert 0<=rigidIndex<rigidBodyCount, "There Are Only {0} Rigid Bodies".format(rigidBodyCount)
         self.index=rigidIndex
 
     @property
@@ -285,13 +292,10 @@ class RigidBody(object):
     def location(self, float x, float y, float z,
                        float qx, float qy, float qz, float qw,
                        float yaw, float pitch, float roll):
-        """##Not sure if this function sets or gets the location.
-        If it returns values different from the ones you entered,
-        the function gets the location as computed by Motive.
-        Otherwise it is for manually setting the location.
-        Update: So far this function only returns nonsense values.
-                Maybe I have to initialize the variables in the function as c variables
-                so that correct addresses are given to the function..."""
+        """##
+        Function returns location of rigid body.
+        So far it seems necessary to load the rigid body data
+        through first loading project file."""
         TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
         return "The position of rigid body {0} is x={1}, y={2}, z={3}. \n".format(self.index, x, y, z)
         return "Orientation in quaternions is qx={0}, qy={1}, qz={2}, qw={3}. \n".format(qx, qy, qz, qw)
@@ -316,10 +320,10 @@ class RigidBody(object):
         cdef float z=0
         for i in range(0,mcount):
             TT_RigidBodyMarker(self.index, i, &x, &y, &z)
-            nest_markers=[]
-            nest_markers.append(x)
-            nest_markers.append(y)
-            nest_markers.append(z)
+            nest_markers=[x, y, z]
+            # nest_markers.append(x)
+            # nest_markers.append(y)
+            # nest_markers.append(z)
             markers.append(nest_markers)
         return markers
 
