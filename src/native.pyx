@@ -493,23 +493,48 @@ class Camera(object):
     @property
     @check_cam_setting
     def video_type(self):
-        dict={0:"Segment Mode", 1:"Grayscale Mode", 2:"Object Mode", 3:"Precision Mode", 4:"MJPEG Mode"}
-        return dict[TT_CameraVideoType(self.index)]
+        """Video Type value (int) and its name."""
+        vidtypes = {0: "Segment Mode", 1: "Grayscale Mode", 2: "Object Mode", 3: "Precision Mode", 4: "MJPEG Mode"}
+        value = TT_CameraVideoType(self.index)
+        return value, vidtypes[value]
+
+    @video_type.setter
+    def video_type(self, value):
+        """ 0:"Segment Mode",\n 1:"Grayscale Mode",\n 2:"Object Mode",\n 3:"Precision Mode",\n 4:"MJPEG Mode"""
+        assert value in {0:"Segment Mode", 1:"Grayscale Mode", 2:"Object Mode", 3:"Precision Mode", 4:"MJPEG Mode"}, "Video Type must be of 0-4"
+        TT_SetCameraSettings(self.index, value, self.exposure, self.threshold, self.intensity)
 
     @property
     @check_cam_setting
     def exposure(self):
+        """Camera exposure level."""
         return TT_CameraExposure(self.index)
+
+    @exposure.setter
+    def exposure(self, value):
+        TT_SetCameraSettings(self.index, self.video_type, value, self.threshold, self.intensity)
 
     @property
     @check_cam_setting
     def threshold(self):
+        """Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker"""
         return TT_CameraThreshold(self.index)
+
+    @threshold.setter
+    def threshold(self, value):
+        assert value >= 0 and value <= 255, "Threshold out of bounds 0-255"
+        TT_SetCameraSettings(self.index, self.video_type, self.exposure, value, self.intensity)
 
     @property
     @check_cam_setting
     def intensity(self):
+        """Camera IR LED Brightness Intensity Level"""
         return TT_CameraIntensity(self.index)
+
+    @intensity.setter
+    def intensity(self, value):
+        assert value >= 0 and value <= 15, "Intensity value out of bounds 0-15"
+        TT_SetCameraSettings(self.index, self.video_type, self.exposure, self.threshold, value)
 
     def set_settings(self, int videotype, int exposure, int threshold, int intensity):
         """Set camera settings.  This function allows you to set the camera's video mode, exposure, threshold,
