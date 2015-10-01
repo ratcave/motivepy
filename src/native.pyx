@@ -135,33 +135,10 @@ def stream_np(bool enabled):
     """Start/stop NaturalPoint Stream"""
     return TT_StreamNP(enabled)
 
-
-#FRAME
-def frame_marker_count():
-    """Returns Frame Markers Count"""
-    return TT_FrameMarkerCount()
-
-def frame_marker_x(int markerIndex):
-    """Returns X Coord of Marker"""
-    return TT_FrameMarkerX(markerIndex)
-
-def frame_marker_y(int markerIndex):
-    """Returns Y Coord of Marker"""
-    return TT_FrameMarkerY(markerIndex)
-
-def frame_marker_z(int markerIndex):
-    """Returns Z Coord of Marker"""
-    return TT_FrameMarkerZ(markerIndex)
-
 def frame_markers():
-    markers=[]
-    for i in range(0,frame_marker_count()):
-        nest_markers=[]
-        nest_markers.append(frame_marker_x(i))
-        nest_markers.append(frame_marker_y(i))
-        nest_markers.append(frame_marker_z(i))
-        markers.append(nest_markers)
-    return markers
+    """Returns list of all marker positions."""
+    get_x, get_y, get_z = TT_FrameMarkerX, TT_FrameMarkerY, TT_FrameMarkerZ
+    return [[get_x(idx), get_y(idx), get_z(idx)] for idx in xrange(TT_FrameMarkerCount())]
 
 def unident_markers(int rigidBody_count):
     """
