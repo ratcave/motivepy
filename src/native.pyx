@@ -5,24 +5,22 @@ __author__ = 'Vash'
 include "cnative.pxd"
 
 def check_npresult(func):
+    error_dict = {1: (IOError, "File Not Found"),
+                  2: (Exception, "Load Failed"),
+                  3: (Exception, "Failed"),
+                  8: (IOError, "Invalid File"),
+                  9: (IOError, "Invalid Calibration File"),
+                  10: (EnvironmentError, "Unable To Initialize"),
+                  11: (EnvironmentError, "Invalid License"),
+                  14: (RuntimeWarning, "No Frames Available")}
+
     def wrapper(*args, **kwargs):
+        """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
         npresult = func(*args, **kwargs)
-        if npresult == 1:
-            raise IOError("File Not Found")
-        elif npresult == 2:
-            raise IOError("Load Failed")
-        elif npresult == 3:
-            raise Exception("Failed")
-        elif npresult == 8:
-            raise IOError("Invalid File")
-        elif npresult == 9:
-            raise IOError("Invalid Calibration File")
-        elif npresult == 10:
-            raise EnvironmentError("Unable To Initialize")
-        elif npresult == 11:
-            raise EnvironmentError("Invalid License")
-        elif npresult == 14:
-            raise RuntimeWarning("No Frames Available")   #think about putting a try statement here, which tries to get the next frame for a couple of times for example
+        if npresult in error_dict:
+            error, msg = error_dict[npresult]
+            raise error(msg)
+
     return wrapper
 
 def check_cam_setting(func):
