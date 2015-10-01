@@ -5,6 +5,7 @@ __author__ = 'Vash'
 include "cnative.pxd"
 
 def check_npresult(func):
+    """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
     error_dict = {1: (IOError, "File Not Found"),
                   2: (Exception, "Load Failed"),
                   3: (Exception, "Failed"),
@@ -15,13 +16,35 @@ def check_npresult(func):
                   14: (RuntimeWarning, "No Frames Available")}
 
     def wrapper(*args, **kwargs):
-        """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
         npresult = func(*args, **kwargs)
         if npresult in error_dict:
             error, msg = error_dict[npresult]
             raise error(msg)
 
     return wrapper
+
+
+def block_for_frame(secs_to_timeout=1):
+    """Decorator to Continually calls a function until it stops raising a RuntimeWarning until timeout."""
+    import time
+    def decorator_fun(func):
+        def wrapper(, *args, **kwargs):
+
+            end_time = time.time() + secs_to_timeout
+            while time.time() < end_time:
+                try:
+                    output = func(*args, **kwargs)
+                    break
+                except RuntimeWarning:
+                    pass
+            else:
+                raise RuntimeWarning("Timed Out after {} seconds".format(secs_to_timeout))
+            return output
+        return wrapper
+    return decorator_fun
+
+
+
 
 def check_cam_setting(func):
     def wrapper(*args, **kwargs):
@@ -31,6 +54,8 @@ def check_cam_setting(func):
         else:
             return check
     return wrapper
+
+
 
 
 #STARTUP / SHUTDOWN
@@ -81,11 +106,13 @@ def load_calibration_from_memory(buffername,int buffersize):
     cdef unsigned char * buffer=buffername
     return TT_LoadCalibrationFromMemory(buffer,buffersize)
 
+@block_for_frame(secs_to_timeout=1)
 @check_npresult
 def update():
-    """Process incoming camera data"""
+    """Process incoming camera data."""
     return TT_Update()
 
+@block_for_frame(secs_to_timeout=1)
 @check_npresult
 def update_single_frame():
     """Process incoming camera data"""
