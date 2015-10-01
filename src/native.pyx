@@ -33,13 +33,11 @@ def block_for_frame(secs_to_timeout=1):
             end_time = time.time() + secs_to_timeout
             while time.time() < end_time:
                 try:
-                    output = func(*args, **kwargs)
-                    break
+                    return func(*args, **kwargs)
                 except RuntimeWarning:
                     pass
             else:
-                raise RuntimeWarning("Timed Out after {} seconds".format(secs_to_timeout))
-            return output
+                raise RuntimeWarning("No Frames Available: Timed Out after {} seconds".format(secs_to_timeout))
         return wrapper
     return decorator_fun
 
