@@ -377,8 +377,7 @@ def camera_count():
 def return_cams():
     """Initiate all cameras as python objects,
     where camera #k is cam[k-1]"""
-    cam=[Camera(cameraIndex) for cameraIndex in range(camera_count())]
-    return cam
+    return [Camera(cameraIndex) for cameraIndex in range(camera_count())]
 
 
 class Camera(object):
@@ -422,7 +421,7 @@ class Camera(object):
     def imager_gain(self):
         """ (int)
         """
-        return  TT_CameraImagerGain(self.index)
+        return  TT_CameraImagerGainLevels(self.index)
 
     @imager_gain.setter
     def imager_gain(self, value):
@@ -521,10 +520,10 @@ class Camera(object):
         Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)"""
         return TT_SetCameraSettings(self.index, videotype, exposure, threshold, intensity)
 
-    ##@property
-    ##@check_cam_setting
-    ##def imager_gain_levels(self):
-    ##    return  TT_CameraImagerGainLevels(self.index)  ##for some reason function always returns 0
+    @property
+    @check_cam_setting
+    def max_imager_gain(self):
+        return  TT_CameraImagerGain(self.index)
 
     @property
     def is_continuous_ir_available(self):
@@ -562,7 +561,7 @@ class Camera(object):
         cdef int blockingMaskHeight=0
         cdef int blockingMaskGrid=0
         if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
-            return "Camera {0} blocking masks width:{1}, height:{2}, grid:{3}".format(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid)
+            return {'blockingMaskwidth':blockingMaskWidth,'blockingMaskHeight': blockingMaskHeight, 'blockingMaskGrid': blockingMaskGrid}
         else:
             raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
 
@@ -588,7 +587,7 @@ class Camera(object):
         cdef float x=0
         cdef float y=0
         if TT_CameraMarker(self.index, markerIndex, x, y):
-            return "The 2D location of marker {0} is x={1}, y={2}".format(markerIndex, x, y)
+            return x, y
         else:
             raise Exception("Could Not Fetch Location. Possibly Marker {0} Is Not Seen By Camera".format(markerIndex))
 
@@ -596,7 +595,7 @@ class Camera(object):
         cdef int width=0
         cdef int height=0
         if TT_CameraPixelResolution(self.index, width, height):
-            return "Pixel resolution for camera {0} is width={1}, height={2}".format(self.index, width, height)
+            return {'width':width, 'height':height}
         else:
             raise Exception
 
@@ -608,7 +607,7 @@ class Camera(object):
         cdef float cameraX=0
         cdef float cameraY=0
         TT_CameraBackproject(self.index, x, y, z, cameraX, cameraY)
-        return "Point in camera 2D space: x={0}, y={1}".format(cameraX, cameraY)
+        return cameraX, cameraY
 
     def ray(self, float x, float y):
         """Takes an undistorted 2D centroid and return a camera ray in the world coordinate system."""
@@ -619,7 +618,7 @@ class Camera(object):
         cdef float rayEndY=0
         cdef float rayEndZ=0
         if TT_CameraRay(self.index, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
-            return "Ray Xstart={0}, Xend={1}, Ystart={2}, Yend={3}, Zstart={4}, Zend={5}".format(rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ)
+            return {'Xstart':rayStartX, 'Ystart':rayStartY, 'Zstart':rayStartZ,'Xend':rayEndX, 'Yend':rayEndY, 'Zend':rayEndZ}
         else:
             raise Exception
 
@@ -629,7 +628,7 @@ class Camera(object):
         cdef float x=0
         cdef float y=0
         if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
-            return "Camera {0} sees 2D x-position={1}, y-position={2}".format(self.index, x, y)
+            return x, y
         else:
             raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
 
