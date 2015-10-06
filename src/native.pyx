@@ -4,6 +4,8 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
+#def low_id():
+ #   return LowBits()
 
 def check_npresult(func):
     """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""

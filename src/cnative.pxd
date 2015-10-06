@@ -4,6 +4,9 @@ __author__ = 'Vash'
 
 from libcpp cimport bool
 
+cdef extern from "NPTrackingTools.h" namespace "Core":
+    cdef cppclass cUID:
+        unsigned long long int LowBits()
 
 cdef extern from "NPTrackingTools.h":
 
