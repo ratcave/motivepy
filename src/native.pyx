@@ -279,26 +279,6 @@ class RigidBody(object):
         """Get marker count"""
         return TT_RigidBodyMarkerCount(self.index)
 
-    def point_cloud_marker(self, max_markers=200):
-        """Gets list of point cloud markers, with a max length of max_markers (Default: 200)s"""
-        markers = []
-        cdef int markerIndex
-        cdef bool tracked = True
-
-        for markerIndex in xrange(max_markers):
-
-            # Get marker position.
-            cdef float x = 0, y = 0, z = 0  # Says it works at http://docs.cython.org/src/userguide/pyrex_differences.html
-            TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
-
-            # Add the marker if one was found (tracked was True). Else, return the list of markers!
-            if tracked:
-                markers.append([x, y, z])
-            else:
-                return markers
-
-
-
     def location(self, float x, float y, float z,
                        float qx, float qy, float qz, float qw,
                        float yaw, float pitch, float roll):
@@ -311,16 +291,7 @@ class RigidBody(object):
         return "Orientation in quaternions is qx={0}, qy={1}, qz={2}, qw={3}. \n".format(qx, qy, qz, qw)
         return "Yaw is {0}, pitch is {1}, roll is {2}.".format(yaw, pitch, roll)
 
-    def marker(self, int markerIndex):
-        """Get rigid body marker.
-        ##This function gets the location.
-        """
-        cdef float x=0
-        cdef float y=0
-        cdef float z=0
-        TT_RigidBodyMarker(self.index, markerIndex, &x, &y, &z)
-        return "The position of rigid body {0} marker {1}, is x={2}, y={3}, z={4}. \n".format(TT_RigidBodyName(self.index), markerIndex, x, y, z)
-
+    @property
     def markers(self):
         """Get list of rigid body marker position"""
         markers=[]
@@ -330,12 +301,30 @@ class RigidBody(object):
             markers.append([x, y, z])
         return markers
 
+    @property
+    def point_cloud_markers(self):
+        """Gets list of point cloud markers."""
+        markers = []
+        cdef int markerIndex
+        cdef bool tracked = True
+        cdef float x = 0, y = 0, z = 0  # Says it works at http://docs.cython.org/src/userguide/pyrex_differences.html
+        for markerIndex in xrange(TT_RigidBodyMarkerCount(self.index)):
+            # Get marker position.
+            TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
+
+            # Add the marker if one was found (tracked was True). Else, put None in its position in the list!
+            # TODO: decide what to do with the not_tracked case.
+            marker = [x, y, z] if tracked else None
+            markers.append([x, y, z])
+
+        return markers
+
     @check_npresult
     def translate_pivot(self, float x, float y, float z):
         """Rigid Body Pivot-Point Translation: Sets a translation offset for the centroid of the rigid body.
         Reported values for the location of the rigid body, as well as the 3D visualization, will be shifted
         by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters. """
-        return   TT_RigidBodyTranslatePivot(self.index, x, y, z)
+        return TT_RigidBodyTranslatePivot(self.index, x, y, z)
 
     def reset_orientation(self):
         """Reset orientation to match the current tracked orientation
