@@ -2,6 +2,8 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
+from camera import Camera
+
 #DECORATORS
 def check_npresult(func):
     """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
@@ -303,19 +305,7 @@ def is_filter_switch_enabled():
     return TT_IsFilterSwitchEnabled()
 
 
-#CAMERA INTERFACE
-def camera_count():
-    """
-    Returns Camera Count
-    """
-    return TT_CameraCount()
-
-def cams():
-    """
-    Initiate all cameras as python objects,
-    where camera #k is cam[k-1]
-    """
-    return [Camera(cameraIndex) for cameraIndex in xrange(camera_count())]
+cameras = [Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount())]
 
 
 
