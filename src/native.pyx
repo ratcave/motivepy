@@ -301,8 +301,6 @@ def clear_rigid_body_list():
     global rigidBodyCount
     rigidBodyCount=0
 
-#SOFTWARE_BUILD = TT_SoftwareBuild()
-
 
 class RigidBody(object):
     def __init__(self, rigidIndex):
