@@ -274,11 +274,6 @@ class RigidBody(object):
         """Is rigid body currently tracked"""
         return TT_IsRigidBodyTracked(self.index)
 
-    @property
-    def marker_count(self):
-        """Get marker count"""
-        return TT_RigidBodyMarkerCount(self.index)
-
     def location(self, float x, float y, float z,
                        float qx, float qy, float qz, float qw,
                        float yaw, float pitch, float roll):
