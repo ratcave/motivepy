@@ -172,28 +172,30 @@ def stream_np(bool enabled):
 
 #MARKERS
 def frame_markers():
-    """Returns list of all marker positions."""
+    """
+    Returns list of all marker positions.
+    """
     return [[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
 
 
-def unident_markers(int rigidBody_count):
-    """
-    returns a list of all markers which
-    are not in rigid Bodies
-    """
-    markers=frame_markers()
-    unimarkers=[]
-    imarkers=[]
-    for i in range (0,rigidBody_count):
-        for ik in rigidBody_markers(i):
-           imarkers.append(ik)
-           print "{}\n".format(ik)
-        print '\n{}\n\n'.format(imarkers)
-    for k in markers:
-        if k not in imarkers:
-           unimarkers.append(k)
-           print '{}\n'.format(k)
-    return unimarkers
+# def unident_markers(int rigidBody_count):
+#     """
+#     returns a list of all markers which
+#     are not in rigid Bodies
+#     """
+#     markers=frame_markers()
+#     unimarkers=[]
+#     imarkers=[]
+#     for i in range (0,rigidBody_count):
+#         for ik in rigidBody_markers(i):
+#            imarkers.append(ik)
+#            print "{}\n".format(ik)
+#         print '\n{}\n\n'.format(imarkers)
+#     for k in markers:
+#         if k not in imarkers:
+#            unimarkers.append(k)
+#            print '{}\n'.format(k)
+#     return unimarkers
 
 
 
@@ -321,12 +323,12 @@ class RigidBody(object):
         return TT_SetRigidBodyUserData(self.index,value)
 
     @property
-    def enabled(self):
+    def tracking_enabled(self):
         """Get tracking (bool)"""
         return TT_RigidBodyEnabled(self.index)
 
     @tracking_enabled.setter
-    def enabled(self, value):
+    def tracking_enabled(self, value):
         TT_SetRigidBodyEnabled(self.index, value)
 
     @property
@@ -341,7 +343,7 @@ class RigidBody(object):
         This is done in a single C function call, so it's really fast if you want all the data."""
         cdef float x = 0., y = 0., z = 0., qx = 0., qy = 0., qz = 0., qw = 0., yaw = 0., pitch = 0., roll = 0.
         TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
-        return {'location': (x, y, z), 'rotation': (yaw, pitch, roll),'rotation_quats': {qx, qy, qz, qw}}
+        return {'location': (x, y, z), 'rotation': (yaw, pitch, roll),'rotation_quats': (qx, qy, qz, qw)}
 
     @property
     def location(self):
@@ -410,22 +412,6 @@ def set_enabled_filter_switch(bool enabled):
 
 def is_filter_switch_enabled():
     return TT_IsFilterSwitchEnabled()
-
-
-#CAMERA INTERFACE
-def camera_count():
-    """
-    Returns Camera Count
-    """
-    return TT_CameraCount()
-
-def cams():
-    """
-    Initiate all cameras as python objects,
-    where camera #k is cam[k-1]
-    """
-    return [Camera(cameraIndex) for cameraIndex in xrange(camera_count())]
-
 
 
 

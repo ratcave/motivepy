@@ -13,6 +13,12 @@ def check_cam_setting(func):
             return check
     return wrapper
 
+def cams():
+    """
+    Initiate all cameras as python objects,
+    where camera #k is cam[k-1]
+    """
+    return [Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount())]
 
 
 class Camera(object):
