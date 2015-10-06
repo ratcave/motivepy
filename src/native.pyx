@@ -244,6 +244,14 @@ class RigidBody(object):
         #assert 0<=rigidIndex<rigidBodyCount, "There Are Only {0} Rigid Bodies".format(rigidBodyCount)
         self.index=rigidIndex
 
+    def __str__(self):
+        return "Rigid Body: {}".format(self.name)
+
+    @property
+    def name(self):
+        """Returns RigidBody Name"""
+        return "{0}".format(TT_RigidBodyName(self.index))
+
     @property
     def user_data(self):
         """Get RigidBodies User Data"""
@@ -255,19 +263,13 @@ class RigidBody(object):
         return TT_SetRigidBodyUserData(self.index,value)
 
     @property
-    def tracking_enabled(self):
+    def enabled(self):
         """Get tracking (bool)"""
         return TT_RigidBodyEnabled(self.index)
 
     @tracking_enabled.setter
-    def tracking_enabled(self, value):
+    def enabled(self, value):
         TT_SetRigidBodyEnabled(self.index, value)
-
-#Properties Without Simple Setter (If Not Here Maybe In Camera Class)
-    @property
-    def name(self):
-        """Returns RigidBody Name"""
-        return "{0}".format(TT_RigidBodyName(self.index))
 
     @property
     def is_tracked(self):
