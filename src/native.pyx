@@ -56,18 +56,23 @@ def autoupdate(func):
         return output
     return wrapper
 
-#CONSTANTS
-BUILD_NUMBER = TT_BuildNumber()
 
 
 #STARTUP / SHUTDOWN
 @autoupdate
 @check_npresult
-def initialize():
-    """
-    initialize library
-    """
+def _initialize():
+    """Initialize the connection to Motive.  Done automatically upon importing the Python package."""
     return TT_Initialize()
+
+_initialize()
+
+#CONSTANTS
+BUILD_NUMBER = TT_BuildNumber()
+
+#VARIABLES
+cameras = [Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount())]
+
 
 @check_npresult
 def shutdown():
@@ -303,9 +308,6 @@ def set_enabled_filter_switch(bool enabled):
 
 def is_filter_switch_enabled():
     return TT_IsFilterSwitchEnabled()
-
-
-cameras = [Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount())]
 
 
 
