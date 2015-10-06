@@ -323,20 +323,12 @@ class RigidBody(object):
 
     def markers(self):
         """Get list of rigid body marker position"""
-        mcount=TT_RigidBodyMarkerCount(self.index)
         markers=[]
-        cdef float x=0
-        cdef float y=0
-        cdef float z=0
-        for i in range(0,mcount):
+        cdef float x = 0, y = 0, z = 0
+        for i in range(0, TT_RigidBodyMarkerCount(self.index)):
             TT_RigidBodyMarker(self.index, i, &x, &y, &z)
-            nest_markers=[x, y, z]
-            # nest_markers.append(x)
-            # nest_markers.append(y)
-            # nest_markers.append(z)
-            markers.append(nest_markers)
+            markers.append([x, y, z])
         return markers
-
 
     @check_npresult
     def translate_pivot(self, float x, float y, float z):
@@ -349,23 +341,6 @@ class RigidBody(object):
         """Reset orientation to match the current tracked orientation
         of the rigid body"""
         TT_RigidBodyResetOrientation(self.index)
-
-def rigidBody_markers(rigidIndex):
-    """Get list of any rigid body marker position"""
-    mcount=TT_RigidBodyMarkerCount(rigidIndex)
-    markers=[]
-    cdef float x=0
-    cdef float y=0
-    cdef float z=0
-    for i in range(0,mcount):
-        TT_RigidBodyMarker(rigidIndex, i, &x, &y, &z)
-        nest_markers=[]
-        nest_markers.append(x)
-        nest_markers.append(y)
-        nest_markers.append(z)
-        markers.append(nest_markers)
-    return markers
-
 
 #MARKER SIZE SETTINGS
 @check_npresult
