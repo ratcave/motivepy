@@ -4,6 +4,7 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
+#DECORATORS
 def check_npresult(func):
     """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
     error_dict = {1: (IOError, "File Not Found"),
@@ -23,7 +24,6 @@ def check_npresult(func):
 
     return wrapper
 
-
 def block_for_frame(secs_to_timeout=1):
     """Decorator to Continually calls a function until it stops raising a RuntimeWarning until timeout."""
     import time
@@ -40,9 +40,6 @@ def block_for_frame(secs_to_timeout=1):
         return wrapper
     return decorator_fun
 
-
-
-
 def check_cam_setting(func):
     def wrapper(*args, **kwargs):
         check=func(*args, **kwargs)
@@ -52,10 +49,17 @@ def check_cam_setting(func):
             return check
     return wrapper
 
-
+def autoupdate(func):
+    def wrapper(*args, **kwargs):
+        """Decorator, to call update() right after calling the function."""
+        output = func(*args, **kwargs)
+        update()
+        return output
+    return wrapper
 
 
 #STARTUP / SHUTDOWN
+@autoupdate
 @check_npresult
 def initialize():
     """initialize library"""
@@ -98,10 +102,10 @@ def save_project(str project_file):
     return TT_SaveProject(project_file)
 
 @check_npresult
-def load_calibration_from_memory(buffername,int buffersize):
-    assert isinstance(buffername,str), "Buffername Needs To Be String"
-    cdef unsigned char * buffer=buffername
-    return TT_LoadCalibrationFromMemory(buffer,buffersize)
+def load_calibration_from_memory(buffername, int buffersize):
+    assert isinstance(buffername, str), "Buffername Needs To Be String"
+    cdef unsigned char * buff=buffername
+    return TT_LoadCalibrationFromMemory(buff, buffersize)
 
 @block_for_frame(secs_to_timeout=1)
 @check_npresult
@@ -135,10 +139,11 @@ def stream_np(bool enabled):
     """Start/stop NaturalPoint Stream"""
     return TT_StreamNP(enabled)
 
+
+#MARKERS
 def frame_markers():
     """Returns list of all marker positions."""
-    get_x, get_y, get_z = TT_FrameMarkerX, TT_FrameMarkerY, TT_FrameMarkerZ
-    return [[get_x(idx), get_y(idx), get_z(idx)] for idx in xrange(TT_FrameMarkerCount())]
+    return [[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
 
 def unident_markers(int rigidBody_count):
     """
