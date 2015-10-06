@@ -2,7 +2,6 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
-from camera import Camera
 
 #DECORATORS
 def check_npresult(func):
@@ -39,14 +38,21 @@ def block_for_frame(secs_to_timeout=1):
         return wrapper
     return decorator_fun
 
-def check_cam_setting(func):
-    def wrapper(*args, **kwargs):
-        check=func(*args, **kwargs)
-        if check<0:
-            raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")
-        else:
-            return check
-    return wrapper
+@block_for_frame(secs_to_timeout=3)
+@check_npresult
+def update_single_frame():
+    """
+    Process incoming camera data
+    """
+    return TT_UpdateSingleFrame()
+
+@block_for_frame(secs_to_timeout=3)
+@check_npresult
+def update():
+    """
+    Process incoming camera data. More than one frame
+    """
+    return TT_Update()
 
 def autoupdate(func):
     def wrapper(*args, **kwargs):
@@ -61,18 +67,9 @@ def autoupdate(func):
 #STARTUP / SHUTDOWN
 @autoupdate
 @check_npresult
-def _initialize():
+def initialize():
     """Initialize the connection to Motive.  Done automatically upon importing the Python package."""
     return TT_Initialize()
-
-_initialize()
-
-#CONSTANTS
-BUILD_NUMBER = TT_BuildNumber()
-
-#VARIABLES
-cameras = [Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount())]
-
 
 @check_npresult
 def shutdown():
@@ -130,22 +127,6 @@ def load_calibration_from_memory(buffername, int buffersize):
     assert isinstance(buffername, str), "Buffername Needs To Be String"
     cdef unsigned char * buff=buffername
     return TT_LoadCalibrationFromMemory(buff, buffersize)
-
-@block_for_frame(secs_to_timeout=3)
-@check_npresult
-def update_single_frame():
-    """
-    Process incoming camera data
-    """
-    return TT_UpdateSingleFrame()
-
-@block_for_frame(secs_to_timeout=3)
-@check_npresult
-def update():
-    """
-    Process incoming camera data. More than one frame
-    """
-    return TT_Update()
 
 
 #DATA STREAMING
@@ -326,4 +307,5 @@ def orient_tracking_bar(float positionX, float positionY, float positionZ,
     return TT_OrientTrackingBar(positionX, positionY, positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
-
+def get_build_number():
+    return TT_BuildNumber()

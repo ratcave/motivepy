@@ -1,6 +1,23 @@
 include "cnative.pxd"
 
-from native import check_npresult
+#DECORATORS
+def check_npresult(func):
+    """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
+    error_dict = {1: (IOError, "File Not Found"),
+                  2: (Exception, "Load Failed"),
+                  3: (Exception, "Failed"),
+                  8: (IOError, "Invalid File"),
+                  9: (IOError, "Invalid Calibration File"),
+                  10: (EnvironmentError, "Unable To Initialize"),
+                  11: (EnvironmentError, "Invalid License"),
+                  14: (RuntimeWarning, "No Frames Available")}
+    def wrapper(*args, **kwargs):
+        npresult = func(*args, **kwargs)
+        if npresult in error_dict:
+            error, msg = error_dict[npresult]
+            raise error(msg)
+    return wrapper
+
 
 class RigidBody(object):
     def __init__(self, rigidIndex):

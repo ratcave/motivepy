@@ -45,8 +45,7 @@ class Camera(object):
         3:"Precision Mode"
         4:"MJPEG Mode"
         """
-        vidtypes = {0: "Segment Mode", 1: "Grayscale Mode", 2: "Object Mode", 3: "Precision Mode", 4: "MJPEG Mode"}
-        return vidtypes[TT_CameraVideoType(self.index)]
+        return TT_CameraVideoType(self.index)
 
     @video_type.setter
     def video_type(self, value):
@@ -172,25 +171,8 @@ class Camera(object):
         return TT_CameraID(self.index)
 
     @property
-    def x_location(self):
-        """
-        Returns Camera's X Coord
-        """
-        return TT_CameraXLocation(self.index)
-
-    @property
-    def y_location(self):
-        """
-        Returns Camera's Y Coord
-        """
-        return TT_CameraYLocation(self.index)
-
-    @property
-    def z_location(self):
-        """
-        Returns Camera's Z Coord
-        """
-        return TT_CameraZLocation(self.index)
+    def location(self):
+        return TT_CameraXLocation(self.index), TT_CameraYLocation(self.index), TT_CameraZLocation(self.index)
 
     def orientation_matrix(self, int matrixIndex):
         """
