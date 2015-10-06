@@ -1,7 +1,5 @@
 include "cnative.pxd"
 
-from native import camera_count
-
 # Decorator
 def check_cam_setting(func):
     """Decorator to check if calling a TT_Camera function returns an exception."""
@@ -13,7 +11,7 @@ def check_cam_setting(func):
             return check
     return wrapper
 
-def cams():
+def get_cams():
     """
     Initiate all cameras as python objects,
     where camera #k is cam[k-1]
@@ -23,7 +21,7 @@ def cams():
 
 class Camera(object):
     def __init__(self, cameraIndex):
-        assert cameraIndex < camera_count(), "There Are Only {0} Cameras".format(camera_count())
+        assert cameraIndex < TT_CameraCount(), "There Are Only {0} Cameras".format(TT_CameraCount())
         self.index=cameraIndex
 
     @property

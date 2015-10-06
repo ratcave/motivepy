@@ -3,12 +3,14 @@ from Cython.Build import cythonize
 
 native = Extension(
     'motive.native',
-    sources=["src\\native.pyx", "src\\camera.pyx" ],
+    sources=["src\\native.pyx", "src\\camera.pyx", "src\\rigidbody.pyx" ],
     include_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\inc", "src"],
     library_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\lib" ],
     extra_link_args=["/DEFAULTLIB:NPTrackingTools"],
     language="c++"
 )
+
+
 
 setup(
     name="motive",
