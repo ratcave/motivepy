@@ -4,7 +4,7 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
-
+#DECORATORS
 def check_npresult(func):
     """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
     error_dict = {1: (IOError, "File Not Found"),
@@ -22,14 +22,6 @@ def check_npresult(func):
             raise error(msg)
     return wrapper
 
-def check_cam_setting(func):
-    def wrapper(*args, **kwargs):
-        check=func(*args, **kwargs)
-        if check<0:
-            raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")
-        else:
-            return check
-    return wrapper
 
 def block_for_frame(secs_to_timeout=1):
     """Decorator to continually call a function until it stops raising a RuntimeWarning or until timeout."""
@@ -47,8 +39,29 @@ def block_for_frame(secs_to_timeout=1):
         return wrapper
     return decorator_fun
 
+def check_cam_setting(func):
+    def wrapper(*args, **kwargs):
+        check=func(*args, **kwargs)
+        if check<0:
+            raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")
+        else:
+            return check
+    return wrapper
+
+def autoupdate(func):
+    def wrapper(*args, **kwargs):
+        """Decorator, to call update() right after calling the function."""
+        output = func(*args, **kwargs)
+        update()
+        return output
+    return wrapper
+
+#CONSTANTS
+BUILD_NUMBER = TT_BuildNumber()
+
 
 #STARTUP / SHUTDOWN
+@autoupdate
 @check_npresult
 def initialize():
     """
@@ -108,10 +121,10 @@ def save_project(str project_file):
     return TT_SaveProject(project_file)
 
 @check_npresult
-def load_calibration_from_memory(buffername,int buffersize):
-    assert isinstance(buffername,str), "Buffername Needs To Be String"
-    cdef unsigned char * buffer=buffername
-    return TT_LoadCalibrationFromMemory(buffer,buffersize)
+def load_calibration_from_memory(buffername, int buffersize):
+    assert isinstance(buffername, str), "Buffername Needs To Be String"
+    cdef unsigned char * buff=buffername
+    return TT_LoadCalibrationFromMemory(buff, buffersize)
 
 @block_for_frame(secs_to_timeout=3)
 @check_npresult
@@ -155,14 +168,11 @@ def stream_np(bool enabled):
     """
     return TT_StreamNP(enabled)
 
+
+#MARKERS
 def frame_markers():
-    """
-    Returns list of all marker positions.
-    """
-    x, y, z = TT_FrameMarkerX, TT_FrameMarkerY, TT_FrameMarkerZ
-    return [[x(i), y(i), z(i)] for i in xrange(TT_FrameMarkerCount())]
-
-
+    """Returns list of all marker positions."""
+    return [[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
 
 
 def unident_markers(int rigidBody_count):
@@ -281,13 +291,19 @@ def clear_rigid_body_list():
     global rigidBodyCount
     rigidBodyCount=0
 
-#SOFTWARE_BUILD = TT_SoftwareBuild()
-
 
 class RigidBody(object):
     def __init__(self, rigidIndex):
         #assert 0<=rigidIndex<rigidBodyCount, "There Are Only {0} Rigid Bodies".format(rigidBodyCount)
         self.index=rigidIndex
+
+    def __str__(self):
+        return "Rigid Body: {}".format(self.name)
+
+    @property
+    def name(self):
+        """Returns RigidBody Name"""
+        return "{0}".format(TT_RigidBodyName(self.index))
 
     @property
     def user_data(self):
@@ -304,23 +320,13 @@ class RigidBody(object):
         return TT_SetRigidBodyUserData(self.index,value)
 
     @property
-    def tracking_enabled(self):
-        """
-        Get tracking. Returns bool
-        """
+    def enabled(self):
+        """Get tracking (bool)"""
         return TT_RigidBodyEnabled(self.index)
 
     @tracking_enabled.setter
-    def tracking_enabled(self, value):
+    def enabled(self, value):
         TT_SetRigidBodyEnabled(self.index, value)
-
-#Properties Without Simple Setter (If Not Here Maybe In Camera Class)
-    @property
-    def name(self):
-        """
-        Returns RigidBody Name
-        """
-        return "{0}".format(TT_RigidBodyName(self.index))
 
     @property
     def is_tracked(self):
@@ -329,108 +335,67 @@ class RigidBody(object):
         """
         return TT_IsRigidBodyTracked(self.index)
 
-    @property
-    def marker_count(self):
-        """
-        Get marker count
-        """
-        return TT_RigidBodyMarkerCount(self.index)
-
-    def point_cloud_marker(self, int markerIndex):
-        """
-        Get corresponding point cloud marker
-        If tracked is false, there is no corresponding point cloud marker.
-        """
-        cdef bool tracked=True
-        cdef float x=0
-        cdef float y=0
-        cdef float z=0
-        TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
-        if tracked:
-            return x, y, z
-        else:
-            raise Exception("No Corresponding Point Cloud Marker")
-
-    def location(self):
-        """
-        Function returns location of rigid body.
-        So far it seems necessary to load the rigid body data
-        through first loading project file.
-        """
-        cdef float x=0
-        cdef float y=0
-        cdef float z=0
-        cdef float qx=0
-        cdef float qy=0
-        cdef float qz=0
-        cdef float qw=0
-        cdef float yaw=0
-        cdef float pitch=0
-        cdef float roll=0
+    def get_all_spatial_data(self):
+        """Returns dict: {'location': (x, y, z), 'rotation':(yaw, pitch, roll), 'rotation_quats':(qx, qy, qz, qw)}.
+        This is done in a single C function call, so it's really fast if you want all the data."""
+        cdef float x = 0., y = 0., z = 0., qx = 0., qy = 0., qz = 0., qw = 0., yaw = 0., pitch = 0., roll = 0.
         TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
-        return {'x':x,'y':y,'z':z,'qx':qx,'qy':qy,'qz':qz,'qw':qw,'yaw':yaw,'pitch':pitch,'roll':roll}
+        return {'location': (x, y, z), 'rotation': (yaw, pitch, roll),'rotation_quats': {qx, qy, qz, qw}}
 
-    def marker(self, int markerIndex):
-        """
-        Get rigid body marker.
-        This function returns the location.
-        """
-        cdef float x=0
-        cdef float y=0
-        cdef float z=0
-        TT_RigidBodyMarker(self.index, markerIndex, &x, &y, &z)
-        return x, y, z
+    @property
+    def location(self):
+        """(x, y, z) position."""
+        return self.get_all_spatial_data()['location']
 
+    @property
+    def rotation(self):
+        """(yaw, pitch, roll) rotation"""
+        return self.get_all_spatial_data()['rotation']
+
+    @property
+    def rotation_quats(self):
+        """(qx, qy, qz, qw) quaternion rotation."""
+        return self.get_all_spatial_data()['rotation_quats']
+
+    @property
     def markers(self):
-        """
-        Get list of rigid body marker position
-        """
-        mcount=TT_RigidBodyMarkerCount(self.index)
+        """Get list of rigid body marker position"""
         markers=[]
-        cdef float x=0
-        cdef float y=0
-        cdef float z=0
-        for i in range(0,mcount):
+        cdef float x = 0, y = 0, z = 0
+        for i in range(0, TT_RigidBodyMarkerCount(self.index)):
             TT_RigidBodyMarker(self.index, i, &x, &y, &z)
-            nest_markers=[x, y, z]
-            markers.append(nest_markers)
+            markers.append([x, y, z])
         return markers
 
+    @property
+    def point_cloud_markers(self):
+        """Gets list of point cloud markers."""
+        markers = []
+        cdef int markerIndex
+        cdef bool tracked = True
+        cdef float x = 0, y = 0, z = 0  # Says it works at http://docs.cython.org/src/userguide/pyrex_differences.html
+        for markerIndex in xrange(TT_RigidBodyMarkerCount(self.index)):
+            # Get marker position.
+            TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
+
+            # Add the marker if one was found (tracked was True). Else, put None in its position in the list!
+            # TODO: decide what to do with the not_tracked case.
+            marker = [x, y, z] if tracked else None
+            markers.append([x, y, z])
+
+        return markers
 
     @check_npresult
     def translate_pivot(self, float x, float y, float z):
         """
         Rigid Body Pivot-Point Translation: Sets a translation offset for the centroid of the rigid body.
         Reported values for the location of the rigid body, as well as the 3D visualization, will be shifted
-        by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters.
-        """
-        return   TT_RigidBodyTranslatePivot(self.index, x, y, z)
+        by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters. """
+        return TT_RigidBodyTranslatePivot(self.index, x, y, z)
 
     def reset_orientation(self):
-        """
-        Reset orientation to match the current tracked orientation
-        of the rigid body
-        """
+        """Reset orientation to match the current tracked orientation of the rigid body."""
         TT_RigidBodyResetOrientation(self.index)
-
-
-
-def rigidBody_markers(rigidIndex):
-    """
-    Get list of any rigid body marker position
-    """
-    mcount=TT_RigidBodyMarkerCount(rigidIndex)
-    markers=[]
-    cdef float x=0
-    cdef float y=0
-    cdef float z=0
-    for i in range(0,mcount):
-        TT_RigidBodyMarker(rigidIndex, i, &x, &y, &z)
-        nest_markers=[x,y,z]
-        markers.append(nest_markers)
-    return markers
-
-
 
 
 #MARKER SIZE SETTINGS
@@ -461,372 +426,6 @@ def cams():
     return [Camera(cameraIndex) for cameraIndex in xrange(camera_count())]
 
 
-class Camera(object):
-    def __init__(self, cameraIndex):
-        assert cameraIndex<camera_count(), "There Are Only {0} Cameras".format(camera_count())
-        self.index=cameraIndex
-
-    @property
-    def group(self):
-        """
-        Camera's camera group index
-        """
-        return TT_CamerasGroup(self.index)
-
-    @group.setter
-    def group(self,value):
-        return TT_SetCameraGroup(self.index, value)
-
-    @property
-    @check_cam_setting
-    def video_type(self):
-        """
-        0:"Segment Mode"
-        1:"Grayscale Mode"
-        2:"Object Mode"
-        3:"Precision Mode"
-        4:"MJPEG Mode"
-        """
-        vidtypes = {0: "Segment Mode", 1: "Grayscale Mode", 2: "Object Mode", 3: "Precision Mode", 4: "MJPEG Mode"}
-        return vidtypes[TT_CameraVideoType(self.index)]
-
-    @video_type.setter
-    def video_type(self, value):
-        assert value in {0:"Segment Mode", 1:"Grayscale Mode", 2:"Object Mode", 3:"Precision Mode", 4:"MJPEG Mode"}, "Video Type Must Be In (0,4)"
-        TT_SetCameraSettings(self.index, value, self.exposure, self.threshold, self.intensity)
-
-    @property
-    @check_cam_setting
-    def exposure(self):
-        """
-        Camera exposure level.
-        """
-        return TT_CameraExposure(self.index)
-
-    @exposure.setter
-    def exposure(self, value):
-        TT_SetCameraSettings(self.index, self.video_type, value, self.threshold, self.intensity)
-
-    @property
-    @check_cam_setting
-    def threshold(self):
-        """
-        Camera threshold level for determining
-        whether a pixel is bright enough to
-        contain a reflective marker
-        """
-        return TT_CameraThreshold(self.index)
-
-    @threshold.setter
-    def threshold(self, value):
-        assert value >= 0 and value <= 255, "Threshold Must Be In (0,255)"
-        TT_SetCameraSettings(self.index, self.video_type, self.exposure, value, self.intensity)
-
-    @property
-    @check_cam_setting
-    def intensity(self):
-        """Camera IR LED Brightness Intensity Level"""
-        return TT_CameraIntensity(self.index)
-
-    @intensity.setter
-    def intensity(self, value):
-        assert value >= 0 and value <= 15, "Intensity Must Be In (0,15)"
-        TT_SetCameraSettings(self.index, self.video_type, self.exposure, self.threshold, value)
-
-    def set_settings(self, int videotype, int exposure, int threshold, int intensity):
-        """
-        Set camera settings.  This function allows you to set the camera's video mode, exposure, threshold,
-        and illumination settings.
-        VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode.
-        Exposure: Valid values are:  1-480.
-        Threshold: Valid values are: 0-255.
-        Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)
-        """
-        return TT_SetCameraSettings(self.index, videotype, exposure, threshold, intensity)
-
-    @property
-    @check_cam_setting
-    def frame_rate(self):
-        """
-        frames/sec
-        int
-        """
-        return TT_CameraFrameRate(self.index)
-
-    @frame_rate.setter
-    def frame_rate(self, value):
-        if not TT_SetCameraFrameRate(self.index, value):
-            raise Exception("Could Not Set Frame Rate. Check Camera Index And Initialize With TT_Initialize()")
-
-    @property
-    @check_cam_setting
-    def grayscale_decimation(self):
-        """
-        returns int
-        """
-        return  TT_CameraGrayscaleDecimation(self.index)
-
-    @grayscale_decimation.setter
-    def grayscale_decimation(self, value):
-        if not TT_SetCameraGrayscaleDecimation(self.index, value):
-            raise Exception("Could Not Set Decimation")
-
-    @property
-    @check_cam_setting
-    def imager_gain(self):
-        """
-        returns int
-        """
-        return  TT_CameraImagerGainLevels(self.index)
-
-    @imager_gain.setter
-    def imager_gain(self, value):
-        assert value<=8, "Maximum Gain Level is 8"
-        TT_SetCameraImagerGain(self.index, value)
-
-    @property
-    def continuous_ir(self):
-        """
-        bool
-        """
-        assert TT_IsContinuousIRAvailable(self.index), "Camera {0} Does Not Support Continuous IR".format(self.index)
-        return TT_ContinuousIR(self.index)
-
-    @continuous_ir.setter
-    def continuous_ir(self, bool value):
-        TT_SetContinuousIR(self.index, value)
-
-#def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
-#    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
-#    print "Set"
-
-#Properties Without Simple Setter (If Not Here Maybe In Camera Class)
-    @property
-    def name(self):
-        """
-        Camera Name
-        """
-        return TT_CameraName(self.index)
-
-    @property
-    @check_cam_setting
-    def id(self):
-        return TT_CameraID(self.index)
-
-    @property
-    def x_location(self):
-        """
-        Returns Camera's X Coord
-        """
-        return TT_CameraXLocation(self.index)
-
-    @property
-    def y_location(self):
-        """
-        Returns Camera's Y Coord
-        """
-        return TT_CameraYLocation(self.index)
-
-    @property
-    def z_location(self):
-        """
-        Returns Camera's Z Coord
-        """
-        return TT_CameraZLocation(self.index)
-
-    def orientation_matrix(self, int matrixIndex):
-        """
-        According to TT_CameraModel()
-        the orientation matrix
-        is a 3x3 matrix.
-        """
-        return TT_CameraOrientationMatrix(self.index, matrixIndex)
-
-    def model(self, float x, float y, float z,             #Camera Position
-              orientation,                                 #Orientation (3x3 matrix)
-              float principleX, float principleY,          #Lens center (in pixels)
-              float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
-              float kc1, float kc2, float kc3,             #Barrel distortion coefficients
-              float tangential0, float tangential1):       #Tangential distortion
-        """
-        Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
-        with parameters compatible with the OpenCV intrinsic model.
-        """
-        cdef float orientationp[9]
-        for i in range(0,9):
-            orientationp[i]=orientation[i]
-        if not TT_CameraModel(self.index, x, y, z, orientationp, principleX, principleY,
-                              focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
-            raise Exception("Could Not Set Parameters")
-
-    @property
-    @check_cam_setting
-    def max_imager_gain(self):
-        return  TT_CameraImagerGain(self.index)
-
-    @property
-    def is_continuous_ir_available(self):
-        return TT_IsContinuousIRAvailable(self.index)
-
-    @property
-    @check_cam_setting
-    def temperature(self):
-        return TT_CameraTemperature(self.index)
-
-    @property
-    @check_cam_setting
-    def ring_light_temperature(self):
-        return  TT_CameraRinglightTemperature(self.index)
-
-    @property
-    def marker_count(self):
-        """
-        Camera's 2D Marker Count
-        """
-        return TT_CameraMarkerCount(self.index)
-
-    #CAMERA MASKING
-    def mask(self, buffername, int bufferSize):
-        assert isinstance(buffername,str), "Buffername Needs To Be String"
-        cdef unsigned char * buffer=buffername
-        return TT_CameraMask(self.index, buffer, bufferSize)
-
-    def set_mask(self, buffername, int bufferSize):
-        assert isinstance(buffername,str), "Buffername Needs To Be String"
-        cdef unsigned char * buffer=buffername
-        if not TT_SetCameraMask(self.index, buffer, bufferSize):
-            raise Exception("Could Not Set Mask")
-
-    def mask_info(self):
-        cdef int blockingMaskWidth=0
-        cdef int blockingMaskHeight=0
-        cdef int blockingMaskGrid=0
-        if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
-            return {'blockingMaskwidth':blockingMaskWidth,'blockingMaskHeight': blockingMaskHeight, 'blockingMaskGrid': blockingMaskGrid}
-        else:
-            raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
-
-    def clear_mask(self):
-        if not TT_ClearCameraMask(self.index):
-            raise Exception("Could Not Clear Mask")
-
-    #CAMERA DISTORTION
-    def undistort_2d_point(self, float x, float y):
-        """
-        The 2D centroids the camera reports are distorted by the lens.  To remove the distortion, call
-        CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
-        to a distorted point call CameraDistort2DPoint.
-        """
-        TT_CameraUndistort2DPoint(self.index, x, y)
-
-    def distort_2d_point(self, float x, float y):
-        """
-        The 2D centroids the camera reports are distorted by the lens.  To remove the distortion, call
-        CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
-        to a distorted point call CameraDistort2DPoint.
-        """
-        TT_CameraDistort2DPoint(self.index, x, y)
-
-    def marker(self, int markerIndex):
-        """
-        CameraMarker fetches the 2D centroid location of the marker as seen by the camera
-        """
-        cdef float x=0
-        cdef float y=0
-        if TT_CameraMarker(self.index, markerIndex, x, y):
-            return x, y
-        else:
-            raise Exception("Could Not Fetch Location. Possibly Marker {0} Is Not Seen By Camera".format(markerIndex))
-
-    def pixel_resolution(self):
-        cdef int width=0
-        cdef int height=0
-        if TT_CameraPixelResolution(self.index, width, height):
-            return {'width':width, 'height':height}
-        else:
-            raise Exception
-
-    def backproject(self, float x, float y, float z):
-        """
-        Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera,
-        it will return where the point would land on the imager of that camera in to 2D space.
-        This basically locates where in the camera's FOV a 3D point would be located.
-        """
-        cdef float cameraX=0
-        cdef float cameraY=0
-        TT_CameraBackproject(self.index, x, y, z, cameraX, cameraY)
-        return cameraX, cameraY
-
-    def ray(self, float x, float y):
-        """
-        Takes an undistorted 2D centroid and return a camera ray in the world coordinate system.
-        """
-        cdef float rayStartX=0
-        cdef float rayStartY=0
-        cdef float rayStartZ=0
-        cdef float rayEndX=0
-        cdef float rayEndY=0
-        cdef float rayEndZ=0
-        if TT_CameraRay(self.index, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
-            return {'Xstart':rayStartX, 'Ystart':rayStartY, 'Zstart':rayStartZ,'Xend':rayEndX, 'Yend':rayEndY, 'Zend':rayEndZ}
-        else:
-            raise Exception
-
-    def frame_centroid(self, int markerIndex):
-        """
-        Returns true if the camera is contributing to this 3D marker.
-        It also returns the location of the 2D centroid that is reconstructing to this 3D marker
-        """
-        cdef float x=0
-        cdef float y=0
-        if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
-            return x, y
-        else:
-            raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
-
-    def frame_buffer(self, int bufferPixelWidth, int bufferPixelHeight,
-                     int bufferByteSpan, int bufferPixelBitDepth, buffername):
-        """
-        Fetch the camera's frame buffer.
-        This function fills the provided buffer with an image of what is in the camera view.
-        The resulting image depends on what video mode the camera is in.
-        If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
-        """
-        assert isinstance(buffername,str), "Buffername Needs To Be String"
-        cdef unsigned char * buffer=buffername
-        if not TT_CameraFrameBuffer(self.index, bufferPixelWidth, bufferPixelHeight, bufferByteSpan, bufferPixelBitDepth, buffer):
-            raise BufferError("Camera Frame Could Not Be Buffered")
-
-    def frame_buffer_save_as_bmp(self, str filename):
-        """
-        Save camera's frame buffer as a BMP image file
-        """
-        if not TT_CameraFrameBufferSaveAsBMP(self.index, filename):
-            raise IOError("Camera Frame Buffer Not Successfully Saved To Filename: {0}.".format(filename))
-
-#Functions To Set Camera Property Value, But W\O Possibility To Get Value
-    def set_filter_switch(self, bool enableIRFilter):
-        """
-        True: IRFilter, False: VisibleLight
-        """
-        if not TT_SetCameraFilterSwitch(self.index, enableIRFilter):
-            raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
-
-    def set_agc(self, bool enableAutomaticGainControl):
-        if not TT_SetCameraAGC(self.index, enableAutomaticGainControl):
-            raise Exception("Could Not Enable AGC. Possibly Camera Has No AGC")
-
-    def set_aec(self, bool enableAutomaticExposureControl):
-        if not TT_SetCameraAEC(self.index, enableAutomaticExposureControl):
-            raise Exception("Could Not Enable AEC. Possibly Camera Has No AEC")
-
-    def set_high_power(self, bool enableHighPowerMode):
-        if not TT_SetCameraHighPower(self.index, enableHighPowerMode):
-            raise Exception("Could Not Enable HighPowerMode. Possibly Camera Has No HighPowerMode")
-
-    def set_mjpeg_high_quality(self, int mjpegQuality):
-        if not TT_SetCameraMJPEGHighQuality(self.index, mjpegQuality):
-            raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")
 
 
 #ADDITIONAL FUNCTIONALITY
@@ -842,8 +441,4 @@ def orient_tracking_bar(float positionX, float positionY, float positionZ,
     return TT_OrientTrackingBar(positionX, positionY, positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
-def software_build():
-    """
-    Software Release Build
-    """
-    return TT_BuildNumber()
+
