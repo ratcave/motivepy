@@ -279,19 +279,25 @@ class RigidBody(object):
         """Get marker count"""
         return TT_RigidBodyMarkerCount(self.index)
 
-    def point_cloud_marker(self, int markerIndex):
-        """ Get corresponding point cloud marker
-        If tracked is false, there is no corresponding point cloud marker.
-        """
-        cdef bool tracked=True
-        cdef float x=0
-        cdef float y=0
-        cdef float z=0
-        TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
-        if tracked:
-            return "The point cloud markers position is x={0}, y={1}, z={2}".format(x,y,z)
-        else:
-            raise Exception("No Corresponding Point Cloud Marker")
+    def point_cloud_marker(self, max_markers=200):
+        """Gets list of point cloud markers, with a max length of max_markers (Default: 200)s"""
+        markers = []
+        cdef int markerIndex
+        cdef bool tracked = True
+
+        for markerIndex in xrange(max_markers):
+
+            # Get marker position.
+            cdef float x = 0, y = 0, z = 0  # Says it works at http://docs.cython.org/src/userguide/pyrex_differences.html
+            TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
+
+            # Add the marker if one was found (tracked was True). Else, return the list of markers!
+            if tracked:
+                markers.append([x, y, z])
+            else:
+                return markers
+
+
 
     def location(self, float x, float y, float z,
                        float qx, float qy, float qz, float qw,
