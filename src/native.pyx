@@ -276,17 +276,27 @@ class RigidBody(object):
         """Is rigid body currently tracked"""
         return TT_IsRigidBodyTracked(self.index)
 
-    def location(self, float x, float y, float z,
-                       float qx, float qy, float qz, float qw,
-                       float yaw, float pitch, float roll):
-        """##
-        Function returns location of rigid body.
-        So far it seems necessary to load the rigid body data
-        through first loading project file."""
+    def get_all_spatial_data(self):
+        """Returns dict: {'location': (x, y, z), 'rotation':(yaw, pitch, roll), 'rotation_quats':(qx, qy, qz, qw)}.
+        This is done in a single C function call, so it's really fast if you want all the data."""
+        cdef float x = 0., y = 0., z = 0., qx = 0., qy = 0., qz = 0., qw = 0., yaw = 0., pitch = 0., roll = 0.
         TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
-        return "The position of rigid body {0} is x={1}, y={2}, z={3}. \n".format(self.index, x, y, z)
-        return "Orientation in quaternions is qx={0}, qy={1}, qz={2}, qw={3}. \n".format(qx, qy, qz, qw)
-        return "Yaw is {0}, pitch is {1}, roll is {2}.".format(yaw, pitch, roll)
+        return {'location': (x, y, z), 'rotation': (yaw, pitch, roll),'rotation_quats': {qx, qy, qz, qw}}
+
+    @property
+    def location(self):
+        """(x, y, z) position."""
+        return self.get_all_spatial_data()['location']
+
+    @property
+    def rotation(self):
+        """(yaw, pitch, roll) rotation"""
+        return self.get_all_spatial_data()['rotation']
+
+    @property
+    def rotation_quats(self):
+        """(qx, qy, qz, qw) quaternion rotation."""
+        return self.get_all_spatial_data()['rotation_quats']
 
     @property
     def markers(self):
