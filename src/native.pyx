@@ -66,6 +66,10 @@ def autoupdate(func):
         return output
     return wrapper
 
+#CONSTANTS
+BUILD_NUMBER = TT_BuildNumber()
+
+
 #STARTUP / SHUTDOWN
 @autoupdate
 @check_npresult
@@ -815,8 +819,4 @@ def orient_tracking_bar(float positionX, float positionY, float positionZ,
     return TT_OrientTrackingBar(positionX, positionY, positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
-def software_build():
-    """
-    Software Release Build
-    """
-    return TT_BuildNumber()
+
