@@ -176,28 +176,30 @@ def stream_np(bool enabled):
 
 #MARKERS
 def frame_markers():
-    """Returns list of all marker positions."""
+    """
+    Returns list of all marker positions.
+    """
     return [[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
 
 
-def unident_markers(int rigidBody_count):
-    """
-    returns a list of all markers which
-    are not in rigid Bodies
-    """
-    markers=frame_markers()
-    unimarkers=[]
-    imarkers=[]
-    for i in range (0,rigidBody_count):
-        for ik in rigidBody_markers(i):
-           imarkers.append(ik)
-           print "{}\n".format(ik)
-        print '\n{}\n\n'.format(imarkers)
-    for k in markers:
-        if k not in imarkers:
-           unimarkers.append(k)
-           print '{}\n'.format(k)
-    return unimarkers
+# def unident_markers(int rigidBody_count):
+#     """
+#     returns a list of all markers which
+#     are not in rigid Bodies
+#     """
+#     markers=frame_markers()
+#     unimarkers=[]
+#     imarkers=[]
+#     for i in range (0,rigidBody_count):
+#         for ik in rigidBody_markers(i):
+#            imarkers.append(ik)
+#            print "{}\n".format(ik)
+#         print '\n{}\n\n'.format(imarkers)
+#     for k in markers:
+#         if k not in imarkers:
+#            unimarkers.append(k)
+#            print '{}\n'.format(k)
+#     return unimarkers
 
 
 
@@ -296,20 +298,19 @@ def clear_rigid_body_list():
     global rigidBodyCount
     rigidBodyCount=0
 
-
 #MARKER SIZE SETTINGS
 @check_npresult
 def set_camera_group_reconstruction(int groupIndex, bool enable):
     return TT_SetCameraGroupReconstruction(groupIndex, enable)
 
+
 @check_npresult
 def set_enabled_filter_switch(bool enabled):
     return TT_SetEnabledFilterSwitch(enabled)
 
+
 def is_filter_switch_enabled():
     return TT_IsFilterSwitchEnabled()
-
-
 
 
 #ADDITIONAL FUNCTIONALITY
