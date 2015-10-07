@@ -10,6 +10,7 @@ cdef extern from "NPTrackingTools.h" namespace "Core":
 
 cdef extern from "NPTrackingTools.h":
 
+    cUID TT_FrameMarkerLabel(int index)                                           #Returns Label of Marker
 
 #STARTUP / SHUTDOWN
     int    TT_Initialize()                                                        #initialize library

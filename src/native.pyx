@@ -2,6 +2,21 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
+cdef class markID:
+    cdef cUID *thisptr            # hold a C++ instance which we're wrapping
+
+    def __cinit__(self):
+        self.thisptr =NULL
+
+    def lowID(self):
+        return self.thisptr.LowBits()
+
+
+def frame_marker_label(marker_index):
+    ID=markID()
+    cdef cUID label=TT_FrameMarkerLabel(marker_index)
+    ID.thisptr=&label
+    return ID
 
 #DECORATORS
 def check_npresult(func):
