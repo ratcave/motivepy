@@ -18,7 +18,7 @@ def check_npresult(func):
             raise error(msg)
     return wrapper
 
-RIGIDBODY_COUNT=2                #should be automatized at one point
+RIGIDBODY_COUNT=3                #should be automatized at one point
 
 def unident_markers():
      """
