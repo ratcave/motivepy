@@ -37,7 +37,8 @@ while True:
     ax.set_zlabel('Z Label')
     if m.frame_markers():
         am=array(m.frame_markers())
-        ax.scatter(am[:,0], am[:,1], am[:,2]) #list of x position of every marker, y position of every marker, z position of every marker
+        ax.scatter(am[:,0], am[:,1], am[:,2],label="markers") #list of x position of every marker, y position of every marker, z position of every marker
+        ax.legend()
         plt.draw()
 
 

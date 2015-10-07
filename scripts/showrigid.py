@@ -47,7 +47,7 @@ while True:
 
             for p in range (0,len(perm_markers)):
                 am=array(perm_markers[p])
-                ax.plot(am[:,0], am[:,1], am[:,2]) #list of x position of every marker, y position of every marker, z position of every marker in rigid body
+                ax.plot(am[:,0], am[:,1], am[:,2], linewidth=3) #list of x position of every marker, y position of every marker, z position of every marker in rigid body
 
         plt.draw()
 

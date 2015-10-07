@@ -22,6 +22,7 @@ fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 plt.ion()
 plt.show()
+color_dict={0:'red',1:'blue',2:'yellow',3:'black',4:'green',5:'magenta',6:'cyan'}
 last_time=time.time()
 
 while True:
@@ -45,13 +46,18 @@ while True:
         ax.scatter(am[:,0], am[:,1], am[:,2])
 
         rigs=m.get_rigid_bodies()
-
+        
         for i in range(1,len(rigs)):
             perm_markers=list(itertools.permutations(rigs[i].point_cloud_markers))
 
+            if len(color_dict)>=i:
+                color=color_dict[i]
+            else:
+                color='blue'
+
             for p in range (0,len(perm_markers)):
                 am=array(perm_markers[p])
-                ax.plot(am[:,0], am[:,1], am[:,2],'r') #list of x position of every marker, y position of every marker, z position of every marker in rigid body
+                ax.plot(am[:,0], am[:,1], am[:,2],color) #list of x position of every marker, y position of every marker, z position of every marker in rigid body
 
         plt.draw()
 
