@@ -29,7 +29,7 @@ def unident_markers():
      rigs=get_rigid_bodies()
      imarkers=[]
      unimarkers=[]
-     for i in range (0,RIGIDBODY_COUNT):
+     for i in range (1,RIGIDBODY_COUNT):
         for ik in rigs[i].point_cloud_markers:
             imarkers.append(ik)
      for k in markers:
