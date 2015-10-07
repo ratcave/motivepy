@@ -155,11 +155,9 @@ def stream_np(bool enabled):
 
 
 #MARKERS
-def frame_markers():
-    """
-    Returns list of all marker positions.
-    """
-    return [[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
+def get_frame_markers():
+    """Returns list of all marker positions"""
+    return tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
 
 cdef class markID:
     cdef cUID *thisptr            # hold a C++ instance which we're wrapping
@@ -200,84 +198,6 @@ def flush_camera_queues():
     """
     TT_FlushCameraQueues()
 
-
-#CAMERA GROUP SUPPORT
-def camera_group_count():
-    """
-    Returns number of camera groups
-    """
-    return TT_CameraGroupCount()
-
-def create_camera_group():
-    """
-    Add an additional group
-    """
-    if not TT_CreateCameraGroup():
-        raise Exception("Could Not Create Camera Group")
-
-def remove_camera_group(int groupIndex):
-    """
-    Remove a camera group (must be empty)
-    """
-    if not TT_RemoveCameraGroup(groupIndex):
-        raise Exception("Could Not Remove. Check If Group Empty")
-
-def set_group_shutter_delay(int groupIndex, int microseconds):
-    """
-    Set camera group's shutter delay
-    """
-    TT_SetGroupShutterDelay(groupIndex, microseconds)
-
-
-#RIGID BODY CONTROL
-
-
-rigidBodyCount=0
-
-def rigidBody_count():
-    """
-    returns number of rigid bodies
-    """
-    return rigidBodyCount
-
-
-
-@check_npresult
-def create_rigid_body(str name, markerList):
-     """
-     The marker list is expected to contain a list of marker coordinates in the order:
-     x1,y1,z1,x2,y2,z2,...xN,yN,zN.
-     """
-     id = rigidBody_count()-1
-     cdef float markerListp[1000]
-     markerCount=len(markerList)
-     assert markerCount<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
-     for i in range(0,len(markerList)):
-         markerListp[3*i]=markerList[i][0]
-         markerListp[3*i+1]=markerList[i][1]
-         markerListp[3*i+2]=markerList[i][2]
-     if (TT_CreateRigidBody(name, id, markerCount, markerListp)==0):
-         global rigidBodyCount
-         rigidBodyCount=rigidBodyCount+1
-     return TT_CreateRigidBody(name, id, markerCount, markerListp)
-
-@check_npresult
-def remove_rigid_body(int rigidIndex):
-    """
-    Remove single rigid body
-    """
-    if (TT_RemoveRigidBody(rigidIndex)==0):
-        global rigidBodyCount
-        rigidBodyCount=rigidBodyCount-1
-    return TT_RemoveRigidBody(rigidIndex)
-
-def clear_rigid_body_list():
-    """
-    Clear all rigid bodies
-    """
-    TT_ClearRigidBodyList()
-    global rigidBodyCount
-    rigidBodyCount=0
 
 #MARKER SIZE SETTINGS
 @check_npresult

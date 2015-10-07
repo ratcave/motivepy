@@ -18,7 +18,7 @@ def check_npresult(func):
             raise error(msg)
     return wrapper
 
-RIGIDBODY_COUNT=3                #should be automatized at one point
+RIGID_BODY_COUNT=3                #should be automatized at one point
 
 def unident_markers():
      """
@@ -29,7 +29,7 @@ def unident_markers():
      rigs=get_rigid_bodies()
      imarkers=[]
      unimarkers=[]
-     for i in range (1,RIGIDBODY_COUNT):
+     for i in range (1,RIGID_BODY_COUNT):
         for ik in rigs[i].point_cloud_markers:
             imarkers.append(ik)
      for k in markers:
@@ -42,8 +42,58 @@ def get_rigid_bodies():
     Initiate all loaded rigid bodies as python objects,
     where rigid body #k is [k-1]
     """
-    return [RigidBody(rigidIndex) for rigidIndex in xrange(RIGIDBODY_COUNT)]
+    return [RigidBody(rigidIndex) for rigidIndex in xrange(RIGID_BODY_COUNT)]
 
+
+rigidBodyCount=0
+
+
+def rigidBody_count():
+    """
+    returns number of rigid bodies
+    """
+    return rigidBodyCount
+
+#FUNCTIONS
+@check_npresult
+def create_rigid_body(str name, markerList):
+     """
+     The marker list is expected to contain a list of marker coordinates in the order:
+     x1,y1,z1,x2,y2,z2,...xN,yN,zN.
+     """
+     id = rigidBody_count()-1
+     cdef float markerListp[1000]
+     markerCount=len(markerList)
+     assert markerCount<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
+     for i in range(0,len(markerList)):
+         markerListp[3*i]=markerList[i][0]
+         markerListp[3*i+1]=markerList[i][1]
+         markerListp[3*i+2]=markerList[i][2]
+     if (TT_CreateRigidBody(name, id, markerCount, markerListp)==0):
+         global rigidBodyCount
+         rigidBodyCount=rigidBodyCount+1
+     return TT_CreateRigidBody(name, id, markerCount, markerListp)
+
+@check_npresult
+def remove_rigid_body(int rigidIndex):
+    """
+    Remove single rigid body
+    """
+    if (TT_RemoveRigidBody(rigidIndex)==0):
+        global rigidBodyCount
+        rigidBodyCount=rigidBodyCount-1
+    return TT_RemoveRigidBody(rigidIndex)
+
+def clear_rigid_body_list():
+    """
+    Clear all rigid bodies
+    """
+    TT_ClearRigidBodyList()
+    global rigidBodyCount
+    rigidBodyCount=0
+
+
+#CLASS
 class RigidBody(object):
     def __init__(self, rigidIndex):
         """Returns a RigidBody Motive API object."""
@@ -130,10 +180,10 @@ class RigidBody(object):
 
             # Add the marker if one was found (tracked was True). Else, put None in its position in the list!
             # TODO: decide what to do with the not_tracked case.
-            marker = [x, y, z] if tracked else None
-            markers.append([x, y, z])
+            marker = (x, y, z) if tracked else None
+            markers.append(marker)
 
-        return markers
+        return tuple(markers)
 
     @check_npresult
     def translate_pivot(self, float x, float y, float z):
