@@ -11,14 +11,32 @@ def check_cam_setting(func):
             return check
     return wrapper
 
+#FUNCTIONS
 def get_cams():
-    """
-    Initiate all cameras as python objects,
-    where camera #k is cam[k-1]
-    """
+    """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
     return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
 
+#CAMERA GROUP SUPPORT
+def camera_group_count():
+    """Returns number of camera groups"""
+    return TT_CameraGroupCount()
 
+def create_camera_group():
+    """Add an additional group"""
+    if not TT_CreateCameraGroup():
+        raise Exception("Could Not Create Camera Group")
+
+def remove_camera_group(int groupIndex):
+    """Remove a camera group (must be empty)"""
+    if not TT_RemoveCameraGroup(groupIndex):
+        raise Exception("Could Not Remove. Check If Group Empty")
+
+def set_group_shutter_delay(int groupIndex, int microseconds):
+    """Set camera group's shutter delay"""
+    TT_SetGroupShutterDelay(groupIndex, microseconds)
+
+
+#CLASS
 class Camera(object):
     def __init__(self, cameraIndex):
         assert cameraIndex < TT_CameraCount(), "There Are Only {0} Cameras".format(TT_CameraCount())

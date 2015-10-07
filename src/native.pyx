@@ -201,36 +201,6 @@ def flush_camera_queues():
     TT_FlushCameraQueues()
 
 
-#CAMERA GROUP SUPPORT
-def camera_group_count():
-    """
-    Returns number of camera groups
-    """
-    return TT_CameraGroupCount()
-
-def create_camera_group():
-    """
-    Add an additional group
-    """
-    if not TT_CreateCameraGroup():
-        raise Exception("Could Not Create Camera Group")
-
-def remove_camera_group(int groupIndex):
-    """
-    Remove a camera group (must be empty)
-    """
-    if not TT_RemoveCameraGroup(groupIndex):
-        raise Exception("Could Not Remove. Check If Group Empty")
-
-def set_group_shutter_delay(int groupIndex, int microseconds):
-    """
-    Set camera group's shutter delay
-    """
-    TT_SetGroupShutterDelay(groupIndex, microseconds)
-
-
-#RIGID BODY CONTROL
-
 #MARKER SIZE SETTINGS
 @check_npresult
 def set_camera_group_reconstruction(int groupIndex, bool enable):
