@@ -46,7 +46,7 @@ while True:
         ax.scatter(am[:,0], am[:,1], am[:,2])
 
         rigs=m.get_rigid_bodies()
-        
+
         for i in range(1,len(rigs)):
             perm_markers=list(itertools.permutations(rigs[i].point_cloud_markers))
 
