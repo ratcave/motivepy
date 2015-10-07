@@ -51,7 +51,7 @@ class Camera(object):
 
     @group.setter
     def group(self,value):
-        return TT_SetCameraGroup(self.index, value)
+        TT_SetCameraGroup(self.index, value)
 
     @property
     @check_cam_setting
