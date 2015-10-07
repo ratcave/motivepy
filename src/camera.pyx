@@ -16,7 +16,7 @@ def get_cams():
     Initiate all cameras as python objects,
     where camera #k is cam[k-1]
     """
-    return [Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount())]
+    return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
 
 
 class Camera(object):

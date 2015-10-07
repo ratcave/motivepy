@@ -160,7 +160,7 @@ def frame_markers():
     """
     Returns list of all marker positions.
     """
-    return [[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
+    return tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
 
 
 # def unident_markers(int rigidBody_count):

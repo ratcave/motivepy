@@ -105,10 +105,10 @@ class RigidBody(object):
 
             # Add the marker if one was found (tracked was True). Else, put None in its position in the list!
             # TODO: decide what to do with the not_tracked case.
-            marker = [x, y, z] if tracked else None
-            markers.append([x, y, z])
+            marker = (x, y, z) if tracked else None
+            markers.append(marker)
 
-        return markers
+        return tuple(markers)
 
     @check_npresult
     def translate_pivot(self, float x, float y, float z):
