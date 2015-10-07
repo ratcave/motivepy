@@ -156,7 +156,7 @@ def stream_np(bool enabled):
 
 
 #MARKERS
-def frame_markers():
+def get_frame_markers():
     """
     Returns list of all marker positions.
     """
