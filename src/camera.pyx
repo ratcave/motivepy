@@ -11,40 +11,59 @@ def check_cam_setting(func):
             return check
     return wrapper
 
+#FUNCTIONS
 def get_cams():
-    """
-    Initiate all cameras as python objects,
-    where camera #k is cam[k-1]
-    """
-    return [Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount())]
+    """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
+    return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
+
+#CAMERA GROUP SUPPORT
+def camera_group_count():
+    """Returns number of camera groups"""
+    return TT_CameraGroupCount()
+
+def create_camera_group():
+    """Add an additional group"""
+    if not TT_CreateCameraGroup():
+        raise Exception("Could Not Create Camera Group")
+
+def remove_camera_group(int groupIndex):
+    """Remove a camera group (must be empty)"""
+    if not TT_RemoveCameraGroup(groupIndex):
+        raise Exception("Could Not Remove. Check If Group Empty")
+
+def set_group_shutter_delay(int groupIndex, int microseconds):
+    """Set camera group's shutter delay"""
+    TT_SetGroupShutterDelay(groupIndex, microseconds)
 
 
+#CLASS
 class Camera(object):
+
     def __init__(self, cameraIndex):
         assert cameraIndex < TT_CameraCount(), "There Are Only {0} Cameras".format(TT_CameraCount())
         self.index=cameraIndex
 
+    def __str__(self):
+        return "Camera {0}: {1}".format(self.index, TT_CameraName(self.index))
+
+    @property
+    def name(self):
+        """Camera Name"""
+        return TT_CameraName(self.index)
+
     @property
     def group(self):
-        """
-        Camera's camera group index
-        """
+        """Camera's camera group index"""
         return TT_CamerasGroup(self.index)
 
     @group.setter
     def group(self,value):
-        return TT_SetCameraGroup(self.index, value)
+        TT_SetCameraGroup(self.index, value)
 
     @property
     @check_cam_setting
     def video_type(self):
-        """
-        0:"Segment Mode"
-        1:"Grayscale Mode"
-        2:"Object Mode"
-        3:"Precision Mode"
-        4:"MJPEG Mode"
-        """
+        """0:"Segment Mode"\n 1:"Grayscale Mode"\n 2:"Object Mode"\n 3:"Precision Mode"\n 4:"MJPEG Mode" """
         return TT_CameraVideoType(self.index)
 
     @video_type.setter
@@ -55,9 +74,7 @@ class Camera(object):
     @property
     @check_cam_setting
     def exposure(self):
-        """
-        Camera exposure level.
-        """
+        """Camera exposure level."""
         return TT_CameraExposure(self.index)
 
     @exposure.setter
@@ -67,11 +84,7 @@ class Camera(object):
     @property
     @check_cam_setting
     def threshold(self):
-        """
-        Camera threshold level for determining
-        whether a pixel is bright enough to
-        contain a reflective marker
-        """
+        """Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker."""
         return TT_CameraThreshold(self.index)
 
     @threshold.setter
@@ -104,10 +117,7 @@ class Camera(object):
     @property
     @check_cam_setting
     def frame_rate(self):
-        """
-        frames/sec
-        int
-        """
+        """frames/sec"""
         return TT_CameraFrameRate(self.index)
 
     @frame_rate.setter
@@ -118,9 +128,7 @@ class Camera(object):
     @property
     @check_cam_setting
     def grayscale_decimation(self):
-        """
-        returns int
-        """
+        """returns int"""
         return  TT_CameraGrayscaleDecimation(self.index)
 
     @grayscale_decimation.setter
@@ -131,9 +139,7 @@ class Camera(object):
     @property
     @check_cam_setting
     def imager_gain(self):
-        """
-        returns int
-        """
+        """returns int"""
         return  TT_CameraImagerGainLevels(self.index)
 
     @imager_gain.setter
@@ -143,9 +149,7 @@ class Camera(object):
 
     @property
     def continuous_ir(self):
-        """
-        bool
-        """
+        """bool"""
         assert TT_IsContinuousIRAvailable(self.index), "Camera {0} Does Not Support Continuous IR".format(self.index)
         return TT_ContinuousIR(self.index)
 
@@ -158,12 +162,6 @@ class Camera(object):
 #    print "Set"
 
 #Properties Without Simple Setter (If Not Here Maybe In Camera Class)
-    @property
-    def name(self):
-        """
-        Camera Name
-        """
-        return TT_CameraName(self.index)
 
     @property
     @check_cam_setting
@@ -175,11 +173,7 @@ class Camera(object):
         return TT_CameraXLocation(self.index), TT_CameraYLocation(self.index), TT_CameraZLocation(self.index)
 
     def orientation_matrix(self, int matrixIndex):
-        """
-        According to TT_CameraModel()
-        the orientation matrix
-        is a 3x3 matrix.
-        """
+        """According to TT_CameraModel(), the orientation matrix is a 3x3 matrix."""
         return TT_CameraOrientationMatrix(self.index, matrixIndex)
 
     def model(self, float x, float y, float z,             #Camera Position
@@ -220,10 +214,19 @@ class Camera(object):
 
     @property
     def marker_count(self):
-        """
-        Camera's 2D Marker Count
-        """
+        """Camera's 2D Marker Count"""
         return TT_CameraMarkerCount(self.index)
+
+    @property
+    def markers(self):
+        """A tuple of 2D centroid locations of the marker as seen by the camera"""
+        cdef float x = 0, y = 0
+        markers = []
+        for marker_index in xrange(TT_CameraMarkerCount(self.index)):
+            TT_CameraMarker(self.index, markerIndex, x, y)
+            markers.append((x, y))
+        return tuple(markers)
+
 
     #CAMERA MASKING
     def mask(self, buffername, int bufferSize):
@@ -267,17 +270,6 @@ class Camera(object):
         """
         TT_CameraDistort2DPoint(self.index, x, y)
 
-    def marker(self, int markerIndex):
-        """
-        CameraMarker fetches the 2D centroid location of the marker as seen by the camera
-        """
-        cdef float x=0
-        cdef float y=0
-        if TT_CameraMarker(self.index, markerIndex, x, y):
-            return x, y
-        else:
-            raise Exception("Could Not Fetch Location. Possibly Marker {0} Is Not Seen By Camera".format(markerIndex))
-
     def pixel_resolution(self):
         cdef int width=0
         cdef int height=0
@@ -298,9 +290,7 @@ class Camera(object):
         return cameraX, cameraY
 
     def ray(self, float x, float y):
-        """
-        Takes an undistorted 2D centroid and return a camera ray in the world coordinate system.
-        """
+        """Takes an undistorted 2D centroid and return a camera ray in the world coordinate system."""
         cdef float rayStartX=0
         cdef float rayStartY=0
         cdef float rayStartZ=0
@@ -338,17 +328,13 @@ class Camera(object):
             raise BufferError("Camera Frame Could Not Be Buffered")
 
     def frame_buffer_save_as_bmp(self, str filename):
-        """
-        Save camera's frame buffer as a BMP image file
-        """
+        """Save camera's frame buffer as a BMP image file"""
         if not TT_CameraFrameBufferSaveAsBMP(self.index, filename):
             raise IOError("Camera Frame Buffer Not Successfully Saved To Filename: {0}.".format(filename))
 
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
     def set_filter_switch(self, bool enableIRFilter):
-        """
-        True: IRFilter, False: VisibleLight
-        """
+        """True: IRFilter, False: VisibleLight"""
         if not TT_SetCameraFilterSwitch(self.index, enableIRFilter):
             raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
 
