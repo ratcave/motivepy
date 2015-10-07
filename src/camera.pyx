@@ -212,6 +212,17 @@ class Camera(object):
         """Camera's 2D Marker Count"""
         return TT_CameraMarkerCount(self.index)
 
+    @property
+    def markers(self):
+        """A tuple of 2D centroid locations of the marker as seen by the camera"""
+        cdef float x = 0, y = 0
+        markers = []
+        for marker_index in xrange(TT_CameraMarkerCount(self.index)):
+            TT_CameraMarker(self.index, markerIndex, x, y)
+            markers.append((x, y))
+        return tuple(markers)
+
+
     #CAMERA MASKING
     def mask(self, buffername, int bufferSize):
         assert isinstance(buffername,str), "Buffername Needs To Be String"
@@ -253,15 +264,6 @@ class Camera(object):
         to a distorted point call CameraDistort2DPoint.
         """
         TT_CameraDistort2DPoint(self.index, x, y)
-
-    def marker(self, int markerIndex):
-        """CameraMarker fetches the 2D centroid location of the marker as seen by the camera"""
-        cdef float x=0
-        cdef float y=0
-        if TT_CameraMarker(self.index, markerIndex, x, y):
-            return x, y
-        else:
-            raise Exception("Could Not Fetch Location. Possibly Marker {0} Is Not Seen By Camera".format(markerIndex))
 
     def pixel_resolution(self):
         cdef int width=0
