@@ -38,9 +38,18 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
 
 #CLASS
 class Camera(object):
+
     def __init__(self, cameraIndex):
         assert cameraIndex < TT_CameraCount(), "There Are Only {0} Cameras".format(TT_CameraCount())
         self.index=cameraIndex
+
+    def __str__(self):
+        return "Camera {0}: {1}".format(self.index, TT_CameraName(self.index))
+
+    @property
+    def name(self):
+        """Camera Name"""
+        return TT_CameraName(self.index)
 
     @property
     def group(self):
@@ -153,10 +162,6 @@ class Camera(object):
 #    print "Set"
 
 #Properties Without Simple Setter (If Not Here Maybe In Camera Class)
-    @property
-    def name(self):
-        """Camera Name"""
-        return TT_CameraName(self.index)
 
     @property
     @check_cam_setting
