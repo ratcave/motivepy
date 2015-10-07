@@ -18,6 +18,31 @@ def check_npresult(func):
             raise error(msg)
     return wrapper
 
+RIGIDBODY_COUNT=2                #should be automatized at one point
+
+def unident_markers():
+     """
+     returns a list of all markers which
+     are not in rigid Bodies
+     """
+     markers=[[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
+     rigs=get_rigid_bodies()
+     imarkers=[]
+     unimarkers=[]
+     for i in range (0,RIGIDBODY_COUNT):
+        for ik in rigs[i].point_cloud_markers:
+            imarkers.append(ik)
+     for k in markers:
+        if k not in imarkers:
+            unimarkers.append(k)
+     return unimarkers
+
+def get_rigid_bodies():
+    """
+    Initiate all loaded rigid bodies as python objects,
+    where rigid body #k is [k-1]
+    """
+    return [RigidBody(rigidIndex) for rigidIndex in xrange(RIGIDBODY_COUNT)]
 
 class RigidBody(object):
     def __init__(self, rigidIndex):

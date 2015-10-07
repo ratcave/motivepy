@@ -2,22 +2,6 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
-cdef class markID:
-    cdef cUID *thisptr            # hold a C++ instance which we're wrapping
-
-    def __cinit__(self):
-        self.thisptr =NULL
-
-    def lowID(self):
-        return self.thisptr.LowBits()
-
-
-def frame_marker_label(marker_index):
-    ID=markID()
-    cdef cUID label=TT_FrameMarkerLabel(marker_index)
-    ID.thisptr=&label
-    return ID
-
 #DECORATORS
 def check_npresult(func):
     """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
@@ -177,27 +161,28 @@ def frame_markers():
     """
     return [[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
 
+cdef class markID:
+    cdef cUID *thisptr            # hold a C++ instance which we're wrapping
 
-# def unident_markers(int rigidBody_count):
-#     """
-#     returns a list of all markers which
-#     are not in rigid Bodies
-#     """
-#     markers=frame_markers()
-#     unimarkers=[]
-#     imarkers=[]
-#     for i in range (0,rigidBody_count):
-#         for ik in rigidBody_markers(i):
-#            imarkers.append(ik)
-#            print "{}\n".format(ik)
-#         print '\n{}\n\n'.format(imarkers)
-#     for k in markers:
-#         if k not in imarkers:
-#            unimarkers.append(k)
-#            print '{}\n'.format(k)
-#     return unimarkers
+    def __cinit__(self):
+        self.thisptr =NULL
+    @property
+    def low_bits(self):
+        return self.thisptr.LowBits()
+
+    @property
+    def high_bits(self):
+        return self.thisptr.HighBits()
 
 
+def frame_marker_label(marker_index):
+    """"
+    returns marker label (cUID) class object
+    """
+    ID=markID()
+    cdef cUID label=TT_FrameMarkerLabel(marker_index)
+    ID.thisptr=&label
+    return ID
 
 
 def frame_time_stamp():
