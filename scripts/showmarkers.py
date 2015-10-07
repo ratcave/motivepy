@@ -18,6 +18,7 @@ m.load_project(project_file)
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
+
 plt.ion()
 plt.show()
 last_time=time.time()
@@ -43,8 +44,8 @@ while True:
         amx, amy, amz = am[:,0], am[:,1], am[:,2]
         x2, y2, _ = proj3d.proj_transform(amx[0],amy[0],amz[0], ax.get_proj())
         plt.annotate('unimarker1',xy=(x2,y2),xytext=(-1,1),textcoords = 'offset points', ha = 'right', va = 'bottom')
-
-        ax.scatter(amx, amy, amz,label="markers") #list of x position of every marker, y position of every marker, z position of every marker
+        plt.figtext(0.1,0.1,".", color='blue', size='x-large')
+        ax.scatter(amx, amy, amz, label="markers") #list of x position of every marker, y position of every marker, z position of every marker
         ax.legend()
         plt.draw()
 
