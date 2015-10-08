@@ -243,7 +243,7 @@ class Camera(object):
             raise Exception("Could Not Set Mask")
 
     def mask_info(self):
-        cdef int blockingMaskWidth=0, blockingMaskHeight=0 blockingMaskGrid=0
+        cdef int blockingMaskWidth=0, blockingMaskHeight=0, blockingMaskGrid=0
         if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
             return {'blockingMaskwidth':blockingMaskWidth,'blockingMaskHeight': blockingMaskHeight, 'blockingMaskGrid': blockingMaskGrid}
         else:

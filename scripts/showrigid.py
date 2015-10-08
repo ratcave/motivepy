@@ -13,7 +13,6 @@ root = Tkinter.Tk()
 root.withdraw()
 project_file_u=tkFileDialog.askopenfilename(title='Choose a project file to load: ', filetypes=[('motive projectfiles', '*.ttp')])
 project_file = project_file_u.encode("ascii")
-m.initialize()
 m.load_project(project_file)
 
 #TO DO: automatically change rigidbody count

@@ -13,7 +13,6 @@ root = Tkinter.Tk()
 root.withdraw()
 project_file_u=tkFileDialog.askopenfilename(title='Choose a project file to load: ', filetypes=[('motive projectfiles', '*.ttp')])
 project_file = project_file_u.encode("ascii")
-m.initialize()
 m.load_project(project_file)
 
 fig = plt.figure()
@@ -23,7 +22,7 @@ plt.ion()
 plt.show()
 last_time=time.time()
 
-while True:
+def update_position(e):
     m.update_single_frame()
 
     if m.get_frame_markers():
@@ -35,6 +34,7 @@ while True:
             ax.set_title("Update Rate: {0} fps".format(1./(update_time-last_time)))
         except ZeroDivisionError:
             pass
+        global last_time
         last_time=update_time
 
         ax.set_xlabel('X Label')
@@ -46,9 +46,10 @@ while True:
         plt.annotate('unimarker1',xy=(x2,y2),xytext=(-1,1),textcoords = 'offset points', ha = 'right', va = 'bottom')
         p=ax.scatter(amx, amy, amz, label="markers") #list of x position of every marker, y position of every marker, z position of every marker
         plt.legend(handles=[p])
-        plt.draw()
+        #plt.draw()
 
-
-
+fig.canvas.mpl_connect('draw_event', update_position)
+plt.draw()
+#plt.show
 
 

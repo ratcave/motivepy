@@ -45,9 +45,6 @@ def autoupdate(func):
     return wrapper
 
 
-
-
-
 #STARTUP / SHUTDOWN
 @autoupdate
 @check_npresult

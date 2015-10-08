@@ -18,7 +18,11 @@ def check_npresult(func):
             raise error(msg)
     return wrapper
 
-def unident_markers():
+
+
+
+#FUNCTIONS
+def get_unident_markers():
      """returns a tuple of all markers which are not in rigid Bodies"""
      markers=tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
      rigs=get_rigid_bodies()
@@ -36,10 +40,13 @@ def get_rigid_bodies():
     """Initiate all loaded rigid bodies as python objects, where rigid body #k is [k-1]"""
     return tuple(RigidBody(rigidIndex) for rigidIndex in xrange(TT_RigidBodyCount()))
 
-#FUNCTIONS
 @check_npresult
 def create_rigid_body(str name, markerList):
-     """The marker list is expected to contain a list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN."""
+     """
+     The marker list is expected to contain a list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN.
+     For some reason a rigid body created via this function in python, is not tracked,
+     and seemingly cannot be tracked.
+     """
      raise NotImplementedError()
      cdef float markerListp[1000]
      markerCount=len(markerList)
@@ -49,7 +56,8 @@ def create_rigid_body(str name, markerList):
          markerListp[3*i+1]=markerList[i][1]
          markerListp[3*i+2]=markerList[i][2]
 
-     return TT_CreateRigidBody(name, id, markerCount, markerListp)
+     rigidIndexplus1=TT_RigidBodyCount()+1
+     return TT_CreateRigidBody(name, rigidIndexplus1 , markerCount, markerListp)
 
 @check_npresult
 def remove_rigid_body(int rigidIndex):
@@ -140,7 +148,7 @@ class RigidBody(object):
 
     @property
     def point_cloud_markers(self):
-        """Gets list of point cloud markers."""
+        """Gets tuple of point cloud markers."""            #Tuples for the location of each marker is good. But all locations together seems more feasible for list!
         markers = []
         cdef int markerIndex
         cdef bool tracked = True
@@ -148,10 +156,8 @@ class RigidBody(object):
         for markerIndex in xrange(TT_RigidBodyMarkerCount(self.index)):
             # Get marker position
             TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
-
-            # Add the marker if one was found (tracked was True). Else, put None in its position in the list!
-            # TODO: decide what to do with the not_tracked case.
-            marker = (x, y, z) if tracked else None
+            # Add the marker if one was found (tracked was True). Else, substitute by rigid body position
+            marker = (x, y, z) if tracked else self.location
             markers.append(marker)
 
         return tuple(markers)
