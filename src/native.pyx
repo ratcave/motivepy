@@ -20,8 +20,7 @@ def check_npresult(func):
             raise error(msg)
     return wrapper
 
-
-def block_for_frame(secs_to_timeout=1):
+def block_for_frame(secs_to_timeout=3):
     """Decorator to continually call a function until it stops raising a RuntimeWarning or until timeout."""
     import time
     def decorator_fun(func):
@@ -37,22 +36,6 @@ def block_for_frame(secs_to_timeout=1):
         return wrapper
     return decorator_fun
 
-@block_for_frame(secs_to_timeout=3)
-@check_npresult
-def update_single_frame():
-    """
-    Process incoming camera data
-    """
-    return TT_UpdateSingleFrame()
-
-@block_for_frame(secs_to_timeout=3)
-@check_npresult
-def update():
-    """
-    Process incoming camera data. More than one frame
-    """
-    return TT_Update()
-
 def autoupdate(func):
     def wrapper(*args, **kwargs):
         """Decorator, to call update() right after calling the function."""
@@ -63,10 +46,12 @@ def autoupdate(func):
 
 
 
+
+
 #STARTUP / SHUTDOWN
 @autoupdate
 @check_npresult
-def initialize():
+def _initialize():
     """Initialize the connection to Motive.  Done automatically upon importing the Python package."""
     return TT_Initialize()
 
@@ -76,6 +61,18 @@ def shutdown():
     shutdown library
     """
     return TT_Shutdown()
+
+@block_for_frame(secs_to_timeout=3)
+@check_npresult
+def update_single_frame():
+    """Process incoming camera data"""
+    return TT_UpdateSingleFrame()
+
+@block_for_frame(secs_to_timeout=3)
+@check_npresult
+def update():
+    """Process incoming camera data. More than one frame"""
+    return TT_Update()
 
 
 #RIGID BODY INTERFACE FILES
@@ -181,7 +178,6 @@ def frame_marker_label(marker_index):
     cdef cUID label=TT_FrameMarkerLabel(marker_index)
     ID.thisptr=&label
     return ID
-
 
 def frame_time_stamp():
     """

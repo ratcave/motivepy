@@ -1,7 +1,6 @@
 __author__ = 'ratcave'
 
-import motive as m
 
-m.initialize()
+import motive as m
 
 m.load_project("Nico3.ttp")

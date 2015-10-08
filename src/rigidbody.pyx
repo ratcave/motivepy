@@ -18,50 +18,29 @@ def check_npresult(func):
             raise error(msg)
     return wrapper
 
-RIGID_BODY_COUNT=3                #should be automatized at one point
-
 def unident_markers():
-     """
-     returns a list of all markers which
-     are not in rigid Bodies
-     """
-     markers=[[TT_FrameMarkerX(idx), TT_FrameMarkerY(idx), TT_FrameMarkerZ(idx)] for idx in xrange(TT_FrameMarkerCount())]
+     """returns a tuple of all markers which are not in rigid Bodies"""
+     markers=tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
      rigs=get_rigid_bodies()
      imarkers=[]
      unimarkers=[]
-     for i in range (1,RIGID_BODY_COUNT):
+     for i in range (1,TT_RigidBodyCount()):
         for ik in rigs[i].point_cloud_markers:
             imarkers.append(ik)
      for k in markers:
         if k not in imarkers:
             unimarkers.append(k)
-     return unimarkers
+     return tuple(unimarkers)
 
 def get_rigid_bodies():
-    """
-    Initiate all loaded rigid bodies as python objects,
-    where rigid body #k is [k-1]
-    """
-    return [RigidBody(rigidIndex) for rigidIndex in xrange(RIGID_BODY_COUNT)]
-
-
-rigidBodyCount=0
-
-
-def rigidBody_count():
-    """
-    returns number of rigid bodies
-    """
-    return rigidBodyCount
+    """Initiate all loaded rigid bodies as python objects, where rigid body #k is [k-1]"""
+    return tuple(RigidBody(rigidIndex) for rigidIndex in xrange(TT_RigidBodyCount()))
 
 #FUNCTIONS
 @check_npresult
 def create_rigid_body(str name, markerList):
-     """
-     The marker list is expected to contain a list of marker coordinates in the order:
-     x1,y1,z1,x2,y2,z2,...xN,yN,zN.
-     """
-     id = rigidBody_count()-1
+     """The marker list is expected to contain a list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN."""
+     raise NotImplementedError()
      cdef float markerListp[1000]
      markerCount=len(markerList)
      assert markerCount<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
@@ -69,39 +48,31 @@ def create_rigid_body(str name, markerList):
          markerListp[3*i]=markerList[i][0]
          markerListp[3*i+1]=markerList[i][1]
          markerListp[3*i+2]=markerList[i][2]
-     if (TT_CreateRigidBody(name, id, markerCount, markerListp)==0):
-         global rigidBodyCount
-         rigidBodyCount=rigidBodyCount+1
+
      return TT_CreateRigidBody(name, id, markerCount, markerListp)
 
 @check_npresult
 def remove_rigid_body(int rigidIndex):
-    """
-    Remove single rigid body
-    """
-    if (TT_RemoveRigidBody(rigidIndex)==0):
-        global rigidBodyCount
-        rigidBodyCount=rigidBodyCount-1
+    """Remove single rigid body"""
     return TT_RemoveRigidBody(rigidIndex)
 
 def clear_rigid_body_list():
-    """
-    Clear all rigid bodies
-    """
+    """Clear all rigid bodies"""
     TT_ClearRigidBodyList()
-    global rigidBodyCount
-    rigidBodyCount=0
 
 
 #CLASS
 class RigidBody(object):
     def __init__(self, rigidIndex):
         """Returns a RigidBody Motive API object."""
-        #assert 0<=rigidIndex<rigidBodyCount, "There Are Only {0} Rigid Bodies".format(rigidBodyCount)
+        assert 0<=rigidIndex<TT_RigidBodyCount(), "There Are Only {0} Rigid Bodies".format(TT_RigidBodyCount())
         self.index=rigidIndex
 
     def __str__(self):
-        return "Rigid Body: {}".format(self.name)
+        return "Rigid Body Object: {0}".format(self.name)
+
+    def __repr__(self):
+        return self.__str__()
 
     @property
     def name(self):
@@ -175,7 +146,7 @@ class RigidBody(object):
         cdef bool tracked = True
         cdef float x = 0, y = 0, z = 0  # Says it works at http://docs.cython.org/src/userguide/pyrex_differences.html
         for markerIndex in xrange(TT_RigidBodyMarkerCount(self.index)):
-            # Get marker position.
+            # Get marker position
             TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
 
             # Add the marker if one was found (tracked was True). Else, put None in its position in the list!
@@ -190,7 +161,8 @@ class RigidBody(object):
         """
         Rigid Body Pivot-Point Translation: Sets a translation offset for the centroid of the rigid body.
         Reported values for the location of the rigid body, as well as the 3D visualization, will be shifted
-        by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters. """
+        by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters.
+        """
         return TT_RigidBodyTranslatePivot(self.index, x, y, z)
 
     def reset_orientation(self):

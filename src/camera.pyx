@@ -11,10 +11,9 @@ def check_cam_setting(func):
             return check
     return wrapper
 
+
 def get_cams():
-    """
-    Initiate all cameras as python objects, where camera #k is cam[k-1]
-    """
+    """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
     return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
 
 #CAMERA GROUP SUPPORT
@@ -36,6 +35,7 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
     """Set camera group's shutter delay"""
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
+
 #CLASS
 class Camera(object):
 
@@ -44,7 +44,10 @@ class Camera(object):
         self.index=cameraIndex
 
     def __str__(self):
-        return "Camera {0}: {1}".format(self.index, TT_CameraName(self.index))
+        return "Camera Object {0}: {1}".format(self.index, TT_CameraName(self.index))
+
+    def __repr__(self):
+        return self.__str__()
 
     @property
     def name(self):
@@ -240,9 +243,7 @@ class Camera(object):
             raise Exception("Could Not Set Mask")
 
     def mask_info(self):
-        cdef int blockingMaskWidth=0
-        cdef int blockingMaskHeight=0
-        cdef int blockingMaskGrid=0
+        cdef int blockingMaskWidth=0, blockingMaskHeight=0 blockingMaskGrid=0
         if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
             return {'blockingMaskwidth':blockingMaskWidth,'blockingMaskHeight': blockingMaskHeight, 'blockingMaskGrid': blockingMaskGrid}
         else:
@@ -270,8 +271,7 @@ class Camera(object):
         TT_CameraDistort2DPoint(self.index, x, y)
 
     def pixel_resolution(self):
-        cdef int width=0
-        cdef int height=0
+        cdef int width=0, height=0
         if TT_CameraPixelResolution(self.index, width, height):
             return {'width':width, 'height':height}
         else:
@@ -283,19 +283,13 @@ class Camera(object):
         it will return where the point would land on the imager of that camera in to 2D space.
         This basically locates where in the camera's FOV a 3D point would be located.
         """
-        cdef float cameraX=0
-        cdef float cameraY=0
+        cdef float cameraX=0, cameraY=0
         TT_CameraBackproject(self.index, x, y, z, cameraX, cameraY)
         return cameraX, cameraY
 
     def ray(self, float x, float y):
         """Takes an undistorted 2D centroid and returns a camera ray in the world coordinate system"""
-        cdef float rayStartX=0
-        cdef float rayStartY=0
-        cdef float rayStartZ=0
-        cdef float rayEndX=0
-        cdef float rayEndY=0
-        cdef float rayEndZ=0
+        cdef float rayStartX=0, rayStartY=0, rayStartZ=0, rayEndX=0, rayEndY=0, rayEndZ=0
         if TT_CameraRay(self.index, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
             return {'Xstart':rayStartX, 'Ystart':rayStartY, 'Zstart':rayStartZ,'Xend':rayEndX, 'Yend':rayEndY, 'Zend':rayEndZ}
         else:
@@ -306,8 +300,7 @@ class Camera(object):
         Returns true if the camera is contributing to this 3D marker.
         It also returns the location of the 2D centroid that is reconstructing to this 3D marker
         """
-        cdef float x=0
-        cdef float y=0
+        cdef float x=0, y=0
         if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
             return x, y
         else:
