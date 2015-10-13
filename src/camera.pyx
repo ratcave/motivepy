@@ -141,12 +141,12 @@ class Camera(object):
 
     @property
     @check_cam_setting
-    def imager_gain(self):
+    def image_gain(self):
         """returns int"""
         return  TT_CameraImagerGainLevels(self.index)
 
-    @imager_gain.setter
-    def imager_gain(self, value):
+    @image_gain.setter
+    def image_gain(self, value):
         assert value<=8, "Maximum Gain Level is 8"
         TT_SetCameraImagerGain(self.index, value)
 
@@ -197,7 +197,7 @@ class Camera(object):
 
     @property
     @check_cam_setting
-    def max_imager_gain(self):
+    def max_image_gain(self):
         return  TT_CameraImagerGain(self.index)
 
     @property
