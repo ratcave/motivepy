@@ -1872,7 +1872,7 @@ static PyObject *__pyx_pf_9rigidbody_2get_unident_markers(CYTHON_UNUSED PyObject
  *      rigs=get_rigid_bodies()
  *      imarkers=[]             # <<<<<<<<<<<<<<
  *      unimarkers=[]
- *      for i in range (1,TT_RigidBodyCount()):
+ *      for i in range (0,TT_RigidBodyCount()):
  */
   __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
@@ -1883,7 +1883,7 @@ static PyObject *__pyx_pf_9rigidbody_2get_unident_markers(CYTHON_UNUSED PyObject
  *      rigs=get_rigid_bodies()
  *      imarkers=[]
  *      unimarkers=[]             # <<<<<<<<<<<<<<
- *      for i in range (1,TT_RigidBodyCount()):
+ *      for i in range (0,TT_RigidBodyCount()):
  *         for ik in rigs[i].point_cloud_markers:
  */
   __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -1894,17 +1894,17 @@ static PyObject *__pyx_pf_9rigidbody_2get_unident_markers(CYTHON_UNUSED PyObject
   /* "rigidbody.pyx":31
  *      imarkers=[]
  *      unimarkers=[]
- *      for i in range (1,TT_RigidBodyCount()):             # <<<<<<<<<<<<<<
+ *      for i in range (0,TT_RigidBodyCount()):             # <<<<<<<<<<<<<<
  *         for ik in rigs[i].point_cloud_markers:
  *             imarkers.append(ik)
  */
   __pyx_t_4 = TT_RigidBodyCount();
-  for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
     /* "rigidbody.pyx":32
  *      unimarkers=[]
- *      for i in range (1,TT_RigidBodyCount()):
+ *      for i in range (0,TT_RigidBodyCount()):
  *         for ik in rigs[i].point_cloud_markers:             # <<<<<<<<<<<<<<
  *             imarkers.append(ik)
  *      for k in markers:
@@ -1958,7 +1958,7 @@ static PyObject *__pyx_pf_9rigidbody_2get_unident_markers(CYTHON_UNUSED PyObject
       __pyx_t_1 = 0;
 
       /* "rigidbody.pyx":33
- *      for i in range (1,TT_RigidBodyCount()):
+ *      for i in range (0,TT_RigidBodyCount()):
  *         for ik in rigs[i].point_cloud_markers:
  *             imarkers.append(ik)             # <<<<<<<<<<<<<<
  *      for k in markers:
@@ -1968,7 +1968,7 @@ static PyObject *__pyx_pf_9rigidbody_2get_unident_markers(CYTHON_UNUSED PyObject
 
       /* "rigidbody.pyx":32
  *      unimarkers=[]
- *      for i in range (1,TT_RigidBodyCount()):
+ *      for i in range (0,TT_RigidBodyCount()):
  *         for ik in rigs[i].point_cloud_markers:             # <<<<<<<<<<<<<<
  *             imarkers.append(ik)
  *      for k in markers:

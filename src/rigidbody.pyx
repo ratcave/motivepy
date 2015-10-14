@@ -28,7 +28,7 @@ def get_unident_markers():
      rigs=get_rigid_bodies()
      imarkers=[]
      unimarkers=[]
-     for i in range (1,TT_RigidBodyCount()):
+     for i in range (0,TT_RigidBodyCount()):
         for ik in rigs[i].point_cloud_markers:
             imarkers.append(ik)
      for k in markers:
