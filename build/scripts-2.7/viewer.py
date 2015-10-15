@@ -1,5 +1,8 @@
 __author__ = 'nico'
 
+#import pdb
+#pdb.set_trace()
+
 import motive as m
 import Tkinter, tkFileDialog
 from numpy import array, linspace, vstack, zeros_like

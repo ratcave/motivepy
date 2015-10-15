@@ -34,5 +34,5 @@ setup(
     name="motive",
     ext_modules= cythonize([native, rigidbody, camera]),
     packages=["motive"],
-    scripts=['scripts/vislight.py', 'scripts/showmarkers.py']
+    scripts=['scripts/vislight.py', 'scripts/viewer.py']
 )
