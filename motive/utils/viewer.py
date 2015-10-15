@@ -93,6 +93,8 @@ def viewer():
     t.timeout.connect(updater.next)
     t.start(2)
 
+    QtGui.QApplication.instance().exec_()
+
     ## Start Qt event loop unless running in interactive mode.
     if __name__ == '__main__':
         import sys

@@ -4,6 +4,8 @@ motive.egg-info/PKG-INFO
 motive.egg-info/SOURCES.txt
 motive.egg-info/dependency_links.txt
 motive.egg-info/top_level.txt
+motive/utils/__init__.py
+motive/utils/viewer.py
 scripts/viewer.py
 scripts/vislight.py
 src/camera.cpp

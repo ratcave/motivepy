@@ -1,4 +1,4 @@
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 
 native = Extension(
@@ -33,6 +33,6 @@ rigidbody = Extension(
 setup(
     name="motive",
     ext_modules= cythonize([native, rigidbody, camera]),
-    packages=["motive"],
+    packages= find_packages(), #,["motive"],
     scripts=['scripts/vislight.py', 'scripts/viewer.py']
 )
