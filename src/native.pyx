@@ -2,6 +2,8 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
+import utils
+
 #DECORATORS
 def check_npresult(func):
     """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
@@ -74,38 +76,47 @@ def update():
 
 #RIGID BODY INTERFACE FILES
 @check_npresult
-def load_calibration(str calib_filename):
+def load_calibration(str file_name):
     """
     load calibration
     """
-    return TT_LoadCalibration(calib_filename)
+    utils.crash_avoidance.check_file_exists(file_name)
+    utils.crash_avoidance.check_file_extension(file_name, '.cal')
+    return TT_LoadCalibration(file_name)
 
 @check_npresult
-def load_rigid_bodies(str load_bodies_file):
+def load_rigid_bodies(str file_name):
     """
     load rigid bodies
     """
-    return TT_LoadRigidBodies(load_bodies_file)
+    utils.crash_avoidance.check_file_exists(file_name)
+    utils.crash_avoidance.check_file_extension(file_name, '.tra')
+    return TT_LoadRigidBodies(file_name)
 
 @check_npresult
-def save_rigid_bodies(str rigid_filename):
+def save_rigid_bodies(str file_name):
     """
     save rigid bodies
     """
-    return TT_SaveRigidBodies(rigid_filename)
+    utils.crash_avoidance.check_file_extension(file_name, '.tra')
+    return TT_SaveRigidBodies(file_name)
 
 @check_npresult
-def add_rigid_bodies(str rigid_bodies_file):
+def add_rigid_bodies(str file_name):
     """
     add rigid bodies
     """
-    return TT_AddRigidBodies(rigid_bodies_file)
+    utils.crash_avoidance.check_file_extension(file_name, '.tra')
+    utils.crash_avoidance.check_file_exists(file_name)
+    return TT_AddRigidBodies(file_name)
 
 @check_npresult
 def load_project(str project_file):
     """
     load project file
     """
+    utils.crash_avoidance.check_file_exists(project_file)
+    utils.crash_avoidance.check_file_extension(project_file, '.ttp')
     return TT_LoadProject(project_file)
 
 @check_npresult
@@ -113,6 +124,7 @@ def save_project(str project_file):
     """
     save project file
     """
+    utils.crash_avoidance.check_file_extension(project_file, '.ttp')
     return TT_SaveProject(project_file)
 
 @check_npresult
