@@ -4,78 +4,34 @@ include "cnative.pxd"
 
 import utils
 
-#DECORATORS
-def check_npresult(func):
-    """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
-    error_dict = {1: (IOError, "File Not Found"),
-                  2: (Exception, "Load Failed"),
-                  3: (Exception, "Failed"),
-                  8: (IOError, "Invalid File"),
-                  9: (IOError, "Invalid Calibration File"),
-                  10: (EnvironmentError, "Unable To Initialize"),
-                  11: (EnvironmentError, "Invalid License"),
-                  14: (RuntimeWarning, "No Frames Available")}
-    def wrapper(*args, **kwargs):
-        npresult = func(*args, **kwargs)
-        if npresult in error_dict:
-            error, msg = error_dict[npresult]
-            raise error(msg)
-    return wrapper
-
-def block_for_frame(secs_to_timeout=3):
-    """Decorator to continually call a function until it stops raising a RuntimeWarning or until timeout."""
-    import time
-    def decorator_fun(func):
-        def wrapper(*args, **kwargs):
-            end_time = time.time() + secs_to_timeout
-            while time.time() < end_time:
-                try:
-                    return func(*args, **kwargs)
-                except RuntimeWarning:
-                    pass
-            else:
-                raise RuntimeWarning("No Frames Available: Timed Out after {} seconds".format(secs_to_timeout))
-        return wrapper
-    return decorator_fun
-
-def autoupdate(func):
-    def wrapper(*args, **kwargs):
-        """Decorator, to call update() right after calling the function."""
-        output = func(*args, **kwargs)
-        update()
-        return output
-    return wrapper
-
-
 #STARTUP / SHUTDOWN
-@autoupdate
-@check_npresult
+@utils.decorators.check_npresult
 def _initialize():
     """Initialize the connection to Motive.  Done automatically upon importing the Python package."""
     return TT_Initialize()
 
-@check_npresult
+@utils.decorators.check_npresult
 def shutdown():
     """
     shutdown library
     """
     return TT_Shutdown()
 
-@block_for_frame(secs_to_timeout=3)
-@check_npresult
+@utils.decorators.block_for_frame(secs_to_timeout=3)
+@utils.decorators.check_npresult
 def update_single_frame():
     """Process incoming camera data"""
     return TT_UpdateSingleFrame()
 
-@block_for_frame(secs_to_timeout=3)
-@check_npresult
+@utils.decorators.block_for_frame(secs_to_timeout=3)
+@utils.decorators.check_npresult
 def update():
     """Process incoming camera data. More than one frame"""
     return TT_Update()
 
 
 #RIGID BODY INTERFACE FILES
-@check_npresult
+@utils.decorators.check_npresult
 def load_calibration(str file_name):
     """
     load calibration
@@ -84,7 +40,7 @@ def load_calibration(str file_name):
     utils.crash_avoidance.check_file_extension(file_name, '.cal')
     return TT_LoadCalibration(file_name)
 
-@check_npresult
+@utils.decorators.check_npresult
 def load_rigid_bodies(str file_name):
     """
     load rigid bodies
@@ -93,7 +49,7 @@ def load_rigid_bodies(str file_name):
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_LoadRigidBodies(file_name)
 
-@check_npresult
+@utils.decorators.check_npresult
 def save_rigid_bodies(str file_name):
     """
     save rigid bodies
@@ -101,7 +57,7 @@ def save_rigid_bodies(str file_name):
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_SaveRigidBodies(file_name)
 
-@check_npresult
+@utils.decorators.check_npresult
 def add_rigid_bodies(str file_name):
     """
     add rigid bodies
@@ -110,7 +66,7 @@ def add_rigid_bodies(str file_name):
     utils.crash_avoidance.check_file_exists(file_name)
     return TT_AddRigidBodies(file_name)
 
-@check_npresult
+@utils.decorators.check_npresult
 def load_project(str project_file):
     """
     load project file
@@ -119,7 +75,7 @@ def load_project(str project_file):
     utils.crash_avoidance.check_file_extension(project_file, '.ttp')
     return TT_LoadProject(project_file)
 
-@check_npresult
+@utils.decorators.check_npresult
 def save_project(str project_file):
     """
     save project file
@@ -127,7 +83,7 @@ def save_project(str project_file):
     utils.crash_avoidance.check_file_extension(project_file, '.ttp')
     return TT_SaveProject(project_file)
 
-@check_npresult
+@utils.decorators.check_npresult
 def load_calibration_from_memory(buffername, int buffersize):
     assert isinstance(buffername, str), "Buffername Needs To Be String"
     cdef unsigned char * buff=buffername
@@ -135,7 +91,7 @@ def load_calibration_from_memory(buffername, int buffersize):
 
 
 #DATA STREAMING
-@check_npresult
+@utils.decorators.check_npresult
 def stream_trackd(bool enabled):
     """
     Start/stop Trackd Stream.
@@ -143,7 +99,7 @@ def stream_trackd(bool enabled):
     """
     return TT_StreamTrackd(enabled)
 
-@check_npresult
+@utils.decorators.check_npresult
 def stream_vrpn(bool enabled, int port=3883):
     """
     Start/stop VRPN Stream.
@@ -152,7 +108,7 @@ def stream_vrpn(bool enabled, int port=3883):
     """
     return TT_StreamVRPN(enabled, port)
 
-@check_npresult
+@utils.decorators.check_npresult
 def stream_np(bool enabled):
     """
     Start/stop NaturalPoint Stream
@@ -205,12 +161,12 @@ def flush_camera_queues():
 
 
 #MARKER SIZE SETTINGS
-@check_npresult
+@utils.decorators.check_npresult
 def set_camera_group_reconstruction(int groupIndex, bool enable):
     return TT_SetCameraGroupReconstruction(groupIndex, enable)
 
 
-@check_npresult
+@utils.decorators.check_npresult
 def set_enabled_filter_switch(bool enabled):
     return TT_SetEnabledFilterSwitch(enabled)
 
@@ -226,7 +182,7 @@ def set_frame_id_based_timing(bool enable):
 def set_suppress_out_of_order(bool enable):
     return TT_SetSuppressOutOfOrder(enable)
 
-@check_npresult
+@utils.decorators.check_npresult
 def orient_tracking_bar(float positionX, float positionY, float positionZ,
                         float orientationX, float orientationY, float orientationZ, float orientationW):
     return TT_OrientTrackingBar(positionX, positionY, positionZ,

@@ -1,25 +1,6 @@
 include "cnative.pxd"
 
-#DECORATORS
-def check_npresult(func):
-    """Checks if the output of a function matches the Motive Error Values, and raises a Python error if so."""
-    error_dict = {1: (IOError, "File Not Found"),
-                  2: (Exception, "Load Failed"),
-                  3: (Exception, "Failed"),
-                  8: (IOError, "Invalid File"),
-                  9: (IOError, "Invalid Calibration File"),
-                  10: (EnvironmentError, "Unable To Initialize"),
-                  11: (EnvironmentError, "Invalid License"),
-                  14: (RuntimeWarning, "No Frames Available")}
-    def wrapper(*args, **kwargs):
-        npresult = func(*args, **kwargs)
-        if npresult in error_dict:
-            error, msg = error_dict[npresult]
-            raise error(msg)
-    return wrapper
-
-
-
+from motive import utils
 
 #FUNCTIONS
 def get_unident_markers():
@@ -36,11 +17,13 @@ def get_unident_markers():
             unimarkers.append(k)
      return tuple(unimarkers)
 
+
 def get_rigid_bodies():
     """Initiate all loaded rigid bodies as python objects, where rigid body #k is [k-1]"""
     return {RigidBody(idx).name: RigidBody(idx) for idx in xrange(TT_RigidBodyCount())}
 
-@check_npresult
+
+@utils.decorators.check_npresult
 def create_rigid_body(str name, markerList):
      """
      The marker list is expected to contain a list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN.
@@ -59,10 +42,12 @@ def create_rigid_body(str name, markerList):
      rigidIndexplus1=TT_RigidBodyCount()+1
      return TT_CreateRigidBody(name, rigidIndexplus1 , markerCount, markerListp)
 
-@check_npresult
+
+@utils.decorators.check_npresult
 def remove_rigid_body(int rigidIndex):
     """Remove single rigid body"""
     return TT_RemoveRigidBody(rigidIndex)
+
 
 def clear_rigid_body_list():
     """Clear all rigid bodies"""
@@ -162,7 +147,7 @@ class RigidBody(object):
 
         return tuple(markers)
 
-    @check_npresult
+    @utils.decorators.check_npresult
     def translate_pivot(self, float x, float y, float z):
         """
         Rigid Body Pivot-Point Translation: Sets a translation offset for the centroid of the rigid body.
