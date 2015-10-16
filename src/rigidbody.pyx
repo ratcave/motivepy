@@ -25,7 +25,7 @@ def check_npresult(func):
 def get_unident_markers():
      """returns a tuple of all markers which are not in rigid Bodies"""
      markers=tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
-     rigs=get_rigid_bodies()
+     rigs=get_rigid_bodies().values()
      imarkers=[]
      unimarkers=[]
      for i in range (0,TT_RigidBodyCount()):
@@ -38,7 +38,7 @@ def get_unident_markers():
 
 def get_rigid_bodies():
     """Initiate all loaded rigid bodies as python objects, where rigid body #k is [k-1]"""
-    return tuple(RigidBody(rigidIndex) for rigidIndex in xrange(TT_RigidBodyCount()))
+    return {RigidBody(idx).name: RigidBody(idx) for idx in xrange(TT_RigidBodyCount())}
 
 @check_npresult
 def create_rigid_body(str name, markerList):
