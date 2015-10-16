@@ -113,8 +113,14 @@ class RigidBody(object):
 
     @property
     def rotation(self):
-        """(yaw, pitch, roll) rotation"""
+        """(yaw, pitch, roll) rotation, in degrees and in local axis."""
         return self.get_all_spatial_data()['rotation']
+
+    @property
+    def rotation_global(self):
+        """(x, y, z) rotation, in degrees and in world axis."""
+        rotation = self.get_all_spatial_data()['rotation']
+        return tuple(rotation[el] for el in [1, 0, 2])
 
     @property
     def rotation_quats(self):
