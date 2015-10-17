@@ -2,7 +2,14 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
-import utils
+from os import path
+from motive import utils
+
+# Cython Decorators
+def _save_backup(func):
+    def wrapper(*args, **kwargs):
+        func(*args, **kwargs)
+        _save_project(utils.backup_project_filename)
 
 #STARTUP / SHUTDOWN
 @utils.decorators.check_npresult
@@ -31,6 +38,7 @@ def update():
 
 
 #RIGID BODY INTERFACE FILES
+@_save_backup
 @utils.decorators.check_npresult
 def load_calibration(str file_name):
     """
@@ -40,6 +48,7 @@ def load_calibration(str file_name):
     utils.crash_avoidance.check_file_extension(file_name, '.cal')
     return TT_LoadCalibration(file_name)
 
+@_save_backup
 @utils.decorators.check_npresult
 def load_rigid_bodies(str file_name):
     """
@@ -49,6 +58,7 @@ def load_rigid_bodies(str file_name):
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_LoadRigidBodies(file_name)
 
+@_save_backup
 @utils.decorators.check_npresult
 def save_rigid_bodies(str file_name):
     """
@@ -56,6 +66,7 @@ def save_rigid_bodies(str file_name):
     """
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_SaveRigidBodies(file_name)
+
 
 @utils.decorators.check_npresult
 def add_rigid_bodies(str file_name):
@@ -66,22 +77,31 @@ def add_rigid_bodies(str file_name):
     utils.crash_avoidance.check_file_exists(file_name)
     return TT_AddRigidBodies(file_name)
 
+
+@_save_backup
 @utils.decorators.check_npresult
 def load_project(str project_file):
-    """
-    load project file
-    """
+    """Loads a Motive .ttp Project File."""
+
+    # Check File name and raise appropriate errors.
     utils.crash_avoidance.check_file_exists(project_file)
     utils.crash_avoidance.check_file_extension(project_file, '.ttp')
+
+    # Load Project File
     return TT_LoadProject(project_file)
 
+
 @utils.decorators.check_npresult
-def save_project(str project_file):
-    """
-    save project file
-    """
+def _save_project(str project_file):
+    """Saves project file."""
+
+    # Check File name and raise appropriate errors
     utils.crash_avoidance.check_file_extension(project_file, '.ttp')
+
+    # Save Project File
     return TT_SaveProject(project_file)
+
+save_project = _save_backup(_save_project)  #  Saves a project file, and  also saves a backup version in the app data directory.
 
 @utils.decorators.check_npresult
 def load_calibration_from_memory(buffername, int buffersize):
