@@ -34,5 +34,6 @@ setup(
     name="motive",
     ext_modules= cythonize([native, rigidbody, camera]),
     packages= find_packages(), #,["motive"],
-    scripts=['scripts/vislight.py', 'scripts/viewer.py']
+    scripts= ['scripts/vislight.py', 'scripts/viewer.py'],
+    package_data= {'': ['data/*.ttp']}
 )
