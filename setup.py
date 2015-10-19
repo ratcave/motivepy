@@ -35,5 +35,6 @@ setup(
     ext_modules= cythonize([native, rigidbody, camera]),
     packages= find_packages(), #,["motive"],
     scripts=['scripts/vislight.py', 'scripts/viewer.py'],
-    install_requires=['cython', 'appdirs']
+    install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph'],
+    package_data= {'': ['data/*.ttp']}
 )
