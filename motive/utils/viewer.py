@@ -2,7 +2,7 @@ __author__ = 'nico'
 
 
 import motive as m
-from numpy import array, linspace, vstack, zeros_like
+import numpy as np
 import time
 import itertools
 from pyqtgraph.Qt import QtCore, QtGui
@@ -10,40 +10,33 @@ import pyqtgraph.opengl as gl
 
 def show_viewer():
 
-    m.update()
-
     # Create Qt Window
     app = QtGui.QApplication([])            #create the graphing application
     w = gl.GLViewWidget()                   #create widget
     w.opts['distance'] = 4                  #start distance from where one looks at the plot
     w.setFixedSize(1100, 800)
-    y_up_rotation = (90, 1, 0, 0)
 
-    # Initialize/Set unident_marker plot
-    unident_markers = gl.GLScatterPlotItem(pos=array([[0,0,0]]), color=(204/255, 1, 1, 0.8), size=6)  #pos needs array because it needs shape
-    unident_markers.rotate(*y_up_rotation)
+    # Initialize/Set unident_marker plot with dummy data.
+    unident_markers = gl.GLScatterPlotItem(pos=np.array([[0, 0, 0]]), color=(204/255, 1, 1, 0.8), size=6)
     w.addItem(unident_markers)
 
-    # Initialize/Set rigid_marker plot for every rigid body (except arena!)
-    rigs=m.get_rigid_bodies()
-
     # # Initialize the Rigid Body Scatterplot and ssign plot color to the rigid bodies
+    m.update()
+    rigs = m.get_rigid_bodies()
+
     color_dict = {'Red': (1., 0., 0.), 'Green': (0., 1., 0.), 'Yellow': (1., 1., 0.),
                   'Mag.': (1., 0., 1.), 'Orange': (1., .4, 0.)}
 
     for rig, color_name in zip(rigs, itertools.cycle(color_dict)):
         rigs[rig].color_name = color_name
-        scat = gl.GLScatterPlotItem(pos=array([[0, 0, 0]]), color=color_dict[color_name] + (1.,), size=8)
-        scat.rotate(*y_up_rotation)
-        w.addItem(scat)
+        w.addItem(gl.GLScatterPlotItem(pos=np.array([[0, 0, 0]]), color=color_dict[color_name] + (1.,), size=8))
 
     # Make floor rectangle
-    grid_points = linspace(-1, 1, 200)
-    points_2d =  array(list(itertools.product(grid_points, grid_points)))
-    points_3d =  vstack((points_2d[:,0], zeros_like(points_2d[:, 0]), points_2d[:,1])).T
-    rectangle = gl.GLScatterPlotItem(pos=points_3d, color=(0.5, 0.5, 0.5, 0.3), size=0.1)
-    rectangle.rotate(*y_up_rotation)
-    w.addItem(rectangle)
+    points_3d =  np.insert(np.mgrid[-100:100, -100:100].reshape(-1, 2) / 50., 1, 0, axis=1)
+    w.addItem(gl.GLScatterPlotItem(pos=points_3d, color=(0.5, 0.5, 0.5, 0.3), size=0.1))
+
+    # Rotate Everything so Y axis is up when plotted.
+    [item.rotate(90, 1, 0, 0) for item in w.items]
 
     #show widget (for different backgroundcolor see PyQtshowmarkers.py)
     w.show()
@@ -57,14 +50,14 @@ def show_viewer():
             m.update()
 
             # Measure FPS
-            new_time = time.time()
-            fps = round(1. / (new_time - last_time)) if new_time > last_time else 0
-            last_time = new_time
+            if time.time() > last_time:
+                fps = round(1. / (time.time() - last_time))
+                last_time = time.time()
 
             # Plot
-            unident_markers.setData(pos=array(m.get_unident_markers()))
+            unident_markers.setData(pos=np.array(m.get_unident_markers()))
             for rig, scat in zip(rigs, w.items[1:-1]):
-                scat.setData(pos=array(rig.point_cloud_markers))
+                scat.setData(pos=np.array(rig.point_cloud_markers))
 
             # Update Title
             w.setWindowTitle('MotivePy Viewer. Rigid Bodies: {rigid_bodies}. Update Rate: {fps} fps'.format(fps=fps,
@@ -72,16 +65,9 @@ def show_viewer():
             # Return Nothing
             yield
 
-    updater = update_generator()
-
     t = QtCore.QTimer()
-    t.timeout.connect(updater.next)
+    t.timeout.connect(update_generator().next)
     t.start(2)
 
+    # Start Viewer App
     QtGui.QApplication.instance().exec_()
-
-    ## Start Qt event loop unless running in interactive mode.
-    if __name__ == '__main__':
-        import sys
-        if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-            QtGui.QApplication.instance().exec_()
