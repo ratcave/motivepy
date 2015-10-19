@@ -27,20 +27,13 @@ def show_viewer():
     # Initialize/Set rigid_marker plot for every rigid body (except arena!)
     rigs=m.get_rigid_bodies()
 
-    # Assign plot color to the rigid bodies
-    color_dict = {'Red': (1., 0., 0.),
-                  'Green': (0., 1., 0.),
-                  'Yellow': (1., 1., 0.),
-                  'Mag.': (1., 0., 1.),
-                  'Orange': (1., .4, 0.)}
-    color_cycler = itertools.cycle(color_dict)
-    for rig, color_name in zip(rigs, color_cycler):
-        rig.color_name = color_name
-        rig.color_val = color_dict[color_name] + (1.0,)
+    # # Initialize the Rigid Body Scatterplot and ssign plot color to the rigid bodies
+    color_dict = {'Red': (1., 0., 0.), 'Green': (0., 1., 0.), 'Yellow': (1., 1., 0.),
+                  'Mag.': (1., 0., 1.), 'Orange': (1., .4, 0.)}
 
-    # Initialize the Rigid Body Scatterplot
-    for rig in rigs:
-        scat = gl.GLScatterPlotItem(pos=array([[0,0,0]]), color=rig.color_val, size=8)  #pos needs array because it needs shape
+    for rig, color_name in zip(rigs, itertools.cycle(color_dict)):
+        rigs[rig].color_name = color_name
+        scat = gl.GLScatterPlotItem(pos=array([[0, 0, 0]]), color=color_dict[color_name] + (1.,), size=8)
         scat.rotate(*y_up_rotation)
         w.addItem(scat)
 
