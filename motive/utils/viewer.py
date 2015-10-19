@@ -28,8 +28,8 @@ def show_viewer():
     color_dict = {'Red': (1., 0., 0.), 'Green': (0., 1., 0.), 'Yellow': (1., 1., 0.),
                   'Mag.': (1., 0., 1.), 'Orange': (1., .4, 0.)}
 
-    for rig, color_name in zip(rigs, itertools.cycle(color_dict)):
-        rigs[rig].color_name = color_name
+    for rig, color_name in zip(rigs.values(), itertools.cycle(color_dict)):
+        rigs.color_name = color_name
         w.addItem(gl.GLScatterPlotItem(pos=np.array([[0, 0, 0]]), color=color_dict[color_name] + (1.,), size=8))
 
     # Make floor rectangle
@@ -45,7 +45,7 @@ def show_viewer():
     # Main Draw Loop (as generator)
     def update_generator():
         last_time = time.time()
-        rig_data = ', '.join('{0}:{1}'.format(body.name, body.color_name) for body in rigs)
+        rig_data = ', '.join('{0}:{1}'.format(name, rigs[name].color_name) for name in rigs)
 
         while True:
             m.update()
