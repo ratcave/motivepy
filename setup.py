@@ -29,7 +29,6 @@ rigidbody = Extension(
 )
 
 
-
 setup(
     name="motive",
     ext_modules= cythonize([native, rigidbody, camera]),
