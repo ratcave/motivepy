@@ -83,10 +83,8 @@ def add_rigid_bodies(str file_name):
 
 @_save_backup
 @utils.decorators.check_npresult
-def load_project(str project_file=''):
+def load_project(str project_file=utils.backup_project_filename):
     """Loads a Motive .ttp Project File.  If left blank, will load the most recently worked on Project file."""
-    if not project_file:
-        project_file = utils.backup_project_filename
 
     # Check File name and raise appropriate errors.
     utils.crash_avoidance.check_file_exists(project_file)
