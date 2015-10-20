@@ -10,6 +10,7 @@ def _save_backup(func):
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
         _save_project(utils.backup_project_filename)
+    return wrapper
 
 #STARTUP / SHUTDOWN
 @utils.decorators.check_npresult
@@ -78,10 +79,14 @@ def add_rigid_bodies(str file_name):
     return TT_AddRigidBodies(file_name)
 
 
+
+
 @_save_backup
 @utils.decorators.check_npresult
-def load_project(str project_file):
-    """Loads a Motive .ttp Project File."""
+def load_project(str project_file=''):
+    """Loads a Motive .ttp Project File.  If left blank, will load the most recently worked on Project file."""
+    if not project_file:
+        project_file = utils.backup_project_filename
 
     # Check File name and raise appropriate errors.
     utils.crash_avoidance.check_file_exists(project_file)
@@ -91,7 +96,7 @@ def load_project(str project_file):
     return TT_LoadProject(project_file)
 
 
-@utils.decorators.check_npresult
+#@utils.decorators.check_npresult
 def _save_project(str project_file):
     """Saves project file."""
 

@@ -22,6 +22,6 @@ def get_backup_dir():
         print("Data Directory not found--creating new data directory at {0}".format(data_dir))
         os.makedirs(data_dir)
 
-    return data_dir
+    return str(data_dir)
 
 backup_project_filename = os.path.join(get_backup_dir(), 'last_project.ttp')
