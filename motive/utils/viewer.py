@@ -20,7 +20,7 @@ def show_viewer():
     unident_markers = gl.GLScatterPlotItem(pos=np.array([[0, 0, 0]]), color=(204/255, 1, 1, 0.8), size=6)
     w.addItem(unident_markers)
 
-    # # Initialize the Rigid Body Scatterplot and ssign plot color to the rigid bodies
+    # # Initialize the Rigid Body Scatterplot and assign plot color to the rigid bodies
     m.update()
     rigs = m.get_rigid_bodies()
 
@@ -32,7 +32,9 @@ def show_viewer():
         w.addItem(gl.GLScatterPlotItem(pos=np.array([[0, 0, 0]]), color=color_dict[color_name] + (1.,), size=8))
 
     # Make floor rectangle
-    points_3d =  np.insert(np.mgrid[-100:100, -100:100].reshape(-1, 2) / 50., 1, 0, axis=1)
+    grid_points = np.linspace(-1, 1, 200)
+    points_2d =  np.array(list(itertools.product(grid_points, grid_points)))
+    points_3d =  np.insert(points_2d, 1, 0, axis=1)
     w.addItem(gl.GLScatterPlotItem(pos=points_3d, color=(0.5, 0.5, 0.5, 0.3), size=0.1))
 
     # Rotate Everything so Y axis is up when plotted.
@@ -43,8 +45,9 @@ def show_viewer():
 
     # Main Draw Loop (as generator)
     def update_generator():
+
         last_time = time.time()
-        rig_data  = ', '.join('{0}:{1}'.format(body.name, body.color_name) for body in rigs)
+        rig_data  = ', '.join(['{0}: {1}'.format(body.name, body.color_name) for body in rigs.values()])
 
         while True:
             m.update()
@@ -55,15 +58,19 @@ def show_viewer():
                 last_time = time.time()
 
             # Plot
-            unident_markers.setData(pos=np.array(m.get_unident_markers()))
-            for rig, scat in zip(rigs, w.items[1:-1]):
-                scat.setData(pos=np.array(rig.point_cloud_markers))
+            markers = m.get_unident_markers()
+            if markers:
+                unident_markers.setData(pos=np.array(m.get_unident_markers()))
+
+            for rig, scat in zip(rigs.values(), w.items[1:-1]):
+                 scat.setData(pos=np.array(rig.point_cloud_markers))
 
             # Update Title
-            w.setWindowTitle('MotivePy Viewer. Rigid Bodies: {rigid_bodies}. Update Rate: {fps} fps'.format(fps=fps,
-                                                                                                            rigid_bodies = rig_data))
+            w.setWindowTitle('MotivePy Viewer. Rigid Bodies: {rigid_bodies}. Update Rate: {fps} fps'.format(fps=fps, rigid_bodies = rig_data))
+
             # Return Nothing
             yield
+
 
     t = QtCore.QTimer()
     t.timeout.connect(update_generator().next)
