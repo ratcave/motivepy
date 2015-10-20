@@ -29,7 +29,7 @@ def show_viewer():
                   'Mag.': (1., 0., 1.), 'Orange': (1., .4, 0.)}
 
     for rig, color_name in zip(rigs.values(), itertools.cycle(color_dict)):
-        rigs.color_name = color_name
+        rig.color_name = color_name
         w.addItem(gl.GLScatterPlotItem(pos=np.array([[0, 0, 0]]), color=color_dict[color_name] + (1.,), size=8))
 
     # Make floor rectangle
