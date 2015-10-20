@@ -2,15 +2,7 @@ __author__ = 'Vash'
 
 include "cnative.pxd"
 
-from os import path
 from motive import utils
-
-# Cython Decorators
-def _save_backup(func):
-    def wrapper(*args, **kwargs):
-        func(*args, **kwargs)
-        _save_project(utils.backup_project_filename)
-    return wrapper
 
 #STARTUP / SHUTDOWN
 @utils.decorators.check_npresult
@@ -39,7 +31,7 @@ def update():
 
 
 #RIGID BODY INTERFACE FILES
-@_save_backup
+@utils.decorators._save_backup
 @utils.decorators.check_npresult
 def load_calibration(str file_name):
     """
@@ -49,7 +41,7 @@ def load_calibration(str file_name):
     utils.crash_avoidance.check_file_extension(file_name, '.cal')
     return TT_LoadCalibration(file_name)
 
-@_save_backup
+@utils.decorators._save_backup
 @utils.decorators.check_npresult
 def load_rigid_bodies(str file_name):
     """
@@ -59,7 +51,7 @@ def load_rigid_bodies(str file_name):
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_LoadRigidBodies(file_name)
 
-@_save_backup
+@utils.decorators._save_backup
 @utils.decorators.check_npresult
 def save_rigid_bodies(str file_name):
     """
@@ -81,7 +73,7 @@ def add_rigid_bodies(str file_name):
 
 
 
-@_save_backup
+@utils.decorators._save_backup
 @utils.decorators.check_npresult
 def load_project(str project_file=utils.backup_project_filename):
     """Loads a Motive .ttp Project File.  If left blank, will load the most recently worked on Project file."""
@@ -94,7 +86,7 @@ def load_project(str project_file=utils.backup_project_filename):
     return TT_LoadProject(project_file)
 
 
-#@utils.decorators.check_npresult
+@utils.decorators.check_npresult
 def _save_project(str project_file):
     """Saves project file."""
 
@@ -104,7 +96,7 @@ def _save_project(str project_file):
     # Save Project File
     return TT_SaveProject(project_file)
 
-save_project = _save_backup(_save_project)  #  Saves a project file, and  also saves a backup version in the app data directory.
+save_project = utils.decorators._save_backup(_save_project)  #  Saves a project file, and  also saves a backup version in the app data directory.
 
 @utils.decorators.check_npresult
 def load_calibration_from_memory(buffername, int buffersize):
