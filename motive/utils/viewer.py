@@ -8,27 +8,28 @@ import itertools
 from pyqtgraph.Qt import QtCore, QtGui
 import pyqtgraph.opengl as gl
 
+
 def show_viewer():
 
     # Create Qt Window
-    app = QtGui.QApplication([])            #create the graphing application
-    w = gl.GLViewWidget()                   #create widget
-    w.opts['distance'] = 4                  #start distance from where one looks at the plot
+    app = QtGui.QApplication([])  # create the graphing application
+    w = gl.GLViewWidget()  # create widget
+    w.opts['distance'] = 4  # start distance from where one looks at the plot
     w.setFixedSize(1100, 800)
 
-    # Initialize/Set unident_marker plot with dummy data.
+    # Initialize/Set unidentified_markers plot with dummy data.
     unident_markers = gl.GLScatterPlotItem(pos=np.array([[0, 0, 0]]), color=(204/255, 1, 1, 0.8), size=6)
     w.addItem(unident_markers)
 
-    # # Initialize the Rigid Body Scatterplot and assign plot color to the rigid bodies
+    # Initialize the Rigid Body Scatterplot and assign plot color to the rigid bodies
     m.update()
     rigs = m.get_rigid_bodies()
 
     color_dict = {'Red': (1., 0., 0.), 'Green': (0., 1., 0.), 'Yellow': (1., 1., 0.),
                   'Mag.': (1., 0., 1.), 'Orange': (1., .4, 0.)}
 
-    for rig, color_name in zip(rigs, itertools.cycle(color_dict)):
-        rigs[rig].color_name = color_name
+    for rig, color_name in zip(rigs.values(), itertools.cycle(color_dict)):
+        rig.color_name = color_name
         w.addItem(gl.GLScatterPlotItem(pos=np.array([[0, 0, 0]]), color=color_dict[color_name] + (1.,), size=8))
 
     # Make floor rectangle
@@ -40,7 +41,7 @@ def show_viewer():
     # Rotate Everything so Y axis is up when plotted.
     [item.rotate(90, 1, 0, 0) for item in w.items]
 
-    #show widget (for different backgroundcolor see PyQtshowmarkers.py)
+    # Show widget (for different backgroundcolor see PyQtshowmarkers.py)
     w.show()
 
     # Main Draw Loop (as generator)
@@ -53,9 +54,8 @@ def show_viewer():
             m.update()
 
             # Measure FPS
-            if time.time() > last_time:
-                fps = round(1. / (time.time() - last_time))
-                last_time = time.time()
+            fps = round(1. / (time.time() - last_time + .00001))
+            last_time = time.time()
 
             # Plot
             markers = m.get_unident_markers()

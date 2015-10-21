@@ -1,5 +1,5 @@
 __author__ = 'ratcave'
-
+import motive
 
 def check_npresult(func):
     """
@@ -22,13 +22,20 @@ def check_npresult(func):
     return wrapper
 
 
+def countdown_timer(total_time):
+    """Generator the creates an iterator that counts back the seconds from total_time"""
+    import time
+    end_time = time.time() + total_time
+    while time.time() < end_time:
+        yield end_time - time.time()
+    raise StopIteration
+
+
 def block_for_frame(secs_to_timeout=3):
     """Decorator to continually call a function until it stops raising a RuntimeWarning or until timeout."""
-    import time
     def decorator_fun(func):
         def wrapper(*args, **kwargs):
-            end_time = time.time() + secs_to_timeout
-            while time.time() < end_time:
+            for time in countdown_timer(secs_to_timeout):
                 try:
                     return func(*args, **kwargs)
                 except RuntimeWarning:
@@ -47,4 +54,11 @@ def check_cam_setting(func):
             raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")
         else:
             return check
+    return wrapper
+
+
+def _save_backup(func):
+    def wrapper(*args, **kwargs):
+        func(*args, **kwargs)
+        motive.native._save_project(motive.utils.backup_project_filename)
     return wrapper
