@@ -47,8 +47,9 @@ def show_viewer():
     # Main Draw Loop (as generator)
     def update_generator():
 
-        last_time = time.time()
+        last_time= time.time()
         rig_data  = ', '.join(['{0}: {1}'.format(body.name, body.color_name) for body in rigs.values()])
+
 
         while True:
             m.update()
@@ -56,7 +57,7 @@ def show_viewer():
             # Measure FPS
             fps = round(1. / (time.time() - last_time + .00001))
             last_time = time.time()
-
+            
             # Plot
             markers = m.get_unident_markers()
             if markers:
@@ -66,7 +67,7 @@ def show_viewer():
                  scat.setData(pos=np.array(rig.point_cloud_markers))
 
             # Update Title
-            w.setWindowTitle('MotivePy Viewer. Rigid Bodies: {rigid_bodies}. Update Rate: {fps} fps'.format(fps=fps, rigid_bodies = rig_data))
+            w.setWindowTitle('MotivePy Viewer. Rigid Bodies = {{{rigid_bodies}}}. Update Rate: {fps} fps'.format(rigid_bodies = rig_data, fps=fps))
 
             # Return Nothing
             yield
