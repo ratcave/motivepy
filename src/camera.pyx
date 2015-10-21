@@ -1,16 +1,6 @@
 include "cnative.pxd"
 
-# Decorator
-def check_cam_setting(func):
-    """  Decorator to check if calling a TT_Camera function returns an exception. """
-    def wrapper(*args, **kwargs):
-        check=func(*args, **kwargs)
-        if check<0:
-            raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")
-        else:
-            return check
-    return wrapper
-
+from motive import utils
 
 def get_cams():
     """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
@@ -64,7 +54,7 @@ class Camera(object):
         TT_SetCameraGroup(self.index, value)
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def video_type(self):
         """0:"Segment Mode"\n 1:"Grayscale Mode"\n 2:"Object Mode"\n 3:"Precision Mode"\n 4:"MJPEG Mode" """
         return TT_CameraVideoType(self.index)
@@ -75,7 +65,7 @@ class Camera(object):
         TT_SetCameraSettings(self.index, value, self.exposure, self.threshold, self.intensity)
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def exposure(self):
         """Camera exposure level"""
         return TT_CameraExposure(self.index)
@@ -85,7 +75,7 @@ class Camera(object):
         TT_SetCameraSettings(self.index, self.video_type, value, self.threshold, self.intensity)
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def threshold(self):
         """Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker"""
         return TT_CameraThreshold(self.index)
@@ -96,7 +86,7 @@ class Camera(object):
         TT_SetCameraSettings(self.index, self.video_type, self.exposure, value, self.intensity)
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def intensity(self):
         """Camera IR LED Brightness Intensity Level"""
         return TT_CameraIntensity(self.index)
@@ -118,7 +108,7 @@ class Camera(object):
         return TT_SetCameraSettings(self.index, videotype, exposure, threshold, intensity)
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def frame_rate(self):
         """frames/sec"""
         return TT_CameraFrameRate(self.index)
@@ -129,7 +119,7 @@ class Camera(object):
             raise Exception("Could Not Set Frame Rate. Check Camera Index And Initialize With TT_Initialize()")
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def grayscale_decimation(self):
         """returns int"""
         return  TT_CameraGrayscaleDecimation(self.index)
@@ -140,7 +130,7 @@ class Camera(object):
             raise Exception("Could Not Set Decimation")
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def image_gain(self):
         """returns int"""
         return  TT_CameraImagerGainLevels(self.index)
@@ -166,7 +156,7 @@ class Camera(object):
 
 #Properties Without Simple Setter (If Not Here Maybe In Camera Class)
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def id(self):
         return TT_CameraID(self.index)
 
@@ -196,7 +186,7 @@ class Camera(object):
             raise Exception("Could Not Set Parameters")
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def max_image_gain(self):
         return  TT_CameraImagerGain(self.index)
 
@@ -205,12 +195,12 @@ class Camera(object):
         return TT_IsContinuousIRAvailable(self.index)
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def temperature(self):
         return TT_CameraTemperature(self.index)
 
     @property
-    @check_cam_setting
+    @utils.decorators.check_cam_setting
     def ring_light_temperature(self):
         return  TT_CameraRinglightTemperature(self.index)
 
