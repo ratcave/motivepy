@@ -13,9 +13,10 @@ import argparse
 if __name__ == '__main__':
 
    # Get command line inputs
-    parser = argparse.ArgumentParser(description="This is the motive viewer script.  It shows the unidentified markers and the rigid bodies in real time.")
+    parser = argparse.ArgumentParser(description="This is the motive viewer script. It displays the unidentified markers and the rigid bodies in real time.",
+                                     epilog="If no arguments are given, the script first opens a window to let you search for a project file to load. \n")
 
-    parser.add_argument('-l', action='store', dest='last_project', default=False,
+    parser.add_argument('-l', action='store_true', dest='last_project', default=False,
                         help='If this flag is set, the last project file is loaded.')
 
     parser.add_argument('-p', action='store', dest='project_filename', default='',
