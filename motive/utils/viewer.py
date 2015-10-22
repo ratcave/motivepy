@@ -52,12 +52,12 @@ def show_viewer():
 
 
         while True:
-            m.update()
+            m.update_single_frame()
 
             # Measure FPS
             fps = round(1. / (time.time() - last_time + .00001))
             last_time = time.time()
-            
+
             # Plot
             markers = m.get_unident_markers()
             if markers:

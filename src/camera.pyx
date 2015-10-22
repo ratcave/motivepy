@@ -1,6 +1,7 @@
 include "cnative.pxd"
 
 from motive import utils
+import numpy as np
 
 def get_cams():
     """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
@@ -61,7 +62,7 @@ class Camera(object):
 
     @video_type.setter
     def video_type(self, value):
-        assert value in {0:"Segment Mode", 1:"Grayscale Mode", 2:"Object Mode", 3:"Precision Mode", 4:"MJPEG Mode"}, "Video Type Must Be In (0,4)"
+        #assert value in {0:"Segment Mode", 1:"Grayscale Mode", 2:"Object Mode", 3:"Precision Mode", 4:"MJPEG Mode"}, "Video Type Must Be In (0,4)"
         TT_SetCameraSettings(self.index, value, self.exposure, self.threshold, self.intensity)
 
     @property
@@ -296,18 +297,27 @@ class Camera(object):
         else:
             raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
 
-    def frame_buffer(self, int bufferPixelWidth, int bufferPixelHeight,
-                     int bufferByteSpan, int bufferPixelBitDepth, buffername):
+    def get_frame_buffer(self, int bufferPixelWidth, int bufferPixelHeight,
+                         int bufferByteSpan, int bufferPixelBitDepth):
         """
         Fetch the camera's frame buffer.
         This function fills the provided buffer with an image of what is in the camera view.
         The resulting image depends on what video mode the camera is in.
         If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
         """
-        assert isinstance(buffername,str), "Buffername Needs To Be String"
-        cdef unsigned char * buffer=buffername
-        if not TT_CameraFrameBuffer(self.index, bufferPixelWidth, bufferPixelHeight, bufferByteSpan, bufferPixelBitDepth, buffer):
+        cdef unsigned char buffer[1000000]                 #  ='a'   #This is more to choose a name for the buffer. In our case 'buffer'.
+                                                                     #But still maximum buffersize also depends on initiation... (wrote optitrack team)
+        if TT_CameraFrameBuffer(self.index, bufferPixelWidth, bufferPixelHeight, bufferByteSpan, bufferPixelBitDepth, buffer):
+            f=open('buffertest.txt','w')
+            for i in xrange(10000):
+                #print type(buffer[i])
+                f.write(str(buffer[i]))                    #python automatically converts unsigned char to integer
+
+            return np.frombuffer(buffer, dtype='B')        #still returns only empty array.
+            # next time will find a way to determine size of buffer array. then simply create np.array from that
+        else:
             raise BufferError("Camera Frame Could Not Be Buffered")
+
 
     def frame_buffer_save_as_bmp(self, str filename):
         """Save camera's frame buffer as a BMP image file"""
