@@ -314,7 +314,7 @@ class Camera(object):
                 f.write(str(buffer[i]))                    #python automatically converts unsigned char to integer
 
             return np.frombuffer(buffer, dtype='B')        #still returns only empty array.
-            # next time will find a way to determine size of buffer array. then simply create np.array from that
+            # next time will find a way to determine size of buffer array (template sizeof). then simply create np.array from that
         else:
             raise BufferError("Camera Frame Could Not Be Buffered")
 
