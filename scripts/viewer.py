@@ -22,6 +22,9 @@ if __name__ == '__main__':
     parser.add_argument('-p', action='store', dest='project_filename', default='',
                         help='Name of the project file to load.')
 
+    parser.add_argument('-love', action='store', dest='love', default='',
+                        help='Plot a heart instead.')
+
     args = parser.parse_args()
 
     # Get Project
@@ -43,6 +46,14 @@ if __name__ == '__main__':
 
     # Load Motive Project
     motive.load_project(project_file)
+
+    if args.love:
+        import matplotlib.pyplot as plt
+        import numpy as np
+        t=np.arange(0,2*np.pi, 0.1)
+        x, y =   16*np.sin(t)**3, 13*np.cos(t)-5*np.cos(2*t)-2*np.cos(3*t)-np.cos(4*t)
+        plt.plot(x,y)
+        plt.show()
 
    # Display viewer
     motive.show_viewer()
