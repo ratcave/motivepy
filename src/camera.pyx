@@ -315,14 +315,12 @@ class Camera(object):
         cdef unsigned char * buffer=<unsigned char *> malloc(Width_in_Bytes*Height_in_Pixels*sizeof(unsigned char))
         if TT_CameraFrameBuffer(self.index, Width_in_Pixels, Height_in_Pixels, Width_in_Bytes, Bits_per_Pixel, buffer):
                         #python automatically converts unsigned char to integer
-            a=np.zeros((Width_in_Bytes,Height_in_Pixels), dtype='B')
+            a=np.zeros((Height_in_Pixels,Width_in_Bytes), dtype='B')
             h=0
-            while h-1<Height_in_Pixels:
+            while h<Height_in_Pixels:
                 for w in xrange(Width_in_Bytes):
                     a[h][w]=buffer[h*Width_in_Bytes+w]
                 h=h+1
-                import pdb
-                pdb.set_trace()
             return a
             #return np.asarray(<np.uint8_t[:]> buffer)
 
