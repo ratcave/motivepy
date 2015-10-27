@@ -1,6 +1,10 @@
 include "cnative.pxd"
 
 from motive import utils
+#cimport numpy as np
+#import numpy as np
+from libc.stdlib cimport malloc, free
+#from cython.view cimport array as cvarray
 import numpy as np
 
 def get_cams():
@@ -297,26 +301,63 @@ class Camera(object):
         else:
             raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
 
-    def get_frame_buffer(self, int bufferPixelWidth, int bufferPixelHeight,
-                         int bufferByteSpan, int bufferPixelBitDepth):
+    def get_frame_buffer(self, int Width_in_Pixels, int Height_in_Pixels):
         """
         Fetch the camera's frame buffer.
         This function fills the provided buffer with an image of what is in the camera view.
         The resulting image depends on what video mode the camera is in.
         If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
         """
-        cdef unsigned char buffer[1000000]                 #  ='a'   #This is more to choose a name for the buffer. In our case 'buffer'.
-                                                                     #But still maximum buffersize also depends on initiation... (wrote optitrack team)
-        if TT_CameraFrameBuffer(self.index, bufferPixelWidth, bufferPixelHeight, bufferByteSpan, bufferPixelBitDepth, buffer):
-            f=open('buffertest.txt','w')
-            for i in xrange(10000):
-                #print type(buffer[i])
-                f.write(str(buffer[i]))                    #python automatically converts unsigned char to integer
 
-            return np.frombuffer(buffer, dtype='B')        #still returns only empty array.
-            # next time will find a way to determine size of buffer array (template sizeof). then simply create np.array from that
+        Width_in_Bytes=Width_in_Pixels
+        Bits_per_Pixel=8
+
+        cdef unsigned char * buffer=<unsigned char *> malloc(Width_in_Bytes*Height_in_Pixels*sizeof(unsigned char))
+        if TT_CameraFrameBuffer(self.index, Width_in_Pixels, Height_in_Pixels, Width_in_Bytes, Bits_per_Pixel, buffer):
+                        #python automatically converts unsigned char to integer
+            a=np.zeros((Width_in_Bytes,Height_in_Pixels), dtype='B')
+            h=0
+            while h-1<Height_in_Pixels:
+                for w in xrange(Width_in_Bytes):
+                    a[h][w]=buffer[h*Width_in_Bytes+w]
+                h=h+1
+                import pdb
+                pdb.set_trace()
+            return a
+            #return np.asarray(<np.uint8_t[:]> buffer)
+
+            free(buffer)
+
         else:
             raise BufferError("Camera Frame Could Not Be Buffered")
+
+
+
+
+
+    # def get_frame_buffer(self, int bufferPixelWidth, int bufferPixelHeight):
+    #     """
+    #     Fetch the camera's frame buffer.
+    #     This function fills the provided buffer with an image of what is in the camera view.
+    #     The resulting image depends on what video mode the camera is in.
+    #     If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
+    #     """
+    #
+    #     bufferByteSpan=bufferPixelWidth
+    #     bufferPixelBitDepth=8
+    #     cdef unsigned char buffer[2000000]                 #try to use new allocate...
+    #
+    #     if TT_CameraFrameBuffer(self.index, bufferPixelWidth, bufferPixelHeight, bufferByteSpan, bufferPixelBitDepth, buffer):
+    #         f=open('buffertest.txt','w')
+    #
+    #         for i in xrange(bufferByteSpan*bufferPixelWidth):
+    #             #print type(buffer[i])
+    #             f.write(str(buffer[i]))                    #python automatically converts unsigned char to integer
+    #
+    #         return np.frombuffer(buffer, dtype='B')
+    #
+    #     else:
+    #         raise BufferError("Camera Frame Could Not Be Buffered")
 
 
     def frame_buffer_save_as_bmp(self, str filename):

@@ -31,10 +31,9 @@ def create_rigid_body(str name, markerList):
      and seemingly cannot be tracked.
      """
      raise NotImplementedError()
-     cdef float markerListp[1000]
      markerCount=len(markerList)
-     assert markerCount<=1000, "Due to need of const C array size, markerList max items=1000. \n Please resize const in native.pyx"
-     for i in range(0,len(markerList)):
+     cdef float * markerListp=<float *> malloc(markerCount*sizeof(float))
+     for i in xrange(len(markerList)):
          markerListp[3*i]=markerList[i][0]
          markerListp[3*i+1]=markerList[i][1]
          markerListp[3*i+2]=markerList[i][2]
