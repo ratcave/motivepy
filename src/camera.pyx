@@ -168,6 +168,7 @@ class Camera(object):
 
     @property
     def pixel_resolution(self):
+        """returns a tuple containing number of pixels in width and height per image (can depend on video_mode)"""
         cdef int width=0, height=0
         if TT_CameraPixelResolution(self.index, width, height):
             if self.video_type==6:
@@ -180,27 +181,6 @@ class Camera(object):
     @property
     def location(self):
         return TT_CameraXLocation(self.index), TT_CameraYLocation(self.index), TT_CameraZLocation(self.index)
-
-    def orientation_matrix(self, int matrixIndex):
-        """According to TT_CameraModel() the orientation matrix is a 3x3 matrix"""
-        return TT_CameraOrientationMatrix(self.index, matrixIndex)
-
-    def model(self, float x, float y, float z,             #Camera Position
-              orientation,                                 #Orientation (3x3 matrix)
-              float principleX, float principleY,          #Lens center (in pixels)
-              float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
-              float kc1, float kc2, float kc3,             #Barrel distortion coefficients
-              float tangential0, float tangential1):       #Tangential distortion
-        """
-        Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
-        with parameters compatible with the OpenCV intrinsic model.
-        """
-        cdef float orientationp[9]
-        for i in range(0,9):
-            orientationp[i]=orientation[i]
-        if not TT_CameraModel(self.index, x, y, z, orientationp, principleX, principleY,
-                              focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
-            raise Exception("Could Not Set Parameters")
 
     @property
     @utils.decorators.check_cam_setting
@@ -236,6 +216,26 @@ class Camera(object):
             markers.append((x, y))
         return tuple(markers)
 
+    def orientation_matrix(self, int matrixIndex):
+        """According to TT_CameraModel() the orientation matrix is a 3x3 matrix"""
+        return TT_CameraOrientationMatrix(self.index, matrixIndex)
+
+    def model(self, float x, float y, float z,             #Camera Position
+              orientation,                                 #Orientation (3x3 matrix)
+              float principleX, float principleY,          #Lens center (in pixels)
+              float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
+              float kc1, float kc2, float kc3,             #Barrel distortion coefficients
+              float tangential0, float tangential1):       #Tangential distortion
+        """
+        Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
+        with parameters compatible with the OpenCV intrinsic model.
+        """
+        cdef float orientationp[9]
+        for i in range(0,9):
+            orientationp[i]=orientation[i]
+        if not TT_CameraModel(self.index, x, y, z, orientationp, principleX, principleY,
+                              focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
+            raise Exception("Could Not Set Parameters")
 
     #CAMERA MASKING
     def mask(self, buffername, int bufferSize):
@@ -313,20 +313,12 @@ class Camera(object):
         The resulting image depends on what video mode the camera is in.
         If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
         """
-        cdef int width=0, height=0
-        if TT_CameraPixelResolution(self.index, width, height):
-            res={'width':width, 'height':height}
-        else:
-            raise Exception
-
-        size=res['width']*res['height']
-        if self.video_type==6:
-            res
-        cdef unsigned char * buffer=<unsigned char *> malloc(size*sizeof(unsigned char))
-        if TT_CameraFrameBuffer(self.index, width_in_pixels=res['width'], height_in_pixels=res['height'], width_in_bytes=res['width'], bits_per_pixel=8, buffer):   #width in bytes = width in pixels * bits per pixel / 8
-            py_buffer=buffer[:size]
+        width, height=self.pixel_resolution
+        cdef unsigned char * buffer=<unsigned char *> malloc(width*height*sizeof(unsigned char))
+        if TT_CameraFrameBuffer(self.index, width, height, width, 8, buffer):   #(camera number, width in pixels, height in pixels, width in bytes, bits per pixel, buffer name) -> where width in bytes should equal width in pixels * bits per pixel / 8
+            py_buffer=buffer[:width*height]
             free(buffer)
-            return np.frombuffer(py_buffer, dtype='B').reshape(res['height'],res['width'])
+            return np.frombuffer(py_buffer, dtype='B').reshape(height,width)
 
         else:
             raise BufferError("Camera Frame Could Not Be Buffered")
