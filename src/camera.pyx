@@ -167,6 +167,17 @@ class Camera(object):
         return TT_CameraID(self.index)
 
     @property
+    def pixel_resolution(self):
+        cdef int width=0, height=0
+        if TT_CameraPixelResolution(self.index, width, height):
+            if self.video_type==6:
+                return (width/2, height/2)
+            else:
+                return (width, height)
+        else:
+            raise Exception("Could Not Find Camera Resolution")
+
+    @property
     def location(self):
         return TT_CameraXLocation(self.index), TT_CameraYLocation(self.index), TT_CameraZLocation(self.index)
 
@@ -266,13 +277,6 @@ class Camera(object):
         """
         TT_CameraDistort2DPoint(self.index, x, y)
 
-    def pixel_resolution(self):
-        cdef int width=0, height=0
-        if TT_CameraPixelResolution(self.index, width, height):
-            return {'width':width, 'height':height}
-        else:
-            raise Exception
-
     def backproject(self, float x, float y, float z):
         """
         Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera,
@@ -313,20 +317,16 @@ class Camera(object):
         if TT_CameraPixelResolution(self.index, width, height):
             res={'width':width, 'height':height}
         else:
-            raise Exception("Could Not Find Camera Resolution")
+            raise Exception
 
         size=res['width']*res['height']
+        if self.video_type==6:
+            res
         cdef unsigned char * buffer=<unsigned char *> malloc(size*sizeof(unsigned char))
-        if TT_CameraFrameBuffer(self.index, width_in_pixels=res['width'], height_in_pixels=res['height'], res['width'], 8, buffer):
-            #python automatically converts unsigned char to integer
-
-            #return np.asarray(<np.uint8_t[0:200]> buffer)
-
-            return np.frombuffer(buffer[:Width_in_Bytes*Height_in_Pixels], dtype='B').reshape()
-            # return py_buffer
-            # return np.frombuffer(py_buffer, dtype='B')
-
+        if TT_CameraFrameBuffer(self.index, width_in_pixels=res['width'], height_in_pixels=res['height'], width_in_bytes=res['width'], bits_per_pixel=8, buffer):   #width in bytes = width in pixels * bits per pixel / 8
+            py_buffer=buffer[:size]
             free(buffer)
+            return np.frombuffer(py_buffer, dtype='B').reshape(res['height'],res['width'])
 
         else:
             raise BufferError("Camera Frame Could Not Be Buffered")
