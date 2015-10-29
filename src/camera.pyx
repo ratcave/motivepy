@@ -313,15 +313,20 @@ class Camera(object):
         The resulting image depends on what video mode the camera is in.
         If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
         """
+        # width, height=self.pixel_resolution
+        # cdef unsigned char * buffer=<unsigned char *> malloc(width*height*sizeof(unsigned char))
+        # if TT_CameraFrameBuffer(self.index, width, height, width, 8, buffer):   #(camera number, width in pixels, height in pixels, width in bytes, bits per pixel, buffer name) -> where width in bytes should equal width in pixels * bits per pixel / 8
+        #     py_buffer=buffer[:width*height]
+        #     free(buffer)
+        #     return np.frombuffer(py_buffer, dtype='B').reshape(height,width)
+        #
+        # else:
+        #     raise BufferError("Camera Frame Could Not Be Buffered")
         width, height=self.pixel_resolution
-        cdef unsigned char * buffer=<unsigned char *> malloc(width*height*sizeof(unsigned char))
-        if TT_CameraFrameBuffer(self.index, width, height, width, 8, buffer):   #(camera number, width in pixels, height in pixels, width in bytes, bits per pixel, buffer name) -> where width in bytes should equal width in pixels * bits per pixel / 8
-            py_buffer=buffer[:width*height]
-            free(buffer)
-            return np.frombuffer(py_buffer, dtype='B').reshape(height,width)
-
-        else:
+        cdef np.ndarray[unsigned char, ndim=2, mode="c"] frame = np.empty((height, width))
+        if not TT_CameraFrameBuffer(self.index, width, height, width, 8, &frame[0,0]):
             raise BufferError("Camera Frame Could Not Be Buffered")
+        return frame
 
     def frame_buffer_save_as_bmp(self, str filename):
         """Save camera's frame buffer as a BMP image file"""
