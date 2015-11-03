@@ -3,10 +3,8 @@ include "cnative.pxd"
 from motive import utils
 cimport numpy as np
 import numpy as np
+import warnings
 #from libc.stdlib cimport malloc, free
-#from ctypes import *
-#from cython.view cimport array as cvarray
-import numpy as np
 
 def get_cams():
     """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
@@ -39,6 +37,18 @@ class Camera(object):
         assert cameraIndex < TT_CameraCount(), "There Are Only {0} Cameras".format(TT_CameraCount())
         self.index=cameraIndex
 
+        #Detect video modes and set as instance constants.
+        self._video_modes = {'OBJECT_MODE': 0, 'GRAYSCALE_MODE': 1, 'SEGMENT_MODE': 2, 'MJPEG_MODE': 6}
+        if '13' in self.name:
+            self._video_modes['PRECISION_MODE'] = 4
+            self.PRECISION_MODE = self._video_modes['PRECISION_MODE']
+
+        self.OBJECT_MODE = self._video_modes['OBJECT_MODE']
+        self.GRAYSCALE_MODE = self._video_modes['GRAYSCALE_MODE']
+        self.SEGMENT_MODE = self._video_modes['SEGMENT_MODE']
+        self.MJPEG_MODE = self._video_modes['MJPEG_MODE']
+
+
     def __str__(self):
         return "Camera Object {0}: {1}".format(self.index, TT_CameraName(self.index))
 
@@ -67,10 +77,7 @@ class Camera(object):
 
     @video_mode.setter
     def video_mode(self, value):
-        mode_dict={0:"Segment Mode", 1:"Grayscale Mode", 2:"Object Mode", 4:"Precision Mode", 6:"MJPEG Mode"}
-        if value==4 and "17" in self.name:
-            raise AssertionError, "Camera Type Prime 17 Has No Precision Mode"
-        assert value in mode_dict , "Possible Video Modes {0}".format(mode_dict)
+        assert value in self._video_modes.values(), "Possible Video Modes {0}".format(self._video_modes)
         TT_SetCameraSettings(self.index, value, self.exposure, self.threshold, self.intensity)
 
     @property
@@ -174,14 +181,15 @@ class Camera(object):
         """returns a tuple containing number of pixels in width and height per image (can depend on video_mode)"""
         cdef int width=0, height=0
         if TT_CameraPixelResolution(self.index, width, height):
-            if self.video_mode==6:
-                return (width/2, height/2)
-            else:
-                return (width, height)
+            return (width, height)
         else:
             raise Exception("Could Not Find Camera Resolution")
 
     @property
+    def frame_resolution(self):
+        """depending on video mode returns different image frame resolution"""
+        width, height=self.pixel_resolution
+        return (width, height) if self.video_mode!=6 else (width/2, height/2)
 
     @property
     def location(self):
@@ -328,13 +336,33 @@ class Camera(object):
         # else:
         #     raise BufferError("Camera Frame Could Not Be Buffered")
 
-        width, height=self.pixel_resolution
+        width, height=self.frame_resolution
         cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((height, width), dtype='B')    #np.empty is not empty due to dtype='B'
         if not TT_CameraFrameBuffer(self.index, width, height, width, 8, &frame[0,0]):
                                   #(camera number, width in pixels, height in pixels, width in bytes, bits per pixel, buffer name)
                                   #  -> where width in bytes should equal width in pixels * bits per pixel / 8
             raise BufferError("Camera Frame Could Not Be Buffered")
-        elif self.video_mode==frame
+
+        # When video mode is changed, it often takes a few frames before the data coming in is correct.
+        # Give a warning if you can detect that happening.
+        # TODO: Get instant video mode switching.
+        if len(frame) != self.frame_resolution[1]:
+            print("Frame size not correct for current video mode. Call motive.update().")
+            # warnings.warn("Frame size not correct for current video mode. Call motive.update().")
+
+        unique_values = np.unique(frame)
+        if self.video_mode in [self.OBJECT_MODE, self.SEGMENT_MODE]:
+            if len(unique_values) > 2:
+                print("Frame contains video or precision data. Call motive.update().")
+                # warnings.warn("Frame contains video or precision data. Call motive.update().")
+        else:
+            if len(unique_values) == 2:
+                print("Frame contains object or segment data. Call motive.update().")
+                # warnings.warn("Frame contains object or segment data. Call motive.update().")
+
+
+
+
         return frame
 
     def frame_buffer_save_as_bmp(self, str filename):
