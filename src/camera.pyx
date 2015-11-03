@@ -142,12 +142,12 @@ class Camera(object):
     @utils.decorators.check_cam_setting
     def image_gain(self):
         """returns int"""
-        return  TT_CameraImagerGainLevels(self.index)
+        return  TT_CameraImagerGainLevels(self.index)+1   #In the motive GUI values range from 1 to 8
 
     @image_gain.setter
     def image_gain(self, value):
-        assert value<=8, "Maximum Gain Level is 8"
-        TT_SetCameraImagerGain(self.index, value)
+        assert 0<value<9, "Range from 1 to 8"
+        TT_SetCameraImagerGain(self.index, value-1)
 
     @property
     def continuous_ir(self):
@@ -180,6 +180,8 @@ class Camera(object):
                 return (width, height)
         else:
             raise Exception("Could Not Find Camera Resolution")
+
+    @property
 
     @property
     def location(self):
@@ -332,7 +334,7 @@ class Camera(object):
                                   #(camera number, width in pixels, height in pixels, width in bytes, bits per pixel, buffer name)
                                   #  -> where width in bytes should equal width in pixels * bits per pixel / 8
             raise BufferError("Camera Frame Could Not Be Buffered")
-        #elif self.video_mode==frame
+        elif self.video_mode==frame
         return frame
 
     def frame_buffer_save_as_bmp(self, str filename):
