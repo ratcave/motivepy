@@ -1,6 +1,8 @@
 __author__ = 'Nico'
 
 import btk
+import motive as m
+
 
 def create_record_object():
     acq=btk.btkAcquisition()
@@ -19,8 +21,8 @@ def record_frames_markers(acq):
 
     for i in xrange(len(markers)):
         point=acq.GetPoint(i)
-        point.SetDataSlice(frames-1, markers[i])
-    btk.btkAcquisition.ResizeFrameNumber(acq, frames+1)
+        point.SetDataSlice(frames-1, *markers[i])
+    btk.btkAcquisition.ResizeFrameNumber(acq, frames+1)   #always one frame more than needed
 
     return acq
 

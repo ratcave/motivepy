@@ -4,7 +4,6 @@ from motive import utils
 cimport numpy as np
 import numpy as np
 import warnings
-#from libc.stdlib cimport malloc, free
 
 def get_cams():
     """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
