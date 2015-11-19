@@ -21,7 +21,7 @@ def record_frames_markers(acq):
 
     for i in xrange(len(markers)):
         point=acq.GetPoint(i)
-        point.SetDataSlice(frames-1, *markers[i])
+        point.SetDataSlice(frames-1, *[1000*x for x in markers[i]])
     btk.btkAcquisition.ResizeFrameNumber(acq, frames+1)   #always one frame more than needed
 
     return acq
