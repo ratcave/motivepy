@@ -55,5 +55,6 @@ elif args.folder and args.file:
 else:
     root = Tkinter.Tk()
     root.withdraw()
-    file_u=tkFileDialog.askopenfilename(title='Choose a c3d file to convert: ', filetypes=[('motive c3d tracking files', '*.c3d')])
+    #file_u=tkFileDialog.askopenfilename(title='Choose a c3d file to convert: ', filetypes=[('motive c3d tracking files', '*.c3d')])
+    tkFileDialog.askdirectory(initialdir='.') #get directory
     convert_and_write(file_u.encode("ascii"))
