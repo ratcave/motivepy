@@ -325,16 +325,6 @@ class Camera(object):
         The resulting image depends on what video mode the camera is in.
         If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
         """
-        # width, height=self.pixel_resolution
-        # cdef unsigned char * buffer=<unsigned char *> malloc(width*height*sizeof(unsigned char))
-        # if TT_CameraFrameBuffer(self.index, width, height, width, 8, buffer):
-        #     py_buffer=buffer[:width*height]
-        #     free(buffer)
-        #     return np.frombuffer(py_buffer, dtype='B').reshape(height,width)
-        #
-        # else:
-        #     raise BufferError("Camera Frame Could Not Be Buffered")
-
         width, height=self.frame_resolution
         cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((height, width), dtype='B')    #np.empty is not empty due to dtype='B'
         if not TT_CameraFrameBuffer(self.index, width, height, width, 8, &frame[0,0]):
@@ -359,10 +349,8 @@ class Camera(object):
                 print("Frame contains object or segment data. Call motive.update().")
                 # warnings.warn("Frame contains object or segment data. Call motive.update().")
 
-
-
-
         return frame
+
 
     def frame_buffer_save_as_bmp(self, str filename):
         """Save camera's frame buffer as a BMP image file"""
