@@ -1,9 +1,12 @@
 include "cnative.pxd"
 
-from motive import utils
+from motive import utils, native
 cimport numpy as np
 import numpy as np
 import warnings
+import cv
+import cv2
+import time
 
 def get_cams():
     """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
@@ -356,6 +359,51 @@ class Camera(object):
         """Save camera's frame buffer as a BMP image file"""
         if not TT_CameraFrameBufferSaveAsBMP(self.index, filename):
             raise IOError("Camera Frame Buffer Not Successfully Saved To Filename: {0}.".format(filename))
+
+
+    def get_frame_buffer_video(video_file='video.avi', record_length=10, save_video=True):#(self):
+        """Show video of camera's frame buffer"""
+
+        if save_video:
+            # Define the codec and create VideoWriter object
+            #CODEC = cv.CV_FOURCC('D','I','V','3') # MPEG 4.3
+            #CODEC = cv.CV_FOURCC('M','P','4','2') # MPEG 4.2
+            #CODEC = cv.CV_FOURCC('M','J','P','G') # Motion Jpeg
+            #CODEC = cv.CV_FOURCC('U','2','6','3') # H263
+            #CODEC = cv.CV_FOURCC('I','2','6','3') # H263I
+            #CODEC = cv.CV_FOURCC('F','L','V','1') # FLV
+            #CODEC = cv.CV_FOURCC('P','I','M','1') # MPEG-1
+            #CODEC = cv.CV_FOURCC('D','I','V','X') # MPEG-4 = MPEG-1
+            CODEC=-1
+
+            # Initialize the video writer to write the file
+            writer = cv2.VideoWriter(
+                                video_file,                         # Filename
+                                CODEC,                              # Codec for compression
+                                30,#cam.frame_rate,                 # Frames per second
+                                (640,480),#cam.frame_resolution,    # Width / Height tuple
+                                False                               # Color flag
+                                )
+            start_time=time.time()
+        while(True):
+            k=cv2.waitKey(1)
+            #native.update()
+            #frame=self.get_frame_buffer()
+            #cv2.imshow('framerate={}'.format(self.frame_rate),self.get_frame_buffer())
+            frame=np.random.rand(480,640)
+            cv2.imshow('frame',frame)
+            if save_video:
+                writer.write(frame)
+                if time.time()>start_time+record_length:
+                    break
+
+            if k in {27, ord('q')}:  #Hit Escape Key (value might not be 27 depending on OS) or q to exit
+                break
+
+        if save_video:
+            writer.release()
+        cv2.destroyAllWindows()
+
 
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
     def set_filter_switch(self, bool enableIRFilter):

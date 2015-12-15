@@ -1,46 +1,58 @@
 import motive as m
 import cv
+import cv2
+
 
 m.load_project()
 
-cams=m.get_cams()
+for cam in m.get_cams():
+    cam.frame_rate = 30
 
 def give_cam():
     for cam in m.get_cams():
         if "91" in cam.name:
             return cam
+
 cam=give_cam()
 cam.exposure=33000
+cam.image_gain = 8  # 8 is the maximum image gain setting
 
 m.update()
 
-import numpy as np
-import cv2
-
-cap = cv2.VideoCapture(0)
-
 # Define the codec and create VideoWriter object
-fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
+#CODEC = cv.CV_FOURCC('D','I','V','3') # MPEG 4.3
+#CODEC = cv.CV_FOURCC('M','P','4','2') # MPEG 4.2
+CODEC = cv.CV_FOURCC('M','J','P','G') # Motion Jpeg
+#CODEC = cv.CV_FOURCC('U','2','6','3') # H263
+#CODEC = cv.CV_FOURCC('I','2','6','3') # H263I
+#CODEC = cv.CV_FOURCC('F','L','V','1') # FLV
+#CODEC = cv.CV_FOURCC('P','I','M','1') # MPEG-1
+#CODEC = cv.CV_FOURCC('D','I','V','X') # MPEG-4 = MPEG-1
 
-while(cap.isOpened()):
-    ret, frame = cap.read()
+#CODEC=-1
+
+# Initialize the video writer to write the file
+writer = cv2.VideoWriter(
+    'video.avi',                        # Filename
+    CODEC,                              # Codec for compression
+    cam.frame_rate,                     # Frames per second
+    cam.frame_resolution,               # Width / Height tuple
+    False                               # Color flag
+)
+
+# Capture 50 frames and write each one to the file
+for i in range(0, 1000):
+    print 'frame #:', i
     m.update()
-    if ret==True:
-        frame = cv2.flip(frame,0)
+    frame=cam.get_frame_buffer()
+    writer.write(frame)
 
-        # write the flipped frame
-        out.write(frame)
-
-        cv2.imshow('frame',frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-    else:
+    cv2.imshow('frame',frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 # Release everything if job is finished
-cap.release()
-out.release()
+writer.release()
 cv2.destroyAllWindows()
 
 
@@ -70,7 +82,6 @@ cam.exposure=33000
 
 m.update()
 
-
 #CODEC = cv.CV_FOURCC('D','I','V','3') # MPEG 4.3
 #CODEC = cv.CV_FOURCC('M','P','4','2') # MPEG 4.2
 CODEC = cv.CV_FOURCC('M','J','P','G') # Motion Jpeg
@@ -79,7 +90,6 @@ CODEC = cv.CV_FOURCC('M','J','P','G') # Motion Jpeg
 #CODEC = cv.CV_FOURCC('F','L','V','1') # FLV
 #CODEC = cv.CV_FOURCC('P','I','M','1') # MPEG-1
 #CODEC = cv.CV_FOURCC('D','I','V','X') # MPEG-4 = MPEG-1
-
 #CODEC=-1
 
 # Initialize the video writer to write the file
