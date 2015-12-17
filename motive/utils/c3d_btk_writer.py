@@ -3,7 +3,6 @@ __author__ = 'Nico'
 import btk
 import motive as m
 
-
 def create_record_object():
     acq=btk.btkAcquisition()
     btk.btkAcquisition.Reset(acq)

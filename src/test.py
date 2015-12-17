@@ -2,6 +2,7 @@ import motive as m
 import cv
 import cv2
 
+
 m.load_project()
 
 for cam in m.get_cams():
@@ -34,12 +35,15 @@ CODEC = cv.CV_FOURCC('M','J','P','G') # Motion Jpeg
 
 # Initialize the video writer to write the file
 writer = cv2.VideoWriter(
-    'videomjpeg.avi',                        # Filename
+    'video.avi',                        # Filename
     CODEC,                              # Codec for compression
     cam.frame_rate,                     # Frames per second
     cam.frame_resolution,               # Width / Height tuple
     False                               # Color flag
-)
+                        )
+
+
+# Capture 50 frames and write each one to the file
 
 for i in range(0, 1000):
     print 'frame #:', i
@@ -82,7 +86,6 @@ cam.exposure=33000
 
 m.update()
 
-
 #CODEC = cv.CV_FOURCC('D','I','V','3') # MPEG 4.3
 #CODEC = cv.CV_FOURCC('M','P','4','2') # MPEG 4.2
 CODEC = cv.CV_FOURCC('M','J','P','G') # Motion Jpeg
@@ -91,7 +94,6 @@ CODEC = cv.CV_FOURCC('M','J','P','G') # Motion Jpeg
 #CODEC = cv.CV_FOURCC('F','L','V','1') # FLV
 #CODEC = cv.CV_FOURCC('P','I','M','1') # MPEG-1
 #CODEC = cv.CV_FOURCC('D','I','V','X') # MPEG-4 = MPEG-1
-
 #CODEC=-1
 
 # Initialize the video writer to write the file

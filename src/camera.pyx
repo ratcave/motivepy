@@ -4,6 +4,9 @@ from motive import utils
 cimport numpy as np
 import numpy as np
 import warnings
+import cv
+import cv2
+import time
 
 def get_cams():
     """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
@@ -350,7 +353,6 @@ class Camera(object):
                 # warnings.warn("Frame contains object or segment data. Call motive.update().")
 
         return frame
-
 
     def frame_buffer_save_as_bmp(self, str filename):
         """Save camera's frame buffer as a BMP image file"""
