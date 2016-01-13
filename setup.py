@@ -14,7 +14,7 @@ native = Extension(
 camera = Extension(
     'motive.camera',
     sources=["src\\camera.pyx"],
-    include_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\inc", "src",numpy.get_include()],
+    include_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\inc", "src"],
     library_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\lib" ],
     extra_link_args=["/DEFAULTLIB:NPTrackingTools"],
     language="c++"
@@ -33,8 +33,8 @@ rigidbody = Extension(
 setup(
     name="motive",
     ext_modules= cythonize([native, rigidbody, camera]),
-    packages= find_packages(), #,["motive"],
-    scripts=['scripts/vislight.py', 'scripts/viewer.py', 'scripts/video.py'],
+    packages= find_packages(),
+    scripts=['scripts/vislight.py', 'scripts/viewer.py'],
     install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph', 'btk' ],
     package_data= {'': ['data/*.ttp']}
 )
