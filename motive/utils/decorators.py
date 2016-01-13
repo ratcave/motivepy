@@ -1,4 +1,4 @@
-__author__ = 'ratcave'
+__author__ = 'nico and ratcave'
 import motive
 
 def check_npresult(func):
