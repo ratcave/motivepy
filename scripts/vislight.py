@@ -1,6 +1,3 @@
-__author__ = 'ratcave'
-
-
 if __name__ == '__main__':
 
     import motive as m
