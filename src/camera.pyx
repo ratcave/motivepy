@@ -354,7 +354,7 @@ class Camera(object):
 
         return frame
 
-    def frame_buffer_save_as_bmp(self, str filename):
+    def frame_buffer_save_as_bmp(self, str filename="frame_image.bmp"):
         """Save camera's frame buffer as a BMP image file"""
         if not TT_CameraFrameBufferSaveAsBMP(self.index, filename):
             raise IOError("Camera Frame Buffer Not Successfully Saved To Filename: {0}.".format(filename))

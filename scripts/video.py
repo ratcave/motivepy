@@ -26,7 +26,7 @@ def gui_camera_name():
         #root.withdraw()
         global cam
         cam=get_cam(camera_name)
-        #root.quit()
+        root.quit()
 
     frame=Tkinter.Frame(root)
     frame.pack()
@@ -43,11 +43,13 @@ def gui_camera_name():
     camera_button_10910 = Tkinter.Button(frame, text="Camera Prime 13W #10910", command=lambda: choose_camera('10910'))
     camera_button_10910.pack(side=Tkinter.LEFT)
 
+    print "hello world"
+
     Tkinter.mainloop()
 
     return cam
 
-    root.quit() #doesnt work, the mainloop does not quit that way
+    ##root.quit() #doesnt work, the mainloop does not quit that way
 
 
 def get_video_writer(cam, video_file='video.avi'):
@@ -94,7 +96,7 @@ def write_video(cam, writer, record_time, save_video=True):
             if time.time()>start_time+record_time:
                 break
 
-        if k in {27, ord('q')}:  #Hit Escape Key (value might not be 27 depending on OS) or q to exit
+        if k in {27, ord('q')}:  #Hit Escape Key (depending on OS, escape code might not be 27) or q to exit
             break
 
     if save_video:
