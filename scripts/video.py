@@ -17,14 +17,17 @@ def gui_load_project_file():
 def get_cam(camera_name="91"):
     for cam in m.get_cams():
         if camera_name in cam.name:
+            cam.frame_rate=100
+            m.update()
+            m.update()
+            m.update()
             return cam
 
-def gui_camera_name():
-    #maybe try just returning the camera_name
+def gui_get_cam():
     root = Tkinter.Tk()
 
     def choose_camera(camera_name):
-        #root.withdraw()
+        root.withdraw()
         global cam
         cam=get_cam(camera_name)
         root.quit()
@@ -43,6 +46,26 @@ def gui_camera_name():
 
     camera_button_10910 = Tkinter.Button(frame, text="Camera Prime 13W #10910", command=lambda: choose_camera('10910'))
     camera_button_10910.pack(side=Tkinter.LEFT)
+
+    camera_button_9997 = Tkinter.Button(frame, text="Camera Prime 17W #9997", command=lambda: choose_camera('9997'))
+    camera_button_9997.pack(side=Tkinter.LEFT)
+
+    camera_button_10188 = Tkinter.Button(frame, text="Camera Prime 17W #10188", command=lambda: choose_camera('10188'))
+    camera_button_10188.pack(side=Tkinter.LEFT)
+
+    camera_button_10190 = Tkinter.Button(frame, text="Camera Prime 13W #10190", command=lambda: choose_camera('10190'))
+    camera_button_10190.pack(side=Tkinter.LEFT)
+
+    camera_button_11079 = Tkinter.Button(frame, text="Camera Prime 13 #11079", command=lambda: choose_camera('11079'))
+    camera_button_11079.pack(side=Tkinter.LEFT)
+
+    camera_button_9956 = Tkinter.Button(frame, text="Camera Prime 17W #9956", command=lambda: choose_camera('9956'))
+    camera_button_9956.pack(side=Tkinter.LEFT)
+
+    camera_button_11202 = Tkinter.Button(frame, text="Camera Prime 13W #11202", command=lambda: choose_camera('11202'))
+    camera_button_11202.pack(side=Tkinter.LEFT)
+
+    #TODO: nicer button layout
 
     Tkinter.mainloop()
 
@@ -81,13 +104,15 @@ def write_video(cam, writer, record_time, save_video=True):
     If save_video=False function only shows video and independent of record_time.
     """
     start_time=time.time()
+    last_time=start_time
     while(True):
         k=cv2.waitKey(1)
+        fps = round(1. / (time.time() - last_time + .00001))
+        last_time=time.time()
         m.update()
         frame=cam.get_frame_buffer()
-        cv2.imshow('Live Video. Framerate={}Hz       (Esc or q to exit)'.format(cam.frame_rate),frame)
-        #frame=np.random.rand(480,640)
-        #cv2.imshow('frame',frame)
+        #cv2.imshow('Live Video. Framerate={0}Hz. Videowrite-rate={1}Hz       (Esc or q to exit)'.format(cam.frame_rate, fps),frame)
+        cv2.imshow('Live Video. Framerate={0}Hz.        (Esc or q to exit)'.format(cam.frame_rate ),frame)
 
         if save_video:
             writer.write(frame)                           #TODO: Adapt writing speed to wanted video speed
@@ -131,7 +156,7 @@ if __name__ == '__main__':
     if args.camera_name:
         cam=get_cam(args.camera_name)
     else:
-        cam=gui_camera_name()
+        cam=gui_get_cam()
 
     #Get Video Writer
     if args.save_video:
