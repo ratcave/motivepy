@@ -6,6 +6,7 @@ import argparse
 import motive as m
 import Tkinter, tkFileDialog
 
+
 def gui_load_project_file():
     root = Tkinter.Tk()
     root.withdraw()
@@ -43,13 +44,9 @@ def gui_camera_name():
     camera_button_10910 = Tkinter.Button(frame, text="Camera Prime 13W #10910", command=lambda: choose_camera('10910'))
     camera_button_10910.pack(side=Tkinter.LEFT)
 
-    print "hello world"
-
     Tkinter.mainloop()
 
     return cam
-
-    ##root.quit() #doesnt work, the mainloop does not quit that way
 
 
 def get_video_writer(cam, video_file='video.avi'):
@@ -76,6 +73,7 @@ def get_video_writer(cam, video_file='video.avi'):
                              )
     return writer
 
+
 def write_video(cam, writer, record_time, save_video=True):
     """
     If save_video=True, which is default, function shows video and writes it to file until
@@ -87,12 +85,12 @@ def write_video(cam, writer, record_time, save_video=True):
         k=cv2.waitKey(1)
         m.update()
         frame=cam.get_frame_buffer()
-        cv2.imshow('Live Video. Framerate={}Hz'.format(cam.frame_rate),frame)
+        cv2.imshow('Live Video. Framerate={}Hz       (Esc or q to exit)'.format(cam.frame_rate),frame)
         #frame=np.random.rand(480,640)
         #cv2.imshow('frame',frame)
 
         if save_video:
-            writer.write(frame)
+            writer.write(frame)                           #TODO: Adapt writing speed to wanted video speed
             if time.time()>start_time+record_time:
                 break
 
@@ -123,7 +121,7 @@ if __name__ == '__main__':
                         help='Maximum recording time (equals actual recording time if not stopped manually).')
 
     parser.add_argument('-s', action='store_false', dest='save_video', default=True,
-                        help='If this flag is set, the video is shown but not saved.')
+                        help='If this flag is set, the video is shown but not saved.')        #TODO: should saving the video be mandatory?
 
     args = parser.parse_args()
 
