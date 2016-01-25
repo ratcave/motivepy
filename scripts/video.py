@@ -17,13 +17,13 @@ def gui_load_project_file():
 def get_cam(camera_name="91"):
     for cam in m.get_cams():
         if camera_name in cam.name:
-            cam.frame_rate=100
-            m.update()
-            m.update()
-            m.update()
+            # cam.frame_rate=100
+            # m.update()
+            # m.update()
+            # m.update()
             return cam
 
-def gui_get_cam():
+def gui_get_cam():        #TODO: create a window where one could look at all cameras at once. Then choose one, open up the window in parallel again if necessary
     root = Tkinter.Tk()
 
     def choose_camera(camera_name):
@@ -35,6 +35,7 @@ def gui_get_cam():
     frame=Tkinter.Frame(root)
     frame.pack()
 
+    #TODO: for loop that creates all the buttons
     camera_button_11000=Tkinter.Button(frame, text="Camera Prime 13 #11000", command=lambda: choose_camera('11000'))
     camera_button_11000.pack(side=Tkinter.LEFT)
 
@@ -105,19 +106,22 @@ def write_video(cam, writer, record_time, save_video=True):
     """
     start_time=time.time()
     last_time=start_time
-    while(True):
+
+    while True:
         k=cv2.waitKey(1)
         fps = round(1. / (time.time() - last_time + .00001))
         last_time=time.time()
         m.update()
         frame=cam.get_frame_buffer()
-        #cv2.imshow('Live Video. Framerate={0}Hz. Videowrite-rate={1}Hz       (Esc or q to exit)'.format(cam.frame_rate, fps),frame)
-        cv2.imshow('Live Video. Framerate={0}Hz.        (Esc or q to exit)'.format(cam.frame_rate ),frame)
+        #TODO: look at just having the video object
+        cv2.imshow('Live Video. Framerate={0}Hz.        (Esc or q to exit)'.format(cam.frame_rate ), frame)
+        print fps
 
+        #TODO: write video at higher speed than rendering it
         if save_video:
             writer.write(frame)                           #TODO: Adapt writing speed to wanted video speed
             if time.time()>start_time+record_time:
-                break
+                break                                     #breaks the while loop such that cv2.imshow disappears
 
         if k in {27, ord('q')}:  #Hit Escape Key (depending on OS, escape code might not be 27) or q to exit
             break
@@ -139,14 +143,18 @@ if __name__ == '__main__':
     parser.add_argument('-c', action='store', dest='camera_name', default='',
                         help='Name of the camera from which to get the video.')
 
-    parser.add_argument('-f', action='store', dest='video_filename', default='video.avi',
-                        help='Name of the file the video will be saved as.')
+
 
     parser.add_argument('-t', action='store', dest='record_time', default=60,
                         help='Maximum recording time (equals actual recording time if not stopped manually).')
 
+    #make one of the two below
     parser.add_argument('-s', action='store_false', dest='save_video', default=True,
-                        help='If this flag is set, the video is shown but not saved.')        #TODO: should saving the video be mandatory?
+                        help='If this flag is set, the video is shown but not saved.')        #TODO: saving should not be mandatory. create save button
+
+    parser.add_argument('-f', action='store', dest='video_filename', default='video.avi',
+                        help='Name of the file the video will be saved as.')
+
 
     args = parser.parse_args()
 
@@ -166,5 +174,5 @@ if __name__ == '__main__':
                                                                 #has no property to extract frame rate and frame_size from
     if args.save_video:
         writer.release()
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()  #seems we do not need it. cvimshow disappears when the while loop ends!
     m.shutdown()

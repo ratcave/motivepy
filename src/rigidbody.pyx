@@ -142,7 +142,7 @@ class RigidBody(object):
         markers = []
         cdef int markerIndex
         cdef bool tracked = True
-        cdef float x = 0, y = 0, z = 0  # Says it works at http://docs.cython.org/src/userguide/pyrex_differences.html
+        cdef float x = 0, y = 0, z = 0
         for markerIndex in xrange(TT_RigidBodyMarkerCount(self.index)):
             # Get marker position
             TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)

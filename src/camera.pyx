@@ -329,28 +329,29 @@ class Camera(object):
         If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
         """
         width, height=self.frame_resolution
-        cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((height, width), dtype='B')    #np.empty is not empty due to dtype='B'
+        cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((height, width), dtype='B')    #after this call frame is array with zeros
         if not TT_CameraFrameBuffer(self.index, width, height, width, 8, &frame[0,0]):
                                   #(camera number, width in pixels, height in pixels, width in bytes, bits per pixel, buffer name)
                                   #  -> where width in bytes should equal width in pixels * bits per pixel / 8
             raise BufferError("Camera Frame Could Not Be Buffered")
 
-        # When video mode is changed, it often takes a few frames before the data coming in is correct.
+        #When video mode is changed, it often takes a few frames before the data coming in is correct.
         # Give a warning if you can detect that happening.
         # TODO: Get instant video mode switching.
-        if len(frame) != self.frame_resolution[1]:
-            print("Frame size not correct for current video mode. Call motive.update().")
-            # warnings.warn("Frame size not correct for current video mode. Call motive.update().")
-
-        unique_values = np.unique(frame)
-        if self.video_mode in [self.OBJECT_MODE, self.SEGMENT_MODE]:
-            if len(unique_values) > 2:
-                print("Frame contains video or precision data. Call motive.update().")
-                # warnings.warn("Frame contains video or precision data. Call motive.update().")
-        else:
-            if len(unique_values) == 2:
-                print("Frame contains object or segment data. Call motive.update().")
-                # warnings.warn("Frame contains object or segment data. Call motive.update().")
+        # if len(frame) != self.frame_resolution[1]:
+        #     print("Frame size not correct for current video mode. Call motive.update().")
+        #     # warnings.warn("Frame size not correct for current video mode. Call motive.update().")
+        #
+        # unique_values = np.unique(frame)
+        # if self.video_mode in [self.OBJECT_MODE, self.SEGMENT_MODE]:
+        #     if len(unique_values) > 2:
+        #         print("Frame contains video or precision data. Call motive.update().")
+        #         # warnings.warn("Frame contains video or precision data. Call motive.update().")
+        # else:
+        #     if len(unique_values) == 2:
+        #         print("Frame contains object or segment data. Call motive.update().")
+        #         # warnings.warn("Frame contains object or segment data. Call motive.update().")
+        #
 
         return frame
 
