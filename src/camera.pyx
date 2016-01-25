@@ -337,7 +337,8 @@ class Camera(object):
 
         #When video mode is changed, it often takes a few frames before the data coming in is correct.
         # Give a warning if you can detect that happening.
-        # TODO: Get instant video mode switching.
+        #TODO: Get instant video mode switching.
+        #TODO: find some fast way of checking most important error
         # if len(frame) != self.frame_resolution[1]:
         #     print("Frame size not correct for current video mode. Call motive.update().")
         #     # warnings.warn("Frame size not correct for current video mode. Call motive.update().")
