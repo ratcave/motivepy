@@ -1,6 +1,21 @@
 __author__ = 'Vash'
 
-# means comment from official SDK API (or Cython page) ## means comment from me
+"""Motive Base Module
+
+This module declares the basic functions and classes available
+from the Motive C++ API. Once declared we can use them in specific
+python modules.
+
+Example:
+    This example shows how to define a python function which is callable
+    after the specific module is imported.
+
+        >>> def update():
+                return TT_Update()
+
+That function calls the C++ function declared in this module
+(for more information see the documentation of native.pyx).
+"""
 
 from libcpp cimport bool
 
