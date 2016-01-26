@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Motive Camera Module
 
 This module demonstrates documentation as specified by the `Google Python
@@ -40,7 +39,21 @@ import cv2
 import time
 
 def get_cams():
-    """Initiate all cameras as python objects, where camera #k is cam[k-1]"""
+    """Returns a list of all cameras.
+
+    Returns:
+        List of camera objects
+
+    Examples:
+        >>>get_cams()
+        (Camera Object 0: Camera Prime 13 #11000, Camera Object 1: Camera Prime 17W #10187,
+        Camera Object 2: Camera Prime 17W #10189)
+        >>>cams=get_cams()
+        >>>cams[1].name
+        Camera Prime 17W #10187
+
+    For more information on camera methods see the camera class defined below.
+    """
     return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
 
 #CAMERA GROUP SUPPORT
@@ -49,17 +62,34 @@ def camera_group_count():
     return TT_CameraGroupCount()
 
 def create_camera_group():
-    """Add an additional group"""
+    """Adds an additional camera group
+    Raises:
+        Exception: If a new camera group could not be created
+    """
     if not TT_CreateCameraGroup():
         raise Exception("Could Not Create Camera Group")
 
 def remove_camera_group(int groupIndex):
-    """Remove a camera group (must be empty)"""
+    """Removes a camera group
+
+    Note:
+        A camera group can only be removed if it contains
+        at least one camera.
+    Args:
+        groupIndex (int): The index of the camera group to be removed
+    Raises:
+        Exception: If the camera group could not be removed
+    """
     if not TT_RemoveCameraGroup(groupIndex):
         raise Exception("Could Not Remove. Check If Group Empty")
 
+
 def set_group_shutter_delay(int groupIndex, int microseconds):
-    """Set camera group's shutter delay"""
+    """Set camera group's shutter delay
+    Args:
+        groupIndex (int): The index of the camera group to be removed
+        microseconds (int): The time between opening of shutter and capture of frame
+    """
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
 
@@ -67,6 +97,12 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
 class Camera(object):
 
     def __init__(self, cameraIndex):
+        """Initializes a camera object
+        Args:
+            cameraIndex (int): The index of the camera to be initialized
+        Raises:
+            AssertionError: If the index is larger than the number of cameras
+        """
         assert cameraIndex < TT_CameraCount(), "There Are Only {0} Cameras".format(TT_CameraCount())
         self.index=cameraIndex
 
@@ -75,11 +111,22 @@ class Camera(object):
         if '13' in self.name:
             self._video_modes['PRECISION_MODE'] = 4
             self.PRECISION_MODE = self._video_modes['PRECISION_MODE']
+            """int: Integer code for video in precision mode
+            Note:
+                Only Prime Cameras of the 13 series can switch to precision mode
+            """
 
         self.OBJECT_MODE = self._video_modes['OBJECT_MODE']
+        """int: Integer code for video in object mode"""
+
         self.GRAYSCALE_MODE = self._video_modes['GRAYSCALE_MODE']
+        """int: Integer code for video in grayscale mode"""
+
         self.SEGMENT_MODE = self._video_modes['SEGMENT_MODE']
+        """int: Integer code for video in segment mode"""
+
         self.MJPEG_MODE = self._video_modes['MJPEG_MODE']
+        """int: Integer code for video in mjpeg mode"""
 
 
     def __str__(self):
@@ -90,12 +137,12 @@ class Camera(object):
 
     @property
     def name(self):
-        """Camera Name"""
+        """str: Camera name"""
         return TT_CameraName(self.index)
 
     @property
     def group(self):
-        """Camera's camera group index"""
+        """int: Camera's group index"""
         return TT_CamerasGroup(self.index)
 
     @group.setter
@@ -105,7 +152,7 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def video_mode(self):
-        """0:"Segment Mode"\n 1:"Grayscale Mode"\n 2:"Object Mode"\n 4:"Precision Mode"\n 6:"MJPEG Mode" """
+        """int: Integer encoding the actual video mode of the camera. See Camera.X_MODE"""
         return TT_CameraVideoType(self.index)
 
     @video_mode.setter
@@ -116,7 +163,7 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def exposure(self):
-        """Camera exposure level"""
+        """int: Camera exposure level"""
         return TT_CameraExposure(self.index)
 
     @exposure.setter
@@ -126,7 +173,7 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def threshold(self):
-        """Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker"""
+        """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker"""
         return TT_CameraThreshold(self.index)
 
     @threshold.setter
@@ -137,7 +184,7 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def intensity(self):
-        """Camera IR LED Brightness Intensity Level"""
+        """int: Camera IR LED brightness intensity level"""
         return TT_CameraIntensity(self.index)
 
     @intensity.setter
@@ -146,20 +193,22 @@ class Camera(object):
         TT_SetCameraSettings(self.index, self.video_mode, self.exposure, self.threshold, value)
 
     def set_settings(self, int video_mode, int exposure, int threshold, int intensity):
-        """
-        Set camera settings.  This function allows you to set the camera's video mode, exposure, threshold,
+        """Set camera settings.
+        This function allows you to set the camera's video mode, exposure, threshold,
         and illumination settings.
-        VideoMode: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode.
-        Exposure: Valid values are:  1-480.
-        Threshold: Valid values are: 0-255.
-        Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)
+
+        Args:
+            video_mode (int): Integer encoding the actual video mode of the camera. See Camera.X_MODE
+            exposure (int): Camera exposure level
+            threshold (int): Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
+            intensity (int): Camera IR LED brightness intensity level
         """
         return TT_SetCameraSettings(self.index, video_mode, exposure, threshold, intensity)
 
     @property
     @utils.decorators.check_cam_setting
     def frame_rate(self):
-        """frames/sec"""
+        """int: Cameras frame rate in Hz. That is frames per second"""
         return TT_CameraFrameRate(self.index)
 
     @frame_rate.setter
@@ -170,7 +219,7 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def grayscale_decimation(self):
-        """returns int"""
+        """int: decimate the frame capture when in grayscale mode, or switch to grayscale mode and decimate frame capture?"""
         return  TT_CameraGrayscaleDecimation(self.index)
 
     @grayscale_decimation.setter
@@ -181,7 +230,7 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def image_gain(self):
-        """returns int"""
+        """int: Cameras gain"""
         return  TT_CameraImagerGainLevels(self.index)+1   #In the motive GUI values range from 1 to 8
 
     @image_gain.setter
@@ -191,7 +240,7 @@ class Camera(object):
 
     @property
     def continuous_ir(self):
-        """returns bool"""
+        """bool: Is continuous infrared set?"""
         assert TT_IsContinuousIRAvailable(self.index), "Camera {0} Does Not Support Continuous IR".format(self.index)
         return TT_ContinuousIR(self.index)
 
@@ -207,6 +256,7 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def id(self):
+        "int: Camera ID number"
         return TT_CameraID(self.index)
 
     @property

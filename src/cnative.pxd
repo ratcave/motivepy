@@ -1,5 +1,3 @@
-__author__ = 'Vash'
-
 """Motive Base Module
 
 This module declares the basic functions and classes available
