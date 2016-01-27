@@ -39,10 +39,10 @@ import cv2
 import time
 
 def get_cams():
-    """Returns a list of all cameras.
+    """Returns a tuple containing all cameras.
 
     Returns:
-        List of camera objects
+        Tuple of camera objects
 
     Examples:
         >>>get_cams()
@@ -173,7 +173,10 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def threshold(self):
-        """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker"""
+        """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
+        Raises:
+            AssertionError: If setting values out of scope
+        """
         return TT_CameraThreshold(self.index)
 
     @threshold.setter
@@ -184,7 +187,10 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def intensity(self):
-        """int: Camera IR LED brightness intensity level"""
+        """int: Camera IR LED brightness intensity level
+        Raises:
+            AssertionError: If setting values out of scope
+        """
         return TT_CameraIntensity(self.index)
 
     @intensity.setter
@@ -230,7 +236,10 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def image_gain(self):
-        """int: Cameras gain"""
+        """int: Camera gain level
+        Raises:
+            AssertionError: If setting values out of scope
+        """
         return  TT_CameraImagerGainLevels(self.index)+1   #In the motive GUI values range from 1 to 8
 
     @image_gain.setter
@@ -261,7 +270,7 @@ class Camera(object):
 
     @property
     def pixel_resolution(self):
-        """returns a tuple containing number of pixels in width and height per image (can depend on video_mode)"""
+        """Tuple(int): Returns a tuple containing number of pixels in width and height per image (can depend on video_mode)"""
         cdef int width=0, height=0
         if TT_CameraPixelResolution(self.index, width, height):
             return (width, height)
