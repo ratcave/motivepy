@@ -7,7 +7,7 @@ various methods to change its settings and collect data from it,
 can be applied.
 The basic function in this module is get_cams().
 Please see below for an example of how to use this function to get
-a specific camera and this cameras name.
+a specific camera and this camera's name.
 """
 
 include "cnative.pxd"
@@ -359,12 +359,10 @@ class Camera(object):
     #TODO: Create camera mask class. See issue list on github
     #CAMERA MASKING
     # def mask(self, buffer, int bufferSize):
-    #     assert isinstance(buffer,str), "Buffer Needs To Be String"
-    #     cdef unsigned char * buffer=buffer
+    #     cdef unsigned char * buffer=buffer          #buffer should be an integer array. See get_frame_buffer() below for example
     #     return TT_CameraMask(self.index, buffer, bufferSize)
     #
     # def set_mask(self, buffer, int bufferSize):
-    #     assert isinstance(buffer,str), "Buffer Needs To Be String"
     #     cdef unsigned char * buffer=buffer
     #     if not TT_SetCameraMask(self.index, buffer, bufferSize):
     #         raise Exception("Could Not Set Mask")
