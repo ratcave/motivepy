@@ -3,7 +3,7 @@
 This module features the functionality to load and save files
 for camera settings, rigid bodies and markers.
 Example:
-    >>>load_project(test.ttp)
+    >>>load_project("test.ttp")
     >>>update()
     >>>get_frame_markers()
     ((0.44324554, 0.65645343, 1.5665743), (0.23456576, 0.11568943, 0.04334536), (1.43445367, 1.23546491, 2.34356222))
@@ -181,31 +181,31 @@ def stream_np(bool enabled):
 
 #MARKERS
 def get_frame_markers():
-    """Returns tuple containing all tuples of 3D marker positions"""
+    """Returns a tuple containing all tuples of 3D marker positions"""
     return tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
 
-cdef class markID:
-    cdef cUID *thisptr            # hold a C++ instance which we're wrapping
-
-    def __cinit__(self):
-        self.thisptr = NULL
-
-    @property
-    def low_bits(self):
-        return self.thisptr.LowBits()
-
-    @property
-    def high_bits(self):
-        return self.thisptr.HighBits()
-
-def frame_marker_label(marker_index):
-    """Returns marker label object
-    This object holds a unique ID for every marker.
-    """
-    ID=markID()
-    cdef cUID label=TT_FrameMarkerLabel(marker_index)
-    ID.thisptr=&label
-    return ID
+# cdef class markID:
+#     cdef cUID *thisptr            # hold a C++ instance which we're wrapping
+#
+#     def __cinit__(self):
+#         self.thisptr = NULL
+#
+#     @property
+#     def low_bits(self):
+#         return self.thisptr.LowBits()
+#
+#     @property
+#     def high_bits(self):
+#         return self.thisptr.HighBits()
+#
+# def frame_marker_label(marker_index):
+#     """Returns marker label object
+#     This object holds a unique ID for every marker.
+#     """
+#     ID=markID()
+#     cdef cUID label=TT_FrameMarkerLabel(marker_index)
+#     ID.thisptr=&label
+#     return ID
 
 def frame_time_stamp():
     """Returns time stamp of frame in seconds"""

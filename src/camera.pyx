@@ -79,9 +79,9 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
 class Camera(object):
 
     def __init__(self, cameraIndex):
-        """Initializes a camera object
+        """Returns a camera object
         Args:
-            cameraIndex (int): The index of the camera to be initialized
+            cameraIndex (int): The index of the camera to be returned
         Raises:
             AssertionError: If the index is larger than the number of cameras
         """
