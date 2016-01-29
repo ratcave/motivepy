@@ -184,28 +184,28 @@ def get_frame_markers():
     """Returns a tuple containing all tuples of 3D marker positions"""
     return tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
 
-# cdef class markID:
-#     cdef cUID *thisptr            # hold a C++ instance which we're wrapping
-#
-#     def __cinit__(self):
-#         self.thisptr = NULL
-#
-#     @property
-#     def low_bits(self):
-#         return self.thisptr.LowBits()
-#
-#     @property
-#     def high_bits(self):
-#         return self.thisptr.HighBits()
-#
-# def frame_marker_label(marker_index):
-#     """Returns marker label object
-#     This object holds a unique ID for every marker.
-#     """
-#     ID=markID()
-#     cdef cUID label=TT_FrameMarkerLabel(marker_index)
-#     ID.thisptr=&label
-#     return ID
+cdef class markID:
+    cdef cUID *thisptr            # hold a C++ instance which we're wrapping
+
+    def __cinit__(self):
+        self.thisptr = NULL
+
+    @property
+    def low_bits(self):
+        return self.thisptr.LowBits()
+
+    @property
+    def high_bits(self):
+        return self.thisptr.HighBits()
+
+def frame_marker_label(marker_index):
+    """Returns marker label object
+    This object holds a unique ID for every marker.
+    """
+    ID=markID()
+    cdef cUID label=TT_FrameMarkerLabel(marker_index)
+    ID.thisptr=&label
+    return ID
 
 def frame_time_stamp():
     """Returns time stamp of frame in seconds"""

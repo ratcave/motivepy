@@ -2,29 +2,9 @@
 
 This module features all functionality related to rigid body properties.
 It is basically made up of one large rigid body class.
-Rigid bodies should be loaded through
-Example:
-    Examples can be given using either the ``Example`` or ``Examples``
-    sections. Sections support any reStructuredText formatting, including
-    literal blocks::
-
-        $ python example_google.py
-
-Section breaks are created by resuming unindented text. Section breaks
-are also implicitly created anytime a new section starts.
-
-Attributes:
-    module_level_variable1 (int): Module level variables may be documented in
-        either the ``Attributes`` section of the module docstring, or in an
-        inline docstring immediately following the variable.
-
-        Either form is acceptable, but the two should not be mixed. Choose
-        one convention to document module level variables and be consistent
-        with it.
-
-.. _Google Python Style Guide:
-   http://google.github.io/styleguide/pyguide.html
-
+The basic function in this module is get_rigid_bodies().
+Please see below for an example of how to use this function to get
+a specific rigid body and this rigid body's name.
 """
 
 include "cnative.pxd"
@@ -49,6 +29,9 @@ def get_unident_markers():
 
 def get_rigid_bodies():
     """Returns a tuple containing all rigid bodies.
+    Note:
+        First load a project file or a rigid body file.
+        For more information on this see native.pyx.
 
     Returns:
         Tuple of rigid body objects
