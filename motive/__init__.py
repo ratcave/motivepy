@@ -7,4 +7,8 @@ import utils
 from utils.viewer import show_viewer
 from utils.c3d_btk_writer import *
 
-native._initialize()
+try:
+    native._initialize()
+except EnvironmentError:
+    print('Warning: License not found, so no connection made.')
+    pass
