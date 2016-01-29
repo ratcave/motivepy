@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>motive.utils package &mdash; MotivePy 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MotivePy 0.1 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="motive-utils-package">
+<h1>motive.utils package<a class="headerlink" href="#motive-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-motive.utils.c3d_btk_writer">
+<span id="motive-utils-c3d-btk-writer-module"></span><h2>motive.utils.c3d_btk_writer module<a class="headerlink" href="#module-motive.utils.c3d_btk_writer" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="motive.utils.c3d_btk_writer.create_record_object">
+<code class="descclassname">motive.utils.c3d_btk_writer.</code><code class="descname">create_record_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_btk_writer.create_record_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.utils.c3d_btk_writer.record_frames_markers">
+<code class="descclassname">motive.utils.c3d_btk_writer.</code><code class="descname">record_frames_markers</code><span class="sig-paren">(</span><em>acq</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_btk_writer.record_frames_markers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.utils.c3d_btk_writer.save_record_c3d">
+<code class="descclassname">motive.utils.c3d_btk_writer.</code><code class="descname">save_record_c3d</code><span class="sig-paren">(</span><em>acq</em>, <em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_btk_writer.save_record_c3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-motive.utils.crash_avoidance">
+<span id="motive-utils-crash-avoidance-module"></span><h2>motive.utils.crash_avoidance module<a class="headerlink" href="#module-motive.utils.crash_avoidance" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="motive.utils.crash_avoidance.check_file_exists">
+<code class="descclassname">motive.utils.crash_avoidance.</code><code class="descname">check_file_exists</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.crash_avoidance.check_file_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.utils.crash_avoidance.check_file_extension">
+<code class="descclassname">motive.utils.crash_avoidance.</code><code class="descname">check_file_extension</code><span class="sig-paren">(</span><em>file_name</em>, <em>extension='.ttp'</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.crash_avoidance.check_file_extension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.utils.crash_avoidance.get_backup_dir">
+<code class="descclassname">motive.utils.crash_avoidance.</code><code class="descname">get_backup_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.crash_avoidance.get_backup_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the data directory exists, and creates it if not.  Data directory location is platform-specific.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-motive.utils.decorators">
+<span id="motive-utils-decorators-module"></span><h2>motive.utils.decorators module<a class="headerlink" href="#module-motive.utils.decorators" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="motive.utils.decorators.block_for_frame">
+<code class="descclassname">motive.utils.decorators.</code><code class="descname">block_for_frame</code><span class="sig-paren">(</span><em>secs_to_timeout=3</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.decorators.block_for_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to continually call a function until it stops raising a RuntimeWarning or until timeout.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.utils.decorators.check_cam_setting">
+<code class="descclassname">motive.utils.decorators.</code><code class="descname">check_cam_setting</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.decorators.check_cam_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to check if calling a TT_Camera function returns an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.utils.decorators.check_npresult">
+<code class="descclassname">motive.utils.decorators.</code><code class="descname">check_npresult</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.decorators.check_npresult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so.
+Should decorate every function returning a NPResult type.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.utils.decorators.countdown_timer">
+<code class="descclassname">motive.utils.decorators.</code><code class="descname">countdown_timer</code><span class="sig-paren">(</span><em>total_time</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.decorators.countdown_timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator the creates an iterator that counts back the seconds from total_time</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-motive.utils.viewer">
+<span id="motive-utils-viewer-module"></span><h2>motive.utils.viewer module<a class="headerlink" href="#module-motive.utils.viewer" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="motive.utils.viewer.show_viewer">
+<code class="descclassname">motive.utils.viewer.</code><code class="descname">show_viewer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.viewer.show_viewer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-motive.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-motive.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">motive.utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-motive.utils.c3d_btk_writer">motive.utils.c3d_btk_writer module</a></li>
+<li><a class="reference internal" href="#module-motive.utils.crash_avoidance">motive.utils.crash_avoidance module</a></li>
+<li><a class="reference internal" href="#module-motive.utils.decorators">motive.utils.decorators module</a></li>
+<li><a class="reference internal" href="#module-motive.utils.viewer">motive.utils.viewer module</a></li>
+<li><a class="reference internal" href="#module-motive.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/motive.utils.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Nicolas Kuske.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/motive.utils.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
