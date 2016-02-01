@@ -1,8 +1,8 @@
 if __name__ == '__main__':
 
-    import motive as m
     import Tkinter, tkFileDialog
     from os import path
+    import motive as m
 
     root = Tkinter.Tk()
     root.withdraw()

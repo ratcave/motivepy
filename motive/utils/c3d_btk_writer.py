@@ -1,10 +1,11 @@
 """Motive C3D Writer Module
 
-This module features some functionality to
+This module features functionality to
 create new c3d files from scratch and fill
 them with marker position data.
 
-Example:
+Example::
+
     >>>acq=create_record_object()
     >>>update()
     >>>updated_acq=record_frames_markers(acq)
@@ -60,7 +61,7 @@ def save_record_c3d(acq, file_name):
         file_name(str): Name of the c3d file
 
     Note:
-        The file name should end with .c3d
+        The file name extension should be .c3d
     """
     writer = btk.btkAcquisitionFileWriter()
     writer.SetInput(acq)

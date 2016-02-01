@@ -3,8 +3,15 @@
 This module features all functionality related to rigid body properties.
 It is basically made up of one large rigid body class.
 The basic function in this module is get_rigid_bodies().
-Please see below for an example of how to use this function to get
-a specific rigid body and this rigid body's name.
+
+Examples::
+
+        >>>get_rigid_bodies()
+        (Rigid Body Object: Arena, Rigid Body Object: Head)
+        >>>rigs=get_rigid_bodies()
+        >>>rigs[0].name
+        Arena
+
 """
 
 include "cnative.pxd"
@@ -28,22 +35,14 @@ def get_unident_markers():
 
 
 def get_rigid_bodies():
-    """Returns a tuple containing all rigid bodies.
+    """Returns a tuple containing all rigid bodies
+
     Note:
         First load a project file or a rigid body file.
         For more information on this see native.pyx.
 
     Returns:
         Tuple of rigid body objects
-
-    Examples:
-        >>>get_rigid_bodies()
-        (Rigid Body Object: Arena, Rigid Body Object: Head)
-        >>>rigs=get_rigid_bodies()
-        >>>rigs[0].name
-        Arena
-
-    For more information on rigid body methods see the rigid body class defined below.
     """
     return {RigidBody(idx).name: RigidBody(idx) for idx in xrange(TT_RigidBodyCount())}
 
@@ -70,6 +69,7 @@ def get_rigid_bodies():
 @utils.decorators.check_npresult
 def remove_rigid_body(int rigidIndex):
     """Removes a rigid body object
+
     Args:
         rigidIndex(int): The index of the rigid body
     """
@@ -85,6 +85,7 @@ def clear_rigid_body_list():
 class RigidBody(object):
     def __init__(self, rigidIndex):
         """Returns a rigid body object
+
         Args:
             rigidIndex (int): The index of the rigid body to be returned
         Raises:
@@ -129,13 +130,16 @@ class RigidBody(object):
 
     def get_all_spatial_data(self):
         """Returns spatial data of the rigid body
+
         Returns:
             Dictionary, maps identifying strings to tuples of data::
+
             {
                 'location': (x, y, z),
                 'rotation': (yaw, pitch, roll),
                 'rotation_quats': (qx, qy, qz, qw)
             }
+
         """
         cdef float x = 0., y = 0., z = 0., qx = 0., qy = 0., qz = 0., qw = 0., yaw = 0., pitch = 0., roll = 0.
         TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
@@ -190,7 +194,8 @@ class RigidBody(object):
 
     @utils.decorators.check_npresult
     def translate_pivot(self, float x, float y, float z):
-        """Sets a translation offset for the centroid of the rigid body.
+        """Sets a translation offset for the centroid of the rigid body
+
         Reported values for the location of the rigid body, as well as the 3D visualization, will be shifted
         by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters.
 

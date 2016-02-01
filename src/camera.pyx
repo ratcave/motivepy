@@ -6,8 +6,16 @@ Once a camera has been initialized and called as a python object,
 various methods to change its settings and collect data from it,
 can be applied.
 The basic function in this module is get_cams().
-Please see below for an example of how to use this function to get
-a specific camera and this camera's name.
+
+Examples::
+
+    >>>get_cams()
+    (Camera Object 0: Camera Prime 13 #11000, Camera Object 1: Camera Prime 17W #10187,
+    Camera Object 2: Camera Prime 17W #10189)
+    >>>cams=get_cams()
+    >>>cams[1].name
+    Camera Prime 17W #10187
+
 """
 
 include "cnative.pxd"
@@ -21,20 +29,10 @@ import cv2
 import time
 
 def get_cams():
-    """Returns a tuple containing all cameras.
+    """Returns a tuple containing all cameras
 
     Returns:
-        Tuple of camera objects
-
-    Examples:
-        >>>get_cams()
-        (Camera Object 0: Camera Prime 13 #11000, Camera Object 1: Camera Prime 17W #10187,
-        Camera Object 2: Camera Prime 17W #10189)
-        >>>cams=get_cams()
-        >>>cams[1].name
-        Camera Prime 17W #10187
-
-    For more information on camera methods see the camera class defined below.
+        Tuple of camera objects.
     """
     return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
 
@@ -45,6 +43,7 @@ def camera_group_count():
 
 def create_camera_group():
     """Adds an additional camera group
+
     Raises:
         Exception: If a new camera group could not be created
     """
@@ -68,6 +67,7 @@ def remove_camera_group(int groupIndex):
 
 def set_group_shutter_delay(int groupIndex, int microseconds):
     """Set camera group's shutter delay
+
     Args:
         groupIndex (int): The index of the camera group to be removed
         microseconds (int): The time between opening of shutter and capture of frame
@@ -80,6 +80,7 @@ class Camera(object):
 
     def __init__(self, cameraIndex):
         """Returns a camera object
+
         Args:
             cameraIndex (int): The index of the camera to be returned
         Raises:
@@ -156,6 +157,7 @@ class Camera(object):
     @utils.decorators.check_cam_setting
     def threshold(self):
         """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
+
         Raises:
             AssertionError: If setting values out of scope
         """
@@ -170,6 +172,7 @@ class Camera(object):
     @utils.decorators.check_cam_setting
     def intensity(self):
         """int: Camera IR LED brightness intensity level
+
         Raises:
             AssertionError: If setting values out of scope
         """
@@ -181,7 +184,8 @@ class Camera(object):
         TT_SetCameraSettings(self.index, self.video_mode, self.exposure, self.threshold, value)
 
     def set_settings(self, int video_mode, int exposure, int threshold, int intensity):
-        """Set camera settings.
+        """Set camera settings
+
         This function allows you to set the camera's video mode, exposure, threshold,
         and illumination settings.
 
@@ -219,6 +223,7 @@ class Camera(object):
     @utils.decorators.check_cam_setting
     def image_gain(self):
         """int: Camera gain level
+
         Raises:
             AssertionError: If setting values out of scope
         """
@@ -253,6 +258,7 @@ class Camera(object):
     @property
     def pixel_resolution(self):
         """Tuple[int]: Number of pixels in width and height for this camera
+
         Note:
             Resolution of actual frame can depend on video mode
         Raises:
@@ -315,6 +321,7 @@ class Camera(object):
 
     def orientation_matrix(self, int matrixIndex):
         """Returns one element of a 3x3 orientation matrix of the camera
+
         Args:
             matrixIndex(int): Index ranging over all matrix elements
         Returns:
@@ -328,7 +335,8 @@ class Camera(object):
               float focalLengthX, float focalLengthY,
               float kc1, float kc2, float kc3,
               float tangential0, float tangential1):
-        """Sets a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters.
+        """Sets a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
+
         Those parameters are compatible with the OpenCV intrinsic model.
 
         Args:
@@ -380,7 +388,8 @@ class Camera(object):
 
     #CAMERA DISTORTION
     def undistort_2d_point(self, float x, float y):
-        """Returns undistorted 2D point coordinates.
+        """Returns undistorted 2D point coordinates
+
         The 2D centroids the camera reports are distorted by the lens. This function
         removes the distortion.
 
@@ -394,7 +403,8 @@ class Camera(object):
         return x,y
 
     def distort_2d_point(self, float x, float y):
-        """Returns distorted 2D point coordinates.
+        """Returns distorted 2D point coordinates
+
         The 2D centroids the camera reports are distorted by the lens. If you already
         undistorted those points, this function distorts them again.
 
@@ -409,6 +419,7 @@ class Camera(object):
 
     def backproject(self, float x, float y, float z):
         """Back-project 3D coordinates of point to 2D camera coordinates of point
+
         If you give this function a 3D location and select a camera, it will return
         where the point would land on the imager of that camera in to 2D space.
         This basically locates where in the camera's FOV a 3D point would be located.
@@ -426,6 +437,7 @@ class Camera(object):
 
     def ray(self, float x, float y):
         """Takes an undistorted 2D centroid and returns a camera ray in the world coordinate system
+
         Args:
             float(x): X coordinate of the centroid
             float(y): Y coordinate of the centroid
@@ -460,6 +472,7 @@ class Camera(object):
 
     def get_frame_buffer(self):
         """Returns the cameras frame buffer
+
         This function fills the provided buffer with an image of what is in the camera view.
         The resulting image depends on what video mode the camera is in.
         If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
@@ -497,6 +510,7 @@ class Camera(object):
 
     def frame_buffer_save_as_bmp(self, str filename):
         """Saves camera's frame buffer as a BMP image file
+
         Args:
             filename(str): The name of the image file the buffer will be saved to
         Raises:
@@ -507,6 +521,7 @@ class Camera(object):
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
     def set_filter_switch(self, bool enableIRFilter):
         """Switch filter of camera
+
         Args:
             enableIRFilter(bool): True, IR filter is on. False, visible light.
         Raises:
@@ -517,6 +532,7 @@ class Camera(object):
 
     def set_agc(self, bool enableAutomaticGainControl):
         """Switch gain control
+
         Args:
             enableAutomaticGainControl(bool): True, AGC is on. False,  manual GC.
         Raises:
@@ -527,6 +543,7 @@ class Camera(object):
 
     def set_aec(self, bool enableAutomaticExposureControl):
         """Switch exposure control
+
         Args:
             enableAutomaticExposureControl(bool): True, AEC is on. False,  manual EC.
         Raises:
@@ -537,6 +554,7 @@ class Camera(object):
 
     def set_high_power(self, bool enableHighPowerMode):
         """Set camera IR LED to high power mode
+
         Args:
             enableHighPowerMode(bool): True, HPM is on. False,  manual LED intensity with max 15.
         Raises:
@@ -547,6 +565,7 @@ class Camera(object):
 
     def set_mjpeg_high_quality(self, int mjpegQuality):                  #set to 8 minimum quality. set to 100 maximum quality. TODO: detailed range check
         """Set camera mjpeg video mode to higher quality
+
         Args:
             mjpegQuality(int): Value determines MJPEG quality
         Raises:

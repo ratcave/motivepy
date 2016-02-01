@@ -142,14 +142,16 @@
 <div class="section" id="module-motive.utils.c3d_btk_writer">
 <span id="motive-utils-c3d-btk-writer-module"></span><h2>motive.utils.c3d_btk_writer module<a class="headerlink" href="#module-motive.utils.c3d_btk_writer" title="Permalink to this headline">¶</a></h2>
 <p>Motive C3D Writer Module</p>
-<p>This module features some functionality to
+<p>This module features functionality to
 create new c3d files from scratch and fill
 them with marker position data.</p>
-<p class="rubric">Example</p>
-<p>&gt;&gt;&gt;acq=create_record_object()
-&gt;&gt;&gt;update()
-&gt;&gt;&gt;updated_acq=record_frames_markers(acq)
-&gt;&gt;&gt;save_record_c3d(updated_acq, &#8220;test.c3d&#8221;)</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;acq=create_record_object()</span>
+<span class="go">&gt;&gt;&gt;update()</span>
+<span class="go">&gt;&gt;&gt;updated_acq=record_frames_markers(acq)</span>
+<span class="go">&gt;&gt;&gt;save_record_c3d(updated_acq, &quot;test.c3d&quot;)</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Call update() (see native.pyx for more information on this function) to get
@@ -196,27 +198,60 @@ and returns the updated acquisition object.</p>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The file name should end with .c3d</p>
+<p class="last">The file name extension should be .c3d</p>
 </div>
 </dd></dl>
 
 </div>
 <div class="section" id="module-motive.utils.crash_avoidance">
 <span id="motive-utils-crash-avoidance-module"></span><h2>motive.utils.crash_avoidance module<a class="headerlink" href="#module-motive.utils.crash_avoidance" title="Permalink to this headline">¶</a></h2>
+<p>Motive Crash Avoidance Module</p>
+<p>This module features functionality to
+avoid crashes related to not existing
+files or wrong file extensions.</p>
 <dl class="function">
 <dt id="motive.utils.crash_avoidance.check_file_exists">
 <code class="descclassname">motive.utils.crash_avoidance.</code><code class="descname">check_file_exists</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.crash_avoidance.check_file_exists" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns true if file exists</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> (<em>str</em>) &#8211; The name of the file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code> &#8211; If the file does not exist</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="motive.utils.crash_avoidance.check_file_extension">
 <code class="descclassname">motive.utils.crash_avoidance.</code><code class="descname">check_file_extension</code><span class="sig-paren">(</span><em>file_name</em>, <em>extension='.ttp'</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.crash_avoidance.check_file_extension" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Raises IOError if file does not have correct extension</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_name</strong> (<em>str</em>) &#8211; Name of the file</li>
+<li><strong>extension</strong> (<em>Optional[str]</em>) &#8211; Extension of the file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="motive.utils.crash_avoidance.get_backup_dir">
 <code class="descclassname">motive.utils.crash_avoidance.</code><code class="descname">get_backup_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.crash_avoidance.get_backup_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks that the data directory exists, and creates it if not.  Data directory location is platform-specific.</p>
+<dd><p>Returns name of data directory</p>
+<p>Checks that the data directory exists, and creates it if not.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Data directory location is platform-specific.</p>
+</div>
 </dd></dl>
 
 </div>
@@ -271,7 +306,7 @@ Should decorate every function returning a NPResult type.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Nicolas Kuske.
+        &copy; Copyright 2016, Nicolas Kuske and Nicholas A. Del Grosso.
 
     </p>
   </div>

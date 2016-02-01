@@ -2,11 +2,14 @@
 
 This module features the functionality to load and save files
 for camera settings, rigid bodies and markers.
-Example:
+
+Examples::
+
     >>>load_project("test.ttp")
     >>>update()
     >>>get_frame_markers()
     ((0.44324554, 0.65645343, 1.5665743), (0.23456576, 0.11568943, 0.04334536), (1.43445367, 1.23546491, 2.34356222))
+
 """
 
 include "cnative.pxd"
@@ -16,7 +19,8 @@ from motive import utils
 #STARTUP / SHUTDOWN
 @utils.decorators.check_npresult
 def _initialize():
-    """Initializes the connection to the cameras.
+    """Initializes the connection to the cameras
+
     This function is called automatically upon importing motive.
     """
     return TT_Initialize()
@@ -44,6 +48,7 @@ def update():
 @utils.decorators.check_npresult
 def load_calibration(str file_name):
     """Loads camera calibration data from a file
+
     Note:
         The file should have the extension .cal
     Args:
@@ -58,6 +63,7 @@ def load_calibration(str file_name):
 @utils.decorators.check_npresult
 def load_rigid_bodies(str file_name):
     """Loads rigid body data from a file
+
     Note:
         The file should have the extension .tra
     Args:
@@ -72,6 +78,7 @@ def load_rigid_bodies(str file_name):
 @utils.decorators.check_npresult
 def save_rigid_bodies(str file_name):
     """Saves rigid body data to a file
+
     Note:
         The file should have the extension .tra
     Args:
@@ -84,6 +91,7 @@ def save_rigid_bodies(str file_name):
 @utils.decorators.check_npresult
 def add_rigid_bodies(str file_name):
     """Adds rigid body data to an existing file
+
     Note:
         The file should have the extension .tra
     Args:
@@ -97,7 +105,8 @@ def add_rigid_bodies(str file_name):
 @utils.decorators._save_backup
 @utils.decorators.check_npresult
 def load_project(str project_file=utils.backup_project_filename):
-    """Loads the data of a project file.
+    """Loads the data of a project file
+
     E.g.: Camera calibration data, camera settings and rigid body data.
      Note:
         The file should have the extension .ttp
@@ -117,6 +126,7 @@ def load_project(str project_file=utils.backup_project_filename):
 @utils.decorators.check_npresult
 def _save_project(str project_file):
     """Saves project file
+
     Note:
         The file should have the extension .ttp
     Args:
@@ -135,6 +145,7 @@ def _save_project(str project_file):
 @utils.decorators._save_backup
 def save_project(str project_file):
     """Saves project file
+
     Note:
         The file should have the extension .ttp
     Args:
@@ -151,7 +162,8 @@ def save_project(str project_file):
 #DATA STREAMING
 @utils.decorators.check_npresult
 def stream_trackd(bool enabled):
-    """Start/stop Trackd Stream.
+    """Start/stop Trackd Stream
+
     TrackD Streaming Engine: Streams rigid body data via the Trackd protocol.
     Args:
         enabled(bool): True to start Trackd Stream. False to stop it.
@@ -160,7 +172,8 @@ def stream_trackd(bool enabled):
 
 @utils.decorators.check_npresult
 def stream_vrpn(bool enabled, int port=3883):
-    """Start/stop VRPN Stream.
+    """Start/stop VRPN Stream
+
     VRPN Streaming Engine: Streams rigid body data via the VRPN protocol.
     VRPN Broadcast Port: Specifies the broadcast port for VRPN streaming.
 
@@ -173,6 +186,7 @@ def stream_vrpn(bool enabled, int port=3883):
 @utils.decorators.check_npresult
 def stream_np(bool enabled):
     """Start/stop NaturalPoint Stream
+
     Args:
         enabled(bool): True to start NaturalPoint Stream. False to stop it.
     """
@@ -200,6 +214,7 @@ cdef class markID:
 
 def frame_marker_label(marker_index):
     """Returns marker label object
+
     This object holds a unique ID for every marker.
     """
     ID=markID()
