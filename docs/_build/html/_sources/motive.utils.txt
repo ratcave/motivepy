@@ -4,10 +4,10 @@ motive.utils package
 Submodules
 ----------
 
-motive.utils.c3d_btk_writer module
+motive.utils.c3d_writer module
 ----------------------------------
 
-.. automodule:: motive.utils.c3d_btk_writer
+.. automodule:: motive.utils.c3d_writer
     :members:
     :undoc-members:
     :show-inheritance:

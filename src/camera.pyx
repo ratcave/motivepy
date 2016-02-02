@@ -211,11 +211,13 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def grayscale_decimation(self):
-        """int: decimate the frame capture when in grayscale mode, or switch to grayscale mode and decimate frame capture?"""
+        """int: level of decimation of frame capture"""
+        raise NotImplementedError
         return  TT_CameraGrayscaleDecimation(self.index)
 
     @grayscale_decimation.setter
     def grayscale_decimation(self, value):
+        raise NotImplementedError
         if not TT_SetCameraGrayscaleDecimation(self.index, value):
             raise Exception("Could Not Set Decimation")
 
@@ -244,9 +246,10 @@ class Camera(object):
     def continuous_ir(self, bool value):
         TT_SetContinuousIR(self.index, value)
 
-#def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
-#    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
-#    print "Set"
+def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
+    raise NotImplementedError
+    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
+    print "Set"
 
 #Properties Without Simple Setter (If Not Here Maybe In Camera Class of CameraSDK)
     @property
@@ -366,25 +369,29 @@ class Camera(object):
 
     #TODO: Create camera mask class. See issue list on github
     #CAMERA MASKING
-    # def mask(self, buffer, int bufferSize):
-    #     cdef unsigned char * buffer=buffer          #buffer should be an integer array. See get_frame_buffer() below for example
-    #     return TT_CameraMask(self.index, buffer, bufferSize)
-    #
-    # def set_mask(self, buffer, int bufferSize):
-    #     cdef unsigned char * buffer=buffer
-    #     if not TT_SetCameraMask(self.index, buffer, bufferSize):
-    #         raise Exception("Could Not Set Mask")
-    #
-    # def mask_info(self):
-    #     cdef int blockingMaskWidth=0, blockingMaskHeight=0, blockingMaskGrid=0
-    #     if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
-    #         return {'blockingMaskwidth':blockingMaskWidth,'blockingMaskHeight': blockingMaskHeight, 'blockingMaskGrid': blockingMaskGrid}
-    #     else:
-    #         raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
-    #
-    # def clear_mask(self):
-    #     if not TT_ClearCameraMask(self.index):
-    #         raise Exception("Could Not Clear Mask")
+    def mask(self, buffer, int bufferSize):
+        raise NotImplementedError
+        cdef unsigned char * buffer=buffer          #buffer should be an integer array. See get_frame_buffer() below for example
+        return TT_CameraMask(self.index, buffer, bufferSize)
+
+    def set_mask(self, buffer, int bufferSize):
+        raise NotImplementedError
+        cdef unsigned char * buffer=buffer
+        if not TT_SetCameraMask(self.index, buffer, bufferSize):
+            raise Exception("Could Not Set Mask")
+
+    def mask_info(self):
+        raise NotImplementedError
+        cdef int blockingMaskWidth=0, blockingMaskHeight=0, blockingMaskGrid=0
+        if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
+            return {'blockingMaskwidth':blockingMaskWidth,'blockingMaskHeight': blockingMaskHeight, 'blockingMaskGrid': blockingMaskGrid}
+        else:
+            raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
+
+    def clear_mask(self):
+        raise NotImplementedError
+        if not TT_ClearCameraMask(self.index):
+            raise Exception("Could Not Clear Mask")
 
     #CAMERA DISTORTION
     def undistort_2d_point(self, float x, float y):
@@ -507,6 +514,7 @@ class Camera(object):
                 warnings.warn("Frame contains object or segment data. Call motive.update().")
 
         return frame
+
 
     def frame_buffer_save_as_bmp(self, str filename):
         """Saves camera's frame buffer as a BMP image file

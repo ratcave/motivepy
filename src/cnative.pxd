@@ -162,6 +162,7 @@ cdef extern from "NPTrackingTools.h":
     bool   TT_CameraRay(int cameraIndex, float x, float y,
                         float &rayStartX, float &rayStartY, float &rayStartZ,
                         float &rayEndX,   float &rayEndY,   float &rayEndZ)
+
     #Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters with parameters compatible with the OpenCV intrinsic model.
     bool   TT_CameraModel(int cameraIndex, float x, float y, float z,              #Camera Position
                           float *orientation,                                      #Orientation (3x3 matrix)
@@ -169,8 +170,10 @@ cdef extern from "NPTrackingTools.h":
                           float focalLengthX, float focalLengthY,                  #Lens focal  (in pixels)
                           float kc1, float kc2, float kc3,                         #Barrel distortion coefficients
                           float tangential0, float tangential1)                    #Tangential distortion
+
     #This function will return the Camera SDK's camera pointer.  While the API takes over the data path which prohibits fetching the frames directly from the camera, it is still very useful to be able to communicate with the camera directly for setting camera settings or attaching modules.
     ##CameraLibrary::Camera * TT_GetCamera(int index)                                #Returns Camera SDK Camera
+
     bool   TT_SetFrameIDBasedTiming(bool enable)
     bool   TT_SetSuppressOutOfOrder(bool enable)
     ##void   TT_AttachCameraModule(int index, CameraLibrary::cCameraModule *module)

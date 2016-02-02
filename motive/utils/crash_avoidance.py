@@ -36,7 +36,7 @@ def check_file_extension(file_name, extension='.ttp'):
 def get_backup_dir():
     """Returns name of data directory
 
-    Checks that the data directory exists, and creates it if not.
+    Checks that the data directory exists and creates it if not.
 
     Note:
         Data directory location is platform-specific.

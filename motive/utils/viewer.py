@@ -14,6 +14,7 @@ from pyqtgraph.Qt import QtCore, QtGui
 import pyqtgraph.opengl as gl
 import motive as m
 
+
 def show_viewer():
     """Creates a widget showing a live video plotting the 3D position of unidentified markers (light blue) and
     rigid body markers, with a grey grid denoting the floor

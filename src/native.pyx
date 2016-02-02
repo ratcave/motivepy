@@ -33,13 +33,15 @@ def shutdown():
 @utils.decorators.block_for_frame(secs_to_timeout=3)
 @utils.decorators.check_npresult
 def update_single_frame():
-    """Process incoming camera data"""
+    """Processes incoming camera data, grabs next frame in buffer"""
     return TT_UpdateSingleFrame()
 
 @utils.decorators.block_for_frame(secs_to_timeout=3)
 @utils.decorators.check_npresult
 def update():
-    """Process incoming camera data. More than one frame"""
+    """Processes incoming camera data. Grabs next frame in buffer if calling rate is similar to camera frame rate
+
+    If calling rate is slower than camera frame rate, only grabs frames in intervals"""
     return TT_Update()
 
 
@@ -54,6 +56,7 @@ def load_calibration(str file_name):
     Args:
         file_name(str): Name of the file
     """
+    raise NotImplementedError
     utils.crash_avoidance.check_file_exists(file_name)
     utils.crash_avoidance.check_file_extension(file_name, '.cal')
     return TT_LoadCalibration(file_name)
@@ -69,6 +72,7 @@ def load_rigid_bodies(str file_name):
     Args:
         file_name(str): Name of the file
     """
+    raise NotImplementedError
     utils.crash_avoidance.check_file_exists(file_name)
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_LoadRigidBodies(file_name)
@@ -84,6 +88,7 @@ def save_rigid_bodies(str file_name):
     Args:
         file_name(str): Name of the file
     """
+    raise NotImplementedError
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_SaveRigidBodies(file_name)
 
@@ -97,6 +102,7 @@ def add_rigid_bodies(str file_name):
     Args:
         file_name(str): Name of the file
     """
+    raise NotImplementedError
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     utils.crash_avoidance.check_file_exists(file_name)
     return TT_AddRigidBodies(file_name)
@@ -154,10 +160,11 @@ def save_project(str project_file):
     _save_project(project_file)
 
 #TODO: Find out how this works
-#@utils.decorators.check_npresult
-#def load_calibration_from_memory(buffer, int buffersize):
-#    cdef unsigned char * buff=buffer         #buffer should be an integer array. See get_frame_buffer() in camera.pyx for example
-#    return TT_LoadCalibrationFromMemory(buff, buffersize)
+@utils.decorators.check_npresult
+def load_calibration_from_memory(buffer, int buffersize):
+    raise NotImplementedError
+    cdef unsigned char * buff=buffer         #buffer should be an integer array. See get_frame_buffer() in camera.pyx for example
+    return TT_LoadCalibrationFromMemory(buff, buffersize)
 
 #DATA STREAMING
 @utils.decorators.check_npresult
@@ -198,18 +205,21 @@ def get_frame_markers():
     """Returns a tuple containing all tuples of 3D marker positions"""
     return tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
 
-cdef class markID:
+cdef class _markID:
     cdef cUID *thisptr            # hold a C++ instance which we're wrapping
 
     def __cinit__(self):
+        """returns an uninitialized marker label object"""
         self.thisptr = NULL
 
     @property
     def low_bits(self):
+        """19 digit integer number ending with a capital L (20 digits)"""
         return self.thisptr.LowBits()
 
     @property
     def high_bits(self):
+        """19 digit integer number ending with a capital L(20 digits)"""
         return self.thisptr.HighBits()
 
 def frame_marker_label(marker_index):
@@ -217,7 +227,7 @@ def frame_marker_label(marker_index):
 
     This object holds a unique ID for every marker.
     """
-    ID=markID()
+    ID=_markID()
     cdef cUID label=TT_FrameMarkerLabel(marker_index)
     ID.thisptr=&label
     return ID
@@ -269,5 +279,6 @@ def orient_tracking_bar(float positionX, float positionY, float positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
 def get_build_number():
+    """Returns multiple digit integer number"""
     raise NotImplementedError()
     return TT_BuildNumber()

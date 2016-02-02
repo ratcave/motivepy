@@ -83,7 +83,7 @@
                 <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">motive.utils package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-motive.utils.c3d_btk_writer">motive.utils.c3d_btk_writer module</a></li>
+<li><a class="reference internal" href="#module-motive.utils.c3d_writer">motive.utils.c3d_writer module</a></li>
 <li><a class="reference internal" href="#module-motive.utils.crash_avoidance">motive.utils.crash_avoidance module</a></li>
 <li><a class="reference internal" href="#module-motive.utils.decorators">motive.utils.decorators module</a></li>
 <li><a class="reference internal" href="#module-motive.utils.viewer">motive.utils.viewer module</a></li>
@@ -139,8 +139,8 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-motive.utils.c3d_btk_writer">
-<span id="motive-utils-c3d-btk-writer-module"></span><h2>motive.utils.c3d_btk_writer module<a class="headerlink" href="#module-motive.utils.c3d_btk_writer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-motive.utils.c3d_writer">
+<span id="motive-utils-c3d-writer-module"></span><h2>motive.utils.c3d_writer module<a class="headerlink" href="#module-motive.utils.c3d_writer" title="Permalink to this headline">¶</a></h2>
 <p>Motive C3D Writer Module</p>
 <p>This module features functionality to
 create new c3d files from scratch and fill
@@ -158,14 +158,14 @@ them with marker position data.</p>
 the newest marker data.</p>
 </div>
 <dl class="function">
-<dt id="motive.utils.c3d_btk_writer.create_record_object">
-<code class="descclassname">motive.utils.c3d_btk_writer.</code><code class="descname">create_record_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_btk_writer.create_record_object" title="Permalink to this definition">¶</a></dt>
+<dt id="motive.utils.c3d_writer.create_record_object">
+<code class="descclassname">motive.utils.c3d_writer.</code><code class="descname">create_record_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_writer.create_record_object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a data aquisition object consisting of the marker positions of one frame</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="motive.utils.c3d_btk_writer.record_frames_markers">
-<code class="descclassname">motive.utils.c3d_btk_writer.</code><code class="descname">record_frames_markers</code><span class="sig-paren">(</span><em>acq</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_btk_writer.record_frames_markers" title="Permalink to this definition">¶</a></dt>
+<dt id="motive.utils.c3d_writer.record_frames_markers">
+<code class="descclassname">motive.utils.c3d_writer.</code><code class="descname">record_frames_markers</code><span class="sig-paren">(</span><em>acq</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_writer.record_frames_markers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes the marker positions of one frame to an existing acquisition object
 and returns the updated acquisition object.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -181,8 +181,8 @@ and returns the updated acquisition object.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="motive.utils.c3d_btk_writer.save_record_c3d">
-<code class="descclassname">motive.utils.c3d_btk_writer.</code><code class="descname">save_record_c3d</code><span class="sig-paren">(</span><em>acq</em>, <em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_btk_writer.save_record_c3d" title="Permalink to this definition">¶</a></dt>
+<dt id="motive.utils.c3d_writer.save_record_c3d">
+<code class="descclassname">motive.utils.c3d_writer.</code><code class="descname">save_record_c3d</code><span class="sig-paren">(</span><em>acq</em>, <em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.c3d_writer.save_record_c3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes the data of an acquisition object to a c3d file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -247,7 +247,7 @@ files or wrong file extensions.</p>
 <dt id="motive.utils.crash_avoidance.get_backup_dir">
 <code class="descclassname">motive.utils.crash_avoidance.</code><code class="descname">get_backup_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.crash_avoidance.get_backup_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns name of data directory</p>
-<p>Checks that the data directory exists, and creates it if not.</p>
+<p>Checks that the data directory exists and creates it if not.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Data directory location is platform-specific.</p>
@@ -331,8 +331,7 @@ such as to catch its various exceptions encoded by its return type:</p>
 <span id="motive-utils-viewer-module"></span><h2>motive.utils.viewer module<a class="headerlink" href="#module-motive.utils.viewer" title="Permalink to this headline">¶</a></h2>
 <p>Motive Viewer Module</p>
 <p>This module only contains one function, namely show_viewer(),
-which shows live the plotted 3D position of all markers and updates these
-in a video like manner.</p>
+which shows live the plotted 3D position of all markers.</p>
 <dl class="function">
 <dt id="motive.utils.viewer.show_viewer">
 <code class="descclassname">motive.utils.viewer.</code><code class="descname">show_viewer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.utils.viewer.show_viewer" title="Permalink to this definition">¶</a></dt>

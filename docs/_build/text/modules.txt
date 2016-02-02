@@ -10,7 +10,7 @@ motive
 
       * Submodules
 
-      * motive.utils.c3d_btk_writer module
+      * motive.utils.c3d_writer module
 
       * motive.utils.crash_avoidance module
 

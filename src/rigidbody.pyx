@@ -49,9 +49,14 @@ def get_rigid_bodies():
 
 @utils.decorators.check_npresult
 def create_rigid_body(str name, markerList):
-     #The marker list is expected to contain a list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN.
-     #For some reason a rigid body created via this function in python, is not tracked by Motive.
-     #We therefore raise the not implemented error
+     """Creates a new rigid body
+
+     Args:
+        name(str): Name of the rigid body to be created
+        markerList(List[float]): A list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN
+     Note:
+        For some reason a rigid body created via this API function is not tracked by Motive.
+     """
      raise NotImplementedError()
      markerCount=len(markerList)
      cdef float * markerListp=<float *> malloc(markerCount*sizeof(float))
@@ -129,8 +134,7 @@ class RigidBody(object):
     def get_all_spatial_data(self):
         """Returns spatial data of the rigid body
 
-        Returns:
-            Dictionary, maps identifying strings to tuples of data::
+        Returns::
 
             {
                 'location': (x, y, z),
@@ -166,7 +170,7 @@ class RigidBody(object):
 
     @property
     def markers(self):
-        """Tuple[float]: Rigid body's 3D marker positions"""
+        """Tuple[float]: Rigid body's local 3D marker positions"""
         markers=[]
         cdef float x = 0, y = 0, z = 0
         for i in range(0, TT_RigidBodyMarkerCount(self.index)):
@@ -176,7 +180,7 @@ class RigidBody(object):
 
     @property
     def point_cloud_markers(self):
-        """Tuple[float]:  Rigid body's 3D point cloud marker positions."""
+        """Tuple[float]:  Rigid body's global 3D marker positions."""
         markers = []
         cdef int markerIndex
         cdef bool tracked = True
@@ -184,7 +188,7 @@ class RigidBody(object):
         for markerIndex in xrange(TT_RigidBodyMarkerCount(self.index)):
             # Get marker position
             TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
-            # Add the marker if one was found (tracked was True). Else, substitute by rigid body position
+            # Add the marker if one was found (tracked was True). Else, substitute by rigid body position to reduce error
             marker = (x, y, z) if tracked else self.location
             markers.append(marker)
 
