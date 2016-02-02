@@ -235,31 +235,39 @@ def flush_camera_queues():
     TT_FlushCameraQueues()
 
 
+#TODO: Check what the below functions actually do, then remove the not implemented error
 #MARKER SIZE SETTINGS
 @utils.decorators.check_npresult
 def set_camera_group_reconstruction(int groupIndex, bool enable):
+    raise NotImplementedError()
     return TT_SetCameraGroupReconstruction(groupIndex, enable)
 
 @utils.decorators.check_npresult
 def set_enabled_filter_switch(bool enabled):
+    raise NotImplementedError()
     return TT_SetEnabledFilterSwitch(enabled)
 
 def is_filter_switch_enabled():
+    raise NotImplementedError()
     return TT_IsFilterSwitchEnabled()
 
 
 #ADDITIONAL FUNCTIONALITY
 def set_frame_id_based_timing(bool enable):
+    raise NotImplementedError()
     return TT_SetFrameIDBasedTiming(enable)
 
 def set_suppress_out_of_order(bool enable):
+    raise NotImplementedError()
     return TT_SetSuppressOutOfOrder(enable)
 
 @utils.decorators.check_npresult
 def orient_tracking_bar(float positionX, float positionY, float positionZ,
                         float orientationX, float orientationY, float orientationZ, float orientationW):
+    raise NotImplementedError()
     return TT_OrientTrackingBar(positionX, positionY, positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
 def get_build_number():
+    raise NotImplementedError()
     return TT_BuildNumber()

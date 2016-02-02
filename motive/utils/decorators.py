@@ -1,10 +1,18 @@
 """Motive Decorators Module
 
-This module features functionality to
-avoid crashes related to not existing
-files or wrong file extensions.
+This module features functionality mainly
+in the form of decorators that catch
+general exceptions which can arise when one uses
+the Motive API.
 
-example
+Example:
+    A possible way to implement TT_SaveProject() from the Motive API
+    such as to catch its various exceptions encoded by its return type::
+
+    >>>@utils.decorators.check_npresult
+    >>>def save_project(str project_file):
+    >>>     return TT_SaveProject(project_file)
+
 """
 
 import time

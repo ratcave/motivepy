@@ -1,15 +1,23 @@
-__author__ = 'nico'
+"""Motive Viewer Module
+
+This module only contains one function, namely show_viewer(),
+which shows live the plotted 3D position of all markers.
+
+"""
 
 
-import motive as m
+
 import numpy as np
 import time
 import itertools
 from pyqtgraph.Qt import QtCore, QtGui
 import pyqtgraph.opengl as gl
-
+import motive as m
 
 def show_viewer():
+    """Creates a widget showing a live video plotting the 3D position of unidentified markers (light blue) and
+    rigid body markers, with a grey grid denoting the floor
+    """
 
     # Create Qt Window
     app = QtGui.QApplication([])  # create the graphing application
@@ -52,7 +60,7 @@ def show_viewer():
 
 
         while True:
-            m.update_single_frame()
+            m.update()
 
             # Measure FPS
             fps = round(1. / (time.time() - last_time + .00001))

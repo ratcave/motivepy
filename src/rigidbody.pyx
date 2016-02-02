@@ -47,23 +47,21 @@ def get_rigid_bodies():
     return {RigidBody(idx).name: RigidBody(idx) for idx in xrange(TT_RigidBodyCount())}
 
 
-# @utils.decorators.check_npresult
-# def create_rigid_body(str name, markerList):
-#      """The marker list is expected to contain a list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN.
-#      For some reason a rigid body created via this function in python, is not tracked,
-#      and seemingly cannot be tracked.
-#      We therefore decided to let it raise a not implemented error.
-#      """
-#      raise NotImplementedError()
-#      markerCount=len(markerList)
-#      cdef float * markerListp=<float *> malloc(markerCount*sizeof(float))
-#      for i in xrange(len(markerList)):
-#          markerListp[3*i]=markerList[i][0]
-#          markerListp[3*i+1]=markerList[i][1]
-#          markerListp[3*i+2]=markerList[i][2]
-#
-#      rigidIndexplus1=TT_RigidBodyCount()+1
-#      return TT_CreateRigidBody(name, rigidIndexplus1 , markerCount, markerListp)
+@utils.decorators.check_npresult
+def create_rigid_body(str name, markerList):
+     #The marker list is expected to contain a list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN.
+     #For some reason a rigid body created via this function in python, is not tracked by Motive.
+     #We therefore raise the not implemented error
+     raise NotImplementedError()
+     markerCount=len(markerList)
+     cdef float * markerListp=<float *> malloc(markerCount*sizeof(float))
+     for i in xrange(len(markerList)):
+         markerListp[3*i]=markerList[i][0]
+         markerListp[3*i+1]=markerList[i][1]
+         markerListp[3*i+2]=markerList[i][2]
+
+     rigidIndexplus1=TT_RigidBodyCount()+1
+     return TT_CreateRigidBody(name, rigidIndexplus1 , markerCount, markerListp)
 
 
 @utils.decorators.check_npresult
