@@ -59,7 +59,7 @@ def save_record_c3d(acq, file_name):
     Args:
         acq: Data acquisition object
         file_name(str): Name of the c3d file
-        
+
     Note:
         The file name extension should be .c3d
     """
