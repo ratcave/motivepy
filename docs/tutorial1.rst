@@ -32,7 +32,7 @@ then load this project and voila, our cameras will be set as desired::
   .
   .
 
-  #make sure to shutdown the connection with the cameras before exiting
+  #make sure to shutdown the camera connections before exiting
   m.shutdown()
 
 
@@ -66,7 +66,7 @@ set those settings is by creating :py:class:`.Camera` objects and using their re
   .
   .
 
-  #make sure to shutdown the connection with the cameras before exiting
+  #make sure to shutdown the camera connections before exiting
   m.shutdown()
 
 
@@ -102,7 +102,7 @@ the camera's filter to visible light::
   .
   .
 
-  #make sure to shutdown the connection with the cameras before exiting
+  #make sure to shutdown the camera connections before exiting
   m.shutdown()
 
 

@@ -6,3 +6,4 @@ These Tutorials are meant to help you get started!
 .. toctree::
 
    tutorial1
+   tutorial2
