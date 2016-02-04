@@ -32,7 +32,7 @@
   
     <link rel="top" title="MotivePy 0.1 documentation" href="index.html"/>
         <link rel="up" title="Tutorials" href="tutorials.html"/>
-        <link rel="next" title="Tutorial 3: Track Markers and Rigid Bodies" href="tutorial3.html"/>
+        <link rel="next" title="Tutorial 3: Tracking Markers and Rigid Bodies" href="tutorial3.html"/>
         <link rel="prev" title="Tutorial 1: Saving and Loading Motive Project Files" href="tutorial1.html"/> 
 
   
@@ -86,12 +86,14 @@
 <li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="tutorial1.html">Tutorial 1: Saving and Loading Motive Project Files</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Tutorial 2: Setting Camera Settings</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#process-load-a-motive-project-file">1. Process: Load a Motive project file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#process-create-a-camera-object-and-use-its-methods">2. Process: Create a Camera object and use its methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#process-load-a-motive-project-file-and-create-a-camera-object-to-use-its-methods">3. Process: Load a Motive project file and create a Camera object to use its methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-create-a-tuple-of-camera-objects">1. Step: Create a Tuple of Camera Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-get-camera-settings">2. Step: Get Camera Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-set-camera-settings">3. Step: Set Camera Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial3.html">Tutorial 3: Track Markers and Rigid Bodies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial3.html">Tutorial 3: Tracking Markers and Rigid Bodies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial4.html">Tutorial 4: Getting Camera Image</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">motive</a></li>
@@ -143,102 +145,82 @@
             
   <div class="section" id="tutorial-2-setting-camera-settings">
 <h1>Tutorial 2: Setting Camera Settings<a class="headerlink" href="#tutorial-2-setting-camera-settings" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial will guide through three processes of which each suffices to set a specific camera&#8217;s settings:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>Process:  Load a Motive project file</li>
-<li>Process:  Create a <code class="xref py py-class docutils literal"><span class="pre">Camera</span></code> object and use its methods</li>
-<li>Process:  Load a Motive project file and create a <code class="xref py py-class docutils literal"><span class="pre">Camera</span></code> object to use its methods</li>
-</ol>
-</div></blockquote>
-<p>As the third process is combining the first and the second, we will employ it also as a point for summary.</p>
-<div class="section" id="process-load-a-motive-project-file">
-<h2>1. Process: Load a Motive project file<a class="headerlink" href="#process-load-a-motive-project-file" title="Permalink to this headline">¶</a></h2>
-<p>The simplest way to set OptiTrack camera settings is to load a Motive project file.
-Alas, this is a bit of a chicken and egg situation. In order to load a project file, this
-file needed to be created first. There are two possibilities to create such a file:</p>
-<blockquote>
-<div><ul class="simple">
-<li>Open the Motive GUI, set each setting manually and save the project</li>
-<li>Set camera settings through API as described below (2. Process) and save the project</li>
-</ul>
-</div></blockquote>
-<p>Once we have a project (.ttp) file which features the camera settings we need, we can
-then load this project and voila, our cameras will be set as desired:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">motive</span> <span class="kn">as</span> <span class="nn">m</span>
-
-<span class="c1">#project file must have .ttp extension</span>
-<span class="n">m</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;test.ttp&quot;</span><span class="p">)</span>
-
-<span class="c1">#make sure to shutdown the camera connections before exiting</span>
-<span class="n">m</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="process-create-a-camera-object-and-use-its-methods">
-<h2>2. Process: Create a Camera object and use its methods<a class="headerlink" href="#process-create-a-camera-object-and-use-its-methods" title="Permalink to this headline">¶</a></h2>
-<p>If you do not have a project file with the desired camera settings at hand, the fastet way to
-set those settings is by creating <code class="xref py py-class docutils literal"><span class="pre">Camera</span></code> objects and using their respective methods:</p>
+<p>If you already have a Motive project file at hand which features
+the camera settings you desire, simply load that project file and
+you are done. But no worries if you are not in possession of such a project file yet.
+MotivePy offers you the opportunity to get information about
+each camera&#8217;s specific settings and adapt those if need be.</p>
+<div class="section" id="step-create-a-tuple-of-camera-objects">
+<h2>1. Step: Create a Tuple of Camera Objects<a class="headerlink" href="#step-create-a-tuple-of-camera-objects" title="Permalink to this headline">¶</a></h2>
+<p>You can easily create a tuple containing a <code class="xref py py-class docutils literal"><span class="pre">Camera</span></code> object for each physically connected OptiTrack camera.
+These Camera objects then offer various methods to get and set the respective camera&#8217;s settings:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">motive</span> <span class="kn">as</span> <span class="nn">m</span>
 
 <span class="c1"># create a tuple containing all camera objects</span>
 <span class="n">cams</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">get_cameras</span><span class="p">()</span>
-
-<span class="c1"># get the first camera&#39;s name</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Whenever you import motive, each index in the camera tuple may be assigned to a different camera than last time</p>
+</div>
+</div>
+<div class="section" id="step-get-camera-settings">
+<h2>2. Step: Get Camera Settings<a class="headerlink" href="#step-get-camera-settings" title="Permalink to this headline">¶</a></h2>
+<p>This is more of an optional step, which is only of practical interest for examination or verification purposes,
+since you can always set camera settings to whatever value possible, independent of the original value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># get the zeroth indexed camera&#39;s name</span>
 <span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
 
-<span class="c1"># get its frame rate, set a new frame rate and get the newly set frame rate</span>
+<span class="c1"># get its frame rate</span>
 <span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">frame_rate</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-set-camera-settings">
+<h2>3. Step: Set Camera Settings<a class="headerlink" href="#step-set-camera-settings" title="Permalink to this headline">¶</a></h2>
+<p>Setting settings is as straightforward as getting them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># set the camera&#39;s frame rate to 120 frames per second</span>
 <span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">frame_rate</span><span class="o">=</span><span class="mi">120</span>
-<span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">frame_rate</span>
 
 <span class="c1"># switch the camera&#39;s filter to infrared light</span>
 <span class="c1"># this method has only setter properties</span>
 <span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_filter_switch</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="c1"># to follow up on the 1. process, this is how you save the settings in a project file</span>
-<span class="n">m</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="s2">&quot;test_set.ttp&quot;</span><span class="p">)</span>
-
-
-<span class="c1"># make sure to shutdown the camera connections before exiting</span>
-<span class="n">m</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>To name just a couple more settings, <code class="xref py py-meth docutils literal"><span class="pre">Camera.exposure()</span></code> level, <code class="xref py py-meth docutils literal"><span class="pre">Camera.image_gain()</span></code> level
 and the infrared illumination <code class="xref py py-meth docutils literal"><span class="pre">Camera.intensity()</span></code> level.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Whenever you import motive, the index in the camera tuple may denote a different camera</p>
+<p class="last">Every getter method has a setter method, but not the other way around.</p>
 </div>
 </div>
-<div class="section" id="process-load-a-motive-project-file-and-create-a-camera-object-to-use-its-methods">
-<h2>3. Process: Load a Motive project file and create a Camera object to use its methods<a class="headerlink" href="#process-load-a-motive-project-file-and-create-a-camera-object-to-use-its-methods" title="Permalink to this headline">¶</a></h2>
-<p>Whenever you have a project file which features some settings you desire but others
-you need to adapt, it might make sense to first load that project (1. Process) and then
-only set the settings you need to adapt (2.Process). Let us suppose for example you
-are happy with the frame rate for camera X in test_set.ttp but you want to switch
-the camera&#8217;s filter to visible light:</p>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Here is a simple script including all we learned in this tutorial:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">motive</span> <span class="kn">as</span> <span class="nn">m</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;test_set.ttp&quot;</span><span class="p">)</span>
-
+<span class="c1"># create a tuple containing all camera objects</span>
 <span class="n">cams</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">get_cameras</span><span class="p">()</span>
 
-<span class="c1"># make sure the zeroth index still denotes camera X!</span>
+<span class="c1"># get the zeroth indexed camera&#39;s name</span>
 <span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
 
-<span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_filter_switch</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="c1"># get its frame rate</span>
+<span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">frame_rate</span>
 
-<span class="c1"># if you want to save the new settings to a project file</span>
-<span class="n">m</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="s2">&quot;newtest_set.ttp&quot;</span><span class="p">)</span>
+<span class="c1"># set its frame rate to 120 frames per second</span>
+<span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">frame_rate</span><span class="o">=</span><span class="mi">120</span>
 
-<span class="c1"># make sure to shutdown the camera connections before exiting</span>
+<span class="c1"># switch its filter to infrared light</span>
+<span class="c1"># this method has only setter properties</span>
+<span class="n">cams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_filter_switch</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># see first tutorial</span>
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="s2">&quot;set_test.ttp&quot;</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Whenever you load a project file, this overwrites all camera settings</p>
 </div>
 </div>
 </div>
@@ -250,7 +232,7 @@ the camera&#8217;s filter to visible light:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tutorial3.html" class="btn btn-neutral float-right" title="Tutorial 3: Track Markers and Rigid Bodies" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tutorial3.html" class="btn btn-neutral float-right" title="Tutorial 3: Tracking Markers and Rigid Bodies" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="tutorial1.html" class="btn btn-neutral" title="Tutorial 1: Saving and Loading Motive Project Files" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

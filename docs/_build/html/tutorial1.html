@@ -87,11 +87,13 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="">Tutorial 1: Saving and Loading Motive Project Files</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#loading-a-motive-project-file">Loading a Motive Project File</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#saving-a-motive-project-file">Saving a Motive Project File</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#update">Update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-and-shutdown">Update and Shutdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial2.html">Tutorial 2: Setting Camera Settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial3.html">Tutorial 3: Tracking Markers and Rigid Bodies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial4.html">Tutorial 4: Getting Camera Image</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">motive</a></li>
@@ -170,7 +172,7 @@ camera settings. These are now set.</p>
 </div>
 <div class="section" id="saving-a-motive-project-file">
 <h2>Saving a Motive Project File<a class="headerlink" href="#saving-a-motive-project-file" title="Permalink to this headline">¶</a></h2>
-<p>Saving a project file in MotivePy breaks down to a one liner as well:</p>
+<p>Saving a project file in MotivePy breaks down to one line as well:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">motive</span> <span class="kn">as</span> <span class="nn">m</span>
 
 <span class="n">m</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="s2">&quot;test.ttp&quot;</span><span class="p">)</span>
@@ -178,14 +180,47 @@ camera settings. These are now set.</p>
 </div>
 <p>Which has saved the project file in the working directory.</p>
 </div>
-<div class="section" id="update">
-<h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
-<p>Once you have imported the module, the cameras will be sending
-data to your PC. Once you have loaded a project, depending on
+<div class="section" id="update-and-shutdown">
+<h2>Update and Shutdown<a class="headerlink" href="#update-and-shutdown" title="Permalink to this headline">¶</a></h2>
+<p>As an addendum we introduce here two functions you should get
+in the habit of using whenever you use MotivePy.
+Once you have imported the module, the cameras will be sending
+data to your PC. Upon loading a project, depending on
 your project, Motive will have changed the cameras&#8217; setting
 and might be able to track the 3D position of markers in the cameras&#8217;
-sight. This data is not updated automatically though. To process
-incoming camera data</p>
+sight. This data is not updated automatically though. To process incoming camera
+data you need to call:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Let us assume you finished all tasks related to the cameras and data acquisition.
+If you want to disconnect the cameras, simply call:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">m</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Always disconnect the cameras before exiting python</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Here is a simple script including all we learned in this tutorial:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">motive</span> <span class="kn">as</span> <span class="nn">m</span>
+
+<span class="c1"># set camera settings, calibrate cameras, import rigid body data</span>
+<span class="n">m</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;test.ttp&quot;</span><span class="p">)</span>
+
+<span class="c1"># process the incoming camera data</span>
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<span class="c1"># optionally save the project to file</span>
+<span class="n">m</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="s2">&quot;new_test.ttp&quot;</span><span class="p">)</span>
+
+<span class="c1"># disconnect the cameras</span>
+<span class="n">m</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 </div>
 
