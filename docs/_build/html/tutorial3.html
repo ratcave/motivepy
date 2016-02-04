@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial 3: Tracking Markers and Rigid Bodies &mdash; MotivePy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="MotivePy 0.1 documentation" href="index.html"/>
+        <link rel="up" title="Tutorials" href="tutorials.html"/>
+        <link rel="next" title="motive" href="modules.html"/>
+        <link rel="prev" title="Tutorial 2: Setting Camera Settings" href="tutorial2.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MotivePy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorial1.html">Tutorial 1: Saving and Loading Motive Project Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial2.html">Tutorial 2: Setting Camera Settings</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Tutorial 3: Tracking Markers and Rigid Bodies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tracking-markers-in-general">Tracking markers in general</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tracking-rigid-bodies-and-their-markers">Tracking rigid bodies and their markers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">motive</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">MotivePy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="tutorials.html">Tutorials</a> &raquo;</li>
+      
+    <li>Tutorial 3: Tracking Markers and Rigid Bodies</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/tutorial3.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial-3-tracking-markers-and-rigid-bodies">
+<h1>Tutorial 3: Tracking Markers and Rigid Bodies<a class="headerlink" href="#tutorial-3-tracking-markers-and-rigid-bodies" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial will guide through the process of tracking markers
+and through the process of tracking rigid bodies:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Tracking markers in general</li>
+<li>Tracking rigid bodies and their markers</li>
+</ul>
+</div></blockquote>
+<div class="section" id="tracking-markers-in-general">
+<h2>Tracking markers in general<a class="headerlink" href="#tracking-markers-in-general" title="Permalink to this headline">¶</a></h2>
+<p>After the cameras have been calibrated, the 3D position data of all
+markers large and bright enough can be calculated at any time.
+We can extract that data in form of a tuple of nested tuples, ((x1,y1,z1),(x2,y2,z2),...,(xN,yN,zN)):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">motive</span> <span class="kn">as</span> <span class="nn">m</span>
+
+<span class="c1"># load a project file that includes a calibration file</span>
+<span class="n">m</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;calibrated_test.ttp&quot;</span><span class="p">)</span>
+
+<span class="c1"># update position data</span>
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<span class="c1"># get a tuple consisting of all visible 3D marker positions during the last update</span>
+<span class="n">m</span><span class="o">.</span><span class="n">get_frame_markers</span><span class="p">()</span>
+
+
+<span class="c1"># make sure to shutdown the camera connections before exiting</span>
+<span class="n">m</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tracking-rigid-bodies-and-their-markers">
+<h2>Tracking rigid bodies and their markers<a class="headerlink" href="#tracking-rigid-bodies-and-their-markers" title="Permalink to this headline">¶</a></h2>
+<p>After the cameras have been calibrated and one or multiple rigid bodies have been created
+in the Motive GUI, if its markers are large and bright enough, a rigid body&#8217;s pivot point
+3D location, its rotation and the position of its markers can be calculated
+at any time. To extract that data we create <code class="xref py py-class docutils literal"><span class="pre">RigidBody</span></code> objects and use their respective methods:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">motive</span> <span class="kn">as</span> <span class="nn">m</span>
+
+<span class="c1"># load a project file that includes a calibration file and a rigid body file</span>
+<span class="n">m</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;calibrated_and_rigid_test.ttp&quot;</span><span class="p">)</span>
+
+<span class="c1"># create a tuple containing all rigid body objects</span>
+<span class="n">rigs</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">get_rigid_bodies</span><span class="p">()</span>
+
+<span class="c1"># get the rigid body&#39;s name</span>
+<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+
+<span class="c1"># update position data</span>
+<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<span class="c1"># get the body&#39;s pivot point location during the last update</span>
+<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">location</span>
+
+<span class="c1"># get the body&#39;s rotation in degrees and local axis</span>
+<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rotation</span>
+
+<span class="c1"># get a tuple consisting of the body&#39;s visible global 3D marker positions</span>
+<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">point_cloud_markers</span>
+
+<span class="c1"># get a tuple consisting of all marker positions, of markers not part of any rigid body</span>
+<span class="n">m</span><span class="o">.</span><span class="n">get_unident_markers</span><span class="p">()</span>
+
+<span class="c1">#make sure to shutdown the camera connections before exiting</span>
+<span class="n">m</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As of now, tracked rigid bodies can only be created via the Motive GUI</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modules.html" class="btn btn-neutral float-right" title="motive" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorial2.html" class="btn btn-neutral" title="Tutorial 2: Setting Camera Settings" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nicolas Kuske and Nicholas A. Del Grosso.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

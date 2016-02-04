@@ -1,77 +1,103 @@
-Tutorial 2: Track Markers and Rigid Bodies
-++++++++++++++++++++++++++++++++++++++++++
+Tutorial 2: Setting Camera Settings
++++++++++++++++++++++++++++++++++++
 
-This tutorial will guide through the process of tracking markers
-and through the process of tracking rigid bodies:
+This tutorial will guide through three processes of which each suffices to set a specific camera's settings:
 
-    - Track markers in general
-    - Track rigid bodies and their markers
+  1.  Process:  Load a Motive project file
+  2.  Process:  Create a :py:class:`.Camera` object and use its methods
+  3.  Process:  Load a Motive project file and create a :py:class:`.Camera` object to use its methods
 
-Track markers in general
-------------------------
-
-After the cameras have been calibrated, the 3D position data of all
-markers large and bright enough can be calculated at any time.
-We can extract that data in form of a tuple of nested tuples, ((x1,y1,z1),(x2,y2,z2),...,(xN,yN,zN))::
-
-    import motive as m
-
-    #load a project file that includes a calibration file
-    m.load_project("calibrated_test.ttp")
-
-    #update position data
-    m.update()
-
-    #get a tuple consisting of all visible 3D marker positions during the last update
-    m.get_frame_markers()
-
-    .
-    .
-    .
-
-    #make sure to shutdown the camera connections before exiting
-    m.shutdown()
+As the third process is combining the first and the second, we will employ it also as a point for summary.
 
 
-Track rigid bodies and their markers
-------------------------------------
+1. Process: Load a Motive project file
+--------------------------------------
 
-After the cameras have been calibrated and one or multiple rigid bodies have been created
-in the Motive GUI, if its markers are large and bright enough, a rigid body's pivot point
-3D location, its rotation and the position of its markers can be calculated
-at any time. To extract that data we create :py:class:`.RigidBody` objects and use their respective methods::
+The simplest way to set OptiTrack camera settings is to load a Motive project file.
+Alas, this is a bit of a chicken and egg situation. In order to load a project file, this
+file needed to be created first. There are two possibilities to create such a file:
 
-    import motive as m
+  - Open the Motive GUI, set each setting manually and save the project
+  - Set camera settings through API as described below (2. Process) and save the project
 
-    #load a project file that includes a calibration file and a rigid body file
-    m.load_project("calibrated_and_rigid_test.ttp")
+Once we have a project (.ttp) file which features the camera settings we need, we can
+then load this project and voila, our cameras will be set as desired::
 
-    #create a tuple containing all rigid body objects
-    rigs=m.get_rigid_bodies()
+  import motive as m
 
-    #get the rigid body's name
-    rigs[0].name
+  #project file must have .ttp extension
+  m.load_project("test.ttp")
 
-    #update position data
-    m.update()
+  #make sure to shutdown the camera connections before exiting
+  m.shutdown()
 
-    #get the body's pivot point location during the last update
-    rigs[0].location
 
-    #get the body's rotation in degrees and local axis
-    rigs[0].rotation
+2. Process: Create a Camera object and use its methods
+------------------------------------------------------
 
-    #get a tuple consisting of the body's visible global 3D marker positions
-    rigs[0].point_cloud_markers
+If you do not have a project file with the desired camera settings at hand, the fastet way to
+set those settings is by creating :py:class:`.Camera` objects and using their respective methods::
 
-    #get a tuple consisting of all marker positions, of markers not part of any rigid body
-    m.get_unident_markers()
+  import motive as m
 
-    .
-    .
-    .
+  # create a tuple containing all camera objects
+  cams=m.get_cameras()
 
-    #make sure to shutdown the camera connections before exiting
-    m.shutdown()
+  # get the first camera's name
+  cams[0].name
 
-.. note:: As of now, tracked rigid bodies can only be created via the Motive GUI
+  # get its frame rate, set a new frame rate and get the newly set frame rate
+  cams[0].frame_rate
+  cams[0].frame_rate=120
+  cams[0].frame_rate
+
+  # switch the camera's filter to infrared light
+  # this method has only setter properties
+  cams[0].set_filter_switch(True)
+
+  # to follow up on the 1. process, this is how you save the settings in a project file
+  m.save_project("test_set.ttp")
+
+
+  # make sure to shutdown the camera connections before exiting
+  m.shutdown()
+
+
+To name just a couple more settings, :py:meth:`.Camera.exposure` level, :py:meth:`.Camera.image_gain` level
+and the infrared illumination :py:meth:`.Camera.intensity` level.
+
+.. note:: Whenever you import motive, the index in the camera tuple may denote a different camera
+
+3. Process: Load a Motive project file and create a Camera object to use its methods
+------------------------------------------------------------------------------------
+
+Whenever you have a project file which features some settings you desire but others
+you need to adapt, it might make sense to first load that project (1. Process) and then
+only set the settings you need to adapt (2.Process). Let us suppose for example you
+are happy with the frame rate for camera X in test_set.ttp but you want to switch
+the camera's filter to visible light::
+
+  import motive as m
+
+  m.load_project("test_set.ttp")
+
+  cams=m.get_cameras()
+
+  # make sure the zeroth index still denotes camera X!
+  cams[0].name
+
+  cams[0].set_filter_switch(False)
+
+  # if you want to save the new settings to a project file
+  m.save_project("newtest_set.ttp")
+
+  # make sure to shutdown the camera connections before exiting
+  m.shutdown()
+
+
+.. note::  Whenever you load a project file, this overwrites all camera settings
+
+
+
+
+
