@@ -178,8 +178,8 @@ cdef extern from "NPTrackingTools.h":
     ##int  TT_SetCameraGroupFilterSettings(int groupIndex, cCameraGroupFilterSettings &settings)
 
 #POINT CLOUD RECONSTRUCTION SETTINGS
-    int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
-    int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
+    ##int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
+    ##int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
 
 #MARKER SIZE SETTINGS
     ##int TT_CameraGroupMarkerSize   (int groupIndex, cCameraGroupMarkerSizeSettings &settings)
