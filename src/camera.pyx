@@ -74,6 +74,32 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
     """
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
+@utils.decorators.check_npresult
+def get_camera_group_point_cloud_settings(groupIndex, setting):  #TODO: check if the function takes an array of settings, or only one at a time. I think only one at a time
+    return TT_CameraGroupPointCloudSettings   (groupIndex, setting)
+
+@utils.decorators.check_npresult
+def set_camera_group_point_cloud_settings(groupIndex, setting):
+    return TT_SetCameraGroupPointCloudSettings(groupIndex, setting)
+
+cdef class CameraGroupPointCloudSettings:
+    cdef cCameraGroupPointCloudSettings *obj
+
+    def __cinit__(self):
+        self.obj=new cCameraGroupPointCloudSettings()
+
+    def __dealloc__(self):
+        del self.obj
+
+    def set_bool_parameter(self, which, val):
+        return self.obj.SetBoolParameter( which , val )
+
+    def set_double_parameter(self, which, val):
+        return self.obj.SetBoolParameter( which , val )
+
+    def set_long_parameter(self, which, val):
+        return self.obj.SetBoolParameter( which , val )
+
 
 #CAMERA CLASS
 class Camera(object):

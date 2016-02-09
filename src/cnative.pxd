@@ -23,76 +23,81 @@ cdef extern from "NPTrackingTools.h" namespace "Core":
         unsigned long long int LowBits()
         unsigned long long int HighBits()
 
+cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":  #can not define enum in class in cython yet
+          #unsigned long long k=1 #can not use that as 1LL since in enum I need constant expression
+          cpdef enum Setting :
+#         #unsigned long long
+              eResolvePointCloud = 1L,# L!!!              #bool
+              eShowCameras = 1L << 1               #bool
+#         #     eVisibleMarkerSize = 1L << 3,          #double
+#         #     ePCResidual = 1L << 4,                 #double
+#         #     ePCMinSize = 1L << 5,                  #double
+#         #     ePCMaxSize = 1L << 6,                  #double
+#         #     ePCMinAngle = 1L << 7,                 #double
+#         #     ePCMinRays = 1L << 8,                  #long
+#         #     eShutterDelay = 1L << 9,               #long
+#         #     ePrecisionPacketCap = 1L << 10,        #long
+#         #     ePCMinRayLength = 1L << 11,            #double
+#         #     ePCMaxRayLength = 1L << 12,            #double
+#         #     ePCReconstructMinX = 1L << 13,         #double
+#         #     ePCReconstructMaxX = 1L << 14,         #double
+#         #     ePCReconstructMinY = 1L << 15,         #double
+#         #     ePCReconstructMaxY = 1L << 16,         #double
+#         #     ePCReconstructMinZ = 1L << 17,         #double
+#         #     ePCReconstructMaxZ = 1L << 18,         #double
+#         #     ePCObjectFilterLevel = 1L << 19,       #long
+#         #     ePCObjectFilterMinSize = 1L << 20,     #long
+#         #     ePCObjectFilterMaxSize = 1L << 21,     #long
+#         #     ePCObjectFilterCircularity = 1L << 22, #double
+#         #     ePCObjectFilterGrayscaleFloor = 1L << 23, #long
+#         #     ePCObjectFilterAspectTolerance = 1L << 24, #long
+#         #     ePCObjectFilterObjectMargin = 1L << 25, #long
+#         #     eShowReconstructionBounds = 1L << 26,  #bool
+#         #     eBoundReconstruction = 1L << 27,       #bool
+#         #     eShowCaptureVolume = 1L << 28,         #bool
+#         #     eShow3DMarkers = 1L << 29,             #bool
+#         #     eShowCameraFOV = 1L << 30,             #bool
+#         #     eCameraOverlap = 1L << 31,             #double
+#         #     eVolumeResolution = 1L << 32,          #double
+#         #     eWireframe = 1L << 33,                 #double
+#         #     eFOVIntensity = 1L << 34,              #double
+#         #     eRankRays = 1L << 35,                  #bool
+#         #     eMinimumRankRayCount = 1L << 36,       #long
+#         #     ePCPixelGutter = 1L << 37,             #long
+#         #     ePCMaximum2DPoints = 1L << 38,         #long
+#         #     ePCCalculationTime = 1L << 39,         #long
+#         #     ePCThreadCount = 1L << 40,             #long
+#         #     ePCCalculateDiameter = 1L << 41,       #bool
+#         #     ePCBoostMultThreads = 1L << 42,        #bool
+#         #     ePCSmallMarkerOptimization = 1L << 43, #long
+#         #     eBlockWidth = 1L << 44,                #double
+#         #     eBlockHeight = 1L << 45,               #double
+#         #     ePointCloudEngine = 1L << 46,          #long 1=v1.0  2=v2.0
+#         #     eSynchronizerEngine = 1L << 47,        #long 1=v1.0  2=v2.0
+#         #     eMarkerDiameterType = 1L << 48,        #long
+#         #     eMarkerDiameterForceSize = 1L << 49,   #double
+#         #     eSynchronizerControl = 1L << 50,       #long
+#         #     ePCBoostLeastSq = 1L << 51,            #bool
+#         #     eSettingsCount
+#         #
+
+
 cdef extern from "NPTrackingTools.h":
 
     cdef cppclass cCameraGroupPointCloudSettings:
-        pass
-        # enum Setting : #unsigned long long
-        #     eResolvePointCloud = 1L, #L!!!              #bool
-        #     eShowCameras = 1L << 1,                #bool
-        #     eVisibleMarkerSize = 1L << 3,          #double
-        #     ePCResidual = 1L << 4,                 #double
-        #     ePCMinSize = 1L << 5,                  #double
-        #     ePCMaxSize = 1L << 6,                  #double
-        #     ePCMinAngle = 1L << 7,                 #double
-        #     ePCMinRays = 1L << 8,                  #long
-        #     eShutterDelay = 1L << 9,               #long
-        #     ePrecisionPacketCap = 1L << 10,        #long
-        #     ePCMinRayLength = 1L << 11,            #double
-        #     ePCMaxRayLength = 1L << 12,            #double
-        #     ePCReconstructMinX = 1L << 13,         #double
-        #     ePCReconstructMaxX = 1L << 14,         #double
-        #     ePCReconstructMinY = 1L << 15,         #double
-        #     ePCReconstructMaxY = 1L << 16,         #double
-        #     ePCReconstructMinZ = 1L << 17,         #double
-        #     ePCReconstructMaxZ = 1L << 18,         #double
-        #     ePCObjectFilterLevel = 1L << 19,       #long
-        #     ePCObjectFilterMinSize = 1L << 20,     #long
-        #     ePCObjectFilterMaxSize = 1L << 21,     #long
-        #     ePCObjectFilterCircularity = 1L << 22, #double
-        #     ePCObjectFilterGrayscaleFloor = 1L << 23, #long
-        #     ePCObjectFilterAspectTolerance = 1L << 24, #long
-        #     ePCObjectFilterObjectMargin = 1L << 25, #long
-        #     eShowReconstructionBounds = 1L << 26,  #bool
-        #     eBoundReconstruction = 1L << 27,       #bool
-        #     eShowCaptureVolume = 1L << 28,         #bool
-        #     eShow3DMarkers = 1L << 29,             #bool
-        #     eShowCameraFOV = 1L << 30,             #bool
-        #     eCameraOverlap = 1L << 31,             #double
-        #     eVolumeResolution = 1L << 32,          #double
-        #     eWireframe = 1L << 33,                 #double
-        #     eFOVIntensity = 1L << 34,              #double
-        #     eRankRays = 1L << 35,                  #bool
-        #     eMinimumRankRayCount = 1L << 36,       #long
-        #     ePCPixelGutter = 1L << 37,             #long
-        #     ePCMaximum2DPoints = 1L << 38,         #long
-        #     ePCCalculationTime = 1L << 39,         #long
-        #     ePCThreadCount = 1L << 40,             #long
-        #     ePCCalculateDiameter = 1L << 41,       #bool
-        #     ePCBoostMultThreads = 1L << 42,        #bool
-        #     ePCSmallMarkerOptimization = 1L << 43, #long
-        #     eBlockWidth = 1L << 44,                #double
-        #     eBlockHeight = 1L << 45,               #double
-        #     ePointCloudEngine = 1L << 46,          #long 1=v1.0  2=v2.0
-        #     eSynchronizerEngine = 1L << 47,        #long 1=v1.0  2=v2.0
-        #     eMarkerDiameterType = 1L << 48,        #long
-        #     eMarkerDiameterForceSize = 1L << 49,   #double
-        #     eSynchronizerControl = 1L << 50,       #long
-        #     ePCBoostLeastSq = 1L << 51,            #bool
-        #     eSettingsCount
-        #
-        # #Set individual parameter values. Only values that are set will be changed when submitting
-        # #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
-        # #if there is a mismatch between the requested parameter and its expected type
-        # bool            SetBoolParameter( Setting which, bool val )
-        # bool            SetDoubleParameter( Setting which, double val )
-        # bool            SetLongParameter( Setting which, long val )
-        #
-        # #Retrieve individual parameter settings from the parameter block. These methods will return false
-        # #if there is a mismatch between the requested parameter and its expected type.
-        # bool            BoolParameter( Setting which, bool &val ) const
-        # bool            DoubleParameter( Setting which, double &val ) const
-        # bool            LongParameter( Setting which, long &val ) const
+
+        #Set individual parameter values. Only values that are set will be changed when submitting
+        #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
+        #if there is a mismatch between the requested parameter and its expected type
+        bool            SetBoolParameter( Setting , bool )
+        bool            SetDoubleParameter( Setting , double )
+        bool            SetLongParameter( Setting, long )
+
+        #Retrieve individual parameter settings from the parameter block. These methods will return false
+        #if there is a mismatch between the requested parameter and its expected type.
+        bool            BoolParameter( Setting , bool & ) const
+        bool            DoubleParameter( Setting , double & ) const
+        bool            LongParameter( Setting , long & ) const
 
 
 #STARTUP / SHUTDOWN
@@ -174,8 +179,8 @@ cdef extern from "NPTrackingTools.h":
     ##int  TT_SetCameraGroupFilterSettings(int groupIndex, cCameraGroupFilterSettings &settings)
 
 #POINT CLOUD RECONSTRUCTION SETTINGS
-   #int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
-   #int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
+    int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
+    int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
 
 #MARKER SIZE SETTINGS
     ##int TT_CameraGroupMarkerSize   (int groupIndex, cCameraGroupMarkerSizeSettings &settings)

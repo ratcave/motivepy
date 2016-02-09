@@ -16,6 +16,7 @@ include "cnative.pxd"
 
 from motive import utils
 
+
 #STARTUP / SHUTDOWN
 @utils.decorators.check_npresult
 def _initialize():
