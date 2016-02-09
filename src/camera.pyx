@@ -79,8 +79,12 @@ def get_camera_group_point_cloud_settings(groupIndex, setting):  #TODO: check if
     return TT_CameraGroupPointCloudSettings   (groupIndex, setting)
 
 @utils.decorators.check_npresult
-def set_camera_group_point_cloud_settings(groupIndex, setting):
-    return TT_SetCameraGroupPointCloudSettings(groupIndex, setting)
+def set_camera_group_point_cloud_settings(groupIndex, which_setting, value):
+
+    CGPCS=CameraGroupPointCloudSettings()
+
+    return TT_SetCameraGroupPointCloudSettings(groupIndex, CGPCS.SetBoolParameter(which_setting ,value))
+
 
 cdef class CameraGroupPointCloudSettings:
     cdef cCameraGroupPointCloudSettings *obj
@@ -95,10 +99,10 @@ cdef class CameraGroupPointCloudSettings:
         return self.obj.SetBoolParameter( which , val )
 
     def set_double_parameter(self, which, val):
-        return self.obj.SetBoolParameter( which , val )
+        return self.obj.SetDoubleParameter( which , val )
 
     def set_long_parameter(self, which, val):
-        return self.obj.SetBoolParameter( which , val )
+        return self.obj.SetLongParameter( which , val )
 
 
 #CAMERA CLASS
