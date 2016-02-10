@@ -74,29 +74,16 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
     """
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
-# @utils.decorators.check_npresult
-# def get_camera_group_point_cloud_settings(groupIndex, setting):  #TODO: check if the function takes an array of settings, or only one at a time. I think only one at a time
-#     return TT_CameraGroupPointCloudSettings   (groupIndex, setting)
-#
-# @utils.decorators.check_npresult
-# def set_camera_group_point_cloud_settings(groupIndex, which_setting, value):
-#
-#     CGPCS=CameraGroupPointCloudSettings()
-#
-#     return TT_SetCameraGroupPointCloudSettings(groupIndex, CGPCS.SetBoolParameter(which_setting ,value))
+@utils.decorators.check_npresult
+def get_camera_group_point_cloud_settings(groupIndex, setting):  #TODO: check if the function takes an array of settings, or only one at a time. I think only one at a time
+    return TT_CameraGroupPointCloudSettings   (groupIndex, setting)
 
+@utils.decorators.check_npresult
+def set_camera_group_point_cloud_settings(groupIndex, which_setting, value):
 
-#cdef class CGPCS:
-#    cdef cCameraGroupP
+    CGPCS=CameraGroupPointCloudSettings()
 
-
-# def set(groupIndex, val):
-#     #cdef unsigned long long eResolvePointCloud = 1
-#     #settings=eResolvePointCloud
-#     return SetBoolParameter(eResolvePointCloud, val) #cCameraGroupPointCloudSettings::SetBoolParameter' : illegal call of non-static member
-#
-#     #return TT_SetCameraGroupPointCloudSettings(groupIndex, SetBoolParameter(settings, val))
-
+    return TT_SetCameraGroupPointCloudSettings(groupIndex, CGPCS.SetBoolParameter(which_setting ,value))
 
 
 cdef class CameraGroupPointCloudSettings:
@@ -108,14 +95,42 @@ cdef class CameraGroupPointCloudSettings:
       def __dealloc__(self):
           del self.obj
 
-      def set_bool_parameter(self, which, val):
-          return self.obj.SetBoolParameter(ePCCalculateDiameter, val )
+      def set_bool_parameter(self, which, value):
+          return self.obj.SetBoolParameter(ePCCalculateDiameter, value )
+
+      def set_double_parameter( self, which , value ):
+
+          #a=ePCMinAngle #error C2011: 'cCameraGroupPointCloudSettings::Setting' : 'unsigned enum' type redefinition
+                         #  C:\Program Files (x86)\OptiTrack\Motive\inc\NPTrackingTools.h(296) : see declaration of 'cCameraGroupPointCloud
+                         #  Settings::Setting'
+          #cdef unsigned long long a=ePCMinAngle #Cannot assign type 'unsigned long long' to 'Setting'
+
+          if which=="a":
+            assert self.obj.SetDoubleParameter( ePCMinAngle, value ),"Type of setting is of different type than value"
+          else:
+            assert self.obj.SetDoubleParameter( ePCResidual, value ),"Type of setting is of different type than value"
+
+      def set_long_parameter( self, which ,value ):
+          return self.obj.SetLongParameter( ePCMinRays, value ) #eShutterDelay getter and setter for shutter delay?
 
       def get_bool_parameter(self, which):
           cdef bool value=True
           assert self.obj.BoolParameter(ePCCalculateDiameter, value),"Type of setting is of different type than value"
           return value
 
+      def get_double_parameter(self, which):
+          cdef double value=0
+
+          if which=="a":
+            assert self.obj.DoubleParameter(ePCMinAngle, value),"Type of setting is of different type than value"
+          else:
+            assert self.obj.DoubleParameter(ePCResidual, value),"Type of setting is of different type than value"
+          return value
+
+      def get_long_parameter(self, which):
+          cdef long value=0
+          assert self.obj.LongParameter(ePCMinRays, value),"Type of setting is of different type than value"
+          return value
 
 
 

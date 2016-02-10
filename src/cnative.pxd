@@ -98,15 +98,15 @@ cdef extern from "NPTrackingTools.h":
         #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
         #if there is a mismatch between the requested parameter and its expected type
         bool            SetBoolParameter( Setting which, bool value)
-        bool            SetDoubleParameter( setting , double )
-        bool            SetLongParameter( setting, long )
+        bool            SetDoubleParameter( Setting which , double value )
+        bool            SetLongParameter( Setting which, long value )
         #
         #
         # #Retrieve individual parameter settings from the parameter block. These methods will return false
         # #if there is a mismatch between the requested parameter and its expected type.
         bool            BoolParameter( Setting which, bool & value ) const
-        bool            DoubleParameter( setting , double & ) const
-        bool            LongParameter( setting , long & ) const
+        bool            DoubleParameter( Setting which , double & value) const
+        bool            LongParameter( Setting which , long & value) const
 
 
 #STARTUP / SHUTDOWN
