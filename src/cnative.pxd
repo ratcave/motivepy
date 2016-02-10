@@ -28,80 +28,83 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
           cdef enum Setting:
 #         #unsigned long long
             eResolvePointCloud,       #= 100000000000000000000000000000000L# L!!!              #bool
-            eShowCameras             #= 100000000000000000000000000000000L << 1               #bool
-#         #     eVisibleMarkerSize = 1L << 3,          #double
-#         #     ePCResidual = 1L << 4,                 #double
-#         #     ePCMinSize = 1L << 5,                  #double
-#         #     ePCMaxSize = 1L << 6,                  #double
-#         #     ePCMinAngle = 1L << 7,                 #double
-#         #     ePCMinRays = 1L << 8,                  #long
-#         #     eShutterDelay = 1L << 9,               #long
-#         #     ePrecisionPacketCap = 1L << 10,        #long
-#         #     ePCMinRayLength = 1L << 11,            #double
-#         #     ePCMaxRayLength = 1L << 12,            #double
-#         #     ePCReconstructMinX = 1L << 13,         #double
-#         #     ePCReconstructMaxX = 1L << 14,         #double
-#         #     ePCReconstructMinY = 1L << 15,         #double
-#         #     ePCReconstructMaxY = 1L << 16,         #double
-#         #     ePCReconstructMinZ = 1L << 17,         #double
-#         #     ePCReconstructMaxZ = 1L << 18,         #double
-#         #     ePCObjectFilterLevel = 1L << 19,       #long
-#         #     ePCObjectFilterMinSize = 1L << 20,     #long
-#         #     ePCObjectFilterMaxSize = 1L << 21,     #long
-#         #     ePCObjectFilterCircularity = 1L << 22, #double
-#         #     ePCObjectFilterGrayscaleFloor = 1L << 23, #long
-#         #     ePCObjectFilterAspectTolerance = 1L << 24, #long
-#         #     ePCObjectFilterObjectMargin = 1L << 25, #long
-#         #     eShowReconstructionBounds = 1L << 26,  #bool
-#         #     eBoundReconstruction = 1L << 27,       #bool
-#         #     eShowCaptureVolume = 1L << 28,         #bool
-#         #     eShow3DMarkers = 1L << 29,             #bool
-#         #     eShowCameraFOV = 1L << 30,             #bool
-#         #     eCameraOverlap = 1L << 31,             #double
-#         #     eVolumeResolution = 1L << 32,          #double
-#         #     eWireframe = 1L << 33,                 #double
-#         #     eFOVIntensity = 1L << 34,              #double
-#         #     eRankRays = 1L << 35,                  #bool
-#         #     eMinimumRankRayCount = 1L << 36,       #long
-#         #     ePCPixelGutter = 1L << 37,             #long
-#         #     ePCMaximum2DPoints = 1L << 38,         #long
-#         #     ePCCalculationTime = 1L << 39,         #long
-#         #     ePCThreadCount = 1L << 40,             #long
-#         #     ePCCalculateDiameter = 1L << 41,       #bool
-#         #     ePCBoostMultThreads = 1L << 42,        #bool
-#         #     ePCSmallMarkerOptimization = 1L << 43, #long
-#         #     eBlockWidth = 1L << 44,                #double
-#         #     eBlockHeight = 1L << 45,               #double
-#         #     ePointCloudEngine = 1L << 46,          #long 1=v1.0  2=v2.0
-#         #     eSynchronizerEngine = 1L << 47,        #long 1=v1.0  2=v2.0
-#         #     eMarkerDiameterType = 1L << 48,        #long
-#         #     eMarkerDiameterForceSize = 1L << 49,   #double
-#         #     eSynchronizerControl = 1L << 50,       #long
-#         #     ePCBoostLeastSq = 1L << 51,            #bool
-#         #     eSettingsCount
-#         #
+            eShowCameras,             #= 100000000000000000000000000000000L << 1               #bool
+            eVisibleMarkerSize,          #double
+            ePCResidual,                 #double
+            ePCMinSize,                  #double
+            ePCMaxSize,                  #double
+            ePCMinAngle,                 #double
+            ePCMinRays,                  #long
+            eShutterDelay,               #long
+            ePrecisionPacketCap,        #long
+            ePCMinRayLength,            #double
+            ePCMaxRayLength,            #double
+            ePCReconstructMinX,         #double
+            ePCReconstructMaxX,         #double
+            ePCReconstructMinY,         #double
+            ePCReconstructMaxY,         #double
+            ePCReconstructMinZ,         #double
+            ePCReconstructMaxZ,         #double
+            ePCObjectFilterLevel,       #long
+            ePCObjectFilterMinSize,     #long
+            ePCObjectFilterMaxSize,     #long
+            ePCObjectFilterCircularity, #double
+            ePCObjectFilterGrayscaleFloor, #long
+            ePCObjectFilterAspectTolerance, #long
+            ePCObjectFilterObjectMargin, #long
+            eShowReconstructionBounds,  #bool
+            eBoundReconstruction,       #bool
+            eShowCaptureVolume,         #bool
+            eShow3DMarkers,             #bool
+            eShowCameraFOV,             #bool
+            eCameraOverlap,             #double
+            eVolumeResolution,          #double
+            eWireframe,                 #double
+            eFOVIntensity,              #double
+            eRankRays,                  #bool
+            eMinimumRankRayCount,       #long
+            ePCPixelGutter,             #long
+            ePCMaximum2DPoints,         #long
+            ePCCalculationTime,         #long
+            ePCThreadCount,             #long
+            ePCCalculateDiameter,       #bool
+            ePCBoostMultThreads,        #bool
+            ePCSmallMarkerOptimization, #long
+            eBlockWidth,                #double
+            eBlockHeight,               #double
+            ePointCloudEngine,          #long 1=v1.0  2=v2.0
+            eSynchronizerEngine,        #long 1=v1.0  2=v2.0
+            eMarkerDiameterType,        #long
+            eMarkerDiameterForceSize,   #double
+            eSynchronizerControl,       #long
+            ePCBoostLeastSq,            #bool
+            eSettingsCount
 
-          Setting settings
-          bool            SetBoolParameter( setting , bool )
-          bool            SetDoubleParameter( setting , double )
-          bool            SetLongParameter( setting, long )
 
 cdef extern from "NPTrackingTools.h":
 
     cdef cppclass cCameraGroupPointCloudSettings:
-         #cCameraGroupPointCloudSettings() except +
+        cCameraGroupPointCloudSettings() except +
 
-        cdef enum Setting:
-                eResolvePointCloud,       #= 100000000000000000000000000000000L# L!!!              #bool
-                eShowCameras
+        #Setting settings=  eResolvePointCloud #without extra extern from above, Setting is not defined. Also  Cannot assign default value to fields in cdef classes, structs or unions
+
+
+        #returns: wrong C syntax error
+        #cdef enum Setting:
+        #        eResolvePointCloud,       #= 100000000000000000000000000000000L# L!!!              #bool
+        #        eShowCameras
 
         #Set individual parameter values. Only values that are set will be changed when submitting
         #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
         #if there is a mismatch between the requested parameter and its expected type
-
-        #Retrieve individual parameter settings from the parameter block. These methods will return false
-        #if there is a mismatch between the requested parameter and its expected type.
-        bool            BoolParameter( setting , bool & ) const
+        bool            SetBoolParameter( Setting which, bool value)
+        bool            SetDoubleParameter( setting , double )
+        bool            SetLongParameter( setting, long )
+        #
+        #
+        # #Retrieve individual parameter settings from the parameter block. These methods will return false
+        # #if there is a mismatch between the requested parameter and its expected type.
+        bool            BoolParameter( Setting which, bool & value ) const
         bool            DoubleParameter( setting , double & ) const
         bool            LongParameter( setting , long & ) const
 

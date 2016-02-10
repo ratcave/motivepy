@@ -90,32 +90,33 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
 #    cdef cCameraGroupP
 
 
-def set(groupIndex, val):
-    #cdef unsigned long long eResolvePointCloud = 1
-    settings=eResolvePointCloud
-    return SetBoolParameter(settings ,val)
-    #return TT_SetCameraGroupPointCloudSettings(groupIndex, SetBoolParameter(settings ,val))
+# def set(groupIndex, val):
+#     #cdef unsigned long long eResolvePointCloud = 1
+#     #settings=eResolvePointCloud
+#     return SetBoolParameter(eResolvePointCloud, val) #cCameraGroupPointCloudSettings::SetBoolParameter' : illegal call of non-static member
+#
+#     #return TT_SetCameraGroupPointCloudSettings(groupIndex, SetBoolParameter(settings, val))
 
 
 
 cdef class CameraGroupPointCloudSettings:
-     cdef cCameraGroupPointCloudSettings *obj
+      cdef cCameraGroupPointCloudSettings *obj
 
-     def __cinit__(self):
-         self.obj=new cCameraGroupPointCloudSettings()
+      def __cinit__(self):
+          self.obj=new cCameraGroupPointCloudSettings()
 
-     def __dealloc__(self):
-         del self.obj
+      def __dealloc__(self):
+          del self.obj
 
-     def set_bool_parameter(self, which, val):
-         settings=eResolvePointCloud
-         return self.obj.SetBoolParameter( settings, val )
+      def set_bool_parameter(self, which, val):
+          return self.obj.SetBoolParameter(ePCCalculateDiameter, val )
 
-     def set_double_parameter(self, which, val):
-         return self.obj.SetDoubleParameter( eResolvePointCloud , val )
+      def get_bool_parameter(self, which):
+          cdef bool value=True
+          assert self.obj.BoolParameter(ePCCalculateDiameter, value),"Type of setting is of different type than value"
+          return value
 
-     def set_long_parameter(self, which, val):
-         return self.obj.SetLongParameter( eResolvePointCloud , val )
+
 
 
 #CAMERA CLASS
