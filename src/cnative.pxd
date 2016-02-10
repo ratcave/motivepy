@@ -25,10 +25,10 @@ cdef extern from "NPTrackingTools.h" namespace "Core":
 
 cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":  #can not define enum in class in cython yet
           #unsigned long long k=1 #can not use that as 1LL since in enum I need constant expression
-          cpdef enum Setting :
+          cdef enum Setting:
 #         #unsigned long long
-              eResolvePointCloud = 1L,# L!!!              #bool
-              eShowCameras = 1L << 1               #bool
+            eResolvePointCloud,       #= 100000000000000000000000000000000L# L!!!              #bool
+            eShowCameras             #= 100000000000000000000000000000000L << 1               #bool
 #         #     eVisibleMarkerSize = 1L << 3,          #double
 #         #     ePCResidual = 1L << 4,                 #double
 #         #     ePCMinSize = 1L << 5,                  #double
@@ -81,23 +81,29 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
 #         #     eSettingsCount
 #         #
 
+          Setting settings
+          bool            SetBoolParameter( setting , bool )
+          bool            SetDoubleParameter( setting , double )
+          bool            SetLongParameter( setting, long )
 
 cdef extern from "NPTrackingTools.h":
 
     cdef cppclass cCameraGroupPointCloudSettings:
+         #cCameraGroupPointCloudSettings() except +
+
+        cdef enum Setting:
+                eResolvePointCloud,       #= 100000000000000000000000000000000L# L!!!              #bool
+                eShowCameras
 
         #Set individual parameter values. Only values that are set will be changed when submitting
         #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
         #if there is a mismatch between the requested parameter and its expected type
-        bool            SetBoolParameter( Setting , bool )
-        bool            SetDoubleParameter( Setting , double )
-        bool            SetLongParameter( Setting, long )
 
         #Retrieve individual parameter settings from the parameter block. These methods will return false
         #if there is a mismatch between the requested parameter and its expected type.
-        bool            BoolParameter( Setting , bool & ) const
-        bool            DoubleParameter( Setting , double & ) const
-        bool            LongParameter( Setting , long & ) const
+        bool            BoolParameter( setting , bool & ) const
+        bool            DoubleParameter( setting , double & ) const
+        bool            LongParameter( setting , long & ) const
 
 
 #STARTUP / SHUTDOWN

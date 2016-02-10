@@ -74,35 +74,48 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
     """
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
-@utils.decorators.check_npresult
-def get_camera_group_point_cloud_settings(groupIndex, setting):  #TODO: check if the function takes an array of settings, or only one at a time. I think only one at a time
-    return TT_CameraGroupPointCloudSettings   (groupIndex, setting)
+# @utils.decorators.check_npresult
+# def get_camera_group_point_cloud_settings(groupIndex, setting):  #TODO: check if the function takes an array of settings, or only one at a time. I think only one at a time
+#     return TT_CameraGroupPointCloudSettings   (groupIndex, setting)
+#
+# @utils.decorators.check_npresult
+# def set_camera_group_point_cloud_settings(groupIndex, which_setting, value):
+#
+#     CGPCS=CameraGroupPointCloudSettings()
+#
+#     return TT_SetCameraGroupPointCloudSettings(groupIndex, CGPCS.SetBoolParameter(which_setting ,value))
 
-@utils.decorators.check_npresult
-def set_camera_group_point_cloud_settings(groupIndex, which_setting, value):
 
-    CGPCS=CameraGroupPointCloudSettings()
+#cdef class CGPCS:
+#    cdef cCameraGroupP
 
-    return TT_SetCameraGroupPointCloudSettings(groupIndex, CGPCS.SetBoolParameter(which_setting ,value))
+
+def set(groupIndex, val):
+    #cdef unsigned long long eResolvePointCloud = 1
+    settings=eResolvePointCloud
+    return SetBoolParameter(settings ,val)
+    #return TT_SetCameraGroupPointCloudSettings(groupIndex, SetBoolParameter(settings ,val))
+
 
 
 cdef class CameraGroupPointCloudSettings:
-    cdef cCameraGroupPointCloudSettings *obj
+     cdef cCameraGroupPointCloudSettings *obj
 
-    def __cinit__(self):
-        self.obj=new cCameraGroupPointCloudSettings()
+     def __cinit__(self):
+         self.obj=new cCameraGroupPointCloudSettings()
 
-    def __dealloc__(self):
-        del self.obj
+     def __dealloc__(self):
+         del self.obj
 
-    def set_bool_parameter(self, which, val):
-        return self.obj.SetBoolParameter( which , val )
+     def set_bool_parameter(self, which, val):
+         settings=eResolvePointCloud
+         return self.obj.SetBoolParameter( settings, val )
 
-    def set_double_parameter(self, which, val):
-        return self.obj.SetDoubleParameter( which , val )
+     def set_double_parameter(self, which, val):
+         return self.obj.SetDoubleParameter( eResolvePointCloud , val )
 
-    def set_long_parameter(self, which, val):
-        return self.obj.SetLongParameter( which , val )
+     def set_long_parameter(self, which, val):
+         return self.obj.SetLongParameter( eResolvePointCloud , val )
 
 
 #CAMERA CLASS
