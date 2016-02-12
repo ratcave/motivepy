@@ -24,9 +24,6 @@ from motive import utils
 cimport numpy as np
 import numpy as np
 import warnings
-import cv
-import cv2
-import time
 
 def get_cams():
     """Returns a tuple containing all cameras
@@ -35,105 +32,6 @@ def get_cams():
         Tuple of camera objects.
     """
     return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
-
-#CAMERA GROUP SUPPORT
-def camera_group_count():
-    """Returns number of camera groups"""
-    return TT_CameraGroupCount()
-
-def create_camera_group():
-    """Adds an additional camera group
-
-    Raises:
-        Exception: If a new camera group could not be created
-    """
-    if not TT_CreateCameraGroup():
-        raise Exception("Could Not Create Camera Group")
-
-def remove_camera_group(int groupIndex):
-    """Removes a camera group
-
-    Note:
-        A camera group can only be removed if it contains
-        at least one camera.
-    Args:
-        groupIndex (int): The index of the camera group to be removed
-    Raises:
-        Exception: If the camera group could not be removed
-    """
-    if not TT_RemoveCameraGroup(groupIndex):
-        raise Exception("Could Not Remove. Check If Group Empty")
-
-
-def set_group_shutter_delay(int groupIndex, int microseconds):
-    """Set camera group's shutter delay
-
-    Args:
-        groupIndex (int): The index of the camera group to be removed
-        microseconds (int): The time between opening of shutter and capture of frame
-    """
-    TT_SetGroupShutterDelay(groupIndex, microseconds)
-
-@utils.decorators.check_npresult
-def get_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSettings Settings):
-    """Gets the settings of the camera group and sets them in the CameraGroupPointCloudSettings object)
-
-    """
-    TT_CameraGroupPointCloudSettings   (groupIndex, Settings.obj[0])
-
-@utils.decorators.check_npresult
-def set_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSettings Settings):
-    """Sets the settings in the camera group to the settings of the CameraGroupPointCloudSettings object)
-
-    """
-    TT_SetCameraGroupPointCloudSettings(groupIndex, Settings.obj[0]) #Cannot assign type 'cCameraGroupPointCloudSettings *' to 'cCameraGroupPointCloudSettings'
-
-
-cdef class CameraGroupPointCloudSettings:
-      cdef cCameraGroupPointCloudSettings *obj
-
-      def __cinit__(self):
-          self.obj=new cCameraGroupPointCloudSettings()
-
-      def __dealloc__(self):
-          del self.obj
-
-      def set_bool_parameter(self, which, value):
-          return self.obj.SetBoolParameter(ePCCalculateDiameter, value )
-
-      def set_double_parameter( self, which , value ):
-
-          #a=ePCMinAngle #error C2011: 'cCameraGroupPointCloudSettings::Setting' : 'unsigned enum' type redefinition
-                         #  C:\Program Files (x86)\OptiTrack\Motive\inc\NPTrackingTools.h(296) : see declaration of 'cCameraGroupPointCloud
-                         #  Settings::Setting'
-          #cdef unsigned long long a=ePCMinAngle #Cannot assign type 'unsigned long long' to 'Setting'
-
-          if which=="a":
-            assert self.obj.SetDoubleParameter( ePCMinAngle, value ),"Type of setting is of different type than value"
-          else:
-            assert self.obj.SetDoubleParameter( ePCResidual, value ),"Type of setting is of different type than value"
-
-      def set_long_parameter( self, which ,value ):
-          return self.obj.SetLongParameter( ePCMinRays, value ) #eShutterDelay getter and setter for shutter delay?
-
-      def get_bool_parameter(self, which):
-          cdef bool value=True
-          assert self.obj.BoolParameter(ePCCalculateDiameter, value),"Type of setting is of different type than value"
-          return value
-
-      def get_double_parameter(self, which):
-          cdef double value=0
-
-          if which=="a":
-            assert self.obj.DoubleParameter(ePCMinAngle, value),"Type of setting is of different type than value"
-          else:
-            assert self.obj.DoubleParameter(ePCResidual, value),"Type of setting is of different type than value"
-          return value
-
-      def get_long_parameter(self, which):
-          cdef long value=0
-          assert self.obj.LongParameter(ePCMinRays, value),"Type of setting is of different type than value"
-          return value
 
 
 #CAMERA CLASS

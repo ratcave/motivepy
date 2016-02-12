@@ -29,10 +29,20 @@ rigidbody = Extension(
     language="c++"
 )
 
+pointcloudgroup = Extension(
+    'motive.pointcloudgroup',
+    sources=["src\\pointcloudgroup.pyx" ],
+    include_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\inc", "src"],
+    library_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\lib" ],
+    extra_link_args=["/DEFAULTLIB:NPTrackingTools"],
+    language="c++"
+)
+
+
 
 setup(
     name="motive",
-    ext_modules= cythonize([native, rigidbody, camera]),
+    ext_modules= cythonize([native, rigidbody, camera, pointcloudgroup]),
     packages= find_packages(),
     scripts=['scripts/vislight.py', 'scripts/viewer.py', 'scripts/video.py'],
     install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph', 'btk' ],

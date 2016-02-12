@@ -23,19 +23,18 @@ cdef extern from "NPTrackingTools.h" namespace "Core":
         unsigned long long int LowBits()
         unsigned long long int HighBits()
 
-cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":  #can not define enum in class in cython yet
-          #unsigned long long k=1 #can not use that as 1LL since in enum I need constant expression
-          cdef enum Setting:
-#         #unsigned long long
-            eResolvePointCloud,       #= 100000000000000000000000000000000L# L!!!              #bool
-            eShowCameras,             #= 100000000000000000000000000000000L << 1               #bool
-            eVisibleMarkerSize,          #double
-            ePCResidual,                 #double
-            ePCMinSize,                  #double
-            ePCMaxSize,                  #double
-            ePCMinAngle,                 #double
-            ePCMinRays,                  #long
-            eShutterDelay,               #long
+
+cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings::Setting":  #can not define enum in class in cython yet
+          cdef enum Setting:            #unsigned long long
+            eResolvePointCloud,         #bool
+            eShowCameras,               #bool
+            eVisibleMarkerSize,         #double
+            ePCResidual,                #double in meters
+            ePCMinSize,                 #double
+            ePCMaxSize,                 #double
+            ePCMinAngle,                #double
+            ePCMinRays,                 #long
+            eShutterDelay,              #long
             ePrecisionPacketCap,        #long
             ePCMinRayLength,            #double
             ePCMaxRayLength,            #double
@@ -97,6 +96,7 @@ cdef extern from "NPTrackingTools.h":
         #Set individual parameter values. Only values that are set will be changed when submitting
         #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
         #if there is a mismatch between the requested parameter and its expected type
+
         bool            SetBoolParameter( Setting which, bool value)
         bool            SetDoubleParameter( Setting which , double value )
         bool            SetLongParameter( Setting which, long value )
