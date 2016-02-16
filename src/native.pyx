@@ -47,6 +47,7 @@ def load_rigid_bodies(str file_name):
     """
     load rigid bodies
     """
+    raise NotImplementedError
     utils.crash_avoidance.check_file_exists(file_name)
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_LoadRigidBodies(file_name)
@@ -57,6 +58,7 @@ def save_rigid_bodies(str file_name):
     """
     save rigid bodies
     """
+    raise NotImplementedError
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     return TT_SaveRigidBodies(file_name)
 
@@ -66,6 +68,7 @@ def add_rigid_bodies(str file_name):
     """
     add rigid bodies
     """
+    raise NotImplementedError
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     utils.crash_avoidance.check_file_exists(file_name)
     return TT_AddRigidBodies(file_name)
@@ -178,28 +181,34 @@ def flush_camera_queues():
 #MARKER SIZE SETTINGS
 @utils.decorators.check_npresult
 def set_camera_group_reconstruction(int groupIndex, bool enable):
+    raise NotImplementedError
     return TT_SetCameraGroupReconstruction(groupIndex, enable)
 
 
 @utils.decorators.check_npresult
 def set_enabled_filter_switch(bool enabled):
+    raise NotImplementedError
     return TT_SetEnabledFilterSwitch(enabled)
 
 
 def is_filter_switch_enabled():
+    raise NotImplementedError
     return TT_IsFilterSwitchEnabled()
 
 
 #ADDITIONAL FUNCTIONALITY
 def set_frame_id_based_timing(bool enable):
+    raise NotImplementedError
     return TT_SetFrameIDBasedTiming(enable)
 
 def set_suppress_out_of_order(bool enable):
+    raise NotImplementedError
     return TT_SetSuppressOutOfOrder(enable)
 
 @utils.decorators.check_npresult
 def orient_tracking_bar(float positionX, float positionY, float positionZ,
                         float orientationX, float orientationY, float orientationZ, float orientationW):
+    raise NotImplementedError
     return TT_OrientTrackingBar(positionX, positionY, positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
