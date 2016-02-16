@@ -31,7 +31,7 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             eVisibleMarkerSize,         #double
             ePCResidual,                #double in meters
             ePCMinSize,                 #double
-            ePCMaxSize,                 #double
+            ePCMaxSize,                 #double Is probably max marker size, hat aber falschen wert und aendert nicht (issue!)
             ePCMinAngle,                #double
             ePCMinRays,                 #long
             eShutterDelay,              #long
@@ -56,10 +56,10 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             eShowCaptureVolume,         #bool
             eShow3DMarkers,             #bool
             eShowCameraFOV,             #bool
-            eCameraOverlap,             #double
+            eCameraOverlap,             #double This seems to be wrong type?! also not to be found in GUI (additional issue!)
             eVolumeResolution,          #double
             eWireframe,                 #double
-            eFOVIntensity,              #double
+            eFOVIntensity,              #double Not to be found in GUI (issue!)
             eRankRays,                  #bool
             eMinimumRankRayCount,       #long
             ePCPixelGutter,             #long
@@ -67,14 +67,14 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             ePCCalculationTime,         #long
             ePCThreadCount,             #long
             ePCCalculateDiameter,       #bool
-            ePCBoostMultThreads,        #bool
+            ePCBoostMultThreads,        #bool   Not to be found in GUI (issue!)
             ePCSmallMarkerOptimization, #long
-            eBlockWidth,                #double
+            eBlockWidth,                #double TODO: check if this is actually mask width
             eBlockHeight,               #double
             ePointCloudEngine,          #long 1=v1.0  2=v2.0
-            eSynchronizerEngine,        #long 1=v1.0  2=v2.0 This seems to be wrong type?!
-            eMarkerDiameterType,        #long
-            eMarkerDiameterForceSize,   #double
+            eSynchronizerEngine,        #long 1=v1.0  2=v2.0 This seems to be wrong type?!      (the wrong type guys seems to have actually three of four values to chooose from)
+            eMarkerDiameterType,        #long Is probably marker filter diameter, aber aendert nicht (issue!)
+            eMarkerDiameterForceSize,   #double Is probably min diameter, hat aber falschen wert und aendert nicht (issue!)
             eSynchronizerControl,       #long
             ePCBoostLeastSq,            #bool   This seems to be wrong type?!
             eSettingsCount              # returns 1 in python.

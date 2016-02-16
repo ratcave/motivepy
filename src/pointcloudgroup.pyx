@@ -135,6 +135,7 @@ cdef class CameraGroupPointCloudSettings:
 
       property boost_mult_threads:
         def __get__(self):
+            raise NotImplementedError
             cdef bool value=True
             assert self.obj.BoolParameter(ePCBoostMultThreads, value),"Type of setting is of different type than value"
             return value
@@ -142,11 +143,11 @@ cdef class CameraGroupPointCloudSettings:
 
       property boost_least_sq:
         def __get__(self):
-            #raise NotImplementedError
-            cdef long value=1
-            assert self.obj.LongParameter(ePCBoostLeastSq, value),"Type of setting is of different type than value"
+            raise NotImplementedError
+            cdef bool value=True
+            assert self.obj.BoolParameter(ePCBoostLeastSq, value),"Type of setting is of different type than value"
             return value
-        def __set__(self, value): assert self.obj.SetLongParameter(ePCBoostLeastSq, value ),"Type of setting is of different type than value"
+        def __set__(self, value): assert self.obj.SetBoolParameter(ePCBoostLeastSq, value ),"Type of setting is of different type than value"
 
       #2. Long
       property min_rays:
@@ -184,8 +185,9 @@ cdef class CameraGroupPointCloudSettings:
             return value
         def __set__(self, value): assert self.obj.SetLongParameter(ePCObjectFilterMinSize, value ),"Type of setting is of different type than value"
 
-      property object_filter_maxsize:
+      property object_filter_maxsize: #if this is marker size it doesn't show
         def __get__(self):
+            raise NotImplementedError
             cdef long value=0
             assert self.obj.LongParameter(ePCObjectFilterMaxSize, value),"Type of setting is of different type than value"
             return value
@@ -271,6 +273,7 @@ cdef class CameraGroupPointCloudSettings:
 
       property marker_diameter_type:
         def __get__(self):
+            raise NotImplementedError
             cdef long value=0
             assert self.obj.LongParameter(eMarkerDiameterType, value),"Type of setting is of different type than value"
             return value
@@ -307,6 +310,7 @@ cdef class CameraGroupPointCloudSettings:
 
       property max_size:
         def __get__(self):
+            raise NotImplementedError
             cdef double value=0
             assert self.obj.DoubleParameter(ePCMaxSize, value),"Type of setting is of different type than value"
             return value
@@ -384,6 +388,7 @@ cdef class CameraGroupPointCloudSettings:
 
       property camera_overlap:
         def __get__(self):
+            raise NotImplementedError
             cdef double value=0
             assert self.obj.DoubleParameter(eCameraOverlap, value),"Type of setting is of different type than value"
             return value
@@ -405,6 +410,7 @@ cdef class CameraGroupPointCloudSettings:
 
       property FOV_intensity:
         def __get__(self):
+            raise NotImplementedError
             cdef double value=0
             assert self.obj.DoubleParameter(eFOVIntensity, value),"Type of setting is of different type than value"
             return value
@@ -426,6 +432,7 @@ cdef class CameraGroupPointCloudSettings:
 
       property marker_diameter_force_size:
         def __get__(self):
+            raise NotImplementedError
             cdef double value=0
             assert self.obj.DoubleParameter(eMarkerDiameterForceSize, value),"Type of setting is of different type than value"
             return value
