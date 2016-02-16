@@ -24,7 +24,7 @@ cdef extern from "NPTrackingTools.h" namespace "Core":
         unsigned long long int HighBits()
 
 
-cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings::Setting":  #can not define enum in class in cython yet
+cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":  #can not define enum in class in cython yet
           cdef enum Setting:            #unsigned long long
             eResolvePointCloud,         #bool
             eShowCameras,               #bool
@@ -72,12 +72,12 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings::
             eBlockWidth,                #double
             eBlockHeight,               #double
             ePointCloudEngine,          #long 1=v1.0  2=v2.0
-            eSynchronizerEngine,        #long 1=v1.0  2=v2.0
+            eSynchronizerEngine,        #long 1=v1.0  2=v2.0 This seems to be wrong type?!
             eMarkerDiameterType,        #long
             eMarkerDiameterForceSize,   #double
             eSynchronizerControl,       #long
-            ePCBoostLeastSq,            #bool
-            eSettingsCount
+            ePCBoostLeastSq,            #bool   This seems to be wrong type?!
+            eSettingsCount              # returns 1 in python.
 
 
 cdef extern from "NPTrackingTools.h":
