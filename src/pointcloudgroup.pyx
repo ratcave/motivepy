@@ -37,7 +37,7 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
     """Set camera group's shutter delay
 
     Args:
-        groupIndex (int): The index of the camera group to be removed
+        groupIndex (int): The index of the camera group
         microseconds (int): The time between opening of shutter and capture of frame
     """
     TT_SetGroupShutterDelay(groupIndex, microseconds)
