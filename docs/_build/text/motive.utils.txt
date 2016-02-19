@@ -1,0 +1,92 @@
+
+motive.utils package
+********************
+
+
+Submodules
+==========
+
+
+motive.utils.c3d_writer module
+==================================
+
+Motive C3D Writer Module
+
+This module features the functionality to communicate with specific
+cameras. It is basically made up of one large camera class. Once a
+camera has been initialized and called as a python object, various
+methods to change its settings and collect data from it, can be
+applied. The basic function in this module is get_cams(). Please see
+below for an example of how to use this function to get a specific
+camera and this camera's name.
+
+motive.utils.c3d_writer.create_record_object()
+
+   Returns a data aquisition object consisting of the marker positions
+   of one frame
+
+motive.utils.c3d_writer.record_frames_markers(acq)
+
+   Writes the marker positions of one frame to an existing acquisition
+   object and returns the updated object.
+
+   Parameters:
+      **acq** -- Data acquisition object
+
+   Returns:
+      Data acquisition object
+
+   Return type:
+      acq
+
+motive.utils.c3d_writer.save_record_c3d(acq, file_name)
+
+   Writes the data of an acquisition object to a c3d file.
+
+
+motive.utils.crash_avoidance module
+===================================
+
+motive.utils.crash_avoidance.check_file_exists(file_name)
+
+motive.utils.crash_avoidance.check_file_extension(file_name, extension='.ttp')
+
+motive.utils.crash_avoidance.get_backup_dir()
+
+   Checks that the data directory exists, and creates it if not.  Data
+   directory location is platform-specific.
+
+
+motive.utils.decorators module
+==============================
+
+motive.utils.decorators.block_for_frame(secs_to_timeout=3)
+
+   Decorator to continually call a function until it stops raising a
+   RuntimeWarning or until timeout.
+
+motive.utils.decorators.check_cam_setting(func)
+
+   Decorator to check if calling a TT_Camera function returns an
+   exception.
+
+motive.utils.decorators.check_npresult(func)
+
+   Decorator that checks if the output of a function matches the
+   Motive Error Values, and raises a Python error if so. Should
+   decorate every function returning a NPResult type.
+
+motive.utils.decorators.countdown_timer(total_time)
+
+   Generator the creates an iterator that counts back the seconds from
+   total_time
+
+
+motive.utils.viewer module
+==========================
+
+motive.utils.viewer.show_viewer()
+
+
+Module contents
+===============

@@ -1,30 +1,20 @@
 """Motive Camera Module
 
-This module demonstrates documentation as specified by the `Google Python
-Style Guide`_. Docstrings may extend over multiple lines. Sections are created
-with a section header and a colon followed by a block of indented text.
+This module features the functionality to communicate with specific
+cameras. It is basically made up of one large camera class.
+Once a camera has been initialized and called as a python object,
+various methods to change its settings and collect data from it,
+can be applied.
+The basic function in this module is get_cams().
 
-Example:
-    Examples can be given using either the ``Example`` or ``Examples``
-    sections. Sections support any reStructuredText formatting, including
-    literal blocks::
+Examples::
 
-        $ python example_google.py
-
-Section breaks are created by resuming unindented text. Section breaks
-are also implicitly created anytime a new section starts.
-
-Attributes:
-    module_level_variable1 (int): Module level variables may be documented in
-        either the ``Attributes`` section of the module docstring, or in an
-        inline docstring immediately following the variable.
-
-        Either form is acceptable, but the two should not be mixed. Choose
-        one convention to document module level variables and be consistent
-        with it.
-
-.. _Google Python Style Guide:
-   http://google.github.io/styleguide/pyguide.html
+    >>>get_cams()
+    (Camera Object 0: Camera Prime 13 #11000, Camera Object 1: Camera Prime 17W #10187,
+    Camera Object 2: Camera Prime 17W #10189)
+    >>>cams=get_cams()
+    >>>cams[1].name
+    Camera Prime 17W #10187
 
 """
 
@@ -39,20 +29,10 @@ import cv2
 import time
 
 def get_cams():
-    """Returns a tuple containing all cameras.
+    """Returns a tuple containing all cameras
 
     Returns:
-        Tuple of camera objects
-
-    Examples:
-        >>>get_cams()
-        (Camera Object 0: Camera Prime 13 #11000, Camera Object 1: Camera Prime 17W #10187,
-        Camera Object 2: Camera Prime 17W #10189)
-        >>>cams=get_cams()
-        >>>cams[1].name
-        Camera Prime 17W #10187
-
-    For more information on camera methods see the camera class defined below.
+        Tuple of camera objects.
     """
     return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
 
@@ -63,6 +43,7 @@ def camera_group_count():
 
 def create_camera_group():
     """Adds an additional camera group
+
     Raises:
         Exception: If a new camera group could not be created
     """
@@ -86,20 +67,23 @@ def remove_camera_group(int groupIndex):
 
 def set_group_shutter_delay(int groupIndex, int microseconds):
     """Set camera group's shutter delay
+
     Args:
         groupIndex (int): The index of the camera group to be removed
         microseconds (int): The time between opening of shutter and capture of frame
     """
+    raise NotImplementedError
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
 
-#CLASS
+#CAMERA CLASS
 class Camera(object):
 
     def __init__(self, cameraIndex):
-        """Initializes a camera object
+        """Returns a camera object
+
         Args:
-            cameraIndex (int): The index of the camera to be initialized
+            cameraIndex (int): The index of the camera to be returned
         Raises:
             AssertionError: If the index is larger than the number of cameras
         """
@@ -174,6 +158,7 @@ class Camera(object):
     @utils.decorators.check_cam_setting
     def threshold(self):
         """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
+
         Raises:
             AssertionError: If setting values out of scope
         """
@@ -188,6 +173,7 @@ class Camera(object):
     @utils.decorators.check_cam_setting
     def intensity(self):
         """int: Camera IR LED brightness intensity level
+
         Raises:
             AssertionError: If setting values out of scope
         """
@@ -199,7 +185,8 @@ class Camera(object):
         TT_SetCameraSettings(self.index, self.video_mode, self.exposure, self.threshold, value)
 
     def set_settings(self, int video_mode, int exposure, int threshold, int intensity):
-        """Set camera settings.
+        """Set camera settings
+
         This function allows you to set the camera's video mode, exposure, threshold,
         and illumination settings.
 
@@ -225,11 +212,13 @@ class Camera(object):
     @property
     @utils.decorators.check_cam_setting
     def grayscale_decimation(self):
-        """int: decimate the frame capture when in grayscale mode, or switch to grayscale mode and decimate frame capture?"""
+        """int: level of decimation of frame capture"""
+        raise NotImplementedError
         return  TT_CameraGrayscaleDecimation(self.index)
 
     @grayscale_decimation.setter
     def grayscale_decimation(self, value):
+        raise NotImplementedError
         if not TT_SetCameraGrayscaleDecimation(self.index, value):
             raise Exception("Could Not Set Decimation")
 
@@ -237,6 +226,7 @@ class Camera(object):
     @utils.decorators.check_cam_setting
     def image_gain(self):
         """int: Camera gain level
+
         Raises:
             AssertionError: If setting values out of scope
         """
@@ -249,7 +239,7 @@ class Camera(object):
 
     @property
     def continuous_ir(self):
-        """bool: Is continuous infrared set?"""
+        """bool: Continuous IR illumination is on"""
         assert TT_IsContinuousIRAvailable(self.index), "Camera {0} Does Not Support Continuous IR".format(self.index)
         return TT_ContinuousIR(self.index)
 
@@ -257,11 +247,12 @@ class Camera(object):
     def continuous_ir(self, bool value):
         TT_SetContinuousIR(self.index, value)
 
-#def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
-#    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
-#    print "Set"
+def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
+    raise NotImplementedError
+    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
+    print "Set"
 
-#Properties Without Simple Setter (If Not Here Maybe In Camera Class)
+#Properties Without Simple Setter (If Not Here Maybe In Camera Class of CameraSDK)
     @property
     @utils.decorators.check_cam_setting
     def id(self):
@@ -270,7 +261,13 @@ class Camera(object):
 
     @property
     def pixel_resolution(self):
-        """Tuple(int): Returns a tuple containing number of pixels in width and height per image (can depend on video_mode)"""
+        """Tuple[int]: Number of pixels in width and height for this camera
+
+        Note:
+            Resolution of actual frame can depend on video mode
+        Raises:
+            Exception: If the resolution can not be found
+        """
         cdef int width=0, height=0
         if TT_CameraPixelResolution(self.index, width, height):
             return (width, height)
@@ -279,41 +276,41 @@ class Camera(object):
 
     @property
     def frame_resolution(self):
-        """depending on video mode returns different image frame resolution"""
+        """Tuple[int]: Number of pixels in width and height for this frame"""
         width, height=self.pixel_resolution
         return (width, height) if self.video_mode!=6 else (width/2, height/2)
 
     @property
-    def location(self):
-        return TT_CameraXLocation(self.index), TT_CameraYLocation(self.index), TT_CameraZLocation(self.index)
-
-    @property
     @utils.decorators.check_cam_setting
     def max_image_gain(self):
+        """int: Maximum possible gain level of camera"""
         return  TT_CameraImagerGain(self.index)
 
     @property
     def is_continuous_ir_available(self):
+        """bool: Continuous IR illumination is available"""
         return TT_IsContinuousIRAvailable(self.index)
 
     @property
     @utils.decorators.check_cam_setting
     def temperature(self):
+        """float: Temperature of camera"""
         return TT_CameraTemperature(self.index)
 
     @property
     @utils.decorators.check_cam_setting
     def ring_light_temperature(self):
+        """float: Temperature of the cameras LED ring"""
         return  TT_CameraRinglightTemperature(self.index)
 
     @property
     def marker_count(self):
-        """Camera's 2D Marker Count"""
+        """int: Number of markers as seen by camera"""
         return TT_CameraMarkerCount(self.index)
 
     @property
     def markers(self):
-        """A tuple of 2D centroid locations of the marker as seen by the camera"""
+        """Tuple[float]: 2D centroid locations of all markers as seen by the camera"""
         cdef float x = 0, y = 0
         markers = []
         for markerIndex in xrange(TT_CameraMarkerCount(self.index)):
@@ -321,19 +318,48 @@ class Camera(object):
             markers.append((x, y))
         return tuple(markers)
 
+    @property
+    def location(self):
+        """Tuple[float]: 3D camera location"""
+        return TT_CameraXLocation(self.index), TT_CameraYLocation(self.index), TT_CameraZLocation(self.index)
+
     def orientation_matrix(self, int matrixIndex):
-        """According to TT_CameraModel() the orientation matrix is a 3x3 matrix"""
+        """Returns one element of a 3x3 orientation matrix of the camera
+
+        Args:
+            matrixIndex(int): Index ranging over all matrix elements
+        Returns:
+            float: The element of the matrix corresponding to the given index
+        """
         return TT_CameraOrientationMatrix(self.index, matrixIndex)
 
-    def model(self, float x, float y, float z,             #Camera Position
-              orientation,                                 #Orientation (3x3 matrix)
-              float principleX, float principleY,          #Lens center (in pixels)
-              float focalLengthX, float focalLengthY,      #Lens focal  (in pixels)
-              float kc1, float kc2, float kc3,             #Barrel distortion coefficients
-              float tangential0, float tangential1):       #Tangential distortion
-        """
-        Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
-        with parameters compatible with the OpenCV intrinsic model.
+    def model(self, float x, float y, float z,
+              orientation,
+              float principleX, float principleY,
+              float focalLengthX, float focalLengthY,
+              float kc1, float kc2, float kc3,
+              float tangential0, float tangential1):
+        """Sets a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters
+
+        Those parameters are compatible with the OpenCV intrinsic model.
+
+        Args:
+            x(float): Cameras X position
+            y(float): Cameras Y position
+            z(float): Cameras Z position
+            orientation(List[float]): The 3x3 camera orientation matrix
+            principleX(float): Cameras lens center X position in pixels
+            principleY(float): Cameras lens center Y position in pixels
+            focalLengthX(float): Cameras lens focal length in X direction in pixels
+            focalLengthY(float): Cameras lens focal length in Y direction in pixels
+            kc1(float): Cameras first barrel distortion coefficient
+            kc2(float): Cameras second barrel distortion coefficient
+            kc3(float): Cameras third barrel distortion coefficient
+            tangential0(float): Cameras first tangential distortion coefficient
+            tangential1(float): Cameras second tangential distortion coefficient
+
+         Raises:
+            Exception: If the parameters could not be set
         """
         cdef float orientationp[9]
         for i in range(0,9):
@@ -342,19 +368,21 @@ class Camera(object):
                               focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
             raise Exception("Could Not Set Parameters")
 
+    #TODO: Create camera mask class. See issue list on github
     #CAMERA MASKING
-    def mask(self, buffername, int bufferSize):
-        assert isinstance(buffername,str), "Buffername Needs To Be String"
-        cdef unsigned char * buffer=buffername
+    def mask(self, buffer, int bufferSize):
+        raise NotImplementedError
+        cdef unsigned char * buffer=buffer          #buffer should be an integer array. See get_frame_buffer() below for example
         return TT_CameraMask(self.index, buffer, bufferSize)
 
-    def set_mask(self, buffername, int bufferSize):
-        assert isinstance(buffername,str), "Buffername Needs To Be String"
-        cdef unsigned char * buffer=buffername
+    def set_mask(self, buffer, int bufferSize):
+        raise NotImplementedError
+        cdef unsigned char * buffer=buffer
         if not TT_SetCameraMask(self.index, buffer, bufferSize):
             raise Exception("Could Not Set Mask")
 
     def mask_info(self):
+        raise NotImplementedError
         cdef int blockingMaskWidth=0, blockingMaskHeight=0, blockingMaskGrid=0
         if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
             return {'blockingMaskwidth':blockingMaskWidth,'blockingMaskHeight': blockingMaskHeight, 'blockingMaskGrid': blockingMaskGrid}
@@ -362,38 +390,71 @@ class Camera(object):
             raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
 
     def clear_mask(self):
+        raise NotImplementedError
         if not TT_ClearCameraMask(self.index):
             raise Exception("Could Not Clear Mask")
 
     #CAMERA DISTORTION
     def undistort_2d_point(self, float x, float y):
-        """
-        The 2D centroids the camera reports are distorted by the lens.  To remove the distortion, call
-        CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
-        to a distorted point call CameraDistort2DPoint.
+        """Returns undistorted 2D point coordinates
+
+        The 2D centroids the camera reports are distorted by the lens. This function
+        removes the distortion.
+
+        Args:
+            x(float): Distorted X coordinate
+            y(float): Distorted Y coordinate
+        Returns:
+            Tuple[float]: The undistorted point coordinates
         """
         TT_CameraUndistort2DPoint(self.index, x, y)
+        return x,y
 
     def distort_2d_point(self, float x, float y):
-        """
-        The 2D centroids the camera reports are distorted by the lens.  To remove the distortion, call
-        CameraUndistort2DPoint.  Also if you have a 2D undistorted point that you'd like to convert back
-        to a distorted point call CameraDistort2DPoint.
+        """Returns distorted 2D point coordinates
+
+        The 2D centroids the camera reports are distorted by the lens. If you already
+        undistorted those points, this function distorts them again.
+
+        Args:
+            x(float): Undistorted X coordinate
+            y(float): Undistorted Y coordinate
+        Returns:
+            Tuple[float]: The distorted point coordinates
         """
         TT_CameraDistort2DPoint(self.index, x, y)
+        return x,y
 
     def backproject(self, float x, float y, float z):
-        """
-        Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera,
-        it will return where the point would land on the imager of that camera in to 2D space.
+        """Back-project 3D coordinates of point to 2D camera coordinates of point
+
+        If you give this function a 3D location and select a camera, it will return
+        where the point would land on the imager of that camera in to 2D space.
         This basically locates where in the camera's FOV a 3D point would be located.
+
+        Args:
+            x(float): X coordinate of point
+            y(float): Y coordinate of point
+            z(float): Z coordinate of point
+        Returns:
+            Tuple[float]: The x,y coordinates of a 3D point as seen by the camera
         """
         cdef float cameraX=0, cameraY=0
         TT_CameraBackproject(self.index, x, y, z, cameraX, cameraY)
         return cameraX, cameraY
 
     def ray(self, float x, float y):
-        """Takes an undistorted 2D centroid and returns a camera ray in the world coordinate system"""
+        """Takes an undistorted 2D centroid and returns a camera ray in the world coordinate system
+
+        Args:
+            float(x): X coordinate of the centroid
+            float(y): Y coordinate of the centroid
+        Returns:
+            Dictionary, maps identifying strings to start position coordinates and
+            end position coordinates of ray
+        Raises:
+            Exception: If the function transforming from centroid to ray fails
+        """
         cdef float rayStartX=0, rayStartY=0, rayStartZ=0, rayEndX=0, rayEndY=0, rayEndZ=0
         if TT_CameraRay(self.index, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
             return {'Xstart':rayStartX, 'Ystart':rayStartY, 'Zstart':rayStartZ,'Xend':rayEndX, 'Yend':rayEndY, 'Zend':rayEndZ}
@@ -401,9 +462,15 @@ class Camera(object):
             raise Exception
 
     def frame_centroid(self, int markerIndex):
-        """
-        Returns true if the camera is contributing to this 3D marker.
-        It also returns the location of the 2D centroid that is reconstructing to this 3D marker
+        """Returns the location of the 2D centroid back-projection of a specific 3D Marker
+        if the camera is contributing to this marker.
+
+        Args:
+            markerIndex(int): The index of the marker
+        Returns:
+            Tuple[float]: The 2D coordinates of the back-projected marker
+        Raises:
+            Exception: If the camera does not contribute to this marker
         """
         cdef float x=0, y=0
         if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
@@ -412,14 +479,20 @@ class Camera(object):
             raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
 
     def get_frame_buffer(self):
-        """
-        Fetch the camera's frame buffer.
+        """Returns the cameras frame buffer
+
         This function fills the provided buffer with an image of what is in the camera view.
         The resulting image depends on what video mode the camera is in.
         If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
+
+        Returns:
+            Frame buffer array
+
+        Raises:
+            Warnings: If after a video mode switch the incoming data mode has not switched yet
         """
         width, height=self.frame_resolution
-        cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((height, width), dtype='B')    #np.empty is not empty due to dtype='B'
+        cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((height, width), dtype='B')
         if not TT_CameraFrameBuffer(self.index, width, height, width, 8, &frame[0,0]):
                                   #(camera number, width in pixels, height in pixels, width in bytes, bits per pixel, buffer name)
                                   #  -> where width in bytes should equal width in pixels * bits per pixel / 8
@@ -428,45 +501,84 @@ class Camera(object):
         # When video mode is changed, it often takes a few frames before the data coming in is correct.
         # Give a warning if you can detect that happening.
         # TODO: Get instant video mode switching.
+        # TODO: np.unique slows down the whole process considerably. Maybe only check framesize
         if len(frame) != self.frame_resolution[1]:
-            print("Frame size not correct for current video mode. Call motive.update().")
-            # warnings.warn("Frame size not correct for current video mode. Call motive.update().")
+            warnings.warn("Frame size not correct for current video mode. Call motive.update().")
 
         unique_values = np.unique(frame)
         if self.video_mode in [self.OBJECT_MODE, self.SEGMENT_MODE]:
             if len(unique_values) > 2:
-                print("Frame contains video or precision data. Call motive.update().")
-                # warnings.warn("Frame contains video or precision data. Call motive.update().")
+                warnings.warn("Frame contains video or precision data. Call motive.update().")
+
         else:
             if len(unique_values) == 2:
-                print("Frame contains object or segment data. Call motive.update().")
-                # warnings.warn("Frame contains object or segment data. Call motive.update().")
+                warnings.warn("Frame contains object or segment data. Call motive.update().")
 
         return frame
 
+
     def frame_buffer_save_as_bmp(self, str filename):
-        """Save camera's frame buffer as a BMP image file"""
+        """Saves camera's frame buffer as a BMP image file
+
+        Args:
+            filename(str): The name of the image file the buffer will be saved to
+        Raises:
+            IOError: If the buffer has not been succesfully saved"""
         if not TT_CameraFrameBufferSaveAsBMP(self.index, filename):
-            raise IOError("Camera Frame Buffer Not Successfully Saved To Filename: {0}.".format(filename))
+            raise IOError("Camera Frame Buffer Not Successfully Saved")
 
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
     def set_filter_switch(self, bool enableIRFilter):
-        """True: IRFilter, False: VisibleLight"""
+        """Switch filter of camera
+
+        Args:
+            enableIRFilter(bool): True, IR filter is on. False, visible light.
+        Raises:
+            Exception: If camera could not switch filter
+        """
         if not TT_SetCameraFilterSwitch(self.index, enableIRFilter):
             raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
 
     def set_agc(self, bool enableAutomaticGainControl):
+        """Switch gain control
+
+        Args:
+            enableAutomaticGainControl(bool): True, AGC is on. False,  manual GC.
+        Raises:
+            Exception: If camera could not enable AGC
+        """
         if not TT_SetCameraAGC(self.index, enableAutomaticGainControl):
             raise Exception("Could Not Enable AGC. Possibly Camera Has No AGC")
 
     def set_aec(self, bool enableAutomaticExposureControl):
+        """Switch exposure control
+
+        Args:
+            enableAutomaticExposureControl(bool): True, AEC is on. False,  manual EC.
+        Raises:
+            Exception: If camera could not enable AEC
+        """
         if not TT_SetCameraAEC(self.index, enableAutomaticExposureControl):
             raise Exception("Could Not Enable AEC. Possibly Camera Has No AEC")
 
     def set_high_power(self, bool enableHighPowerMode):
+        """Set camera IR LED to high power mode
+
+        Args:
+            enableHighPowerMode(bool): True, HPM is on. False,  manual LED intensity with max 15.
+        Raises:
+            Exception: If camera could not enable HPM
+        """
         if not TT_SetCameraHighPower(self.index, enableHighPowerMode):
             raise Exception("Could Not Enable HighPowerMode. Possibly Camera Has No HighPowerMode")
 
-    def set_mjpeg_high_quality(self, int mjpegQuality):                  #set to 8 minimum quality. set to 100 maximum quality. range still has to be checked
+    def set_mjpeg_high_quality(self, int mjpegQuality):                  #set to 8 minimum quality. set to 100 maximum quality. TODO: detailed range check
+        """Set camera mjpeg video mode to higher quality
+
+        Args:
+            mjpegQuality(int): Value determines MJPEG quality
+        Raises:
+            Exception: If camera could not change quality
+        """
         if not TT_SetCameraMJPEGHighQuality(self.index, mjpegQuality):
             raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")

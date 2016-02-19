@@ -23,80 +23,7 @@ cdef extern from "NPTrackingTools.h" namespace "Core":
         unsigned long long int LowBits()
         unsigned long long int HighBits()
 
-
 cdef extern from "NPTrackingTools.h":
-
-    cUID TT_FrameMarkerLabel(int index)                                           #Returns Label of Marker
-
-    cdef cppclass cCameraGroupPointCloudSettings:
-        pass
-        # enum Setting : #unsigned long long
-        #     eResolvePointCloud = 1L, #L!!!              #bool
-        #     eShowCameras = 1L << 1,                #bool
-        #     eVisibleMarkerSize = 1L << 3,          #double
-        #     ePCResidual = 1L << 4,                 #double
-        #     ePCMinSize = 1L << 5,                  #double
-        #     ePCMaxSize = 1L << 6,                  #double
-        #     ePCMinAngle = 1L << 7,                 #double
-        #     ePCMinRays = 1L << 8,                  #long
-        #     eShutterDelay = 1L << 9,               #long
-        #     ePrecisionPacketCap = 1L << 10,        #long
-        #     ePCMinRayLength = 1L << 11,            #double
-        #     ePCMaxRayLength = 1L << 12,            #double
-        #     ePCReconstructMinX = 1L << 13,         #double
-        #     ePCReconstructMaxX = 1L << 14,         #double
-        #     ePCReconstructMinY = 1L << 15,         #double
-        #     ePCReconstructMaxY = 1L << 16,         #double
-        #     ePCReconstructMinZ = 1L << 17,         #double
-        #     ePCReconstructMaxZ = 1L << 18,         #double
-        #     ePCObjectFilterLevel = 1L << 19,       #long
-        #     ePCObjectFilterMinSize = 1L << 20,     #long
-        #     ePCObjectFilterMaxSize = 1L << 21,     #long
-        #     ePCObjectFilterCircularity = 1L << 22, #double
-        #     ePCObjectFilterGrayscaleFloor = 1L << 23, #long
-        #     ePCObjectFilterAspectTolerance = 1L << 24, #long
-        #     ePCObjectFilterObjectMargin = 1L << 25, #long
-        #     eShowReconstructionBounds = 1L << 26,  #bool
-        #     eBoundReconstruction = 1L << 27,       #bool
-        #     eShowCaptureVolume = 1L << 28,         #bool
-        #     eShow3DMarkers = 1L << 29,             #bool
-        #     eShowCameraFOV = 1L << 30,             #bool
-        #     eCameraOverlap = 1L << 31,             #double
-        #     eVolumeResolution = 1L << 32,          #double
-        #     eWireframe = 1L << 33,                 #double
-        #     eFOVIntensity = 1L << 34,              #double
-        #     eRankRays = 1L << 35,                  #bool
-        #     eMinimumRankRayCount = 1L << 36,       #long
-        #     ePCPixelGutter = 1L << 37,             #long
-        #     ePCMaximum2DPoints = 1L << 38,         #long
-        #     ePCCalculationTime = 1L << 39,         #long
-        #     ePCThreadCount = 1L << 40,             #long
-        #     ePCCalculateDiameter = 1L << 41,       #bool
-        #     ePCBoostMultThreads = 1L << 42,        #bool
-        #     ePCSmallMarkerOptimization = 1L << 43, #long
-        #     eBlockWidth = 1L << 44,                #double
-        #     eBlockHeight = 1L << 45,               #double
-        #     ePointCloudEngine = 1L << 46,          #long 1=v1.0  2=v2.0
-        #     eSynchronizerEngine = 1L << 47,        #long 1=v1.0  2=v2.0
-        #     eMarkerDiameterType = 1L << 48,        #long
-        #     eMarkerDiameterForceSize = 1L << 49,   #double
-        #     eSynchronizerControl = 1L << 50,       #long
-        #     ePCBoostLeastSq = 1L << 51,            #bool
-        #     eSettingsCount
-        #
-        # #Set individual parameter values. Only values that are set will be changed when submitting
-        # #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
-        # #if there is a mismatch between the requested parameter and its expected type
-        # bool            SetBoolParameter( Setting which, bool val )
-        # bool            SetDoubleParameter( Setting which, double val )
-        # bool            SetLongParameter( Setting which, long val )
-        #
-        # #Retrieve individual parameter settings from the parameter block. These methods will return false
-        # #if there is a mismatch between the requested parameter and its expected type.
-        # bool            BoolParameter( Setting which, bool &val ) const
-        # bool            DoubleParameter( Setting which, double &val ) const
-        # bool            LongParameter( Setting which, long &val ) const
-
 #STARTUP / SHUTDOWN
     int    TT_Initialize()                                                        #initialize library
     int    TT_Shutdown()                                                          #shutdown library
@@ -128,7 +55,7 @@ cdef extern from "NPTrackingTools.h":
     float  TT_FrameMarkerX(int index)                                              #Returns X Coord of Marker
     float  TT_FrameMarkerY(int index)                                              #Returns Y Coord of Marker
     float  TT_FrameMarkerZ(int index)                                              #Returns Z Coord of Marker
-    ##Core::cUID TT_FrameMarkerLabel(int index)                                          #Returns Label of Marker
+    cUID TT_FrameMarkerLabel(int index)                                          #Returns Label of Marker
     double TT_FrameTimeStamp()                                                     #Time Stamp of Frame (seconds)
     bool   TT_FrameCameraCentroid(int index, int cameraIndex, float &x, float &y)  #TT_FrameCameraCentroid returns true if the camera is contributing to this 3D marker.  It also returns the location of the 2D centroid that is reconstructing to this 3D marker ##through changing the x and y values
     void   TT_FlushCameraQueues()                                                  #In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers), and you find that the data you're getting out has sufficient latency you can call TT_FlushCameraQueues() to catch up before calling TT_Update(). Ideally, after calling TT_FlushCameraQueues() you'll want to not call it again until after TT_Update() returns NPRESULT_SUCCESS
@@ -176,8 +103,8 @@ cdef extern from "NPTrackingTools.h":
     ##int  TT_SetCameraGroupFilterSettings(int groupIndex, cCameraGroupFilterSettings &settings)
 
 #POINT CLOUD RECONSTRUCTION SETTINGS
-    int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
-    int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
+   #int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
+   #int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
 
 #MARKER SIZE SETTINGS
     ##int TT_CameraGroupMarkerSize   (int groupIndex, cCameraGroupMarkerSizeSettings &settings)
@@ -235,6 +162,7 @@ cdef extern from "NPTrackingTools.h":
     bool   TT_CameraRay(int cameraIndex, float x, float y,
                         float &rayStartX, float &rayStartY, float &rayStartZ,
                         float &rayEndX,   float &rayEndY,   float &rayEndZ)
+
     #Set a camera's extrinsic (position & orientation) and intrinsic (lens distortion) parameters with parameters compatible with the OpenCV intrinsic model.
     bool   TT_CameraModel(int cameraIndex, float x, float y, float z,              #Camera Position
                           float *orientation,                                      #Orientation (3x3 matrix)
@@ -242,8 +170,10 @@ cdef extern from "NPTrackingTools.h":
                           float focalLengthX, float focalLengthY,                  #Lens focal  (in pixels)
                           float kc1, float kc2, float kc3,                         #Barrel distortion coefficients
                           float tangential0, float tangential1)                    #Tangential distortion
+
     #This function will return the Camera SDK's camera pointer.  While the API takes over the data path which prohibits fetching the frames directly from the camera, it is still very useful to be able to communicate with the camera directly for setting camera settings or attaching modules.
     ##CameraLibrary::Camera * TT_GetCamera(int index)                                #Returns Camera SDK Camera
+
     bool   TT_SetFrameIDBasedTiming(bool enable)
     bool   TT_SetSuppressOutOfOrder(bool enable)
     ##void   TT_AttachCameraModule(int index, CameraLibrary::cCameraModule *module)

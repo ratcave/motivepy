@@ -4,10 +4,10 @@ __author__ = 'nico'
 #import pdb
 #pdb.set_trace()
 
-import motive
-from motive import utils
 import Tkinter, tkFileDialog
 import argparse
+import motive
+from motive import utils
 
 
 if __name__ == '__main__':

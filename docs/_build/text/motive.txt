@@ -1,0 +1,25 @@
+
+motive package
+**************
+
+
+Subpackages
+===========
+
+* motive.utils package
+
+  * Submodules
+
+  * motive.utils.c3d_writer module
+
+  * motive.utils.crash_avoidance module
+
+  * motive.utils.decorators module
+
+  * motive.utils.viewer module
+
+  * Module contents
+
+
+Module contents
+===============

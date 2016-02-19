@@ -1,16 +1,34 @@
-__author__ = 'nico and ratcave'
+"""Motive Decorators Module
+
+This module features functionality mainly
+in the form of decorators that catch
+general exceptions which can arise when one uses
+the Motive API.
+
+Example:
+    A possible way to implement TT_SaveProject() from the Motive API
+    such as to catch its various exceptions encoded by its return type::
+
+    >>>@utils.decorators.check_npresult
+    >>>def save_project(str project_file):
+    >>>     return TT_SaveProject(project_file)
+
+"""
+
+import time
 import motive
 
 def check_npresult(func):
+    """Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so
+
+    Note:
+        Should decorate every Motive API function returning a NPResult type.
     """
-    Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so.
-    Should decorate every function returning a NPResult type.
-    """
-    error_dict = {1: (IOError, "File Not Found"),
-                  2: (Exception, "Load Failed"),
-                  3: (Exception, "Failed"),
-                  8: (IOError, "Invalid File"),
-                  9: (IOError, "Invalid Calibration File"),
+    error_dict = {1:  (IOError, "File Not Found"),
+                  2:  (Exception, "Load Failed"),
+                  3:  (Exception, "Failed"),
+                  8:  (IOError, "Invalid File"),
+                  9:  (IOError, "Invalid Calibration File"),
                   10: (EnvironmentError, "Unable To Initialize"),
                   11: (EnvironmentError, "Invalid License"),
                   14: (RuntimeWarning, "No Frames Available")}
@@ -23,8 +41,11 @@ def check_npresult(func):
 
 
 def countdown_timer(total_time):
-    """Generator the creates an iterator that counts back the seconds from total_time"""
-    import time
+    """Generator that creates an iterator that counts from total_time to zero
+
+    Args:
+        total_time(int): Countdown time in seconds
+    """
     end_time = time.time() + total_time
     while time.time() < end_time:
         yield end_time - time.time()
@@ -32,10 +53,14 @@ def countdown_timer(total_time):
 
 
 def block_for_frame(secs_to_timeout=3):
-    """Decorator to continually call a function until it stops raising a RuntimeWarning or until timeout."""
+    """Decorator to repeatedly call a function until it stops raising a RuntimeWarning or until timeout
+
+    Args:
+        secs_to_timeout(int): Seconds the function is repeatedly called if it returns a RuntimeWarning
+    """
     def decorator_fun(func):
         def wrapper(*args, **kwargs):
-            for time in countdown_timer(secs_to_timeout):
+            for t in countdown_timer(secs_to_timeout):
                 try:
                     return func(*args, **kwargs)
                 except RuntimeWarning:
@@ -47,7 +72,13 @@ def block_for_frame(secs_to_timeout=3):
 
 
 def check_cam_setting(func):
-    """  Decorator to check if calling a TT_Camera function returns an exception. """
+    """Decorator that checks if a TT_Camera function can be called correctly
+
+    Returns:
+        check(int): An integer value encoding the camera setting (see camera.pyx)
+    Raises:
+        Exception: If the camera function returns a value encoding an error
+    """
     def wrapper(*args, **kwargs):
         check=func(*args, **kwargs)
         if check<0:
@@ -58,6 +89,7 @@ def check_cam_setting(func):
 
 
 def _save_backup(func):
+    """Decorator that saves a backup project file"""
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
         motive.native._save_project(motive.utils.backup_project_filename)
