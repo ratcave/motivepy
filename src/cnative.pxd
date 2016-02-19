@@ -57,7 +57,7 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             eShow3DMarkers,             #bool
             eShowCameraFOV,             #bool
             eCameraOverlap,             #double This seems to be wrong type?! for setter (the wrong type guys seems to have actually three or four values to chooose from)
-            eVolumeResolution,          #double This seems to be wrong type?!
+            eVolumeResolution,          #double This seems to be wrong type?! for setter
             eWireframe,                 #double opacity in pointcloudgroup
             eFOVIntensity,              #double
             eRankRays,                  #bool Not to be found in GUI as boolean. and when changed in API does not change in GUI
@@ -67,17 +67,17 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             ePCCalculationTime,         #long
             ePCThreadCount,             #long
             ePCCalculateDiameter,       #bool
-            ePCBoostMultThreads,        #bool   Not to be found in GUI
+            ePCBoostMultThreads,        #bool
             ePCSmallMarkerOptimization, #long  0=None, 1=Fast, 2=Accurate
             eBlockWidth,                #double
             eBlockHeight,               #double
             ePointCloudEngine,          #long 1=v1.0  2=v2.0
             eSynchronizerEngine,        #long 1=v1.0  2=v2.0 This seems to be wrong type?! Neither getter nor setter works
-            eMarkerDiameterType,        #long  Is probably marker filter diameter, but shows value different from GUI
-            eMarkerDiameterForceSize,   #double Is probably min diameter, but shows value different from GUI
+            eMarkerDiameterType,        #long  Might be marker filter diameter, but shows value different from GUI
+            eMarkerDiameterForceSize,   #double Might be min diameter, but shows value different from GUI
             eSynchronizerControl,       #long  0=timely delivery, 1=automatic, 2=complete delivery
             ePCBoostLeastSq,            #bool   This seems to be wrong type?! Neither getter nor setter works
-            eSettingsCount              # returns 1 in python.
+            eSettingsCount              # returns 1
 
 
 cdef extern from "NPTrackingTools.h":
@@ -85,25 +85,15 @@ cdef extern from "NPTrackingTools.h":
     cdef cppclass cCameraGroupPointCloudSettings:
         cCameraGroupPointCloudSettings() except +
 
-        #Setting settings=  eResolvePointCloud #without extra extern from above, Setting is not defined. Also  Cannot assign default value to fields in cdef classes, structs or unions
-
-
-        #returns: wrong C syntax error
-        #cdef enum Setting:
-        #        eResolvePointCloud,       #= 100000000000000000000000000000000L# L!!!              #bool
-        #        eShowCameras
-
         #Set individual parameter values. Only values that are set will be changed when submitting
         #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
         #if there is a mismatch between the requested parameter and its expected type
-
         bool            SetBoolParameter( Setting which, bool value)
         bool            SetDoubleParameter( Setting which , double value )
         bool            SetLongParameter( Setting which, long value )
-        #
-        #
-        # #Retrieve individual parameter settings from the parameter block. These methods will return false
-        # #if there is a mismatch between the requested parameter and its expected type.
+
+        #Retrieve individual parameter settings from the parameter block. These methods will return false
+        #if there is a mismatch between the requested parameter and its expected type.
         bool            BoolParameter( Setting which, bool & value ) const
         bool            DoubleParameter( Setting which , double & value) const
         bool            LongParameter( Setting which , long & value) const
