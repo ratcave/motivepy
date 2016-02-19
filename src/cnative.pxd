@@ -28,14 +28,14 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
           cdef enum Setting:            #unsigned long long
             eResolvePointCloud,         #bool
             eShowCameras,               #bool
-            eVisibleMarkerSize,         #double Not to be found in GUI (issue!)
+            eVisibleMarkerSize,         #double Not to be found in GUI
             ePCResidual,                #double in meters
             ePCMinSize,                 #double same as below
-            ePCMaxSize,                 #double Is probably max marker size, hat aber falschen wert und aendert nicht (issue!)
+            ePCMaxSize,                 #double is probably max marker size, but shows value different from GUI
             ePCMinAngle,                #double
             ePCMinRays,                 #long
-            eShutterDelay,              #long shutter offset in micros
-            ePrecisionPacketCap,        #long Not to be found in GUI (issue!)
+            eShutterDelay,              #long shutter offset in micros (compare to shutter delay function!)
+            ePrecisionPacketCap,        #long Not to be found in GUI
             ePCMinRayLength,            #double
             ePCMaxRayLength,            #double
             ePCReconstructMinX,         #double
@@ -44,13 +44,13 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             ePCReconstructMaxY,         #double
             ePCReconstructMinZ,         #double
             ePCReconstructMaxZ,         #double
-            ePCObjectFilterLevel,       #long Not to be found in GUI (issue!)
-            ePCObjectFilterMinSize,     #long Not to be found in GUI (issue!)
-            ePCObjectFilterMaxSize,     #long Not to be found in GUI (issue!)
-            ePCObjectFilterCircularity, #double Not to be found in GUI (issue!)
-            ePCObjectFilterGrayscaleFloor, #long Not to be found in GUI (issue!)
-            ePCObjectFilterAspectTolerance, #long Not to be found in GUI (issue!)
-            ePCObjectFilterObjectMargin, #long Not to be found in GUI (issue!)
+            ePCObjectFilterLevel,       #long Not to be found in GUI
+            ePCObjectFilterMinSize,     #long Not to be found in GUI
+            ePCObjectFilterMaxSize,     #long Not to be found in GUI
+            ePCObjectFilterCircularity, #double Not to be found in GUI
+            ePCObjectFilterGrayscaleFloor, #long Not to be found in GUI
+            ePCObjectFilterAspectTolerance, #long Not to be found in GUI
+            ePCObjectFilterObjectMargin, #long Not to be found in GUI
             eShowReconstructionBounds,  #bool
             eBoundReconstruction,       #bool
             eShowCaptureVolume,         #bool
@@ -58,23 +58,23 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             eShowCameraFOV,             #bool
             eCameraOverlap,             #double This seems to be wrong type?! (the wrong type guys seems to have actually three or four values to chooose from)
             eVolumeResolution,          #double This seems to be wrong type?!
-            eWireframe,                 #double Opacity in camera group properties in GUI
+            eWireframe,                 #double opacity in pointcloudgroup
             eFOVIntensity,              #double
             eRankRays,                  #bool Not to be found in GUI as boolean. and when changed in API does not change in GUI
-            eMinimumRankRayCount,       #long Not to be found in GUI (issue!)
+            eMinimumRankRayCount,       #long Not to be found in GUI
             ePCPixelGutter,             #long
             ePCMaximum2DPoints,         #long
             ePCCalculationTime,         #long
             ePCThreadCount,             #long
             ePCCalculateDiameter,       #bool
-            ePCBoostMultThreads,        #bool   Not to be found in GUI (issue!)
+            ePCBoostMultThreads,        #bool   Not to be found in GUI
             ePCSmallMarkerOptimization, #long  0=None, 1=Fast, 2=Accurate
             eBlockWidth,                #double
             eBlockHeight,               #double
             ePointCloudEngine,          #long 1=v1.0  2=v2.0
             eSynchronizerEngine,        #long 1=v1.0  2=v2.0 This seems to be wrong type?!
-            eMarkerDiameterType,        #long Is probably marker filter diameter, aber aendert nicht (issue!)
-            eMarkerDiameterForceSize,   #double Is probably min diameter, hat aber falschen wert und aendert nicht (issue!)
+            eMarkerDiameterType,        #long  Is probably marker filter diameter, but shows value different from GUI
+            eMarkerDiameterForceSize,   #double Is probably min diameter, but shows value different from GUI
             eSynchronizerControl,       #long  0=timely delivery, 1=automatic, 2=complete delivery
             ePCBoostLeastSq,            #bool   This seems to be wrong type?!
             eSettingsCount              # returns 1 in python.
