@@ -44,10 +44,10 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             ePCReconstructMaxY,         #double
             ePCReconstructMinZ,         #double
             ePCReconstructMaxZ,         #double
-            ePCObjectFilterLevel,       #long Not to be found in GUI
-            ePCObjectFilterMinSize,     #long Not to be found in GUI
-            ePCObjectFilterMaxSize,     #long Not to be found in GUI
-            ePCObjectFilterCircularity, #double Not to be found in GUI
+            ePCObjectFilterLevel,       #long 0=None, 2=Size & Roundness
+            ePCObjectFilterMinSize,     #long
+            ePCObjectFilterMaxSize,     #long
+            ePCObjectFilterCircularity, #double
             ePCObjectFilterGrayscaleFloor, #long Not to be found in GUI
             ePCObjectFilterAspectTolerance, #long Not to be found in GUI
             ePCObjectFilterObjectMargin, #long Not to be found in GUI
@@ -56,7 +56,7 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             eShowCaptureVolume,         #bool
             eShow3DMarkers,             #bool
             eShowCameraFOV,             #bool
-            eCameraOverlap,             #double This seems to be wrong type?! (the wrong type guys seems to have actually three or four values to chooose from)
+            eCameraOverlap,             #double This seems to be wrong type?! for setter (the wrong type guys seems to have actually three or four values to chooose from)
             eVolumeResolution,          #double This seems to be wrong type?!
             eWireframe,                 #double opacity in pointcloudgroup
             eFOVIntensity,              #double
@@ -72,11 +72,11 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             eBlockWidth,                #double
             eBlockHeight,               #double
             ePointCloudEngine,          #long 1=v1.0  2=v2.0
-            eSynchronizerEngine,        #long 1=v1.0  2=v2.0 This seems to be wrong type?!
+            eSynchronizerEngine,        #long 1=v1.0  2=v2.0 This seems to be wrong type?! Neither getter nor setter works
             eMarkerDiameterType,        #long  Is probably marker filter diameter, but shows value different from GUI
             eMarkerDiameterForceSize,   #double Is probably min diameter, but shows value different from GUI
             eSynchronizerControl,       #long  0=timely delivery, 1=automatic, 2=complete delivery
-            ePCBoostLeastSq,            #bool   This seems to be wrong type?!
+            ePCBoostLeastSq,            #bool   This seems to be wrong type?! Neither getter nor setter works
             eSettingsCount              # returns 1 in python.
 
 
