@@ -5,6 +5,11 @@ from camera import *
 from rigidbody import *
 import utils
 from utils.viewer import show_viewer
-from utils.c3d_btk_writer import *
+from utils.c3d_writer import *
+import warnings
 
-native._initialize()
+try:
+    native._initialize()
+except EnvironmentError, e:
+    warnings.warn('\n' + repr(e))
+    pass
