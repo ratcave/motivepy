@@ -1,6 +1,7 @@
 include "cnative.pxd"
 
 from motive import utils
+from libc.stdlib cimport malloc, free
 
 #FUNCTIONS
 def get_unident_markers():
@@ -32,7 +33,7 @@ def create_rigid_body(str name, markerList):
      """
      raise NotImplementedError()
      markerCount=len(markerList)
-     cdef float * markerListp=<float *> malloc(markerCount*sizeof(float))
+     cdef float * markerListp=<float *> malloc(markerCount*sizeof(float))  #should include some free(markerListp) somewhere below
      for i in xrange(len(markerList)):
          markerListp[3*i]=markerList[i][0]
          markerListp[3*i+1]=markerList[i][1]
