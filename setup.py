@@ -5,27 +5,27 @@ import numpy
 native = Extension(
     'motive.native',
     sources=["src\\native.pyx"],
-    include_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\inc", "src"],
-    library_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\lib" ],
-    extra_link_args=["/DEFAULTLIB:NPTrackingTools"],
+    include_dirs=["C:\\Program Files\\OptiTrack\\Motive\\inc", "src"],
+    library_dirs=["C:\\Program Files\\OptiTrack\\Motive\\lib" ],
+    extra_link_args=["/DEFAULTLIB:NPTrackingToolsx64"],
     language="c++"
 )
 
 camera = Extension(
     'motive.camera',
     sources=["src\\camera.pyx"],
-    include_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\inc", "src", numpy.get_include()],
-    library_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\lib" ],
-    extra_link_args=["/DEFAULTLIB:NPTrackingTools"],
+    include_dirs=["C:\\Program Files\\OptiTrack\\Motive\\inc", "src", numpy.get_include()],
+    library_dirs=["C:\\Program Files\\OptiTrack\\Motive\\lib" ],
+    extra_link_args=["/DEFAULTLIB:NPTrackingToolsx64"],
     language="c++"
 )
 
 rigidbody = Extension(
     'motive.rigidbody',
     sources=["src\\rigidbody.pyx" ],
-    include_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\inc", "src"],
-    library_dirs=["C:\\Program Files (x86)\\OptiTrack\\Motive\\lib" ],
-    extra_link_args=["/DEFAULTLIB:NPTrackingTools"],
+    include_dirs=["C:\\Program Files\\OptiTrack\\Motive\\inc", "src"],
+    library_dirs=["C:\\Program Files\\OptiTrack\\Motive\\lib" ],
+    extra_link_args=["/DEFAULTLIB:NPTrackingToolsx64"],
     language="c++"
 )
 
