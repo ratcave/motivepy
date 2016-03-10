@@ -1,8 +1,0 @@
-.idea/*
-*.pyd
-*.pyc
-*~
-build
-dist
-motive.egg-info
-*.cpp
