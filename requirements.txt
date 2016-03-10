@@ -1,0 +1,7 @@
+sphinxcontrib-napoleon
+numpy
+cython
+btk
+appdirs
+pyqtgraph
+warnings

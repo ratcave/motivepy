@@ -24,9 +24,6 @@ from motive import utils
 cimport numpy as np
 import numpy as np
 import warnings
-#import cv
-import cv2
-import time
 
 def get_cams():
     """Returns a tuple containing all cameras
