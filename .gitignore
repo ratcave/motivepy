@@ -6,3 +6,4 @@ build
 dist
 motive.egg-info
 *.cpp
+docs/_build/html/*
