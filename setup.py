@@ -2,9 +2,9 @@ from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 import numpy
 
-MOTIVE_INC_DIR="C:\\Program Files (x86)\\OptiTrack\\Motive\\inc"
-MOTIVE_LIB_DIR="C:\\Program Files (x86)\\OptiTrack\\Motive\\lib"
-MOTIVE_LINK_ARG="/DEFAULTLIB:NPTrackingTools"
+MOTIVE_INC_DIR="C:\\Program Files\\OptiTrack\\Motive\\inc"
+MOTIVE_LIB_DIR="C:\\Program Files\\OptiTrack\\Motive\\lib"
+MOTIVE_LINK_ARG="/DEFAULTLIB:NPTrackingToolsx64"
 
 native = Extension(
     'motive.native',
