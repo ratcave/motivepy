@@ -1,10 +1,16 @@
 from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 import numpy
+import os
+
 
 MOTIVE_INC_DIR="C:\\Program Files\\OptiTrack\\Motive\\inc"
 MOTIVE_LIB_DIR="C:\\Program Files\\OptiTrack\\Motive\\lib"
 MOTIVE_LINK_ARG="/DEFAULTLIB:NPTrackingToolsx64"
+
+#TODO: Link to correct path automatically
+assert os.path.exists(MOTIVE_INC_DIR), "\n \n Can't find path {0}. Please use Motive 64bit \n \n".format(MOTIVE_INC_DIR)
+
 
 native = Extension(
     'motive.native',
