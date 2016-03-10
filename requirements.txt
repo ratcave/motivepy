@@ -1,6 +1,6 @@
 sphinxcontrib-napoleon
 numpy
-cython
+cython 0.22.1
 btk
 appdirs
 pyqtgraph
