@@ -24,7 +24,7 @@ This object will eventually store the values for all settings::
 
 
 2. Step: Get Point Cloud Settings
-----------------------------
+---------------------------------
 
 This is more of an optional step, which is only of practical interest for examination or verification purposes,
 since you can always set point cloud settings to whatever value possible, independent of the original value::
@@ -41,7 +41,7 @@ since you can always set point cloud settings to whatever value possible, indepe
 .. warning:: This has only been tested for the default camera group
 
 3. Step: Set Point Cloud Settings
-----------------------------
+---------------------------------
 
 Setting settings is as straightforward as getting them::
 
