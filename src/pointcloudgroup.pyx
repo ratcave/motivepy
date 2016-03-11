@@ -1,5 +1,20 @@
+"""Motive Camera Module
 
+This module features the functionality to create and edit
+camera groups as well as to get and set their respective
+point cloud settings. It is basically made up of one large
+CameraGroupPointCloudSettings class.
+Once a CameraGroupPointCloudSettings object has been created,
+the settings it stores can be adapted and finally set
+as the new point cloud settings of the camera group.
 
+Examples::
+
+    >>>settings=CameraGroupPointCloudSettings()
+    >>>settings.object_filter_type=2
+    >>>set_camera_group_point_cloud_settings(0,settings)
+
+"""
 include "cnative.pxd"
 cimport cython
 from motive import utils
@@ -42,6 +57,7 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
     """
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
+#TODO: Check if this actually works for a groupindex different from 0 or more than one group
 @utils.decorators.check_npresult
 def get_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSettings Settings):
     """Gets the settings of the camera group and sets them in the CameraGroupPointCloudSettings object)
