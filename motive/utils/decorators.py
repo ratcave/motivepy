@@ -17,6 +17,7 @@ Example:
 
 import time
 import motive
+import functools
 
 def check_npresult(func):
     """Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so
@@ -32,6 +33,7 @@ def check_npresult(func):
                   10: (EnvironmentError, "Unable To Initialize"),
                   11: (EnvironmentError, "Invalid License"),
                   14: (RuntimeWarning, "No Frames Available")}
+    @functools.wraps
     def wrapper(*args, **kwargs):
         npresult = func(*args, **kwargs)
         if npresult in error_dict:
@@ -59,6 +61,7 @@ def block_for_frame(secs_to_timeout=3):
         secs_to_timeout(int): Seconds the function is repeatedly called if it returns a RuntimeWarning
     """
     def decorator_fun(func):
+        @functools.wraps
         def wrapper(*args, **kwargs):
             for t in countdown_timer(secs_to_timeout):
                 try:
@@ -79,7 +82,9 @@ def check_cam_setting(func):
     Raises:
         Exception: If the camera function returns a value encoding an error
     """
+    @functools.wraps
     def wrapper(*args, **kwargs):
+        """Placeholder decorator docstring"""
         check=func(*args, **kwargs)
         if check<0:
             raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")
@@ -90,6 +95,7 @@ def check_cam_setting(func):
 
 def _save_backup(func):
     """Decorator that saves a backup project file"""
+    @functools.wraps
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
         motive.native._save_project(motive.utils.backup_project_filename)

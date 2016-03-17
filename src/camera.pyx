@@ -33,6 +33,10 @@ def get_cams():
     """
     return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
 
+def do_nothing():
+    """Does nothing."""
+    return
+
 
 #CAMERA CLASS
 class Camera(object):
