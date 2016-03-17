@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    tutorials
-   modules
+   motive
 
 
 Indices and tables
@@ -20,5 +20,5 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
+
 

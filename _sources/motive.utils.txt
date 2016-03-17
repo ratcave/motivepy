@@ -5,7 +5,7 @@ Submodules
 ----------
 
 motive.utils.c3d_writer module
-----------------------------------
+------------------------------
 
 .. automodule:: motive.utils.c3d_writer
     :members:

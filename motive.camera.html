@@ -1,0 +1,723 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>motive.camera package &mdash; MotivePy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="MotivePy 0.1 documentation" href="index.html"/>
+        <link rel="up" title="motive package" href="motive.html"/>
+        <link rel="next" title="motive.utils package" href="motive.utils.html"/>
+        <link rel="prev" title="motive package" href="motive.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MotivePy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="motive.html">motive package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="motive.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="">motive.camera package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="motive.utils.html">motive.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">MotivePy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="motive.html">motive package</a> &raquo;</li>
+      
+    <li>motive.camera package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/motive.camera.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="motive-camera-package">
+<h1>motive.camera package<a class="headerlink" href="#motive-camera-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-motive.camera"></span><p>Motive Camera Module</p>
+<p>This module features the functionality to communicate with specific
+cameras. It is basically made up of one large camera class.
+Once a camera has been initialized and called as a python object,
+various methods to change its settings and collect data from it,
+can be applied.
+The basic function in this module is get_cams().</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;get_cams()</span>
+<span class="go">(Camera Object 0: Camera Prime 13 #11000, Camera Object 1: Camera Prime 17W #10187,</span>
+<span class="go">Camera Object 2: Camera Prime 17W #10189)</span>
+<span class="go">&gt;&gt;&gt;cams=get_cams()</span>
+<span class="go">&gt;&gt;&gt;cams[1].name</span>
+<span class="go">Camera Prime 17W #10187</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt id="motive.camera.get_cams">
+<code class="descclassname">motive.camera.</code><code class="descname">get_cams</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.get_cams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple containing all cameras</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Tuple of camera objects.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="motive.camera.Camera">
+<em class="property">class </em><code class="descclassname">motive.camera.</code><code class="descname">Camera</code><a class="headerlink" href="#motive.camera.Camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="motive.camera.Camera.backproject">
+<code class="descname">backproject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.backproject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Back-project 3D coordinates of point to 2D camera coordinates of point</p>
+<p>If you give this function a 3D location and select a camera, it will return
+where the point would land on the imager of that camera in to 2D space.
+This basically locates where in the camera&#8217;s FOV a 3D point would be located.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; X coordinate of point</li>
+<li><strong>y</strong> (<em>float</em>) &#8211; Y coordinate of point</li>
+<li><strong>z</strong> (<em>float</em>) &#8211; Z coordinate of point</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The x,y coordinates of a 3D point as seen by the camera</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tuple[float]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.clear_mask">
+<code class="descname">clear_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.clear_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.continuous_ir">
+<code class="descname">continuous_ir</code><a class="headerlink" href="#motive.camera.Camera.continuous_ir" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> &#8211; Continuous IR illumination is on</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.distort_2d_point">
+<code class="descname">distort_2d_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.distort_2d_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns distorted 2D point coordinates</p>
+<p>The 2D centroids the camera reports are distorted by the lens. If you already
+undistorted those points, this function distorts them again.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; Undistorted X coordinate</li>
+<li><strong>y</strong> (<em>float</em>) &#8211; Undistorted Y coordinate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The distorted point coordinates</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tuple[float]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.exposure">
+<code class="descname">exposure</code><a class="headerlink" href="#motive.camera.Camera.exposure" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Camera exposure level</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.frame_buffer_save_as_bmp">
+<code class="descname">frame_buffer_save_as_bmp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.frame_buffer_save_as_bmp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves camera&#8217;s frame buffer as a BMP image file
+:param filename: The name of the image file the buffer will be saved to
+:type filename: str</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code> &#8211; If the buffer has not been succesfully saved</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.frame_centroid">
+<code class="descname">frame_centroid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.frame_centroid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the location of the 2D centroid back-projection of a specific 3D Marker
+if the camera is contributing to this marker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>markerIndex</strong> (<em>int</em>) &#8211; The index of the marker</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The 2D coordinates of the back-projected marker</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Tuple[float]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If the camera does not contribute to this marker</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.frame_rate">
+<code class="descname">frame_rate</code><a class="headerlink" href="#motive.camera.Camera.frame_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.frame_resolution">
+<code class="descname">frame_resolution</code><a class="headerlink" href="#motive.camera.Camera.frame_resolution" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[int]</em> &#8211; Number of pixels in width and height for this frame</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.get_frame_buffer">
+<code class="descname">get_frame_buffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.get_frame_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the cameras frame buffer</p>
+<p>This function fills the provided buffer with an image of what is in the camera view.
+The resulting image depends on what video mode the camera is in.
+If the camera is in grayscale mode, for example, a grayscale image is returned from this call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Frame buffer array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Warnings</span></code> &#8211; If after a video mode switch the incoming data mode has not switched yet</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.grayscale_decimation">
+<code class="descname">grayscale_decimation</code><a class="headerlink" href="#motive.camera.Camera.grayscale_decimation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.group">
+<code class="descname">group</code><a class="headerlink" href="#motive.camera.Camera.group" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Camera&#8217;s group index</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.id">
+<code class="descname">id</code><a class="headerlink" href="#motive.camera.Camera.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.image_gain">
+<code class="descname">image_gain</code><a class="headerlink" href="#motive.camera.Camera.image_gain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.intensity">
+<code class="descname">intensity</code><a class="headerlink" href="#motive.camera.Camera.intensity" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Camera IR LED brightness intensity level</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> &#8211; If setting values out of scope</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.is_continuous_ir_available">
+<code class="descname">is_continuous_ir_available</code><a class="headerlink" href="#motive.camera.Camera.is_continuous_ir_available" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> &#8211; Continuous IR illumination is available</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.location">
+<code class="descname">location</code><a class="headerlink" href="#motive.camera.Camera.location" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[float]</em> &#8211; 3D camera location</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.marker_count">
+<code class="descname">marker_count</code><a class="headerlink" href="#motive.camera.Camera.marker_count" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Number of markers as seen by camera</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.markers">
+<code class="descname">markers</code><a class="headerlink" href="#motive.camera.Camera.markers" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[float]</em> &#8211; 2D centroid locations of all markers as seen by the camera</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.mask">
+<code class="descname">mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.mask_info">
+<code class="descname">mask_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.mask_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.max_image_gain">
+<code class="descname">max_image_gain</code><a class="headerlink" href="#motive.camera.Camera.max_image_gain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.model">
+<code class="descname">model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a camera&#8217;s extrinsic (position &amp; orientation) and intrinsic (lens distortion) parameters</p>
+<p>Those parameters are compatible with the OpenCV intrinsic model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; Cameras X position</li>
+<li><strong>y</strong> (<em>float</em>) &#8211; Cameras Y position</li>
+<li><strong>z</strong> (<em>float</em>) &#8211; Cameras Z position</li>
+<li><strong>orientation</strong> (<em>List[float]</em>) &#8211; The 3x3 camera orientation matrix</li>
+<li><strong>principleX</strong> (<em>float</em>) &#8211; Cameras lens center X position in pixels</li>
+<li><strong>principleY</strong> (<em>float</em>) &#8211; Cameras lens center Y position in pixels</li>
+<li><strong>focalLengthX</strong> (<em>float</em>) &#8211; Cameras lens focal length in X direction in pixels</li>
+<li><strong>focalLengthY</strong> (<em>float</em>) &#8211; Cameras lens focal length in Y direction in pixels</li>
+<li><strong>kc1</strong> (<em>float</em>) &#8211; Cameras first barrel distortion coefficient</li>
+<li><strong>kc2</strong> (<em>float</em>) &#8211; Cameras second barrel distortion coefficient</li>
+<li><strong>kc3</strong> (<em>float</em>) &#8211; Cameras third barrel distortion coefficient</li>
+<li><strong>tangential0</strong> (<em>float</em>) &#8211; Cameras first tangential distortion coefficient</li>
+<li><strong>tangential1</strong> &#8211; Cameras second tangential distortion coefficient</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.name">
+<code class="descname">name</code><a class="headerlink" href="#motive.camera.Camera.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; Camera name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.orientation_matrix">
+<code class="descname">orientation_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.orientation_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns one element of a 3x3 orientation matrix of the camera</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>matrixIndex</strong> (<em>int</em>) &#8211; Index ranging over all matrix elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The element of the matrix corresponding to the given index</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.pixel_resolution">
+<code class="descname">pixel_resolution</code><a class="headerlink" href="#motive.camera.Camera.pixel_resolution" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[int]</em> &#8211; Number of pixels in width and height for this camera</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Resolution of actual frame can depend on video mode</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If the resolution can not be found</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.ray">
+<code class="descname">ray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.ray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes an undistorted 2D centroid and returns a camera ray in the world coordinate system</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>float</strong> (<em>y</em>) &#8211; X coordinate of the centroid</li>
+<li><strong>float</strong> &#8211; Y coordinate of the centroid</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Dictionary, maps identifying strings to start position coordinates and
+end position coordinates of ray</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If the function transforming from centroid to ray fails</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.ring_light_temperature">
+<code class="descname">ring_light_temperature</code><a class="headerlink" href="#motive.camera.Camera.ring_light_temperature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.set_aec">
+<code class="descname">set_aec</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.set_aec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch exposure control</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enableAutomaticExposureControl</strong> (<em>bool</em>) &#8211; True, AEC is on. False,  manual EC.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If camera could not enable AEC</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.set_agc">
+<code class="descname">set_agc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.set_agc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch gain control</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enableAutomaticGainControl</strong> (<em>bool</em>) &#8211; True, AGC is on. False,  manual GC.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If camera could not enable AGC</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.set_continuous_camera_mjpeg_high_quality_ir">
+<code class="descname">set_continuous_camera_mjpeg_high_quality_ir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.set_continuous_camera_mjpeg_high_quality_ir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.set_filter_switch">
+<code class="descname">set_filter_switch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.set_filter_switch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch filter of camera</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enableIRFilter</strong> (<em>bool</em>) &#8211; True, IR filter is on. False, visible light.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If camera could not switch filter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.set_high_power">
+<code class="descname">set_high_power</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.set_high_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set camera IR LED to high power mode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enableHighPowerMode</strong> (<em>bool</em>) &#8211; True, HPM is on. False,  manual LED intensity with max 15.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If camera could not enable HPM</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.set_mask">
+<code class="descname">set_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.set_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.set_mjpeg_high_quality">
+<code class="descname">set_mjpeg_high_quality</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.set_mjpeg_high_quality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set camera mjpeg video mode to higher quality</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mjpegQuality</strong> (<em>int</em>) &#8211; Value determines MJPEG quality</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If camera could not change quality</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.set_settings">
+<code class="descname">set_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.set_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set camera settings</p>
+<p>This function allows you to set the camera&#8217;s video mode, exposure, threshold,
+and illumination settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>video_mode</strong> (<em>int</em>) &#8211; Integer encoding the actual video mode of the camera. See Camera.X_MODE</li>
+<li><strong>exposure</strong> (<em>int</em>) &#8211; Camera exposure level</li>
+<li><strong>threshold</strong> (<em>int</em>) &#8211; Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker</li>
+<li><strong>intensity</strong> (<em>int</em>) &#8211; Camera IR LED brightness intensity level</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.temperature">
+<code class="descname">temperature</code><a class="headerlink" href="#motive.camera.Camera.temperature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.threshold">
+<code class="descname">threshold</code><a class="headerlink" href="#motive.camera.Camera.threshold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="motive.camera.Camera.undistort_2d_point">
+<code class="descname">undistort_2d_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.camera.Camera.undistort_2d_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns undistorted 2D point coordinates</p>
+<p>The 2D centroids the camera reports are distorted by the lens. This function
+removes the distortion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; Distorted X coordinate</li>
+<li><strong>y</strong> (<em>float</em>) &#8211; Distorted Y coordinate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The undistorted point coordinates</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tuple[float]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.camera.Camera.video_mode">
+<code class="descname">video_mode</code><a class="headerlink" href="#motive.camera.Camera.video_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Integer encoding the actual video mode of the camera. See Camera.X_MODE</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="motive.utils.html" class="btn btn-neutral float-right" title="motive.utils package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="motive.html" class="btn btn-neutral" title="motive package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nicolas Kuske and Nicholas A. Del Grosso.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,17 +1,16 @@
 motive package
 ==============
 
+.. automodule:: motive
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Subpackages
 -----------
 
 .. toctree::
 
-    motive.utils
-
-Module contents
----------------
-
-.. automodule:: motive
-    :members:
-    :undoc-members:
-    :show-inheritance:
+     motive.camera
+     motive.utils
