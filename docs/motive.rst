@@ -12,5 +12,6 @@ Subpackages
 
 .. toctree::
 
+     motive.native
      motive.camera
      motive.utils

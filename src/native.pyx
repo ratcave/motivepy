@@ -26,16 +26,14 @@ def _initialize():
     """
     return TT_Initialize()
 
-@utils.decorators.check_npresult
 def shutdown():
     """Closes the connection to the cameras"""
-    return TT_Shutdown()
+    return utils.decorators.check_npresult(TT_Shutdown)()
 
 @utils.decorators.block_for_frame(secs_to_timeout=3)
-@utils.decorators.check_npresult
 def update_single_frame():
     """Processes incoming camera data, grabs next frame in buffer"""
-    return TT_UpdateSingleFrame()
+    return utils.decorators.check_npresult(TT_UpdateSingleFrame)()
 
 @utils.decorators.block_for_frame(secs_to_timeout=3)
 @utils.decorators.check_npresult

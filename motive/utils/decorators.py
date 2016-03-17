@@ -60,7 +60,6 @@ def block_for_frame(secs_to_timeout=3):
         secs_to_timeout(int): Seconds the function is repeatedly called if it returns a RuntimeWarning
     """
     def decorator_fun(func):
-        @functools.wraps
         def wrapper(*args, **kwargs):
             for t in countdown_timer(secs_to_timeout):
                 try:
@@ -81,7 +80,6 @@ def check_cam_setting(func):
     Raises:
         Exception: If the camera function returns a value encoding an error
     """
-    # @functools.wraps
     def wrapper(*args, **kwargs):
         check=func(*args, **kwargs)
         if check<0:
