@@ -161,7 +161,7 @@ class Camera(object):
     @property
     def frame_rate(self):
         """int: Cameras frame rate in Hz. That is frames per second"""
-        return @utils.decorators.check_cam_setting(TT_CameraFrameRate)(self.index)
+        return utils.decorators.check_cam_setting(TT_CameraFrameRate)(self.index)
 
     @frame_rate.setter
     def frame_rate(self, value):
@@ -170,7 +170,7 @@ class Camera(object):
 
     @property
     def grayscale_decimation(self):
-        """int: level of decimation of frame capture"""
+        """int: level of decimation of frame capture (how many frames to skip when getting video)"""
         raise NotImplementedError
         return  utils.decorators.check_cam_setting(TT_CameraGrayscaleDecimation)(self.index)
 
@@ -309,7 +309,7 @@ class Camera(object):
             kc2(float): Cameras second barrel distortion coefficient
             kc3(float): Cameras third barrel distortion coefficient
             tangential0(float): Cameras first tangential distortion coefficient
-            tangential1(float): Cameras second tangential distortion coefficient
+            tangential1(float): Cameras' second tangential distortion coefficient
 
          Raises:
             Exception: If the parameters could not be set

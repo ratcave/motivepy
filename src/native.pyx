@@ -281,5 +281,4 @@ def orient_tracking_bar(float positionX, float positionY, float positionZ,
 
 def get_build_number():
     """Returns multiple digit integer number"""
-    raise NotImplementedError()
     return TT_BuildNumber()
