@@ -108,24 +108,22 @@ class Camera(object):
         TT_SetCameraSettings(self.index, value, self.exposure, self.threshold, self.intensity)
 
     @property
-    @utils.decorators.check_cam_setting
     def exposure(self):
         """int: Camera exposure level"""
-        return TT_CameraExposure(self.index)
+        return utils.decorators.check_cam_setting(TT_CameraExposure)(self.index)
 
     @exposure.setter
     def exposure(self, value):
         TT_SetCameraSettings(self.index, self.video_mode, value, self.threshold, self.intensity)
 
     @property
-    @utils.decorators.check_cam_setting
     def threshold(self):
         """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
 
         Raises:
             AssertionError: If setting values out of scope
         """
-        return TT_CameraThreshold(self.index)
+        return utils.decorators.check_cam_setting(TT_CameraThreshold)(self.index)
 
     @threshold.setter
     def threshold(self, value):
@@ -161,10 +159,9 @@ class Camera(object):
         return TT_SetCameraSettings(self.index, video_mode, exposure, threshold, intensity)
 
     @property
-    @utils.decorators.check_cam_setting
     def frame_rate(self):
         """int: Cameras frame rate in Hz. That is frames per second"""
-        return TT_CameraFrameRate(self.index)
+        return @utils.decorators.check_cam_setting(TT_CameraFrameRate)(self.index)
 
     @frame_rate.setter
     def frame_rate(self, value):
@@ -172,11 +169,10 @@ class Camera(object):
             raise Exception("Could Not Set Frame Rate. Check Camera Index And Initialize With TT_Initialize()")
 
     @property
-    @utils.decorators.check_cam_setting
     def grayscale_decimation(self):
         """int: level of decimation of frame capture"""
         raise NotImplementedError
-        return  TT_CameraGrayscaleDecimation(self.index)
+        return  utils.decorators.check_cam_setting(TT_CameraGrayscaleDecimation)(self.index)
 
     @grayscale_decimation.setter
     def grayscale_decimation(self, value):
@@ -185,14 +181,13 @@ class Camera(object):
             raise Exception("Could Not Set Decimation")
 
     @property
-    @utils.decorators.check_cam_setting
     def image_gain(self):
         """int: Camera gain level
 
         Raises:
             AssertionError: If setting values out of scope
         """
-        return  TT_CameraImagerGainLevels(self.index)+1   #In the motive GUI values range from 1 to 8
+        return  utils.decorators.check_cam_setting(TT_CameraImagerGainLevels)(self.index)+1   #In the motive GUI values range from 1 to 8
 
     @image_gain.setter
     def image_gain(self, value):
@@ -216,10 +211,9 @@ class Camera(object):
 
 #Properties Without Simple Setter (If Not Here Maybe In Camera Class of CameraSDK)
     @property
-    @utils.decorators.check_cam_setting
     def id(self):
         "int: Camera ID number"
-        return TT_CameraID(self.index)
+        return utils.decorators.check_cam_setting(TT_CameraID)(self.index)
 
     @property
     def pixel_resolution(self):
@@ -243,10 +237,9 @@ class Camera(object):
         return (width, height) if self.video_mode!=6 else (width/2, height/2)
 
     @property
-    @utils.decorators.check_cam_setting
     def max_image_gain(self):
         """int: Maximum possible gain level of camera"""
-        return  TT_CameraImagerGain(self.index)
+        return  utils.decorators.check_cam_setting(TT_CameraImagerGain)(self.index)
 
     @property
     def is_continuous_ir_available(self):
@@ -254,16 +247,14 @@ class Camera(object):
         return TT_IsContinuousIRAvailable(self.index)
 
     @property
-    @utils.decorators.check_cam_setting
     def temperature(self):
         """float: Temperature of camera"""
-        return TT_CameraTemperature(self.index)
+        return utils.decorators.check_cam_setting(TT_CameraTemperature)(self.index)
 
     @property
-    @utils.decorators.check_cam_setting
     def ring_light_temperature(self):
         """float: Temperature of the cameras LED ring"""
-        return  TT_CameraRinglightTemperature(self.index)
+        return  utils.decorators.check_cam_setting(TT_CameraRinglightTemperature)(self.index)
 
     @property
     def marker_count(self):
