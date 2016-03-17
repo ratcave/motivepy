@@ -161,7 +161,7 @@ class Camera(object):
     @property
     def frame_rate(self):
         """int: Cameras frame rate in Hz. That is frames per second"""
-        return @utils.decorators.check_cam_setting(TT_CameraFrameRate)(self.index)
+        return utils.decorators.check_cam_setting(TT_CameraFrameRate)(self.index)
 
     @frame_rate.setter
     def frame_rate(self, value):

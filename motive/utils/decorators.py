@@ -60,7 +60,6 @@ def block_for_frame(secs_to_timeout=3):
         secs_to_timeout(int): Seconds the function is repeatedly called if it returns a RuntimeWarning
     """
     def decorator_fun(func):
-        @functools.wraps
         def wrapper(*args, **kwargs):
             for t in countdown_timer(secs_to_timeout):
                 try:
