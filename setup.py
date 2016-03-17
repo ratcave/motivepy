@@ -7,9 +7,8 @@ MOTIVE_INC_DIR="C:\\Program Files\\OptiTrack\\Motive\\inc"
 MOTIVE_LIB_DIR="C:\\Program Files\\OptiTrack\\Motive\\lib"
 MOTIVE_LINK_ARG="/DEFAULTLIB:NPTrackingToolsx64"
 
-
 #TODO: Link to correct path automatically
-# assert os.path.exists(MOTIVE_INC_DIR), "\n \n Can't find path {0}. Please use Motive 64bit \n \n".format(MOTIVE_INC_DIR)
+assert os.path.exists(MOTIVE_INC_DIR), "\n \n Can't find path {0}. Please use Motive 64bit \n \n".format(MOTIVE_INC_DIR)
 
 
 native = Extension(
@@ -39,12 +38,22 @@ rigidbody = Extension(
     language="c++"
 )
 
+pointcloudgroup = Extension(
+    'motive.pointcloudgroup',
+    sources=["src\\pointcloudgroup.pyx" ],
+    include_dirs=[MOTIVE_INC_DIR, "src"],
+    library_dirs=[MOTIVE_LIB_DIR ],
+    extra_link_args=[MOTIVE_LINK_ARG],
+    language="c++"
+)
+
+
 
 setup(
     name="motive",
-    ext_modules= cythonize([native, rigidbody, camera]),
+    ext_modules= cythonize([native, rigidbody, camera, pointcloudgroup]),
     packages= find_packages(),
-    scripts=['scripts/vislight.py', 'scripts/viewer.py'],
+    scripts=['scripts/vislight.py', 'scripts/viewer.py', 'scripts/video.py'],
     install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph', 'btk' ],
     package_data= {'': ['data/*.ttp']}
 )

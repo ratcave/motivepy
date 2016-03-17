@@ -23,7 +23,82 @@ cdef extern from "NPTrackingTools.h" namespace "Core":
         unsigned long long int LowBits()
         unsigned long long int HighBits()
 
+
+cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":  #can not define enum in class in cython yet
+          cdef enum Setting:            #unsigned long long
+            eResolvePointCloud,         #bool
+            eShowCameras,               #bool
+            eVisibleMarkerSize,         #double Not to be found in GUI
+            ePCResidual,                #double in meters
+            ePCMinSize,                 #double same as below
+            ePCMaxSize,                 #double is probably max marker size, but shows value different from GUI
+            ePCMinAngle,                #double
+            ePCMinRays,                 #long
+            eShutterDelay,              #long shutter offset in micros (compare to shutter delay function!)
+            ePrecisionPacketCap,        #long Not to be found in GUI
+            ePCMinRayLength,            #double
+            ePCMaxRayLength,            #double
+            ePCReconstructMinX,         #double
+            ePCReconstructMaxX,         #double
+            ePCReconstructMinY,         #double
+            ePCReconstructMaxY,         #double
+            ePCReconstructMinZ,         #double
+            ePCReconstructMaxZ,         #double
+            ePCObjectFilterLevel,       #long 0=None, 2=Size & Roundness
+            ePCObjectFilterMinSize,     #long
+            ePCObjectFilterMaxSize,     #long
+            ePCObjectFilterCircularity, #double
+            ePCObjectFilterGrayscaleFloor, #long Not to be found in GUI
+            ePCObjectFilterAspectTolerance, #long Not to be found in GUI
+            ePCObjectFilterObjectMargin, #long Not to be found in GUI
+            eShowReconstructionBounds,  #bool
+            eBoundReconstruction,       #bool
+            eShowCaptureVolume,         #bool
+            eShow3DMarkers,             #bool
+            eShowCameraFOV,             #bool
+            eCameraOverlap,             #double This seems to be wrong type?! for setter (the wrong type guys seems to have actually three or four values to chooose from)
+            eVolumeResolution,          #double This seems to be wrong type?! for setter
+            eWireframe,                 #double opacity in pointcloudgroup
+            eFOVIntensity,              #double
+            eRankRays,                  #bool Not to be found in GUI as boolean. and when changed in API does not change in GUI
+            eMinimumRankRayCount,       #long Not to be found in GUI
+            ePCPixelGutter,             #long
+            ePCMaximum2DPoints,         #long
+            ePCCalculationTime,         #long
+            ePCThreadCount,             #long
+            ePCCalculateDiameter,       #bool
+            ePCBoostMultThreads,        #bool
+            ePCSmallMarkerOptimization, #long  0=None, 1=Fast, 2=Accurate
+            eBlockWidth,                #double
+            eBlockHeight,               #double
+            ePointCloudEngine,          #long 1=v1.0  2=v2.0
+            eSynchronizerEngine,        #long 1=v1.0  2=v2.0 This seems to be wrong type?! Neither getter nor setter works
+            eMarkerDiameterType,        #long  Might be marker filter diameter, but shows value different from GUI
+            eMarkerDiameterForceSize,   #double Might be min diameter, but shows value different from GUI
+            eSynchronizerControl,       #long  0=timely delivery, 1=automatic, 2=complete delivery
+            ePCBoostLeastSq,            #bool   This seems to be wrong type?! Neither getter nor setter works
+            eSettingsCount              # returns 1
+
+
 cdef extern from "NPTrackingTools.h":
+
+    cdef cppclass cCameraGroupPointCloudSettings:
+        cCameraGroupPointCloudSettings() except +
+
+        #Set individual parameter values. Only values that are set will be changed when submitting
+        #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
+        #if there is a mismatch between the requested parameter and its expected type
+        bool            SetBoolParameter( Setting which, bool value)
+        bool            SetDoubleParameter( Setting which , double value )
+        bool            SetLongParameter( Setting which, long value )
+
+        #Retrieve individual parameter settings from the parameter block. These methods will return false
+        #if there is a mismatch between the requested parameter and its expected type.
+        bool            BoolParameter( Setting which, bool & value ) const
+        bool            DoubleParameter( Setting which , double & value) const
+        bool            LongParameter( Setting which , long & value) const
+
+
 #STARTUP / SHUTDOWN
     int    TT_Initialize()                                                        #initialize library
     int    TT_Shutdown()                                                          #shutdown library
@@ -104,8 +179,8 @@ cdef extern from "NPTrackingTools.h":
     ##int  TT_SetCameraGroupFilterSettings(int groupIndex, cCameraGroupFilterSettings &settings)
 
 #POINT CLOUD RECONSTRUCTION SETTINGS
-    ##int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
-    ##int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
+    int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
+    int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
 
 #MARKER SIZE SETTINGS
     ##int TT_CameraGroupMarkerSize   (int groupIndex, cCameraGroupMarkerSizeSettings &settings)
