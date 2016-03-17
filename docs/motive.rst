@@ -1,5 +1,5 @@
 motive package
-===============
+==============
 
 .. automodule:: motive
     :members:
@@ -12,5 +12,5 @@ Subpackages
 
 .. toctree::
 
-    motive.utils
-    motive.camera
+     motive.camera
+     motive.utils

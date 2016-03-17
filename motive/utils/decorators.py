@@ -33,7 +33,6 @@ def check_npresult(func):
                   10: (EnvironmentError, "Unable To Initialize"),
                   11: (EnvironmentError, "Invalid License"),
                   14: (RuntimeWarning, "No Frames Available")}
-    @functools.wraps
     def wrapper(*args, **kwargs):
         npresult = func(*args, **kwargs)
         if npresult in error_dict:
@@ -82,9 +81,8 @@ def check_cam_setting(func):
     Raises:
         Exception: If the camera function returns a value encoding an error
     """
-    @functools.wraps
+    # @functools.wraps
     def wrapper(*args, **kwargs):
-        """Placeholder decorator docstring"""
         check=func(*args, **kwargs)
         if check<0:
             raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")

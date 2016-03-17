@@ -24,6 +24,8 @@ from motive import utils
 cimport numpy as np
 import numpy as np
 import warnings
+import functools
+
 
 def get_cams():
     """Returns a tuple containing all cameras
@@ -96,10 +98,9 @@ class Camera(object):
         TT_SetCameraGroup(self.index, value)
 
     @property
-    @utils.decorators.check_cam_setting
     def video_mode(self):
         """int: Integer encoding the actual video mode of the camera. See Camera.X_MODE"""
-        return TT_CameraVideoType(self.index)
+        return utils.decorators.check_cam_setting(TT_CameraVideoType)(self.index)
 
     @video_mode.setter
     def video_mode(self, value):
@@ -132,14 +133,13 @@ class Camera(object):
         TT_SetCameraSettings(self.index, self.video_mode, self.exposure, value, self.intensity)
 
     @property
-    @utils.decorators.check_cam_setting
     def intensity(self):
         """int: Camera IR LED brightness intensity level
 
         Raises:
             AssertionError: If setting values out of scope
         """
-        return TT_CameraIntensity(self.index)
+        return utils.decorators.check_cam_setting(TT_CameraIntensity)(self.index)
 
     @intensity.setter
     def intensity(self, value):

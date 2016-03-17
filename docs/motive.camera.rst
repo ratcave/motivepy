@@ -1,5 +1,5 @@
 motive.camera package
-====================
+=====================
 
 Module contents
 ---------------
