@@ -205,10 +205,10 @@ class Camera(object):
     def continuous_ir(self, bool value):
         TT_SetContinuousIR(self.index, value)
 
-def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
-    raise NotImplementedError
-    TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
-    print "Set"
+    def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
+        raise NotImplementedError
+        TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
+        print "Set"
 
 #Properties Without Simple Setter (If Not Here Maybe In Camera Class of CameraSDK)
     @property
