@@ -33,7 +33,7 @@
     <link rel="top" title="MotivePy 0.1 documentation" href="index.html"/>
         <link rel="up" title="motive package" href="motive.html"/>
         <link rel="next" title="motive.utils package" href="motive.utils.html"/>
-        <link rel="prev" title="motive package" href="motive.html"/> 
+        <link rel="prev" title="motive.native package" href="motive.native.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -86,6 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="motive.html">motive package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="motive.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="motive.native.html">motive.native package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="">motive.camera package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
@@ -290,7 +291,8 @@ if the camera is contributing to this marker.</p>
 <dl class="attribute">
 <dt id="motive.camera.Camera.frame_rate">
 <code class="descname">frame_rate</code><a class="headerlink" href="#motive.camera.Camera.frame_rate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><em>int</em> &#8211; Cameras frame rate in Hz. That is frames per second</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="motive.camera.Camera.frame_resolution">
@@ -320,7 +322,8 @@ If the camera is in grayscale mode, for example, a grayscale image is returned f
 <dl class="attribute">
 <dt id="motive.camera.Camera.grayscale_decimation">
 <code class="descname">grayscale_decimation</code><a class="headerlink" href="#motive.camera.Camera.grayscale_decimation" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><em>int</em> &#8211; level of decimation of frame capture (how many frames to skip when getting video)</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="motive.camera.Camera.group">
@@ -331,12 +334,22 @@ If the camera is in grayscale mode, for example, a grayscale image is returned f
 <dl class="attribute">
 <dt id="motive.camera.Camera.id">
 <code class="descname">id</code><a class="headerlink" href="#motive.camera.Camera.id" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><em>int</em> &#8211; Camera ID number</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="motive.camera.Camera.image_gain">
 <code class="descname">image_gain</code><a class="headerlink" href="#motive.camera.Camera.image_gain" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><em>int</em> &#8211; Camera gain level</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> &#8211; If setting values out of scope</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="motive.camera.Camera.intensity">
@@ -389,7 +402,8 @@ If the camera is in grayscale mode, for example, a grayscale image is returned f
 <dl class="attribute">
 <dt id="motive.camera.Camera.max_image_gain">
 <code class="descname">max_image_gain</code><a class="headerlink" href="#motive.camera.Camera.max_image_gain" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><em>int</em> &#8211; Maximum possible gain level of camera</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="motive.camera.Camera.model">
@@ -413,7 +427,7 @@ If the camera is in grayscale mode, for example, a grayscale image is returned f
 <li><strong>kc2</strong> (<em>float</em>) &#8211; Cameras second barrel distortion coefficient</li>
 <li><strong>kc3</strong> (<em>float</em>) &#8211; Cameras third barrel distortion coefficient</li>
 <li><strong>tangential0</strong> (<em>float</em>) &#8211; Cameras first tangential distortion coefficient</li>
-<li><strong>tangential1</strong> &#8211; Cameras second tangential distortion coefficient</li>
+<li><strong>tangential1</strong> &#8211; Cameras&#8217; second tangential distortion coefficient</li>
 </ul>
 </td>
 </tr>
@@ -491,7 +505,8 @@ end position coordinates of ray</p>
 <dl class="attribute">
 <dt id="motive.camera.Camera.ring_light_temperature">
 <code class="descname">ring_light_temperature</code><a class="headerlink" href="#motive.camera.Camera.ring_light_temperature" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><em>float</em> &#8211; Temperature of the cameras LED ring</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="motive.camera.Camera.set_aec">
@@ -608,12 +623,22 @@ and illumination settings.</p>
 <dl class="attribute">
 <dt id="motive.camera.Camera.temperature">
 <code class="descname">temperature</code><a class="headerlink" href="#motive.camera.Camera.temperature" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><em>float</em> &#8211; Temperature of camera</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="motive.camera.Camera.threshold">
 <code class="descname">threshold</code><a class="headerlink" href="#motive.camera.Camera.threshold" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><em>int</em> &#8211; Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> &#8211; If setting values out of scope</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="motive.camera.Camera.undistort_2d_point">
@@ -662,7 +687,7 @@ removes the distortion.</p>
         <a href="motive.utils.html" class="btn btn-neutral float-right" title="motive.utils package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="motive.html" class="btn btn-neutral" title="motive package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="motive.native.html" class="btn btn-neutral" title="motive.native package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

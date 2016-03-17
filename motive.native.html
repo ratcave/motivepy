@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>motive package &mdash; MotivePy 0.1 documentation</title>
+  <title>motive.native package &mdash; MotivePy 0.1 documentation</title>
   
 
   
@@ -31,8 +31,9 @@
 
   
     <link rel="top" title="MotivePy 0.1 documentation" href="index.html"/>
-        <link rel="next" title="motive.native package" href="motive.native.html"/>
-        <link rel="prev" title="Tutorial 5: Setting Point Cloud Settings" href="tutorial5.html"/> 
+        <link rel="up" title="motive package" href="motive.html"/>
+        <link rel="next" title="motive.camera package" href="motive.camera.html"/>
+        <link rel="prev" title="motive package" href="motive.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -83,9 +84,12 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">motive package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="motive.native.html">motive.native package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="motive.html">motive package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="motive.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="">motive.native package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-motive.native">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="motive.camera.html">motive.camera package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="motive.utils.html">motive.utils package</a></li>
 </ul>
@@ -122,11 +126,13 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>motive package</li>
+          <li><a href="motive.html">motive package</a> &raquo;</li>
+      
+    <li>motive.native package</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/motive.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/motive.native.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -136,31 +142,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-motive">
-<span id="motive-package"></span><h1>motive package<a class="headerlink" href="#module-motive" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="motive.native.html">motive.native package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="motive.native.html#module-motive.native">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="motive.camera.html">motive.camera package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="motive.camera.html#module-contents">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="motive.utils.html">motive.utils package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="motive.utils.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="motive.utils.html#module-motive.utils.c3d_writer">motive.utils.c3d_writer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="motive.utils.html#module-motive.utils.crash_avoidance">motive.utils.crash_avoidance module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="motive.utils.html#module-motive.utils.decorators">motive.utils.decorators module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="motive.utils.html#module-motive.utils.viewer">motive.utils.viewer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="motive.utils.html#module-motive.utils">Module contents</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="motive-native-package">
+<h1>motive.native package<a class="headerlink" href="#motive-native-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-motive.native">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-motive.native" title="Permalink to this headline">¶</a></h2>
+<p>Motive Native Module</p>
+<p>This module features the functionality to load and save files
+for camera settings, rigid bodies and markers.</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;load_project(&quot;test.ttp&quot;)</span>
+<span class="go">&gt;&gt;&gt;update()</span>
+<span class="go">&gt;&gt;&gt;get_frame_markers()</span>
+<span class="go">((0.44324554, 0.65645343, 1.5665743), (0.23456576, 0.11568943, 0.04334536), (1.43445367, 1.23546491, 2.34356222))</span>
+</pre></div>
 </div>
+<dl class="function">
+<dt id="motive.native.shutdown">
+<code class="descclassname">motive.native.</code><code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the connection to the cameras</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.update_single_frame">
+<code class="descclassname">motive.native.</code><code class="descname">update_single_frame</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.update_single_frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 
@@ -171,10 +177,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="motive.native.html" class="btn btn-neutral float-right" title="motive.native package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="motive.camera.html" class="btn btn-neutral float-right" title="motive.camera package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tutorial5.html" class="btn btn-neutral" title="Tutorial 5: Setting Point Cloud Settings" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="motive.html" class="btn btn-neutral" title="motive package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
