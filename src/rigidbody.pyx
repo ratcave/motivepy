@@ -36,19 +36,17 @@ def get_unident_markers():
 
 
 def get_rigid_bodies():
-    """Returns a tuple containing all rigid bodies
+    """Returns a dictionary containing all rigid bodies
 
     Note:
         First load a project file or a rigid body file.
         For more information on this see native.pyx.
 
     Returns:
-        Tuple of rigid body objects
+        Dictionary of rigid body objects
     """
     return {RigidBody(idx).name: RigidBody(idx) for idx in xrange(TT_RigidBodyCount())}
 
-
-@utils.decorators.check_npresult
 def create_rigid_body(str name, markerList):
      """Creates a new rigid body
 
@@ -67,7 +65,7 @@ def create_rigid_body(str name, markerList):
          markerListp[3*i+2]=markerList[i][2]
 
      rigidIndexplus1=TT_RigidBodyCount()+1
-     return TT_CreateRigidBody(name, rigidIndexplus1 , markerCount, markerListp)
+     return utils.decorators.check_npresult(TT_CreateRigidBody)(name, rigidIndexplus1 , markerCount, markerListp)
 
 
 def remove_rigid_body(int rigidIndex):
@@ -194,7 +192,7 @@ class RigidBody(object):
 
         return tuple(markers)               #Tuples for the location of each marker is good. But all locations together seems more feasible for list!
 
-    @utils.decorators.check_npresult
+    #@utils.decorators.check_npresult
     def translate_pivot(self, float x, float y, float z):
         """Sets a translation offset for the centroid of the rigid body
 
@@ -206,7 +204,7 @@ class RigidBody(object):
             y(float): shift of rigid body position in Y direction in meters
             z(float): shift of rigid body position in Z direction in meters
         """
-        return TT_RigidBodyTranslatePivot(self.index, x, y, z)
+        return utils.decorators.check_npresult(TT_RigidBodyTranslatePivot)(self.index, x, y, z)
 
     def reset_orientation(self):
         """Resets the rigid body's orientation to match its current tracked orientation"""

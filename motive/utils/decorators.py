@@ -17,7 +17,6 @@ Example:
 
 import time
 import motive
-import functools
 
 def check_npresult(func):
     """Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so
