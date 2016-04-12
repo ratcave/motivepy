@@ -63,9 +63,13 @@ def show_viewer():
         while True:
             m.update()
 
-            # Measure FPS
-            fps = round(1. / (time.time() - last_time + .00001))
-            last_time = time.time()
+            # Update Title with new FPS
+            try:
+                fps = round(1. / (time.time() - last_time))
+                last_time = time.time()
+                w.setWindowTitle('MotivePy Viewer. Rigid Bodies = {{{rigid_bodies}}}. Update Rate: {fps} fps'.format(rigid_bodies = rig_data, fps=fps))
+            except ZeroDivisionError:
+                pass
 
             # Plot
             markers = m.get_unident_markers()
@@ -75,8 +79,6 @@ def show_viewer():
             for rig, scat in zip(rigs.values(), w.items[1:-1]):
                  scat.setData(pos=np.array(rig.point_cloud_markers))
 
-            # Update Title
-            w.setWindowTitle('MotivePy Viewer. Rigid Bodies = {{{rigid_bodies}}}. Update Rate: {fps} fps'.format(rigid_bodies = rig_data, fps=fps))
 
             # Return Nothing
             yield
