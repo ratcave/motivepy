@@ -83,6 +83,7 @@
             
             
                 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="motive.html">motive package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="motive.html#subpackages">Subpackages</a><ul class="current">
@@ -168,6 +169,160 @@ for camera settings, rigid bodies and markers.</p>
 <dt id="motive.native.update_single_frame">
 <code class="descclassname">motive.native.</code><code class="descname">update_single_frame</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.update_single_frame" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.native.update">
+<code class="descclassname">motive.native.</code><code class="descname">update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.native.load_calibration">
+<code class="descclassname">motive.native.</code><code class="descname">load_calibration</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.load_calibration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.native.load_rigid_bodies">
+<code class="descclassname">motive.native.</code><code class="descname">load_rigid_bodies</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.load_rigid_bodies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.native.save_rigid_bodies">
+<code class="descclassname">motive.native.</code><code class="descname">save_rigid_bodies</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.save_rigid_bodies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.native.add_rigid_bodies">
+<code class="descclassname">motive.native.</code><code class="descname">add_rigid_bodies</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.add_rigid_bodies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.native.load_project">
+<code class="descclassname">motive.native.</code><code class="descname">load_project</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.load_project" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.native.save_project">
+<code class="descclassname">motive.native.</code><code class="descname">save_project</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.save_project" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.native.load_calibration_from_memory">
+<code class="descclassname">motive.native.</code><code class="descname">load_calibration_from_memory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.load_calibration_from_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: Not Implemented!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.stream_trackd">
+<code class="descclassname">motive.native.</code><code class="descname">stream_trackd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.stream_trackd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start/stop Trackd Stream</p>
+<p>TrackD Streaming Engine: Streams rigid body data via the Trackd protocol.
+:param enabled: True to start Trackd Stream. False to stop it.
+:type enabled: bool</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.stream_vrpn">
+<code class="descclassname">motive.native.</code><code class="descname">stream_vrpn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.stream_vrpn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start/stop VRPN Stream</p>
+<p>VRPN Streaming Engine: Streams rigid body data via the VRPN protocol.
+VRPN Broadcast Port: Specifies the broadcast port for VRPN streaming.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>enabled</strong> (<em>bool</em>) &#8211; True to start VRPN Stream. False to stop it.</li>
+<li><strong>port</strong> (<em>Optional[int]</em>) &#8211; Encodes the broadcast port</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.stream_np">
+<code class="descclassname">motive.native.</code><code class="descname">stream_np</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.stream_np" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start/stop NaturalPoint Stream</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enabled</strong> (<em>bool</em>) &#8211; True to start NaturalPoint Stream. False to stop it.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.get_frame_markers">
+<code class="descclassname">motive.native.</code><code class="descname">get_frame_markers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.get_frame_markers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple containing all tuples of 3D marker positions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.frame_marker_label">
+<code class="descclassname">motive.native.</code><code class="descname">frame_marker_label</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.frame_marker_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns marker label object</p>
+<p>This object holds a unique ID for every marker.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.frame_time_stamp">
+<code class="descclassname">motive.native.</code><code class="descname">frame_time_stamp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.frame_time_stamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns time stamp of frame in seconds</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.flush_camera_queues">
+<code class="descclassname">motive.native.</code><code class="descname">flush_camera_queues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.flush_camera_queues" title="Permalink to this definition">¶</a></dt>
+<dd><p>In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
+and you find that the data you&#8217;re getting out has sufficient latency you can call flush_camera_queues()
+to catch up before calling update(). Ideally, after calling flush_camera_queues() you&#8217;ll want to not
+call it again until after update() returns a frame again.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.set_camera_group_reconstruction">
+<code class="descclassname">motive.native.</code><code class="descname">set_camera_group_reconstruction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.set_camera_group_reconstruction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: Not Implemented!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.set_enabled_filter_switch">
+<code class="descclassname">motive.native.</code><code class="descname">set_enabled_filter_switch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.set_enabled_filter_switch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: Not Implemented!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.is_filter_switch_enabled">
+<code class="descclassname">motive.native.</code><code class="descname">is_filter_switch_enabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.is_filter_switch_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: Not Implemented!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.set_frame_id_based_timing">
+<code class="descclassname">motive.native.</code><code class="descname">set_frame_id_based_timing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.set_frame_id_based_timing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: Not Implemented!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.set_suppress_out_of_order">
+<code class="descclassname">motive.native.</code><code class="descname">set_suppress_out_of_order</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.set_suppress_out_of_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: Not Implemented!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.orient_tracking_bar">
+<code class="descclassname">motive.native.</code><code class="descname">orient_tracking_bar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.orient_tracking_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: Not Implemented!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.native.get_build_number">
+<code class="descclassname">motive.native.</code><code class="descname">get_build_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.get_build_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns multiple digit integer number</p>
+</dd></dl>
 
 </div>
 </div>

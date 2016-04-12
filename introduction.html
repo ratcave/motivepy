@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>motivepy: A Python API for communicating with OptiTrack cameras &mdash; MotivePy 0.1 documentation</title>
+  <title>Introduction &mdash; MotivePy 0.1 documentation</title>
   
 
   
@@ -82,7 +82,20 @@
             
             
                 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">motivepy: A Python API for communicating with OptiTrack cameras</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-motivepy">What is Motivepy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-we-wrote-motivepy">Why we wrote Motivepy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-use-motivepy">How to use Motivepy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-motive">Install Motive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-python">Install Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-cython">Install Cython</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-motivepy">Download Motivepy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-motivepy">Install Motivepy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#and-now">And Now</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="motive.html">motive package</a></li>
 </ul>
@@ -115,7 +128,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>motivepy: A Python API for communicating with OptiTrack cameras</li>
+    <li>Introduction</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -129,45 +142,89 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="motivepy-a-python-api-for-communicating-with-optitrack-cameras">
-<h1>motivepy: A Python API for communicating with OptiTrack cameras<a class="headerlink" href="#motivepy-a-python-api-for-communicating-with-optitrack-cameras" title="Permalink to this headline">¶</a></h1>
-<p>## Why
-The main goal of the API is to substitute the Motive GUI
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-motivepy">
+<h2>What is Motivepy<a class="headerlink" href="#what-is-motivepy" title="Permalink to this headline">¶</a></h2>
+<p>Motivepy is a Python API for communicating with OptiTrack cameras.</p>
+</div>
+<div class="section" id="why-we-wrote-motivepy">
+<h2>Why we wrote Motivepy<a class="headerlink" href="#why-we-wrote-motivepy" title="Permalink to this headline">¶</a></h2>
+<p>The main goal of the API is to substitute the Motive GUI
 whenever it is convenient.</p>
 <p>For this we wrapped most of OptiTrack&#8217;s C++ Motive SDK with Cython.
 We tried to structure Motivepy as pythonic as possible and also
 added some stability to the raw functionality of the original SDK.
 In addition we developed some advanced features like a 3D viewer
 script for tracked points.</p>
-<p>## How
-First note that Motivepy runs on 32bit as well as on 64bit. In the following
+</div>
+<div class="section" id="how-to-use-motivepy">
+<h2>How to use Motivepy<a class="headerlink" href="#how-to-use-motivepy" title="Permalink to this headline">¶</a></h2>
+<p>First note that motivepy is compatible with 32 and 64bit. In the following
 we only describe the 32bit case, but 64bit is analogous</p>
-<p>###Installing Motive</p>
+<div class="section" id="install-motive">
+<h3>Install Motive<a class="headerlink" href="#install-motive" title="Permalink to this headline">¶</a></h3>
 <p>Go to <a class="reference external" href="https://www.optitrack.com/downloads/">https://www.optitrack.com/downloads/</a> download and install Motive 1.9
 (Or older. Newer versions should also work, but have not been tested).</p>
-<p>### Installing Python</p>
+</div>
+<div class="section" id="install-python">
+<h3>Install Python<a class="headerlink" href="#install-python" title="Permalink to this headline">¶</a></h3>
 <p>To use a Python API you need to install Python on your machine.
-To run the converter script we recommend to install Python 2.7 (32 bit) and make sure it runs in the windows console
-(i.e. open the Command Window and type <em>python</em>. If python starts, then it&#8217;s installed!
+We recommend to install Python 2.7 and make sure it runs in the windows console
+(i.e. open the Command Window, type <em>python</em> and hit enter. If python starts, then it&#8217;s installed!
 If it is installed but not working, try and add the following adresses (or depending where you installed stuff) to the PATH variable:</p>
 <div class="highlight-python"><div class="highlight"><pre>```
 C:\Python27\; C:\Python27\Scripts\
 ```
 </pre></div>
 </div>
-<p>### Installing Motive
-To run our code we recommend to first download and install Motive 1.9</p>
-<p>then install the Microsoft visual C++ compiler package for python 2.7,
-then install Python 2.7.9 (we used 32bit) and add the following file adresses
-(or depending where you installed stuff) to the PATH variable:</p>
-<p>C:Program Files (x86)OptiTrackCamera SDKlib;C:Python27;C:Python27Scripts</p>
-<p>Then open a console, write pip install cython and hit enter.</p>
-<p>To import the wrapped functionality into python, simply cd into your camerapy
-folder, write python, hit enter, write import cam.native and hit enter.</p>
-<p>After you changed code, cd into your camerapy folder, write python setup.py build_ext &#8211;inplace
-and hit enter (if you receive an error message about a dll missing, simply download that dll and
-copy it into the System32 folder).</p>
+</div>
+<div class="section" id="install-cython">
+<h3>Install Cython<a class="headerlink" href="#install-cython" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Open a command window and write::</dt>
+<dd><code class="docutils literal"><span class="pre">`</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">cython</span> <span class="pre">0.22.1</span>
+<span class="pre">`</span></code></dd>
+</dl>
+<p>It is important to use Cython version 0.22.1, as later versions need a different code
+for the pointcloudgroup functions to work (Feel free to try it out and comment,
+it should actually be easier then what we did with 0.22.1).</p>
+</div>
+<div class="section" id="download-motivepy">
+<h3>Download Motivepy<a class="headerlink" href="#download-motivepy" title="Permalink to this headline">¶</a></h3>
+<p>A convenient way to download motivepy would be to clone the repository using <em>git</em> (you may need to install git as well: <a class="reference external" href="https://git-scm.com/downloads">https://git-scm.com/downloads</a>)
+and download it from the command window into the folder of your choice using the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>```
+git clone https://github.com/NicolasKuske/motivepy.git
+```
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-motivepy">
+<h3>Install Motivepy<a class="headerlink" href="#install-motivepy" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Before you can install Motivepy you need to add the following adresses (or depending where you installed stuff) to the PATH variable::</dt>
+<dd><code class="docutils literal"><span class="pre">`</span>
+<span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\OptiTrack\Motive\lib;</span> <span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\OptiTrack\Motive</span>
+<span class="pre">`</span></code></dd>
+</dl>
+<p>Then navigate into the motivepy directory via the command window (<em>cd motivepy</em>) and run the install option on the setup.py script:</p>
+<div class="highlight-python"><div class="highlight"><pre>```
+cd motivepy
+python setup.py install
+```
+</pre></div>
+</div>
+<p>(In case you are still missing dll dependencies, download and open Dependency Walker. There run the dll or program
+giving the error)</p>
+</div>
+<div class="section" id="and-now">
+<h3>And Now<a class="headerlink" href="#and-now" title="Permalink to this headline">¶</a></h3>
+<p>Now open a Command Window, type <em>python</em>, hit enter, and start with the tutorials.</p>
 <p>Njoy!</p>
+</div>
+</div>
 </div>
 
 
