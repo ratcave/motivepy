@@ -17,7 +17,6 @@ Example:
 
 import time
 import motive
-import functools
 
 def check_npresult(func):
     """Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so
@@ -92,7 +91,6 @@ def check_cam_setting(func):
 
 def _save_backup(func):
     """Decorator that saves a backup project file"""
-    @functools.wraps
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
         motive.native._save_project(motive.utils.backup_project_filename)
