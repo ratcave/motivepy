@@ -55,6 +55,8 @@ def create_rigid_body(str name, markerList):
         markerList(List[float]): A list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN
      Note:
         For some reason a rigid body created via this API function is not tracked by Motive.
+     Note:
+        Not Implemented!
      """
      raise NotImplementedError()
      markerCount=len(markerList)
