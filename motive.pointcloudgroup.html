@@ -1,0 +1,608 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>motive.pointcloudgroup package &mdash; MotivePy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="MotivePy 0.1 documentation" href="index.html"/>
+        <link rel="up" title="motive package" href="motive.html"/>
+        <link rel="next" title="motive.rigidbody package" href="motive.rigidbody.html"/>
+        <link rel="prev" title="motive.camera package" href="motive.camera.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MotivePy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="motive.html">motive package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="motive.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="motive.native.html">motive.native package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="motive.camera.html">motive.camera package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">motive.pointcloudgroup package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-motive.pointcloudgroup">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="motive.rigidbody.html">motive.rigidbody package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="motive.utils.html">motive.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">MotivePy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="motive.html">motive package</a> &raquo;</li>
+      
+    <li>motive.pointcloudgroup package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/motive.pointcloudgroup.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="motive-pointcloudgroup-package">
+<h1>motive.pointcloudgroup package<a class="headerlink" href="#motive-pointcloudgroup-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-motive.pointcloudgroup">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-motive.pointcloudgroup" title="Permalink to this headline">¶</a></h2>
+<p>Motive Camera Module</p>
+<p>This module features the functionality to create and edit
+camera groups as well as to get and set their respective
+point cloud settings. It is basically made up of one large
+CameraGroupPointCloudSettings class.
+Once a CameraGroupPointCloudSettings object has been created,
+the settings it stores can be adapted and finally set
+as the new point cloud settings of the camera group.</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;settings=CameraGroupPointCloudSettings()</span>
+<span class="go">&gt;&gt;&gt;settings.object_filter_type=2</span>
+<span class="go">&gt;&gt;&gt;set_camera_group_point_cloud_settings(0,settings)</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt id="motive.pointcloudgroup.camera_group_count">
+<code class="descclassname">motive.pointcloudgroup.</code><code class="descname">camera_group_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.pointcloudgroup.camera_group_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns number of camera groups</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.pointcloudgroup.remove_camera_group">
+<code class="descclassname">motive.pointcloudgroup.</code><code class="descname">remove_camera_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.pointcloudgroup.remove_camera_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a camera group</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A camera group can only be removed if it contains
+at least one camera.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>groupIndex</strong> (<em>int</em>) &#8211; The index of the camera group to be removed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">Exception</span></code> &#8211; If the camera group could not be removed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.pointcloudgroup.set_group_shutter_delay">
+<code class="descclassname">motive.pointcloudgroup.</code><code class="descname">set_group_shutter_delay</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.pointcloudgroup.set_group_shutter_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set camera group&#8217;s shutter delay</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>groupIndex</strong> (<em>int</em>) &#8211; The index of the camera group</li>
+<li><strong>microseconds</strong> (<em>int</em>) &#8211; The time between opening of shutter and capture of frame</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.pointcloudgroup.get_camera_group_point_cloud_settings">
+<code class="descclassname">motive.pointcloudgroup.</code><code class="descname">get_camera_group_point_cloud_settings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.pointcloudgroup.get_camera_group_point_cloud_settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="motive.pointcloudgroup.set_camera_group_point_cloud_settings">
+<code class="descclassname">motive.pointcloudgroup.</code><code class="descname">set_camera_group_point_cloud_settings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.pointcloudgroup.set_camera_group_point_cloud_settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings">
+<em class="property">class </em><code class="descclassname">motive.pointcloudgroup.</code><code class="descname">CameraGroupPointCloudSettings</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.FOV_intensity">
+<code class="descname">FOV_intensity</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.FOV_intensity" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.boost_least_sq">
+<code class="descname">boost_least_sq</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.boost_least_sq" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.boost_mult_threads">
+<code class="descname">boost_mult_threads</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.boost_mult_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.bound_reconstruction">
+<code class="descname">bound_reconstruction</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.bound_reconstruction" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.calculate_diameter">
+<code class="descname">calculate_diameter</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.calculate_diameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.calculation_time">
+<code class="descname">calculation_time</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.calculation_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.camera_overlap">
+<code class="descname">camera_overlap</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.camera_overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.marker_diameter_force_size">
+<code class="descname">marker_diameter_force_size</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.marker_diameter_force_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.marker_diameter_type">
+<code class="descname">marker_diameter_type</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.marker_diameter_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.mask_height">
+<code class="descname">mask_height</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.mask_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.mask_width">
+<code class="descname">mask_width</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.mask_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.max_ray_length">
+<code class="descname">max_ray_length</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.max_ray_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.max_size">
+<code class="descname">max_size</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.max_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.maximum_2D_points">
+<code class="descname">maximum_2D_points</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.maximum_2D_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.min_angle">
+<code class="descname">min_angle</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.min_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.min_ray_length">
+<code class="descname">min_ray_length</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.min_ray_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.min_rays">
+<code class="descname">min_rays</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.min_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.min_size">
+<code class="descname">min_size</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.min_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.minimum_rank_ray_count">
+<code class="descname">minimum_rank_ray_count</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.minimum_rank_ray_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_aspect_tolerance">
+<code class="descname">object_filter_aspect_tolerance</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_aspect_tolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_circularity">
+<code class="descname">object_filter_circularity</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_circularity" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_grayscale_floor">
+<code class="descname">object_filter_grayscale_floor</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_grayscale_floor" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_maxsize">
+<code class="descname">object_filter_maxsize</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_maxsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_minsize">
+<code class="descname">object_filter_minsize</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_minsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_object_margin">
+<code class="descname">object_filter_object_margin</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_object_margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_type">
+<code class="descname">object_filter_type</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.object_filter_type" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; 0=None, 2=Size &amp; Roundness</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.opacity">
+<code class="descname">opacity</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.pixel_gutter">
+<code class="descname">pixel_gutter</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.pixel_gutter" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.point_cloud_engine">
+<code class="descname">point_cloud_engine</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.point_cloud_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; 1=v1.0,  2=v2.0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.precision_packet_cap">
+<code class="descname">precision_packet_cap</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.precision_packet_cap" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.rank_rays">
+<code class="descname">rank_rays</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.rank_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_max_x">
+<code class="descname">reconstruct_max_x</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_max_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_max_y">
+<code class="descname">reconstruct_max_y</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_max_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_max_z">
+<code class="descname">reconstruct_max_z</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_max_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_min_x">
+<code class="descname">reconstruct_min_x</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_min_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_min_y">
+<code class="descname">reconstruct_min_y</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_min_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_min_z">
+<code class="descname">reconstruct_min_z</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.reconstruct_min_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.residual">
+<code class="descname">residual</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.residual" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>double</em> &#8211; in meters</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.resolve_point_cloud">
+<code class="descname">resolve_point_cloud</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.resolve_point_cloud" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.settings_count">
+<code class="descname">settings_count</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.settings_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.show_3D_markers">
+<code class="descname">show_3D_markers</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.show_3D_markers" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.show_camera_FOV">
+<code class="descname">show_camera_FOV</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.show_camera_FOV" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.show_cameras">
+<code class="descname">show_cameras</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.show_cameras" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.show_capture_volume">
+<code class="descname">show_capture_volume</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.show_capture_volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.show_reconstruction_bounds">
+<code class="descname">show_reconstruction_bounds</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.show_reconstruction_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.shutter_delay">
+<code class="descname">shutter_delay</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.shutter_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; in micros</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.small_marker_optimization">
+<code class="descname">small_marker_optimization</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.small_marker_optimization" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; 0=None, 1=Fast, 2=Accurate</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.synchronizer_control">
+<code class="descname">synchronizer_control</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.synchronizer_control" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; 0=timely delivery, 1=automatic, 2=complete delivery</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.synchronizer_engine">
+<code class="descname">synchronizer_engine</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.synchronizer_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; 1=v1.0  2=v2.0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.thread_count">
+<code class="descname">thread_count</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.thread_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.visible_marker_size">
+<code class="descname">visible_marker_size</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.visible_marker_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.pointcloudgroup.CameraGroupPointCloudSettings.volume_resolution">
+<code class="descname">volume_resolution</code><a class="headerlink" href="#motive.pointcloudgroup.CameraGroupPointCloudSettings.volume_resolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>double</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="motive.rigidbody.html" class="btn btn-neutral float-right" title="motive.rigidbody package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="motive.camera.html" class="btn btn-neutral" title="motive.camera package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nicolas Kuske and Nicholas A. Del Grosso.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

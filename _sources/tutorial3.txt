@@ -44,25 +44,25 @@ We then proceed creating :py:class:`.RigidBody` objects::
     # load a project file that includes calibration data and rigid body data
     m.load_project("calibrated_and_rigid_test.ttp")
 
-    # create a tuple containing all rigid body objects
+    # create a dictionary containing all rigid body objects
     rigs=m.get_rigid_bodies()
+
+    # choose the rigid body of interest by name (just enter rigs, to see all bodies with name)
+    test_rig=rigs['Arena']
 
 Now getting a rigid body's data is as easy as calling the :py:class:`.RigidBody` object's methods.
 Remember updating::
 
-    # get the rigid body's name
-    rigs[0].name
-
     m.update()
 
     # get the body's pivot point location during the last update
-    rigs[0].location
+    test_rig.location
 
     # get the body's rotation in degrees and local axis
-    rigs[0].rotation
+    test_rig.rotation
 
     # get a tuple consisting of the body's visible global 3D marker positions
-    rigs[0].point_cloud_markers
+    test_rig.point_cloud_markers
 
 Of course you could always get a tuple holding all marker positions. For convenience we
 also included a function that returns only the unidentified markes, namely the markers
@@ -88,17 +88,20 @@ Here is a simple script including all we learned in this tutorial::
     # immediately updating is good practice
     m.update()
 
-    # get the rigid body's name
-    rigs[0].name
+    # create a dictionary containing all rigid body objects
+    rigs=m.get_rigid_bodies()
+
+    # choose the rigid body of interest by name (just enter rigs, to see all bodies with name)
+    test_rig=rigs['Arena']
 
     # get the body's pivot point location during the last update
-    rigs[0].location
+    test_rig.location
 
     # get the body's rotation in degrees and local axis
-    rigs[0].rotation
+    test_rig.rotation
 
     # get a tuple consisting of the body's visible global 3D marker positions
-    rigs[0].point_cloud_markers
+    test_rig.point_cloud_markers
 
     # get a tuple consisting of all marker positions, of markers not part of any rigid body
     m.get_unident_markers()

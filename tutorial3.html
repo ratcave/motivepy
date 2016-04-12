@@ -183,29 +183,29 @@ it would have returned an empty tuple. Also <code class="xref py py-meth docutil
 in the Motive GUI, if its markers are large and bright enough, a rigid body&#8217;s pivot point
 3D location, its rotation and the position of its markers can be calculated
 at any time. To extract that data we first need to load a project file that includes rigid bodies.
-We then proceed creating <code class="xref py py-class docutils literal"><span class="pre">RigidBody</span></code> objects:</p>
+We then proceed creating <a class="reference internal" href="motive.rigidbody.html#motive.rigidbody.RigidBody" title="motive.rigidbody.RigidBody"><code class="xref py py-class docutils literal"><span class="pre">RigidBody</span></code></a> objects:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c1"># load a project file that includes calibration data and rigid body data</span>
 <span class="n">m</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;calibrated_and_rigid_test.ttp&quot;</span><span class="p">)</span>
 
-<span class="c1"># create a tuple containing all rigid body objects</span>
+<span class="c1"># create a dictionary containing all rigid body objects</span>
 <span class="n">rigs</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">get_rigid_bodies</span><span class="p">()</span>
+
+<span class="c1"># choose the rigid body of interest by name (just enter rigs, to see all bodies with name)</span>
+<span class="n">test_rig</span><span class="o">=</span><span class="n">rigs</span><span class="p">[</span><span class="s1">&#39;Arena&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Now getting a rigid body&#8217;s data is as easy as calling the <code class="xref py py-class docutils literal"><span class="pre">RigidBody</span></code> object&#8217;s methods.
+<p>Now getting a rigid body&#8217;s data is as easy as calling the <a class="reference internal" href="motive.rigidbody.html#motive.rigidbody.RigidBody" title="motive.rigidbody.RigidBody"><code class="xref py py-class docutils literal"><span class="pre">RigidBody</span></code></a> object&#8217;s methods.
 Remember updating:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c1"># get the rigid body&#39;s name</span>
-<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
-
-<span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
 <span class="c1"># get the body&#39;s pivot point location during the last update</span>
-<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">location</span>
+<span class="n">test_rig</span><span class="o">.</span><span class="n">location</span>
 
 <span class="c1"># get the body&#39;s rotation in degrees and local axis</span>
-<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rotation</span>
+<span class="n">test_rig</span><span class="o">.</span><span class="n">rotation</span>
 
 <span class="c1"># get a tuple consisting of the body&#39;s visible global 3D marker positions</span>
-<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">point_cloud_markers</span>
+<span class="n">test_rig</span><span class="o">.</span><span class="n">point_cloud_markers</span>
 </pre></div>
 </div>
 <p>Of course you could always get a tuple holding all marker positions. For convenience we
@@ -231,17 +231,20 @@ which are not assigned to any body:</p>
 <span class="c1"># immediately updating is good practice</span>
 <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
-<span class="c1"># get the rigid body&#39;s name</span>
-<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+<span class="c1"># create a dictionary containing all rigid body objects</span>
+<span class="n">rigs</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">get_rigid_bodies</span><span class="p">()</span>
+
+<span class="c1"># choose the rigid body of interest by name (just enter rigs, to see all bodies with name)</span>
+<span class="n">test_rig</span><span class="o">=</span><span class="n">rigs</span><span class="p">[</span><span class="s1">&#39;Arena&#39;</span><span class="p">]</span>
 
 <span class="c1"># get the body&#39;s pivot point location during the last update</span>
-<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">location</span>
+<span class="n">test_rig</span><span class="o">.</span><span class="n">location</span>
 
 <span class="c1"># get the body&#39;s rotation in degrees and local axis</span>
-<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rotation</span>
+<span class="n">test_rig</span><span class="o">.</span><span class="n">rotation</span>
 
 <span class="c1"># get a tuple consisting of the body&#39;s visible global 3D marker positions</span>
-<span class="n">rigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">point_cloud_markers</span>
+<span class="n">test_rig</span><span class="o">.</span><span class="n">point_cloud_markers</span>
 
 <span class="c1"># get a tuple consisting of all marker positions, of markers not part of any rigid body</span>
 <span class="n">m</span><span class="o">.</span><span class="n">get_unident_markers</span><span class="p">()</span>

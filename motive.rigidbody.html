@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>motive.rigidbody package &mdash; MotivePy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="MotivePy 0.1 documentation" href="index.html"/>
+        <link rel="up" title="motive package" href="motive.html"/>
+        <link rel="next" title="motive.utils package" href="motive.utils.html"/>
+        <link rel="prev" title="motive.pointcloudgroup package" href="motive.pointcloudgroup.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MotivePy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="motive.html">motive package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="motive.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="motive.native.html">motive.native package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="motive.camera.html">motive.camera package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="motive.pointcloudgroup.html">motive.pointcloudgroup package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">motive.rigidbody package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="motive.utils.html">motive.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">MotivePy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="motive.html">motive package</a> &raquo;</li>
+      
+    <li>motive.rigidbody package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/motive.rigidbody.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="motive-rigidbody-package">
+<h1>motive.rigidbody package<a class="headerlink" href="#motive-rigidbody-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-motive.rigidbody"></span><p>Motive Rigid Body Module</p>
+<p>This module features all functionality related to rigid body properties.
+It is basically made up of one large rigid body class.
+The basic function in this module is get_rigid_bodies().</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;get_rigid_bodies()</span>
+<span class="go">(Rigid Body Object: Arena, Rigid Body Object: Head)</span>
+<span class="go">&gt;&gt;&gt;rigs=get_rigid_bodies()</span>
+<span class="go">&gt;&gt;&gt;rigs[0].name</span>
+<span class="go">Arena</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt id="motive.rigidbody.get_unident_markers">
+<code class="descclassname">motive.rigidbody.</code><code class="descname">get_unident_markers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.rigidbody.get_unident_markers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple containing all tuples of 3D marker positions not part of rigid bodies</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.rigidbody.get_rigid_bodies">
+<code class="descclassname">motive.rigidbody.</code><code class="descname">get_rigid_bodies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.rigidbody.get_rigid_bodies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing all rigid bodies</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">First load a project file or a rigid body file.
+For more information on this see native.pyx.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary of rigid body objects</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.rigidbody.create_rigid_body">
+<code class="descclassname">motive.rigidbody.</code><code class="descname">create_rigid_body</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.rigidbody.create_rigid_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new rigid body</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; Name of the rigid body to be created</li>
+<li><strong>markerList</strong> (<em>List[float]</em>) &#8211; A list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For some reason a rigid body created via this API function is not tracked by Motive.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.rigidbody.clear_rigid_body_list">
+<code class="descclassname">motive.rigidbody.</code><code class="descname">clear_rigid_body_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.rigidbody.clear_rigid_body_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all rigid bodies</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="motive.rigidbody.remove_rigid_body">
+<code class="descclassname">motive.rigidbody.</code><code class="descname">remove_rigid_body</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.rigidbody.remove_rigid_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a rigid body object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rigidIndex</strong> (<em>int</em>) &#8211; The index of the rigid body</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="motive.rigidbody.RigidBody">
+<em class="property">class </em><code class="descclassname">motive.rigidbody.</code><code class="descname">RigidBody</code><a class="headerlink" href="#motive.rigidbody.RigidBody" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.enabled">
+<code class="descname">enabled</code><a class="headerlink" href="#motive.rigidbody.RigidBody.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> &#8211; Rigid body tracking enabled</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.rigidbody.RigidBody.get_all_spatial_data">
+<code class="descname">get_all_spatial_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.rigidbody.RigidBody.get_all_spatial_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns spatial data of the rigid body</p>
+<p>Returns:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span>
+    <span class="s1">&#39;rotation&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">yaw</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">roll</span><span class="p">),</span>
+    <span class="s1">&#39;rotation_quats&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">,</span> <span class="n">qw</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.is_tracked">
+<code class="descname">is_tracked</code><a class="headerlink" href="#motive.rigidbody.RigidBody.is_tracked" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> &#8211; Rigid body is tracked</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.location">
+<code class="descname">location</code><a class="headerlink" href="#motive.rigidbody.RigidBody.location" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[float]</em> &#8211; Rigid body&#8217;s (x, y, z) position</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.markers">
+<code class="descname">markers</code><a class="headerlink" href="#motive.rigidbody.RigidBody.markers" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[float]</em> &#8211; Rigid body&#8217;s local 3D marker positions</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.name">
+<code class="descname">name</code><a class="headerlink" href="#motive.rigidbody.RigidBody.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; Rigid body name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.point_cloud_markers">
+<code class="descname">point_cloud_markers</code><a class="headerlink" href="#motive.rigidbody.RigidBody.point_cloud_markers" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[float]</em> &#8211; Rigid body&#8217;s global 3D marker positions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.rigidbody.RigidBody.reset_orientation">
+<code class="descname">reset_orientation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.rigidbody.RigidBody.reset_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the rigid body&#8217;s orientation to match its current tracked orientation</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.rotation">
+<code class="descname">rotation</code><a class="headerlink" href="#motive.rigidbody.RigidBody.rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[float]</em> &#8211; Rigid body&#8217;s (yaw, pitch, roll) rotation, in degrees and in local axis</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.rotation_global">
+<code class="descname">rotation_global</code><a class="headerlink" href="#motive.rigidbody.RigidBody.rotation_global" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[float]</em> &#8211; Rigid body&#8217;s (x, y, z) rotation, in degrees and in world axis</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.rotation_quats">
+<code class="descname">rotation_quats</code><a class="headerlink" href="#motive.rigidbody.RigidBody.rotation_quats" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Tuple[float]</em> &#8211; Rigid body&#8217;s (qx, qy, qz, qw) quaternion rotation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="motive.rigidbody.RigidBody.translate_pivot">
+<code class="descname">translate_pivot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.rigidbody.RigidBody.translate_pivot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a translation offset for the centroid of the rigid body</p>
+<p>Reported values for the location of the rigid body, as well as the 3D visualization, will be shifted
+by the amount provided in the fields on either the X, Y, or Z axis. Values are entered in meters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; shift of rigid body position in X direction in meters</li>
+<li><strong>y</strong> (<em>float</em>) &#8211; shift of rigid body position in Y direction in meters</li>
+<li><strong>z</strong> (<em>float</em>) &#8211; shift of rigid body position in Z direction in meters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="motive.rigidbody.RigidBody.user_data">
+<code class="descname">user_data</code><a class="headerlink" href="#motive.rigidbody.RigidBody.user_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Rigid body user data</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="motive.utils.html" class="btn btn-neutral float-right" title="motive.utils package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="motive.pointcloudgroup.html" class="btn btn-neutral" title="motive.pointcloudgroup package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Nicolas Kuske and Nicholas A. Del Grosso.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

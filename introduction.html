@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>motive.native package &mdash; MotivePy 0.1 documentation</title>
+  <title>motivepy: A Python API for communicating with OptiTrack cameras &mdash; MotivePy 0.1 documentation</title>
   
 
   
@@ -31,9 +31,8 @@
 
   
     <link rel="top" title="MotivePy 0.1 documentation" href="index.html"/>
-        <link rel="up" title="motive package" href="motive.html"/>
-        <link rel="next" title="motive.camera package" href="motive.camera.html"/>
-        <link rel="prev" title="motive package" href="motive.html"/> 
+        <link rel="next" title="Tutorials" href="tutorials.html"/>
+        <link rel="prev" title="Welcome to MotivePy’s documentation!" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -83,21 +82,9 @@
             
             
                 <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">motivepy: A Python API for communicating with OptiTrack cameras</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="motive.html">motive package</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="motive.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="">motive.native package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#module-motive.native">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="motive.camera.html">motive.camera package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="motive.pointcloudgroup.html">motive.pointcloudgroup package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="motive.rigidbody.html">motive.rigidbody package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="motive.utils.html">motive.utils package</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="motive.html">motive package</a></li>
 </ul>
 
             
@@ -128,13 +115,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-          <li><a href="motive.html">motive package</a> &raquo;</li>
-      
-    <li>motive.native package</li>
+    <li>motivepy: A Python API for communicating with OptiTrack cameras</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/motive.native.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/introduction.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -144,32 +129,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="motive-native-package">
-<h1>motive.native package<a class="headerlink" href="#motive-native-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-motive.native">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-motive.native" title="Permalink to this headline">¶</a></h2>
-<p>Motive Native Module</p>
-<p>This module features the functionality to load and save files
-for camera settings, rigid bodies and markers.</p>
-<p>Examples:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;load_project(&quot;test.ttp&quot;)</span>
-<span class="go">&gt;&gt;&gt;update()</span>
-<span class="go">&gt;&gt;&gt;get_frame_markers()</span>
-<span class="go">((0.44324554, 0.65645343, 1.5665743), (0.23456576, 0.11568943, 0.04334536), (1.43445367, 1.23546491, 2.34356222))</span>
+  <div class="section" id="motivepy-a-python-api-for-communicating-with-optitrack-cameras">
+<h1>motivepy: A Python API for communicating with OptiTrack cameras<a class="headerlink" href="#motivepy-a-python-api-for-communicating-with-optitrack-cameras" title="Permalink to this headline">¶</a></h1>
+<p>## Why
+The main goal of the API is to substitute the Motive GUI
+whenever it is convenient.</p>
+<p>For this we wrapped most of OptiTrack&#8217;s C++ Motive SDK with Cython.
+We tried to structure Motivepy as pythonic as possible and also
+added some stability to the raw functionality of the original SDK.
+In addition we developed some advanced features like a 3D viewer
+script for tracked points.</p>
+<p>## How
+First note that Motivepy runs on 32bit as well as on 64bit. In the following
+we only describe the 32bit case, but 64bit is analogous</p>
+<p>###Installing Motive</p>
+<p>Go to <a class="reference external" href="https://www.optitrack.com/downloads/">https://www.optitrack.com/downloads/</a> download and install Motive 1.9
+(Or older. Newer versions should also work, but have not been tested).</p>
+<p>### Installing Python</p>
+<p>To use a Python API you need to install Python on your machine.
+To run the converter script we recommend to install Python 2.7 (32 bit) and make sure it runs in the windows console
+(i.e. open the Command Window and type <em>python</em>. If python starts, then it&#8217;s installed!
+If it is installed but not working, try and add the following adresses (or depending where you installed stuff) to the PATH variable:</p>
+<div class="highlight-python"><div class="highlight"><pre>```
+C:\Python27\; C:\Python27\Scripts\
+```
 </pre></div>
 </div>
-<dl class="function">
-<dt id="motive.native.shutdown">
-<code class="descclassname">motive.native.</code><code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.shutdown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the connection to the cameras</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="motive.native.update_single_frame">
-<code class="descclassname">motive.native.</code><code class="descname">update_single_frame</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#motive.native.update_single_frame" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</div>
+<p>### Installing Motive
+To run our code we recommend to first download and install Motive 1.9</p>
+<p>then install the Microsoft visual C++ compiler package for python 2.7,
+then install Python 2.7.9 (we used 32bit) and add the following file adresses
+(or depending where you installed stuff) to the PATH variable:</p>
+<p>C:Program Files (x86)OptiTrackCamera SDKlib;C:Python27;C:Python27Scripts</p>
+<p>Then open a console, write pip install cython and hit enter.</p>
+<p>To import the wrapped functionality into python, simply cd into your camerapy
+folder, write python, hit enter, write import cam.native and hit enter.</p>
+<p>After you changed code, cd into your camerapy folder, write python setup.py build_ext &#8211;inplace
+and hit enter (if you receive an error message about a dll missing, simply download that dll and
+copy it into the System32 folder).</p>
+<p>Njoy!</p>
 </div>
 
 
@@ -179,10 +177,10 @@ for camera settings, rigid bodies and markers.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="motive.camera.html" class="btn btn-neutral float-right" title="motive.camera package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="motive.html" class="btn btn-neutral" title="motive package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Welcome to MotivePy’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

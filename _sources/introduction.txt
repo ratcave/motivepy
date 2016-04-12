@@ -1,0 +1,54 @@
+motivepy: A Python API for communicating with OptiTrack cameras
+---------------------------------------------------------------
+
+## Why
+The main goal of the API is to substitute the Motive GUI
+whenever it is convenient.
+
+For this we wrapped most of OptiTrack's C++ Motive SDK with Cython.
+We tried to structure Motivepy as pythonic as possible and also
+added some stability to the raw functionality of the original SDK.
+In addition we developed some advanced features like a 3D viewer
+script for tracked points.
+
+## How
+First note that Motivepy runs on 32bit as well as on 64bit. In the following
+we only describe the 32bit case, but 64bit is analogous
+
+###Installing Motive
+
+Go to https://www.optitrack.com/downloads/ download and install Motive 1.9
+(Or older. Newer versions should also work, but have not been tested).
+
+
+### Installing Python
+
+To use a Python API you need to install Python on your machine.
+To run the converter script we recommend to install Python 2.7 (32 bit) and make sure it runs in the windows console
+(i.e. open the Command Window and type *python*. If python starts, then it's installed!
+If it is installed but not working, try and add the following adresses (or depending where you installed stuff) to the PATH variable::
+  ```
+  C:\Python27\; C:\Python27\Scripts\
+  ```
+
+### Installing Motive
+To run our code we recommend to first download and install Motive 1.9
+
+then install the Microsoft visual C++ compiler package for python 2.7,
+then install Python 2.7.9 (we used 32bit) and add the following file adresses
+(or depending where you installed stuff) to the PATH variable:
+
+C:\Program Files (x86)\OptiTrack\Camera SDK\lib;C:\Python27\;C:\Python27\Scripts\
+
+Then open a console, write pip install cython and hit enter.
+
+
+To import the wrapped functionality into python, simply cd into your camerapy
+folder, write python, hit enter, write import cam.native and hit enter.
+
+After you changed code, cd into your camerapy folder, write python setup.py build_ext --inplace
+and hit enter (if you receive an error message about a dll missing, simply download that dll and
+copy it into the System32 folder).
+
+Njoy!
+
