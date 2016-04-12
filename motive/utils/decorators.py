@@ -91,7 +91,7 @@ def check_cam_setting(func):
 
 def _save_backup(func):
     """Decorator that saves a backup project file"""
-    @functools.wraps
+    #@functools.wraps
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
         motive.native._save_project(motive.utils.backup_project_filename)
