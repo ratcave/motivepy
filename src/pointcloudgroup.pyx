@@ -60,17 +60,23 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
 #TODO: Check if this actually works for a groupindex different from 0 or more than one group
 @utils.decorators.check_npresult
 def get_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSettings Settings):
-    """Gets the settings of the camera group and sets them in the CameraGroupPointCloudSettings object)
+    """Gets the settings of the camera group and sets them in the CameraGroupPointCloudSettings object
 
+    Args:
+        groupIndex (int): The index of the camera group to get settings from
+        Settings (CameraGroupPointCloudSetting): The object in which the settings are to be set
     """
-    TT_CameraGroupPointCloudSettings   (groupIndex, Settings.obj[0])
+    return TT_CameraGroupPointCloudSettings(groupIndex, Settings.obj[0])
 
 @utils.decorators.check_npresult
 def set_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSettings Settings):
-    """Sets the settings in the camera group to the settings of the CameraGroupPointCloudSettings object)
+    """Sets the settings in the camera group to the settings of the CameraGroupPointCloudSettings object
 
+    Args:
+        groupIndex (int): The index of the camera group to set settings in
+        Settings (CameraGroupPointCloudSetting): The object in which holds the settings are to be set
     """
-    TT_SetCameraGroupPointCloudSettings(groupIndex, Settings.obj[0]) #Cannot assign type 'cCameraGroupPointCloudSettings *' to 'cCameraGroupPointCloudSettings'
+    return TT_SetCameraGroupPointCloudSettings(groupIndex, Settings.obj[0]) #Cannot assign type 'cCameraGroupPointCloudSettings *' to 'cCameraGroupPointCloudSettings'
 
 
 cdef class CameraGroupPointCloudSettings:

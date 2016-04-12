@@ -79,7 +79,6 @@ def check_cam_setting(func):
     Raises:
         Exception: If the camera function returns a value encoding an error
     """
-    # @functools.wraps
     def wrapper(*args, **kwargs):
         check=func(*args, **kwargs)
         if check<0:

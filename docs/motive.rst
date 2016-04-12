@@ -14,4 +14,6 @@ Subpackages
 
      motive.native
      motive.camera
+     motive.pointcloudgroup
+     motive.rigidbody
      motive.utils
