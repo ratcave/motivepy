@@ -155,9 +155,10 @@ It is basically made up of one large rigid body class.
 The basic function in this module is get_rigid_bodies().</p>
 <p>Examples:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;get_rigid_bodies()</span>
-<span class="go">(Rigid Body Object: Arena, Rigid Body Object: Head)</span>
+<span class="go">{&#39;Arena&#39;: Rigid Body Object: Arena, &#39;Head&#39;: Rigid Body Object: Head}</span>
 <span class="go">&gt;&gt;&gt;rigs=get_rigid_bodies()</span>
-<span class="go">&gt;&gt;&gt;rigs[0].name</span>
+<span class="go">&gt;&gt;&gt;test_rig=rigs[&#39;Arena&#39;]</span>
+<span class="go">&gt;&gt;&gt;test_rig.name</span>
 <span class="go">Arena</span>
 </pre></div>
 </div>
