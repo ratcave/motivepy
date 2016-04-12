@@ -26,10 +26,6 @@ def _initialize():
     """
     return TT_Initialize()
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 def shutdown():
     """Closes the connection to the cameras"""
     return utils.decorators.check_npresult(TT_Shutdown)()

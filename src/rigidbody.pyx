@@ -70,14 +70,13 @@ def create_rigid_body(str name, markerList):
      return TT_CreateRigidBody(name, rigidIndexplus1 , markerCount, markerListp)
 
 
-@utils.decorators.check_npresult
 def remove_rigid_body(int rigidIndex):
     """Removes a rigid body object
 
     Args:
         rigidIndex(int): The index of the rigid body
     """
-    return TT_RemoveRigidBody(rigidIndex)
+    return utils.decorators.check_npresult(TT_RemoveRigidBody)(rigidIndex)
 
 
 def clear_rigid_body_list():
