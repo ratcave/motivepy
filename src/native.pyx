@@ -18,10 +18,8 @@ from motive import utils
 
 
 #STARTUP / SHUTDOWN
-def _initialize():
+def initialize():
     """Initializes the connection to the cameras
-
-    This function is called automatically upon importing motive.
     """
     return utils.decorators.check_npresult(TT_Initialize)()
 
