@@ -146,7 +146,7 @@ class RigidBody(object):
         """
         cdef float x = 0., y = 0., z = 0., qx = 0., qy = 0., qz = 0., qw = 0., yaw = 0., pitch = 0., roll = 0.
         TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
-        return {'location': (x, y, z), 'rotation': (yaw, pitch, roll),'rotation_quats': {qx, qy, qz, qw}}
+        return {'location': (x, y, z), 'rotation': (yaw, pitch, roll),'rotation_quats': (qx, qy, qz, qw)}
 
     @property
     def location(self):
@@ -157,12 +157,6 @@ class RigidBody(object):
     def rotation(self):
         """Tuple[float]: Rigid body's (yaw, pitch, roll) rotation, in degrees and in local axis"""
         return self.get_all_spatial_data()['rotation']
-
-    @property
-    def rotation_global(self):
-        """Tuple[float]: Rigid body's (x, y, z) rotation, in degrees and in world axis"""
-        rotation = self.get_all_spatial_data()['rotation']
-        return tuple(rotation[el] for el in [1, 0, 2])
 
     @property
     def rotation_quats(self):
