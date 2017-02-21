@@ -19,6 +19,12 @@ include "cnative.pxd"
 
 from motive import utils
 from libc.stdlib cimport malloc, free
+from collections import namedtuple
+
+Quaternion = namedtuple('Quaternion', 'x y z w')
+EulerRotation = namedtuple('EulerRotation', 'yaw pitch roll')
+Location = namedtuple('Location', 'x y z')
+
 
 #FUNCTIONS
 def get_unident_markers():
@@ -146,7 +152,7 @@ class RigidBody(object):
         """
         cdef float x = 0., y = 0., z = 0., qx = 0., qy = 0., qz = 0., qw = 0., yaw = 0., pitch = 0., roll = 0.
         TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
-        return {'location': (x, y, z), 'rotation': (yaw, pitch, roll),'rotation_quats': (qx, qy, qz, qw)}
+        return {'location': Location(x, y, z), 'rotation': EulerRotation(yaw, pitch, roll),'rotation_quats': Quaternion(qx, qy, qz, qw)}
 
     @property
     def location(self):
