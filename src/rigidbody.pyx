@@ -21,6 +21,8 @@ from motive import utils, native
 from libc.stdlib cimport malloc, free
 from collections import namedtuple
 import warnings
+import _transformations as trans
+import numpy as np
 
 Quaternion = namedtuple('Quaternion', 'x y z w')
 EulerRotation = namedtuple('EulerRotation', 'yaw pitch roll')
@@ -164,6 +166,16 @@ class RigidBody(object):
         """Tuple[float]: Rigid body's (x, y, z) position"""
         return self.get_all_spatial_data()['location']
 
+    @location.setter
+    def location(self, coords):
+        q = self.rotation_quats
+        rot = (q.w, q.x, q.y, q.z)
+        rot_matrix = trans.quaternion_matrix(rot)[:3, :3]
+        coords_offset = np.array(coords) - np.array(self.location)
+        translation_local = np.dot(np.linalg.pinv(rot_matrix), coords_offset)
+        self.translate_pivot(*translation_local)
+
+
     @property
     def rotation(self):
         """Tuple[float]: Rigid body's (yaw, pitch, roll) rotation, in degrees and in local axis"""
@@ -211,6 +223,8 @@ class RigidBody(object):
             x(float): shift of rigid body position in X direction in meters
             y(float): shift of rigid body position in Y direction in meters
             z(float): shift of rigid body position in Z direction in meters
+
+        Note: To set a new World position for the Rigidbody, simply set a new location: (ex: Rigidbody.location = 1, 2, 3)
         """
 
         if native.get_build_number() > 26069:
