@@ -25,7 +25,6 @@ Quaternion = namedtuple('Quaternion', 'x y z w')
 EulerRotation = namedtuple('EulerRotation', 'yaw pitch roll')
 Location = namedtuple('Location', 'x y z')
 
-
 #FUNCTIONS
 def get_unident_markers():
      """Returns a tuple containing all tuples of 3D marker positions not part of rigid bodies"""
@@ -93,19 +92,24 @@ def clear_rigid_body_list():
 
 #CLASS
 class RigidBody(object):
-    def __init__(self, rigidIndex):
+    def __init__(self, index):
         """Returns a rigid body object
 
         Args:
-            rigidIndex (int): The index of the rigid body to be returned
+            index (int): The index of the rigid body to be returned
         Raises:
             AssertionError: If the index is larger than the number of rigid bodies
         """
-        assert 0<=rigidIndex<TT_RigidBodyCount(), "There Are Only {0} Rigid Bodies".format(TT_RigidBodyCount())
-        self.index=rigidIndex
+        if index < 0:
+            raise ValueError("Index must be Positive")
+        if index >= TT_RigidBodyCount():
+            raise ValueError("Index {} too High: Only {} Rigid Bodies have been created.".format(index,
+                                                                                                 TT_RigidBodyCount()))
+        self.index = index
 
     def __str__(self):
-        return "Rigid Body Object: {0}".format(self.name)
+        fmt = '{cls}(index={index})'
+        return fmt.format(cls=self.__class__.__name__, index=self.index)
 
     def __repr__(self):
         return self.__str__()
