@@ -17,9 +17,10 @@ Examples::
 
 include "cnative.pxd"
 
-from motive import utils
+from motive import utils, native
 from libc.stdlib cimport malloc, free
 from collections import namedtuple
+import warnings
 
 Quaternion = namedtuple('Quaternion', 'x y z w')
 EulerRotation = namedtuple('EulerRotation', 'yaw pitch roll')
@@ -211,6 +212,11 @@ class RigidBody(object):
             y(float): shift of rigid body position in Y direction in meters
             z(float): shift of rigid body position in Z direction in meters
         """
+
+        if native.get_build_number() > 26069:
+            warnings.warn('Negating X axis for pivot translation to counter Motive bug.  Not tested for the current build version--use with care.')
+
+        x *= -1.
         return utils.decorators.check_npresult(TT_RigidBodyTranslatePivot)(self.index, x, y, z)
 
     def reset_orientation(self):
