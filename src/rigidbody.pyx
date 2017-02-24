@@ -174,6 +174,7 @@ class RigidBody(object):
         coords_offset = np.array(coords) - np.array(self.location)
         translation_local = np.dot(np.linalg.pinv(rot_matrix), coords_offset)
         self.translate_pivot(*translation_local)
+        native.update()  # important, to prevent false answers from multiple location-setting calls
 
 
     @property
@@ -232,6 +233,9 @@ class RigidBody(object):
 
         x *= -1.
         return utils.decorators.check_npresult(TT_RigidBodyTranslatePivot)(self.index, x, y, z)
+
+    def reset_pivot_offset(self):
+        self.location = np.mean(self.point_cloud_markers, axis=0)
 
     def reset_orientation(self):
         """Resets the rigid body's orientation to match its current tracked orientation"""
