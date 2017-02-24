@@ -260,3 +260,10 @@ cdef extern from "NPTrackingTools.h":
     ##void     TT_DetachRigidBodySolutionTest(int index, cRigidBodySolutionTest* test)
     ##void     TT_AttachListener(cTTAPIListener* listener)
     ##void     TT_DetachListener(cTTAPIListener* listener)
+
+
+    int NPVIDEOTYPE_SEGMENT
+    int NPVIDEOTYPE_GRAYSCALE
+    int NPVIDEOTYPE_OBJECT
+    int NPVIDEOTYPE_PRECISION
+    int NPVIDEOTYPE_MJPEG

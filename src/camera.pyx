@@ -26,6 +26,7 @@ import numpy as np
 from collections import namedtuple
 
 Mask = namedtuple('Mask', 'grid width height')
+Resolution = namedtuple('Resolution', 'width height')
 
 def get_cams():
     """Returns a tuple containing all cameras
@@ -39,11 +40,11 @@ def get_cams():
 #CAMERA CLASS
 class Camera(object):
 
-    OBJECT_MODE = 0
-    GRAYSCALE_MODE = 1
-    SEGMENT_MODE = 2
-    PRECISION_MODE = 4
-    MJPEG_MODE = 6
+    OBJECT_MODE = NPVIDEOTYPE_OBJECT
+    GRAYSCALE_MODE = NPVIDEOTYPE_GRAYSCALE
+    SEGMENT_MODE = NPVIDEOTYPE_SEGMENT
+    PRECISION_MODE = NPVIDEOTYPE_PRECISION
+    MJPEG_MODE = NPVIDEOTYPE_MJPEG
 
     def __init__(self, index):
         """Returns a Camera object."""
@@ -203,7 +204,6 @@ class Camera(object):
     def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
         raise NotImplementedError
         TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
-        print "Set"
 
     @property
     def pixel_resolution(self):
@@ -216,7 +216,7 @@ class Camera(object):
         """
         cdef int width = 0, height = 0
         if TT_CameraPixelResolution(self.index, width, height):
-            return (width, height)
+            return Resolution(width=width, height=height)
         else:
             raise Exception("Could Not Find Camera Resolution")
 
@@ -224,7 +224,9 @@ class Camera(object):
     def frame_resolution(self):
         """Tuple[int]: Number of pixels in width and height for this frame"""
         width, height = self.pixel_resolution
-        return (width, height) if self.video_mode != self.MJPEG_MODE else (width / 2, height / 2)
+        if self.video_mode == self.MJPEG_MODE:
+            width, height = width / 2, height / 2
+        return Resolution(width=width, height=height)
 
     @property
     def max_image_gain(self):
@@ -390,9 +392,9 @@ class Camera(object):
         Raises:
             Exception: If the function transforming from centroid to ray fails
         """
-        cdef float rayStartX=0, rayStartY=0, rayStartZ=0, rayEndX=0, rayEndY=0, rayEndZ=0
-        if TT_CameraRay(self.index, x, y, rayStartX, rayStartY, rayStartZ, rayEndX, rayEndY, rayEndZ):
-            return {'Xstart':rayStartX, 'Ystart':rayStartY, 'Zstart':rayStartZ,'Xend':rayEndX, 'Yend':rayEndY, 'Zend':rayEndZ}
+        cdef float x0 = 0., y0 = 0., z0 = 0., x1 = 0., y1 = 0., z1 = 0.
+        if TT_CameraRay(self.index, x, y, x0, y0, z0, x1, y1, z1):
+            return ((x0, y0, z0), (x1, y1, z1))
         else:
             raise Exception
 
@@ -413,24 +415,12 @@ class Camera(object):
         else:
             raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
 
-    def get_frame_buffer(self):
-        """Returns the cameras frame buffer
-
-        This function fills the provided buffer with an image of what is in the camera view.
-        The resulting image depends on what video mode the camera is in.
-        If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
-
-        Returns:
-            Frame buffer array
-
-        Raises:
-            Warnings: If after a video mode switch the incoming data mode has not switched yet
-        """
-        width, height=self.frame_resolution
-        cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((height, width), dtype='B')    #after this call frame is array with zeros
-        if not TT_CameraFrameBuffer(self.index, width, height, width, 8, &frame[0,0]):
-                                  #(camera number, width in pixels, height in pixels, width in bytes, bits per pixel, buffer name)
-                                  #  -> where width in bytes should equal width in pixels * bits per pixel / 8
+    @property
+    def frame_buffer(self):
+        """The Camera's frame buffer"""
+        res = self.frame_resolution
+        cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((res.height, res.width), dtype='B')    #after this call frame is array with zeros
+        if not TT_CameraFrameBuffer(self.index, res.width, res.height, res.width, 8, &frame[0,0]):
             raise BufferError("Camera Frame Could Not Be Buffered")
 
         #When video mode is changed, it often takes a few frames before the data coming in is correct.
