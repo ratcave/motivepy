@@ -17,27 +17,49 @@ include "cnative.pxd"
 from motive import utils
 
 
+def check_npresult(func):
+    """Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so
+
+    Note:
+        Should decorate every Motive API function returning a NPResult type.
+    """
+    error_dict = {NPRESULT_FILENOTFOUND:  (IOError, "File Not Found"),
+                  NPRESULT_LOADFAILED:  (Exception, "Load Failed"),
+                  NPRESULT_FAILED:  (Exception, "Failed"),
+                  NPRESULT_INVALIDFILE:  (IOError, "Invalid File"),
+                  NPRESULT_INVALIDCALFILE:  (IOError, "Invalid Calibration File"),
+                  NPRESULT_UNABLETOINITIALIZE: (IOError, "Unable To Initialize"),
+                  NPRESULT_INVALIDLICENSE: (EnvironmentError, "Invalid License"),
+                  NPRESULT_NOFRAMEAVAILABLE: (RuntimeWarning, "No Frames Available")}
+    def wrapper(*args, **kwargs):
+        npresult = func(*args, **kwargs)
+        if npresult != NPRESULT_SUCCESS:
+            error, msg = error_dict[npresult]
+            raise error(msg)
+    return wrapper
+
+
 #STARTUP / SHUTDOWN
 def initialize():
     """Initializes the connection to the cameras
     """
-    return utils.decorators.check_npresult(TT_Initialize)()
+    return check_npresult(TT_Initialize)()
 
 def shutdown():
     """Closes the connection to the cameras"""
-    return utils.decorators.check_npresult(TT_Shutdown)()
+    return check_npresult(TT_Shutdown)()
 
 @utils.decorators.block_for_frame(secs_to_timeout=3)
 def update_single_frame():
     """Processes incoming camera data, grabs next frame in buffer"""
-    return utils.decorators.check_npresult(TT_UpdateSingleFrame)()
+    return check_npresult(TT_UpdateSingleFrame)()
 
 @utils.decorators.block_for_frame(secs_to_timeout=3)
 def update():
     """Processes incoming camera data. Grabs next frame in buffer if calling rate is similar to camera frame rate
 
     If calling rate is slower than camera frame rate, only grabs frames in intervals"""
-    return utils.decorators.check_npresult(TT_Update)()
+    return check_npresult(TT_Update)()
 
 
 #RIGID BODY INTERFACE FILES
@@ -55,7 +77,7 @@ def load_calibration(str file_name):
     raise NotImplementedError
     utils.crash_avoidance.check_file_exists(file_name)
     utils.crash_avoidance.check_file_extension(file_name, '.cal')
-    return utils.decorators.check_npresult(TT_LoadCalibration)(file_name)
+    return check_npresult(TT_LoadCalibration)(file_name)
 
 
 @utils.decorators._save_backup
@@ -72,7 +94,7 @@ def load_rigid_bodies(str file_name):
     raise NotImplementedError
     utils.crash_avoidance.check_file_exists(file_name)
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
-    return utils.decorators.check_npresult(TT_LoadRigidBodies)(file_name)
+    return check_npresult(TT_LoadRigidBodies)(file_name)
 
 
 @utils.decorators._save_backup
@@ -88,10 +110,10 @@ def save_rigid_bodies(str file_name):
     """
     raise NotImplementedError
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
-    return utils.decorators.check_npresult(TT_SaveRigidBodies)(file_name)
+    return check_npresult(TT_SaveRigidBodies)(file_name)
 
 
-@utils.decorators.check_npresult
+@check_npresult
 def add_rigid_bodies(str file_name):
     """Adds rigid body data to an existing file
 
@@ -125,7 +147,7 @@ def load_project(str project_file=utils.backup_project_filename):
     utils.crash_avoidance.check_file_extension(project_file, '.ttp')
 
     # Load Project File
-    return utils.decorators.check_npresult(TT_LoadProject)(project_file)
+    return check_npresult(TT_LoadProject)(project_file)
 
 
 def _save_project(str project_file):
@@ -143,7 +165,7 @@ def _save_project(str project_file):
     utils.crash_avoidance.check_file_extension(project_file, '.ttp')
 
     # Save Project File
-    return utils.decorators.check_npresult(TT_SaveProject)(project_file)
+    return check_npresult(TT_SaveProject)(project_file)
 
 
 @utils.decorators._save_backup
@@ -162,7 +184,7 @@ def load_calibration_from_memory(buffer, int buffersize):
     """Note: Not Implemented!"""
     raise NotImplementedError
     cdef unsigned char * buff=buffer         #buffer should be an integer array. See get_frame_buffer() in camera.pyx for example
-    return utils.decorators.check_npresult(TT_LoadCalibrationFromMemory)(buff, buffersize)
+    return check_npresult(TT_LoadCalibrationFromMemory)(buff, buffersize)
 
 #DATA STREAMING
 def stream_trackd(bool enabled):
@@ -172,7 +194,7 @@ def stream_trackd(bool enabled):
     Args:
         enabled(bool): True to start Trackd Stream. False to stop it.
     """
-    return utils.decorators.check_npresult(TT_StreamTrackd)(enabled)
+    return check_npresult(TT_StreamTrackd)(enabled)
 
 def stream_vrpn(bool enabled, int port=3883):
     """Start/stop VRPN Stream
@@ -184,7 +206,7 @@ def stream_vrpn(bool enabled, int port=3883):
         enabled(bool): True to start VRPN Stream. False to stop it.
         port(Optional[int]): Encodes the broadcast port
     """
-    return utils.decorators.check_npresult(TT_StreamVRPN)(enabled, port)
+    return check_npresult(TT_StreamVRPN)(enabled, port)
 
 def stream_np(bool enabled):
     """Start/stop NaturalPoint Stream
@@ -192,7 +214,7 @@ def stream_np(bool enabled):
     Args:
         enabled(bool): True to start NaturalPoint Stream. False to stop it.
     """
-    return utils.decorators.check_npresult(TT_StreamNP)(enabled)
+    return check_npresult(TT_StreamNP)(enabled)
 
 
 #MARKERS
@@ -245,12 +267,12 @@ def flush_camera_queues():
 def set_camera_group_reconstruction(int groupIndex, bool enable):
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return utils.decorators.check_npresult(TT_SetCameraGroupReconstruction)(groupIndex, enable)
+    return check_npresult(TT_SetCameraGroupReconstruction)(groupIndex, enable)
 
 def set_enabled_filter_switch(bool enabled):
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return utils.decorators.check_npresult(TT_SetEnabledFilterSwitch)(enabled)
+    return check_npresult(TT_SetEnabledFilterSwitch)(enabled)
 
 def is_filter_switch_enabled():
     """Note: Not Implemented!"""
@@ -273,7 +295,7 @@ def orient_tracking_bar(float positionX, float positionY, float positionZ,
                         float orientationX, float orientationY, float orientationZ, float orientationW):
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return utils.decorators.check_npresult(TT_OrientTrackingBar)(positionX, positionY, positionZ,
+    return check_npresult(TT_OrientTrackingBar)(positionX, positionY, positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
 def get_build_number():

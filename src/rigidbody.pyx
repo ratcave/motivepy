@@ -23,6 +23,7 @@ from collections import namedtuple
 import warnings
 import _transformations as trans
 import numpy as np
+from motive import native
 
 Quaternion = namedtuple('Quaternion', 'x y z w')
 EulerRotation = namedtuple('EulerRotation', 'yaw pitch roll')
@@ -76,7 +77,7 @@ def create_rigid_body(str name, markerList):
          markerListp[3*i+2]=markerList[i][2]
 
      rigidIndexplus1=TT_RigidBodyCount()+1
-     return utils.decorators.check_npresult(TT_CreateRigidBody)(name, rigidIndexplus1 , markerCount, markerListp)
+     return native.check_npresult(TT_CreateRigidBody)(name, rigidIndexplus1 , markerCount, markerListp)
 
 
 def remove_rigid_body(int rigidIndex):
@@ -85,7 +86,7 @@ def remove_rigid_body(int rigidIndex):
     Args:
         rigidIndex(int): The index of the rigid body
     """
-    return utils.decorators.check_npresult(TT_RemoveRigidBody)(rigidIndex)
+    return native.check_npresult(TT_RemoveRigidBody)(rigidIndex)
 
 
 def clear_rigid_body_list():
@@ -213,7 +214,7 @@ class RigidBody(object):
 
         return tuple(markers)               #Tuples for the location of each marker is good. But all locations together seems more feasible for list!
 
-    #@utils.decorators.check_npresult
+    #@native.check_npresult
     def translate_pivot(self, float x, float y, float z):
         """Sets a translation offset for the centroid of the rigid body
 
@@ -232,7 +233,7 @@ class RigidBody(object):
             warnings.warn('Negating X axis for pivot translation to counter Motive bug.  Not tested for the current build version--use with care.')
 
         x *= -1.
-        return utils.decorators.check_npresult(TT_RigidBodyTranslatePivot)(self.index, x, y, z)
+        return native.check_npresult(TT_RigidBodyTranslatePivot)(self.index, x, y, z)
 
     def reset_pivot_offset(self):
         self.location = np.mean(self.point_cloud_markers, axis=0)

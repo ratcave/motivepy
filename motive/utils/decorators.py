@@ -5,39 +5,12 @@ in the form of decorators that catch
 general exceptions which can arise when one uses
 the Motive API.
 
-Example:
-    A possible way to implement TT_SaveProject() from the Motive API
-    such as to catch its various exceptions encoded by its return type::
-
-    >>>@utils.decorators.check_npresult
-    >>>def save_project(str project_file):
-    >>>     return TT_SaveProject(project_file)
-
 """
 
 import time
 import motive
 
-def check_npresult(func):
-    """Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so
 
-    Note:
-        Should decorate every Motive API function returning a NPResult type.
-    """
-    error_dict = {1:  (IOError, "File Not Found"),
-                  2:  (Exception, "Load Failed"),
-                  3:  (Exception, "Failed"),
-                  8:  (IOError, "Invalid File"),
-                  9:  (IOError, "Invalid Calibration File"),
-                  10: (EnvironmentError, "Unable To Initialize"),
-                  11: (EnvironmentError, "Invalid License"),
-                  14: (RuntimeWarning, "No Frames Available")}
-    def wrapper(*args, **kwargs):
-        npresult = func(*args, **kwargs)
-        if npresult in error_dict:
-            error, msg = error_dict[npresult]
-            raise error(msg)
-    return wrapper
 
 
 def countdown_timer(total_time):

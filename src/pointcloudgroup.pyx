@@ -17,7 +17,7 @@ Examples::
 """
 include "cnative.pxd"
 cimport cython
-from motive import utils
+from motive import utils, native
 
 #CAMERA GROUP SUPPORT
 def camera_group_count():
@@ -58,7 +58,7 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
     TT_SetGroupShutterDelay(groupIndex, microseconds)
 
 #TODO: Check if this actually works for a groupindex different from 0 or more than one group
-@utils.decorators.check_npresult
+@native.check_npresult
 def get_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSettings Settings):
     """Gets the settings of the camera group and sets them in the CameraGroupPointCloudSettings object
 
@@ -68,7 +68,7 @@ def get_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSetti
     """
     return TT_CameraGroupPointCloudSettings(groupIndex, Settings.obj[0])
 
-@utils.decorators.check_npresult
+@native.check_npresult
 def set_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSettings Settings):
     """Sets the settings in the camera group to the settings of the CameraGroupPointCloudSettings object
 
