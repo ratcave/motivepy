@@ -23,9 +23,9 @@ include "cnative.pxd"
 from motive import utils
 cimport numpy as np
 import numpy as np
-import warnings
-import functools
+from collections import namedtuple
 
+Mask = namedtuple('Mask', 'grid width height')
 
 def get_cams():
     """Returns a tuple containing all cameras
@@ -313,20 +313,19 @@ class Camera(object):
 
     def set_mask(self, buffer, int bufferSize):
         raise NotImplementedError
-        cdef unsigned char * buffer=buffer
+        cdef unsigned char * buffer = buffer
         if not TT_SetCameraMask(self.index, buffer, bufferSize):
             raise Exception("Could Not Set Mask")
 
+    @property
     def mask_info(self):
-        raise NotImplementedError
         cdef int blockingMaskWidth=0, blockingMaskHeight=0, blockingMaskGrid=0
         if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
-            return {'blockingMaskwidth':blockingMaskWidth,'blockingMaskHeight': blockingMaskHeight, 'blockingMaskGrid': blockingMaskGrid}
+            return Mask(width=blockingMaskWidth, height=blockingMaskHeight, grid=blockingMaskGrid)
         else:
             raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
 
     def clear_mask(self):
-        raise NotImplementedError
         if not TT_ClearCameraMask(self.index):
             raise Exception("Could Not Clear Mask")
 
