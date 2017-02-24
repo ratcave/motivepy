@@ -74,7 +74,7 @@ class Camera(object):
 
 
     def __str__(self):
-        return "Camera Object {0}: {1}".format(self.index, TT_CameraName(self.index))
+        return "{cls}(index={idx}, name={name})".format(cls=self.__class__.__name__, idx=self.index, name=self.name)
 
     def __repr__(self):
         return self.__str__()
