@@ -36,7 +36,7 @@ def get_unident_markers():
      rigs=get_rigid_bodies().values()
      imarkers=[]
      unimarkers=[]
-     for i in range (0,TT_RigidBodyCount()):
+     for i in range(RigidBody.count()):
         for ik in rigs[i].point_cloud_markers:
             imarkers.append(ik)
      for k in markers:
@@ -46,16 +46,9 @@ def get_unident_markers():
 
 
 def get_rigid_bodies():
-    """Returns a dictionary containing all rigid bodies
+    """Returns a dictionary containing all rigid bodies."""
+    return RigidBody.get_all()
 
-    Note:
-        First load a project file or a rigid body file.
-        For more information on this see native.pyx.
-
-    Returns:
-        Dictionary of rigid body objects
-    """
-    return {RigidBody(idx).name: RigidBody(idx) for idx in xrange(TT_RigidBodyCount())}
 
 def create_rigid_body(str name, markerList):
      """Creates a new rigid body
@@ -106,9 +99,8 @@ class RigidBody(object):
         """
         if index < 0:
             raise ValueError("Index must be Positive")
-        if index >= TT_RigidBodyCount():
-            raise ValueError("Index {} too High: Only {} Rigid Bodies have been created.".format(index,
-                                                                                                 TT_RigidBodyCount()))
+        if index >= self.count():
+            raise ValueError("Index {} too High: Only {} Rigid Bodies detected.".format(index, RigidBody.count()))
         self.index = index
 
     def __str__(self):
@@ -117,6 +109,15 @@ class RigidBody(object):
 
     def __repr__(self):
         return self.__str__()
+
+    @staticmethod
+    def count():
+        return TT_RigidBodyCount()
+
+    @classmethod
+    def get_all(cls):
+        """Returns dict of all RigidBodies."""
+        return {cls(idx).name: cls(idx) for idx in range(cls.count())}
 
     @property
     def name(self):

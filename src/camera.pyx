@@ -47,15 +47,10 @@ def check_cam_setting(func):
 
 
 def get_cams():
-    """Returns a tuple containing all cameras
-
-    Returns:
-        Tuple of camera objects.
-    """
-    return tuple(Camera(cameraIndex) for cameraIndex in xrange(TT_CameraCount()))
+    """Returns a tuple containing all cameras."""
+    return Camera.get_all()
 
 
-#CAMERA CLASS
 class Camera(object):
 
     OBJECT_MODE = NPVIDEOTYPE_OBJECT
@@ -77,6 +72,11 @@ class Camera(object):
     @staticmethod
     def count():
         return TT_CameraCount()
+
+    @classmethod
+    def get_all(cls):
+        """Returns tuple of Cameras"""
+        return tuple(cls(index) for index in range(cls.count()))
 
     def __str__(self):
         return '{cls}(index={idx}, name="{name}")'.format(cls=self.__class__.__name__, idx=self.index, name=self.name)
