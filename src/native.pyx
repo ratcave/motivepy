@@ -40,14 +40,15 @@ def check_npresult(func):
 
 
 #STARTUP / SHUTDOWN
+@check_npresult
 def initialize():
-    """Initializes the connection to the cameras
-    """
-    return check_npresult(TT_Initialize)()
+    """Initializes the connection to the cameras"""
+    return TT_Initialize()
 
+@check_npresult
 def shutdown():
     """Closes the connection to the cameras"""
-    return check_npresult(TT_Shutdown)()
+    return TT_Shutdown()
 
 @utils.decorators.block_for_frame(secs_to_timeout=3)
 def update_single_frame():
