@@ -111,7 +111,7 @@ class RigidBody(object):
         self.index = index
 
     def __str__(self):
-        fmt = '{cls}(index={index}, name={name})'
+        fmt = '{cls}(index={index}, name="{name}")'
         return fmt.format(cls=self.__class__.__name__, index=self.index, name=self.name)
 
     def __repr__(self):
