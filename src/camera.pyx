@@ -71,6 +71,11 @@ class Camera(object):
         return TT_CameraName(self.index)
 
     @property
+    def id(self):
+        "int: Camera ID number"
+        return utils.decorators.check_cam_setting(TT_CameraID)(self.index)
+
+    @property
     def group(self):
         """int: Camera's group index"""
         return TT_CamerasGroup(self.index)
@@ -148,7 +153,7 @@ class Camera(object):
     @frame_rate.setter
     def frame_rate(self, value):
         if not TT_SetCameraFrameRate(self.index, value):
-            raise Exception("Could Not Set Frame Rate. Check Camera Index And Initialize With TT_Initialize()")
+            raise Exception("Could Not Set Frame Rate.")
 
     @property
     def grayscale_decimation(self):
@@ -173,29 +178,32 @@ class Camera(object):
 
     @image_gain.setter
     def image_gain(self, value):
-        assert 0<value<9, "Range from 1 to 8"
+        if not 0 <= value <= 8:
+            raise ValueError("Camera.image_gain must be between 0 and 8")
         TT_SetCameraImagerGain(self.index, value-1)
+
+    def is_continuous_ir_available(self):
+        """bool: Continuous IR illumination is available"""
+        return TT_IsContinuousIRAvailable(self.index)
 
     @property
     def continuous_ir(self):
         """bool: Continuous IR illumination is on"""
-        assert TT_IsContinuousIRAvailable(self.index), "Camera {0} Does Not Support Continuous IR".format(self.index)
-        return TT_ContinuousIR(self.index)
+        if not self.is_continuous_ir_available() or not TT_ContinuousIR(self.index):
+            return False
+        else:
+            return True
 
     @continuous_ir.setter
     def continuous_ir(self, bool value):
+        if value and not self.is_continuous_ir_available():
+            raise ValueError("continouus_ir not available for this Camera")
         TT_SetContinuousIR(self.index, value)
 
     def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
         raise NotImplementedError
         TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
         print "Set"
-
-#Properties Without Simple Setter (If Not Here Maybe In Camera Class of CameraSDK)
-    @property
-    def id(self):
-        "int: Camera ID number"
-        return utils.decorators.check_cam_setting(TT_CameraID)(self.index)
 
     @property
     def pixel_resolution(self):
@@ -206,7 +214,7 @@ class Camera(object):
         Raises:
             Exception: If the resolution can not be found
         """
-        cdef int width=0, height=0
+        cdef int width = 0, height = 0
         if TT_CameraPixelResolution(self.index, width, height):
             return (width, height)
         else:
@@ -215,18 +223,13 @@ class Camera(object):
     @property
     def frame_resolution(self):
         """Tuple[int]: Number of pixels in width and height for this frame"""
-        width, height=self.pixel_resolution
-        return (width, height) if self.video_mode!=6 else (width/2, height/2)
+        width, height = self.pixel_resolution
+        return (width, height) if self.video_mode != self.MJPEG_MODE else (width / 2, height / 2)
 
     @property
     def max_image_gain(self):
         """int: Maximum possible gain level of camera"""
         return  utils.decorators.check_cam_setting(TT_CameraImagerGain)(self.index)
-
-    @property
-    def is_continuous_ir_available(self):
-        """bool: Continuous IR illumination is available"""
-        return TT_IsContinuousIRAvailable(self.index)
 
     @property
     def temperature(self):
@@ -258,15 +261,13 @@ class Camera(object):
         """Tuple[float]: 3D camera location"""
         return TT_CameraXLocation(self.index), TT_CameraYLocation(self.index), TT_CameraZLocation(self.index)
 
-    def orientation_matrix(self, int matrixIndex):
-        """Returns one element of a 3x3 orientation matrix of the camera
-
-        Args:
-            matrixIndex(int): Index ranging over all matrix elements
-        Returns:
-            float: The element of the matrix corresponding to the given index
-        """
-        return TT_CameraOrientationMatrix(self.index, matrixIndex)
+    @property
+    def orientation_matrix(self):
+        """Returns the Camera's 3x3 orientation matrix."""
+        ori_mat = np.zeros(shape=(3, 3), dtype=float)
+        for idx in range(9):
+            ori_mat[np.unravel_index(idx, ori_mat.shape)] = TT_CameraOrientationMatrix(self.index, idx)
+        return ori_mat
 
     def model(self, float x, float y, float z,
               orientation,
