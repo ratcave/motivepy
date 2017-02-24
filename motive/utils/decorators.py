@@ -44,23 +44,6 @@ def block_for_frame(secs_to_timeout=3):
     return decorator_fun
 
 
-def check_cam_setting(func):
-    """Decorator that checks if a TT_Camera function can be called correctly
-
-    Returns:
-        check(int): An integer value encoding the camera setting (see camera.pyx)
-    Raises:
-        Exception: If the camera function returns a value encoding an error
-    """
-    def wrapper(*args, **kwargs):
-        check=func(*args, **kwargs)
-        if check<0:
-            raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")
-        else:
-            return check
-    return wrapper
-
-
 def _save_backup(func):
     """Decorator that saves a backup project file"""
     def wrapper(*args, **kwargs):

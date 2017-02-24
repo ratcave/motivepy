@@ -28,6 +28,24 @@ from collections import namedtuple
 Mask = namedtuple('Mask', 'grid width height')
 Resolution = namedtuple('Resolution', 'width height')
 
+
+def check_cam_setting(func):
+    """Decorator that checks if a TT_Camera function can be called correctly
+
+    Returns:
+        check(int): An integer value encoding the camera setting (see camera.pyx)
+    Raises:
+        Exception: If the camera function returns a value encoding an error
+    """
+    def wrapper(*args, **kwargs):
+        check=func(*args, **kwargs)
+        if check < 0:
+            raise Exception("Value Not Available. Usually Camera Index Not Valid Or Devices Not Initialized")
+        else:
+            return check
+    return wrapper
+
+
 def get_cams():
     """Returns a tuple containing all cameras
 
@@ -74,7 +92,7 @@ class Camera(object):
     @property
     def id(self):
         "int: Camera ID number"
-        return utils.decorators.check_cam_setting(TT_CameraID)(self.index)
+        return check_cam_setting(TT_CameraID)(self.index)
 
     @property
     def group(self):
@@ -88,7 +106,7 @@ class Camera(object):
     @property
     def video_mode(self):
         """int: Integer encoding the actual video mode of the camera. See Camera.X_MODE"""
-        return utils.decorators.check_cam_setting(TT_CameraVideoType)(self.index)
+        return check_cam_setting(TT_CameraVideoType)(self.index)
 
     @video_mode.setter
     def video_mode(self, value):
@@ -97,7 +115,7 @@ class Camera(object):
     @property
     def exposure(self):
         """int: Camera exposure level"""
-        return utils.decorators.check_cam_setting(TT_CameraExposure)(self.index)
+        return check_cam_setting(TT_CameraExposure)(self.index)
 
     @exposure.setter
     def exposure(self, value):
@@ -107,7 +125,7 @@ class Camera(object):
     @property
     def threshold(self):
         """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker"""
-        return utils.decorators.check_cam_setting(TT_CameraThreshold)(self.index)
+        return check_cam_setting(TT_CameraThreshold)(self.index)
 
     @threshold.setter
     def threshold(self, value):
@@ -116,7 +134,7 @@ class Camera(object):
     @property
     def intensity(self):
         """int: Camera IR LED brightness intensity level"""
-        return utils.decorators.check_cam_setting(TT_CameraIntensity)(self.index)
+        return check_cam_setting(TT_CameraIntensity)(self.index)
 
     @intensity.setter
     def intensity(self, value):
@@ -149,7 +167,7 @@ class Camera(object):
     @property
     def frame_rate(self):
         """int: Cameras frame rate in Hz. That is frames per second"""
-        return utils.decorators.check_cam_setting(TT_CameraFrameRate)(self.index)
+        return check_cam_setting(TT_CameraFrameRate)(self.index)
 
     @frame_rate.setter
     def frame_rate(self, value):
@@ -160,7 +178,7 @@ class Camera(object):
     def grayscale_decimation(self):
         """int: level of decimation of frame capture (how many frames to skip when getting video)"""
         raise NotImplementedError
-        return  utils.decorators.check_cam_setting(TT_CameraGrayscaleDecimation)(self.index)
+        return  check_cam_setting(TT_CameraGrayscaleDecimation)(self.index)
 
     @grayscale_decimation.setter
     def grayscale_decimation(self, value):
@@ -175,7 +193,7 @@ class Camera(object):
         Raises:
             AssertionError: If setting values out of scope
         """
-        return  utils.decorators.check_cam_setting(TT_CameraImagerGainLevels)(self.index)+1   #In the motive GUI values range from 1 to 8
+        return  check_cam_setting(TT_CameraImagerGainLevels)(self.index)+1   #In the motive GUI values range from 1 to 8
 
     @image_gain.setter
     def image_gain(self, value):
@@ -231,17 +249,17 @@ class Camera(object):
     @property
     def max_image_gain(self):
         """int: Maximum possible gain level of camera"""
-        return  utils.decorators.check_cam_setting(TT_CameraImagerGain)(self.index)
+        return  check_cam_setting(TT_CameraImagerGain)(self.index)
 
     @property
     def temperature(self):
         """float: Temperature of camera"""
-        return utils.decorators.check_cam_setting(TT_CameraTemperature)(self.index)
+        return check_cam_setting(TT_CameraTemperature)(self.index)
 
     @property
     def ring_light_temperature(self):
         """float: Temperature of the cameras LED ring"""
-        return  utils.decorators.check_cam_setting(TT_CameraRinglightTemperature)(self.index)
+        return  check_cam_setting(TT_CameraRinglightTemperature)(self.index)
 
     @property
     def marker_count(self):
