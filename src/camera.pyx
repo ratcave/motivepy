@@ -39,42 +39,28 @@ def get_cams():
 #CAMERA CLASS
 class Camera(object):
 
-    def __init__(self, cameraIndex):
-        """Returns a camera object
+    OBJECT_MODE = 0
+    GRAYSCALE_MODE = 1
+    SEGMENT_MODE = 2
+    PRECISION_MODE = 4
+    MJPEG_MODE = 6
 
-        Args:
-            cameraIndex (int): The index of the camera to be returned
-        Raises:
-            AssertionError: If the index is larger than the number of cameras
-        """
-        assert cameraIndex < TT_CameraCount(), "There Are Only {0} Cameras".format(TT_CameraCount())
-        self.index=cameraIndex
+    def __init__(self, index):
+        """Returns a Camera object."""
 
-        #Detect video modes and set as instance constants.
-        self._video_modes = {'OBJECT_MODE': 0, 'GRAYSCALE_MODE': 1, 'SEGMENT_MODE': 2, 'MJPEG_MODE': 6}
-        if '13' in self.name:
-            self._video_modes['PRECISION_MODE'] = 4
-            self.PRECISION_MODE = self._video_modes['PRECISION_MODE']
-            """int: Integer code for video in precision mode
-            Note:
-                Only Prime Cameras of the 13 series can switch to precision mode
-            """
+        if index < 0:
+            raise ValueError("Camera Index Must be Positive")
+        if index >= self.count():
+            raise ValueError("Index too high -- There Are Only {0} Cameras").format(self.count())
 
-        self.OBJECT_MODE = self._video_modes['OBJECT_MODE']
-        """int: Integer code for video in object mode"""
+        self.index=index
 
-        self.GRAYSCALE_MODE = self._video_modes['GRAYSCALE_MODE']
-        """int: Integer code for video in grayscale mode"""
-
-        self.SEGMENT_MODE = self._video_modes['SEGMENT_MODE']
-        """int: Integer code for video in segment mode"""
-
-        self.MJPEG_MODE = self._video_modes['MJPEG_MODE']
-        """int: Integer code for video in mjpeg mode"""
-
+    @staticmethod
+    def count():
+        return TT_CameraCount()
 
     def __str__(self):
-        return "{cls}(index={idx}, name={name})".format(cls=self.__class__.__name__, idx=self.index, name=self.name)
+        return '{cls}(index={idx}, name="{name}")'.format(cls=self.__class__.__name__, idx=self.index, name=self.name)
 
     def __repr__(self):
         return self.__str__()
@@ -100,8 +86,7 @@ class Camera(object):
 
     @video_mode.setter
     def video_mode(self, value):
-        assert value in self._video_modes.values(), "Possible Video Modes {0}".format(self._video_modes)
-        TT_SetCameraSettings(self.index, value, self.exposure, self.threshold, self.intensity)
+        self.set_settings(video_mode=value, exposure=self.exposure, threshold=self.threshold, intensity=self.intensity)
 
     @property
     def exposure(self):
@@ -110,35 +95,26 @@ class Camera(object):
 
     @exposure.setter
     def exposure(self, value):
+        self.set_settings(video_mode=self.video_mode, exposure=value, threshold=self.threshold, intensity=self.intensity)
         TT_SetCameraSettings(self.index, self.video_mode, value, self.threshold, self.intensity)
 
     @property
     def threshold(self):
-        """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
-
-        Raises:
-            AssertionError: If setting values out of scope
-        """
+        """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker"""
         return utils.decorators.check_cam_setting(TT_CameraThreshold)(self.index)
 
     @threshold.setter
     def threshold(self, value):
-        assert value >= 0 and value <= 255, "Threshold Must Be In (0,255)"
-        TT_SetCameraSettings(self.index, self.video_mode, self.exposure, value, self.intensity)
+        self.set_settings(video_mode=self.video_mode, exposure=self.exposure, threshold=value, intensity=self.intensity)
 
     @property
     def intensity(self):
-        """int: Camera IR LED brightness intensity level
-
-        Raises:
-            AssertionError: If setting values out of scope
-        """
+        """int: Camera IR LED brightness intensity level"""
         return utils.decorators.check_cam_setting(TT_CameraIntensity)(self.index)
 
     @intensity.setter
     def intensity(self, value):
-        assert value >= 0 and value <= 15, "Intensity Must Be In (0,15)"
-        TT_SetCameraSettings(self.index, self.video_mode, self.exposure, self.threshold, value)
+        self.set_settings(video_mode=self.video_mode, exposure=self.exposure, threshold=self.threshold, intensity=value)
 
     def set_settings(self, int video_mode, int exposure, int threshold, int intensity):
         """Set camera settings
@@ -152,6 +128,16 @@ class Camera(object):
             threshold (int): Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
             intensity (int): Camera IR LED brightness intensity level
         """
+
+        if video_mode == self.PRECISION_MODE and '13' not in self.name.split('#')[0]:
+            raise ValueError("video_mode PRECISION_MODE not available for this Camera.")
+
+        if not (0 <= intensity <= 15):
+            raise ValueError("Intensity Must Be In (0,15)")
+
+        if not (0 <= threshold <= 255):
+            raise ValueError("Threshold Must Be In (0,255)")
+
         return TT_SetCameraSettings(self.index, video_mode, exposure, threshold, intensity)
 
     @property
@@ -260,7 +246,7 @@ class Camera(object):
     @property
     def markers(self):
         """Tuple[float]: 2D centroid locations of all markers as seen by the camera"""
-        cdef float x = 0, y = 0
+        cdef float x = 0., y = 0.
         markers = []
         for markerIndex in xrange(TT_CameraMarkerCount(self.index)):
             TT_CameraMarker(self.index, markerIndex, x, y)
