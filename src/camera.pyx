@@ -27,6 +27,7 @@ from collections import namedtuple
 
 Mask = namedtuple('Mask', 'grid width height')
 Resolution = namedtuple('Resolution', 'width height')
+CameraSettings = namedtuple('CameraSettings', 'video_mode exposure threshold intensity')
 
 
 def check_cam_setting(func):
@@ -140,6 +141,27 @@ class Camera(object):
     def intensity(self, value):
         self.set_settings(video_mode=self.video_mode, exposure=self.exposure, threshold=self.threshold, intensity=value)
 
+    @property
+    def settings(self):
+        return CameraSettings(video_mode=self.video_mode, exposure=self.exposure, threshold=self.threshold, intensity=self.intensity)
+
+    @settings.setter
+    def settings(self, value):
+        """Takes a CameraSettings tuple (video_mode, exposure, threshold, intensity) to apply multiple settings at once."""
+        ss = CameraSettings(*value) if not isinstance(value, CameraSettings) else value
+
+        if ss.video_mode == self.PRECISION_MODE and '13' not in self.name.split('#')[0]:
+            raise ValueError("video_mode PRECISION_MODE not available for this Camera.")
+
+        if not (0 <= ss.intensity <= 15):
+            raise ValueError("Intensity Must Be In (0,15)")
+
+        if not (0 <= ss.threshold <= 255):
+            raise ValueError("Threshold Must Be In (0,255)")
+
+        return TT_SetCameraSettings(self.index, ss.video_mode, ss.exposure, ss.threshold, ss.intensity)
+
+
     def set_settings(self, int video_mode, int exposure, int threshold, int intensity):
         """Set camera settings
 
@@ -152,6 +174,7 @@ class Camera(object):
             threshold (int): Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
             intensity (int): Camera IR LED brightness intensity level
         """
+        raise DeprecationWarning("Camera.set_settings() deprecated.  New use is property Camera.settings.")
 
         if video_mode == self.PRECISION_MODE and '13' not in self.name.split('#')[0]:
             raise ValueError("video_mode PRECISION_MODE not available for this Camera.")
