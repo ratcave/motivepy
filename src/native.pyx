@@ -55,6 +55,7 @@ def update_single_frame():
     """Processes incoming camera data, grabs next frame in buffer"""
     return check_npresult(TT_UpdateSingleFrame)()
 
+
 @utils.decorators.block_for_frame(secs_to_timeout=3)
 def update():
     """Processes incoming camera data. Grabs next frame in buffer if calling rate is similar to camera frame rate

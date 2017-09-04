@@ -174,7 +174,7 @@ class Camera(object):
             threshold (int): Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker
             intensity (int): Camera IR LED brightness intensity level
         """
-        raise DeprecationWarning("Camera.set_settings() deprecated.  New use is property Camera.settings.")
+        # raise DeprecationWarning("Camera.set_settings() deprecated.  New use is property Camera.settings.")
 
         if video_mode == self.PRECISION_MODE and '13' not in self.name.split('#')[0]:
             raise ValueError("video_mode PRECISION_MODE not available for this Camera.")

@@ -17,6 +17,8 @@ Examples::
 
 include "cnative.pxd"
 
+from cpython cimport array
+import array
 from motive import utils, native
 from libc.stdlib cimport malloc, free
 from collections import namedtuple
@@ -24,6 +26,7 @@ import warnings
 import _transformations as trans
 import numpy as np
 from motive import native
+import itertools
 
 Quaternion = namedtuple('Quaternion', 'x y z w')
 EulerRotation = namedtuple('EulerRotation', 'yaw pitch roll')
@@ -55,22 +58,12 @@ def create_rigid_body(str name, markerList):
 
      Args:
         name(str): Name of the rigid body to be created
-        markerList(List[float]): A list of marker coordinates in the order:  x1,y1,z1,x2,y2,z2,...xN,yN,zN
+        markerList(List[float]): A list of marker coordinates in the order:  [[x1,y1,z1], [x2,y2,z2], ..., [xN,yN,zN]]
      Note:
         For some reason a rigid body created via this API function is not tracked by Motive.
-     Note:
-        Not Implemented!
      """
-     raise NotImplementedError()
-     markerCount=len(markerList)
-     cdef float * markerListp=<float *> malloc(markerCount*sizeof(float))  #should include some free(markerListp) somewhere below
-     for i in xrange(len(markerList)):
-         markerListp[3*i]=markerList[i][0]
-         markerListp[3*i+1]=markerList[i][1]
-         markerListp[3*i+2]=markerList[i][2]
-
-     rigidIndexplus1=TT_RigidBodyCount()+1
-     return native.check_npresult(TT_CreateRigidBody)(name, rigidIndexplus1 , markerCount, markerListp)
+     cdef array.array markerList_array = array.array('f', itertools.chain(*markerList))
+     return TT_CreateRigidBody(name, RigidBody.count() + 1, len(markerList), markerList_array.data.as_floats)
 
 
 def remove_rigid_body(int rigidIndex):
