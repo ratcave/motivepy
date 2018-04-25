@@ -17,10 +17,11 @@ Examples::
     Camera Prime 17W #10187
 
 """
+from __future__ import absolute_import
 
 include "cnative.pxd"
 
-from motive import utils
+from . import utils
 cimport numpy as np
 import numpy as np
 from collections import namedtuple

@@ -6,11 +6,11 @@ general exceptions which can arise when one uses
 the Motive API.
 
 """
+from  __future__ import absoluate_import
+
 
 import time
-import motive
-
-
+from .. import native, utils
 
 
 def countdown_timer(total_time):
@@ -48,5 +48,5 @@ def _save_backup(func):
     """Decorator that saves a backup project file"""
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
-        motive.native._save_project(motive.utils.backup_project_filename)
+        native._save_project(utils.backup_project_filename)
     return wrapper

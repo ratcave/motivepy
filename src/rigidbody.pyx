@@ -14,18 +14,18 @@ Examples::
         Arena
 
 """
+from __future__ import absolute_import
 
 include "cnative.pxd"
 
 from cpython cimport array
 import array
-from motive import utils, native
+from . import utils, native
 from libc.stdlib cimport malloc, free
 from collections import namedtuple
 import warnings
 import _transformations as trans
 import numpy as np
-from motive import native
 import itertools
 
 Quaternion = namedtuple('Quaternion', 'x y z w')

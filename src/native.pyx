@@ -11,10 +11,11 @@ Examples::
     ((0.44324554, 0.65645343, 1.5665743), (0.23456576, 0.11568943, 0.04334536), (1.43445367, 1.23546491, 2.34356222))
 
 """
+from __future__ import absolute_import
 
 include "cnative.pxd"
 
-from motive import utils
+from . import utils
 
 
 def check_npresult(func):

@@ -55,6 +55,6 @@ setup(
     ext_modules= cythonize([native, rigidbody, camera, pointcloudgroup, transformations]),
     packages= find_packages(),
     scripts=['scripts/vislight.py', 'scripts/viewer.py', 'scripts/video.py'],
-    install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph', 'btk' ],
+    install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph'], #, 'btk' ],
     package_data= {'': ['data/*.ttp']}
 )

@@ -15,9 +15,11 @@ Examples::
     >>>set_camera_group_point_cloud_settings(0,settings)
 
 """
+from __future__ import absolute_import
+
 include "cnative.pxd"
 cimport cython
-from motive import utils, native
+from . import utils, native
 
 #CAMERA GROUP SUPPORT
 def camera_group_count():

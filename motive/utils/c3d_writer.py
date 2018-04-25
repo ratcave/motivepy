@@ -15,15 +15,16 @@ Note:
     Call update() (see native.pyx for more information on this function) to get
     the newest marker data.
 """
+from __future__ import absoluate_import
 
 import btk
-import motive as m
+from ..native import get_frame_markers
 
 def create_record_object():
     """Returns a data aquisition object consisting of the marker positions of one frame"""
     acq=btk.btkAcquisition()
     btk.btkAcquisition.Reset(acq)
-    btk.btkAcquisition.Init(acq,len(m.get_frame_markers()),1)
+    btk.btkAcquisition.Init(acq,len(get_frame_markers()),1)
 
     return acq
 
@@ -38,7 +39,7 @@ def record_frames_markers(acq):
         Data acquisition object
     """
     frames=acq.GetPointFrameNumber()
-    markers=m.get_frame_markers()
+    markers=get_frame_markers()
     record_points=acq.GetPoints()
 
     if record_points.GetItemNumber()<len(markers):

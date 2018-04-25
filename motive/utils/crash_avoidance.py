@@ -4,6 +4,7 @@ This module features functionality to
 avoid crashes related to not existing
 files or wrong file extensions.
 """
+from __future__ import absolute_import
 
 import os
 import appdirs
