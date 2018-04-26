@@ -80,7 +80,7 @@ def load_calibration(str file_name):
     raise NotImplementedError
     utils.crash_avoidance.check_file_exists(file_name)
     utils.crash_avoidance.check_file_extension(file_name, '.cal')
-    return check_npresult(TT_LoadCalibration)(file_name)
+    return check_npresult(TT_LoadCalibration)(file_name.encode('UTF-8'))
 
 
 @utils.decorators._save_backup
@@ -97,7 +97,7 @@ def load_rigid_bodies(str file_name):
     raise NotImplementedError
     utils.crash_avoidance.check_file_exists(file_name)
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
-    return check_npresult(TT_LoadRigidBodies)(file_name)
+    return check_npresult(TT_LoadRigidBodies)(file_name.encode('UTF-8'))
 
 
 @utils.decorators._save_backup
@@ -113,7 +113,7 @@ def save_rigid_bodies(str file_name):
     """
     raise NotImplementedError
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
-    return check_npresult(TT_SaveRigidBodies)(file_name)
+    return check_npresult(TT_SaveRigidBodies)(file_name.encode('UTF-8'))
 
 
 @check_npresult
@@ -130,10 +130,10 @@ def add_rigid_bodies(str file_name):
     raise NotImplementedError
     utils.crash_avoidance.check_file_extension(file_name, '.tra')
     utils.crash_avoidance.check_file_exists(file_name)
-    return TT_AddRigidBodies(file_name)
+    return TT_AddRigidBodies(file_name.encode('UTF-8'))
 
 
-@utils.decorators._save_backup
+#@utils.decorators._save_backup
 def load_project(str project_file=utils.backup_project_filename):
     """Loads the data of a project file
 
@@ -144,13 +144,13 @@ def load_project(str project_file=utils.backup_project_filename):
         file_name(Optional[str]): Name of the file
             If left blank, will load the most recently loaded or saved project file
     """
-
+    
     # Check File name and raise appropriate errors.
     utils.crash_avoidance.check_file_exists(project_file)
     utils.crash_avoidance.check_file_extension(project_file, '.ttp')
 
     # Load Project File
-    return check_npresult(TT_LoadProject)(project_file)
+    return check_npresult(TT_LoadProject)(project_file.encode('UTF-8'))
 
 
 def _save_project(str project_file):
@@ -168,7 +168,7 @@ def _save_project(str project_file):
     utils.crash_avoidance.check_file_extension(project_file, '.ttp')
 
     # Save Project File
-    return check_npresult(TT_SaveProject)(project_file)
+    return check_npresult(TT_SaveProject)(project_file.encode('UTF-8'))
 
 
 @utils.decorators._save_backup

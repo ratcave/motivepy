@@ -22,6 +22,7 @@ from __future__ import absolute_import
 include "cnative.pxd"
 
 from . import utils
+from .utils.decorators import convert_string_output
 cimport numpy as np
 import numpy as np
 from collections import namedtuple
@@ -87,6 +88,7 @@ class Camera(object):
         return self.__str__()
 
     @property
+    @convert_string_output
     def name(self):
         """str: Camera name"""
         return TT_CameraName(self.index)
@@ -494,7 +496,7 @@ class Camera(object):
         Raises:
             IOError: If the buffer has not been succesfully saved
         """
-        if not TT_CameraFrameBufferSaveAsBMP(self.index, filename):
+        if not TT_CameraFrameBufferSaveAsBMP(self.index, filename.encode('UTF-8')):
             raise IOError("Camera Frame Buffer Not Successfully Saved")
 
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value

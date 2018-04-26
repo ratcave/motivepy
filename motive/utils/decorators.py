@@ -6,9 +6,9 @@ general exceptions which can arise when one uses
 the Motive API.
 
 """
-from  __future__ import absoluate_import
+from  __future__ import absolute_import
 
-
+import sys
 import time
 from .. import native, utils
 
@@ -49,4 +49,15 @@ def _save_backup(func):
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
         native._save_project(utils.backup_project_filename)
+    return wrapper
+    
+    
+def convert_string_output(func):
+    """Decorator that converts a string output to unicode for Python 3 and bytes in Python 2."""
+    def wrapper(*args, **kwargs):
+        str_output = func(*args, **kwargs)
+        if sys.version_info.major >= 3:
+            return str_output.decode('UTF-8')
+        else:
+            return str_output
     return wrapper

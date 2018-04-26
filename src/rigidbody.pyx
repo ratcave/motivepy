@@ -21,6 +21,7 @@ include "cnative.pxd"
 from cpython cimport array
 import array
 from . import utils, native
+from .utils.decorators import convert_string_output
 from libc.stdlib cimport malloc, free
 from collections import namedtuple
 import warnings
@@ -63,7 +64,7 @@ def create_rigid_body(str name, markerList):
         For some reason a rigid body created via this API function is not tracked by Motive.
      """
      cdef array.array markerList_array = array.array('f', itertools.chain(*markerList))
-     return TT_CreateRigidBody(name, RigidBody.count() + 1, len(markerList), markerList_array.data.as_floats)
+     return TT_CreateRigidBody(name.encode('UTF-8'), RigidBody.count() + 1, len(markerList), markerList_array.data.as_floats)
 
 
 def remove_rigid_body(int rigidIndex):
@@ -113,9 +114,10 @@ class RigidBody(object):
         return {cls(idx).name: cls(idx) for idx in range(cls.count())}
 
     @property
+    @convert_string_output
     def name(self):
         """str: Rigid body name"""
-        return "{0}".format(TT_RigidBodyName(self.index))
+        return TT_RigidBodyName(self.index)
 
     @property
     def user_data(self):
