@@ -35,18 +35,17 @@ Location = namedtuple('Location', 'x y z')
 
 #FUNCTIONS
 def get_unident_markers():
-     """Returns a tuple containing all tuples of 3D marker positions not part of rigid bodies"""
-     markers=tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
-     rigs=get_rigid_bodies().values()
-     imarkers=[]
-     unimarkers=[]
-     for i in range(RigidBody.count()):
-        for ik in rigs[i].point_cloud_markers:
-            imarkers.append(ik)
-     for k in markers:
+    """Returns a tuple containing all tuples of 3D marker positions not part of rigid bodies"""
+    markers=tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
+    rigs=get_rigid_bodies().values()
+    imarkers=[]
+    unimarkers=[]
+    for name, body in get_rigid_bodies().items():
+        imarkers.extend(body.point_cloud_markers)
+    for k in markers:
         if k not in imarkers:
             unimarkers.append(k)
-     return tuple(unimarkers)
+    return tuple(unimarkers)
 
 
 def get_rigid_bodies():
