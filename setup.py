@@ -38,21 +38,21 @@ rigidbody = Extension(
     language="c++"
 )
 
-pointcloudgroup = Extension(
-    'motive.pointcloudgroup',
-    sources=["src\\pointcloudgroup.pyx" ],
-    include_dirs=[MOTIVE_INC_DIR, "src"],
-    library_dirs=[MOTIVE_LIB_DIR ],
-    extra_link_args=[MOTIVE_LINK_ARG],
-    language="c++"
-)
+# pointcloudgroup = Extension(
+    # 'motive.pointcloudgroup',
+    # sources=["src\\pointcloudgroup.pyx" ],
+    # include_dirs=[MOTIVE_INC_DIR, "src"],
+    # library_dirs=[MOTIVE_LIB_DIR ],
+    # extra_link_args=[MOTIVE_LINK_ARG],
+    # language="c++"
+# )
 
 
 transformations  = Extension('_transformations', sources=['third_party/transformations.c'], include_dirs=[numpy.get_include()])
 
 setup(
     name="motive",
-    ext_modules= cythonize([native, rigidbody, camera, pointcloudgroup, transformations]),
+    ext_modules= cythonize([native, rigidbody, camera, transformations]), # pointcloudgroup
     packages= find_packages(),
     scripts=['scripts/vislight.py', 'scripts/viewer.py', 'scripts/video.py'],
     install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph'], #, 'btk' ],
