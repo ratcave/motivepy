@@ -6,8 +6,8 @@ from os import path
 from warnings import warn
 
 
-MOTIVE_INC_DIR = path.join("C:", "Program Files", "OptiTrack", "Motive", "inc")
-MOTIVE_LIB_DIR = path.join("C:", "Program Files", "OptiTrack", "Motive", "lib")
+MOTIVE_INC_DIR = path.join(r"C:\\", "Program Files", "OptiTrack", "Motive", "inc")
+MOTIVE_LIB_DIR = path.join(r"C:\\", "Program Files", "OptiTrack", "Motive", "lib")
 MOTIVE_LINK_ARG="/DEFAULTLIB:NPTrackingToolsx64"
 
 #TODO: Link to correct path automatically
