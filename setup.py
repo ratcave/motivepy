@@ -12,7 +12,7 @@ MOTIVE_LINK_ARG="/DEFAULTLIB:NPTrackingToolsx64"
 
 #TODO: Link to correct path automatically
 if not os.path.exists(MOTIVE_INC_DIR):
-    warn("Can't find path {0}. Continuing installation, but please ensure Motive 64bit files are there before running.".format(MOTIVE_INC_DIR))
+    raise IOError("Can't find path {0}. Continuing installation, but please ensure Motive 64bit files are there before running.".format(MOTIVE_INC_DIR))
 
 
 native = Extension(
