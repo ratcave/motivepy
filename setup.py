@@ -17,7 +17,7 @@ if not os.path.exists(MOTIVE_INC_DIR):
 
 native = Extension(
     'motive.native',
-    sources=[path.join("src", "native.pyx")],
+    sources=[path.join("motive", "native.pyx")],
     include_dirs=[MOTIVE_INC_DIR, "src"],
     library_dirs=[MOTIVE_LIB_DIR ],
     extra_link_args=[MOTIVE_LINK_ARG],
@@ -26,7 +26,7 @@ native = Extension(
 
 camera = Extension(
     'motive.camera',
-    sources=[path.join("src", "camera.pyx")],
+    sources=[path.join("motive", "camera.pyx")],
     include_dirs=[MOTIVE_INC_DIR, "src", numpy.get_include()],
     library_dirs=[MOTIVE_LIB_DIR ],
     extra_link_args=[MOTIVE_LINK_ARG],
@@ -35,7 +35,7 @@ camera = Extension(
 
 rigidbody = Extension(
     'motive.rigidbody',
-    sources=[path.join("src", "rigidbody.pyx")],
+    sources=[path.join("motive", "rigidbody.pyx")],
     include_dirs=[MOTIVE_INC_DIR, "src"],
     library_dirs=[MOTIVE_LIB_DIR ],
     extra_link_args=[MOTIVE_LINK_ARG],
