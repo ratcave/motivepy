@@ -10,7 +10,7 @@ from  __future__ import absolute_import
 
 import sys
 import time
-from . import native
+# from .native import _save_project
 from .crash_avoidance import backup_project_filename
 
 
@@ -48,8 +48,9 @@ def block_for_frame(secs_to_timeout=3):
 def _save_backup(func):
     """Decorator that saves a backup project file"""
     def wrapper(*args, **kwargs):
+        # pass
         func(*args, **kwargs)
-        native._save_project(backup_project_filename)
+        # _save_project(backup_project_filename)
     return wrapper
     
     

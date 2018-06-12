@@ -134,7 +134,7 @@ def add_rigid_bodies(str file_name):
 
 
 #@decorators._save_backup
-def load_project(str project_file=backup_project_filename):
+def load_project(str project_file=crash_avoidance.backup_project_filename):
     """Loads the data of a project file
 
     E.g.: Camera calibration data, camera settings and rigid body data.
