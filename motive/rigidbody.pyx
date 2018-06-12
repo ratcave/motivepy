@@ -20,8 +20,8 @@ include "cnative.pxd"
 
 from cpython cimport array
 import array
-from . import utils, native
-from .utils.decorators import convert_string_output
+from . import native
+from .decorators import convert_string_output
 from libc.stdlib cimport malloc, free
 from collections import namedtuple
 import warnings

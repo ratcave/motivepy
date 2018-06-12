@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 include "cnative.pxd"
 cimport cython
-from . import utils, native
+from . import native
 
 #CAMERA GROUP SUPPORT
 def camera_group_count():

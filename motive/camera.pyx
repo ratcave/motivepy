@@ -21,8 +21,8 @@ from __future__ import absolute_import
 
 include "cnative.pxd"
 
-from . import utils
-from .utils.decorators import convert_string_output
+
+from .decorators import convert_string_output
 cimport numpy as np
 import numpy as np
 from collections import namedtuple

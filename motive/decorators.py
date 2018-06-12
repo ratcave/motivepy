@@ -10,7 +10,8 @@ from  __future__ import absolute_import
 
 import sys
 import time
-from .. import native, utils
+from . import native
+from .crash_avoidance import backup_project_filename
 
 
 def countdown_timer(total_time):
@@ -48,7 +49,7 @@ def _save_backup(func):
     """Decorator that saves a backup project file"""
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
-        native._save_project(utils.backup_project_filename)
+        native._save_project(backup_project_filename)
     return wrapper
     
     

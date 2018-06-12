@@ -18,7 +18,7 @@ Note:
 from __future__ import absoluate_import
 
 import btk
-from ..native import get_frame_markers
+from .native import get_frame_markers
 
 def create_record_object():
     """Returns a data aquisition object consisting of the marker positions of one frame"""

@@ -15,7 +15,7 @@ from __future__ import absolute_import
 
 include "cnative.pxd"
 
-from . import utils
+from . import decorators, crash_avoidance
 
 
 def check_npresult(func):
@@ -51,13 +51,13 @@ def shutdown():
     """Closes the connection to the cameras"""
     return TT_Shutdown()
 
-@utils.decorators.block_for_frame(secs_to_timeout=3)
+@decorators.block_for_frame(secs_to_timeout=3)
 def update_single_frame():
     """Processes incoming camera data, grabs next frame in buffer"""
     return check_npresult(TT_UpdateSingleFrame)()
 
 
-@utils.decorators.block_for_frame(secs_to_timeout=3)
+@decorators.block_for_frame(secs_to_timeout=3)
 def update():
     """Processes incoming camera data. Grabs next frame in buffer if calling rate is similar to camera frame rate
 
@@ -66,7 +66,7 @@ def update():
 
 
 #RIGID BODY INTERFACE FILES
-@utils.decorators._save_backup
+@decorators._save_backup
 def load_calibration(str file_name):
     """Loads camera calibration data from a file
 
@@ -78,12 +78,12 @@ def load_calibration(str file_name):
         Not Implemented!
     """
     raise NotImplementedError
-    utils.crash_avoidance.check_file_exists(file_name)
-    utils.crash_avoidance.check_file_extension(file_name, '.cal')
+    crash_avoidance.check_file_exists(file_name)
+    crash_avoidance.check_file_extension(file_name, '.cal')
     return check_npresult(TT_LoadCalibration)(file_name.encode('UTF-8'))
 
 
-@utils.decorators._save_backup
+@decorators._save_backup
 def load_rigid_bodies(str file_name):
     """Loads rigid body data from a file
 
@@ -95,12 +95,12 @@ def load_rigid_bodies(str file_name):
         Not Implemented!
     """
     raise NotImplementedError
-    utils.crash_avoidance.check_file_exists(file_name)
-    utils.crash_avoidance.check_file_extension(file_name, '.tra')
+    crash_avoidance.check_file_exists(file_name)
+    crash_avoidance.check_file_extension(file_name, '.tra')
     return check_npresult(TT_LoadRigidBodies)(file_name.encode('UTF-8'))
 
 
-@utils.decorators._save_backup
+@decorators._save_backup
 def save_rigid_bodies(str file_name):
     """Saves rigid body data to a file
 
@@ -112,7 +112,7 @@ def save_rigid_bodies(str file_name):
         Not Implemented!
     """
     raise NotImplementedError
-    utils.crash_avoidance.check_file_extension(file_name, '.tra')
+    crash_avoidance.check_file_extension(file_name, '.tra')
     return check_npresult(TT_SaveRigidBodies)(file_name.encode('UTF-8'))
 
 
@@ -128,13 +128,13 @@ def add_rigid_bodies(str file_name):
         Not Implemented!
     """
     raise NotImplementedError
-    utils.crash_avoidance.check_file_extension(file_name, '.tra')
-    utils.crash_avoidance.check_file_exists(file_name)
+    crash_avoidance.check_file_extension(file_name, '.tra')
+    crash_avoidance.check_file_exists(file_name)
     return TT_AddRigidBodies(file_name.encode('UTF-8'))
 
 
-#@utils.decorators._save_backup
-def load_project(str project_file=utils.backup_project_filename):
+#@decorators._save_backup
+def load_project(str project_file=backup_project_filename):
     """Loads the data of a project file
 
     E.g.: Camera calibration data, camera settings and rigid body data.
@@ -146,8 +146,8 @@ def load_project(str project_file=utils.backup_project_filename):
     """
     
     # Check File name and raise appropriate errors.
-    utils.crash_avoidance.check_file_exists(project_file)
-    utils.crash_avoidance.check_file_extension(project_file, '.ttp')
+    crash_avoidance.check_file_exists(project_file)
+    crash_avoidance.check_file_extension(project_file, '.ttp')
 
     # Load Project File
     return check_npresult(TT_LoadProject)(project_file.encode('UTF-8'))
@@ -165,13 +165,13 @@ def _save_project(str project_file):
     """
 
     # Check File name and raise appropriate errors
-    utils.crash_avoidance.check_file_extension(project_file, '.ttp')
+    crash_avoidance.check_file_extension(project_file, '.ttp')
 
     # Save Project File
     return check_npresult(TT_SaveProject)(project_file.encode('UTF-8'))
 
 
-@utils.decorators._save_backup
+@decorators._save_backup
 def save_project(str project_file):
     """Saves project file
 
