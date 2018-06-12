@@ -9,7 +9,6 @@ from __future__ import absolute_import
 import os
 import appdirs
 import warnings
-from . import decorators
 
 # Utility Functions
 def check_file_exists(file_name):
