@@ -112,10 +112,10 @@ cdef extern from "NPTrackingTools.h":
     ##int    TT_SaveRigidBodiesW(const wchar_t *filename)
     int    TT_AddRigidBodies(const char *filename)                                 #add rigid bodies
     ##int    TT_AddRigidBodiesW (const wchar_t *filename)
-    int    TT_LoadProject(const char *filename)                                    #load project file
-    ##int    TT_LoadProjectW(const wchar_t *filename)
-    int    TT_SaveProject(const char *filename)                                    #save project file
-    ##int    TT_SaveProjectW(const wchar_t *filename)
+    int    TT_LoadProfile(const char *filename)                                    #load profile file
+    ##int    TT_LoadProfileW(const wchar_t *filename)
+    int    TT_SaveProfile(const char *filename)                                    #save profile file
+    ##int    TT_SaveProfileW(const wchar_t *filename)
     int    TT_LoadCalibrationFromMemory(unsigned char* buffer, int bufferSize)
     int    TT_Update()                                                             # Process incoming camera data
     int    TT_UpdateSingleFrame()                                                  # Process incoming camera data
