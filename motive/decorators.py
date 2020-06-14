@@ -11,7 +11,7 @@ from  __future__ import absolute_import
 import sys
 import time
 # from .native import _save_project
-from .crash_avoidance import backup_project_filename
+from .crash_avoidance import backup_profile_filename
 
 
 def countdown_timer(total_time):
@@ -50,7 +50,7 @@ def _save_backup(func):
     def wrapper(*args, **kwargs):
         # pass
         func(*args, **kwargs)
-        # _save_project(backup_project_filename)
+        # _save_project(backup_profile_filename)
     return wrapper
     
     

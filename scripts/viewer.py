@@ -31,7 +31,7 @@ if __name__ == '__main__':
     if args.last_project:
         if args.project_filename is True:
             raise Warning("Load last project file OR name a project file to load.")
-        project_file=utils.backup_project_filename
+        project_file=utils.backup_profile_filename
 
     elif args.project_filename:
         if args.last_project is True:
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     else:
         root = Tkinter.Tk()
         root.withdraw()
-        project_file_u=tkFileDialog.askopenfilename(title='Choose a project file to load: ', filetypes=[('motive projectfiles', '*.ttp')])
+        project_file_u=tkFileDialog.askopenfilename(title='Choose a profile file to load: ', filetypes=[('motive profilefiles', '*.motive')])
         project_file = project_file_u.encode("ascii")
 
     # Load Motive Project
