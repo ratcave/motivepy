@@ -74,10 +74,8 @@ def load_calibration(str file_name):
         The file should have the extension .cal
     Args:
         file_name(str): Name of the file
-    Note:
-        Not Implemented!
     """
-    #raise NotImplementedError
+    # raise NotImplementedError
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.cal')
     return check_npresult(TT_LoadCalibration)(file_name.encode('UTF-8'))
@@ -91,10 +89,8 @@ def load_rigid_bodies(str file_name):
         The file should have the extension .tra
     Args:
         file_name(str): Name of the file
-    Note:
-        Not Implemented!
     """
-    raise NotImplementedError
+    # raise NotImplementedError
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.tra')
     return check_npresult(TT_LoadRigidBodies)(file_name.encode('UTF-8'))
