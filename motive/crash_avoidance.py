@@ -23,7 +23,7 @@ def check_file_exists(file_name):
         raise IOError("File '{}' Does not exist.".format(file_name))
     return True
 
-def check_file_extension(file_name, extension='.ttp'):
+def check_file_extension(file_name, extension='.motive'):
     """Raises IOError if file does not have correct extension
 
     Args:
@@ -49,4 +49,4 @@ def get_backup_dir():
 
     return str(data_dir)
 
-backup_project_filename = os.path.join(get_backup_dir(), 'last_project.ttp')
+backup_profile_filename = os.path.join(get_backup_dir(), 'last_profile.motive')

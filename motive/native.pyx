@@ -5,7 +5,7 @@ for camera settings, rigid bodies and markers.
 
 Examples::
 
-    >>>load_project("test.ttp")
+    >>>load_profile("test.motive")
     >>>update()
     >>>get_frame_markers()
     ((0.44324554, 0.65645343, 1.5665743), (0.23456576, 0.11568943, 0.04334536), (1.43445367, 1.23546491, 2.34356222))
@@ -134,30 +134,30 @@ def add_rigid_bodies(str file_name):
 
 
 #@decorators._save_backup
-def load_project(str project_file=crash_avoidance.backup_project_filename):
-    """Loads the data of a project file
+def load_profile(str profile_file=crash_avoidance.backup_profile_filename):
+    """Loads the data of a profile file
 
     E.g.: Camera calibration data, camera settings and rigid body data.
      Note:
-        The file should have the extension .ttp
+        The file should have the extension .motive
     Args:
         file_name(Optional[str]): Name of the file
-            If left blank, will load the most recently loaded or saved project file
+            If left blank, will load the most recently loaded or saved profile file
     """
     
     # Check File name and raise appropriate errors.
-    crash_avoidance.check_file_exists(project_file)
-    crash_avoidance.check_file_extension(project_file, '.ttp')
+    crash_avoidance.check_file_exists(profile_file)
+    crash_avoidance.check_file_extension(profile_file, '.motive')
 
-    # Load Project File
-    return check_npresult(TT_LoadProject)(project_file.encode('UTF-8'))
+    # Load Profile File
+    return check_npresult(TT_LoadProfile)(profile_file.encode('UTF-8'))
 
 
-def _save_project(str project_file):
-    """Saves project file
+def _save_profile(str profile_file):
+    """Saves profile file
 
     Note:
-        The file should have the extension .ttp
+        The file should have the extension .motive
     Args:
         file_name(str): Name of the file
     Raises:
@@ -165,22 +165,22 @@ def _save_project(str project_file):
     """
 
     # Check File name and raise appropriate errors
-    crash_avoidance.check_file_extension(project_file, '.ttp')
+    crash_avoidance.check_file_extension(profile_file, '.motive')
 
-    # Save Project File
-    return check_npresult(TT_SaveProject)(project_file.encode('UTF-8'))
+    # Save Profile File
+    return check_npresult(TT_SaveProfile)(profile_file.encode('UTF-8'))
 
 
 @decorators._save_backup
-def save_project(str project_file):
-    """Saves project file
+def save_profile(str profile_file):
+    """Saves profile file
 
     Note:
-        The file should have the extension .ttp
+        The file should have the extension .motive
     Args:
         file_name(str): Name of the file
     """
-    _save_project(project_file)
+    _save_profile(profile_file)
 
 #TODO: Find out how this works
 def load_calibration_from_memory(buffer, int buffersize):
