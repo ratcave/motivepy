@@ -77,7 +77,7 @@ def load_calibration(str file_name):
     Note:
         Not Implemented!
     """
-    raise NotImplementedError
+    #raise NotImplementedError
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.cal')
     return check_npresult(TT_LoadCalibration)(file_name.encode('UTF-8'))
