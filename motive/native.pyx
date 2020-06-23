@@ -221,13 +221,6 @@ def get_frame_markers():
     """Returns a tuple containing all tuples of 3D marker positions"""
     return tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
 
-def get_frame_markers_with_label():
-    """Returns a tuple containing all tuples of 3D marker positions"""
-    markers = {}
-    for i in xrange(TT_FrameMarkerCount()):
-        markers[frame_marker_label(i)] = tuple(TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i))
-    return markers
-
 cdef class _markID:
     cdef cUID *thisptr            # hold a C++ instance which we're wrapping
 
