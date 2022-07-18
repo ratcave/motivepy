@@ -116,17 +116,17 @@ cdef extern from "MotiveAPI.h":
     eMotiveAPIResult    TT_Shutdown()                                                          #shutdown library
 
 #RIGID BODY INTERFACE
-    eMotiveAPIResult    TT_LoadCalibration(const char *filename)                                #load calibration
+    eMotiveAPIResult    TT_LoadCalibration(const Py_UNICODE *filename, int *cameraCount)                                #load calibration
     ##int    TT_LoadCalibrationW(const wchar_t *filename)                          ##only necessary when not using english alphabet to name files
-    eMotiveAPIResult    TT_LoadRigidBodies(const char *filename)                                #load rigid bodies
+    eMotiveAPIResult    TT_LoadRigidBodies(const Py_UNICODE *filename)                                #load rigid bodies
     ##int    TT_LoadRigidBodiesW(const wchar_t *filename)
     eMotiveAPIResult    TT_SaveRigidBodies(const char *filename)                                #save rigid bodies
     ##int    TT_SaveRigidBodiesW(const wchar_t *filename)
     eMotiveAPIResult    TT_AddRigidBodies(const char *filename)                                 #add rigid bodies
     ##int    TT_AddRigidBodiesW (const wchar_t *filename)
-    eMotiveAPIResult    TT_LoadProfile(const char *filename)                                    #load profile file
+    eMotiveAPIResult    TT_LoadProfile(const Py_UNICODE *filename)                                    #load profile file
     ##int    TT_LoadProfileW(const wchar_t *filename)
-    eMotiveAPIResult    TT_SaveProfile(const char *filename)                                    #save profile file
+    eMotiveAPIResult    TT_SaveProfile(const Py_UNICODE *filename)                                    #save profile file
     ##int    TT_SaveProfileW(const wchar_t *filename)
     eMotiveAPIResult    TT_LoadCalibrationFromMemory(unsigned char* buffer, int bufferSize)
     eMotiveAPIResult    TT_Update()                                                             # Process incoming camera data

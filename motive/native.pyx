@@ -29,8 +29,6 @@ def check_npresult(func):
                   kApiResult_SaveFailed:  (Exception, "Save Failed"),
                   kApiResult_Failed:  (Exception, "Failed"),
                   kApiResult_InvalidFile:  (IOError, "Invalid File"),
-                  NPRESULT_INVALIDCALFILE:  (IOError, "Invalid Calibration File"),
-                  NPRESULT_UNABLETOINITIALIZE: (IOError, "Unable To Initialize"),
                   kApiResult_InvalidLicense: (EnvironmentError, "Invalid License"),
                   kApiResult_NoFrameAvailable: (RuntimeWarning, "No Frames Available"),
                   kApiResult_TooFewMarkers: (RuntimeWarning, "Too Few Markers")}
@@ -69,7 +67,7 @@ def update():
 
 #RIGID BODY INTERFACE FILES
 @decorators._save_backup
-def load_calibration(str file_name):
+def load_calibration(str file_name, int cameraCount):
     """Loads camera calibration data from a file
 
     Note:
@@ -78,9 +76,11 @@ def load_calibration(str file_name):
         file_name(str): Name of the file
     """
     # raise NotImplementedError
+    cdef int* value = &cameraCount
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.cal')
-    return check_npresult(TT_LoadCalibration)(file_name.encode('UTF-8'))
+#    return check_npresult(TT_LoadCalibration)(file_name.encode('UTF-8'), value)
+    TT_LoadCalibration(file_name.encode('UTF-8'), value)
 
 
 @decorators._save_backup
@@ -187,35 +187,6 @@ def load_calibration_from_memory(buffer, int buffersize):
     cdef unsigned char * buff=buffer         #buffer should be an integer array. See get_frame_buffer() in camera.pyx for example
     return check_npresult(TT_LoadCalibrationFromMemory)(buff, buffersize)
 
-#DATA STREAMING
-def stream_trackd(bool enabled):
-    """Start/stop Trackd Stream
-
-    TrackD Streaming Engine: Streams rigid body data via the Trackd protocol.
-    Args:
-        enabled(bool): True to start Trackd Stream. False to stop it.
-    """
-    return check_npresult(TT_StreamTrackd)(enabled)
-
-def stream_vrpn(bool enabled, int port=3883):
-    """Start/stop VRPN Stream
-
-    VRPN Streaming Engine: Streams rigid body data via the VRPN protocol.
-    VRPN Broadcast Port: Specifies the broadcast port for VRPN streaming.
-
-    Args:
-        enabled(bool): True to start VRPN Stream. False to stop it.
-        port(Optional[int]): Encodes the broadcast port
-    """
-    return check_npresult(TT_StreamVRPN)(enabled, port)
-
-def stream_np(bool enabled):
-    """Start/stop NaturalPoint Stream
-
-    Args:
-        enabled(bool): True to start NaturalPoint Stream. False to stop it.
-    """
-    return check_npresult(TT_StreamNP)(enabled)
 
 
 #MARKERS
