@@ -56,7 +56,7 @@ transformations  = Extension('_transformations', sources=['third_party/transform
 
 setup(
     name="motive",
-    ext_modules= cythonize([native, rigidbody, camera, transformations]), # pointcloudgroup
+    ext_modules= cythonize([native, rigidbody, camera, transformations], language_level = "3"), # pointcloudgroup
     packages= find_packages(),
     scripts=['scripts/vislight.py', 'scripts/viewer.py', 'scripts/video.py'],
     install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph'], #, 'btk' ],

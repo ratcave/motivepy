@@ -75,11 +75,6 @@ def remove_rigid_body(int rigidIndex):
     return native.check_npresult(TT_RemoveRigidBody)(rigidIndex)
 
 
-def clear_rigid_body_list():
-    """Removes all rigid bodies"""
-    TT_ClearRigidBodyList()
-
-
 #CLASS
 class RigidBody(object):
     def __init__(self, index):

@@ -154,16 +154,16 @@ cdef extern from "MotiveAPI.h":
                                      float *qx, float *qy, float *qz, float *qw,        #Orientation
                                      float *yaw, float *pitch, float *roll)             #Orientation
 
-    void   TT_ClearRigidBodyList()                                                 #Clear all rigid bodies
-    int    TT_RemoveRigidBody(int index)                                           #Remove single rigid body
+    eMotiveAPIResult    TT_RemoveRigidBody(int index)                                           #Remove single rigid body
     int    TT_RigidBodyCount()                                                     #Returns number of rigid bodies
     int    TT_RigidBodyUserData(int index)                                         #Get RigidBodies User Data
     void   TT_SetRigidBodyUserData(int index, int ID)                              #Set RigidBodies User Data
-    const char*  TT_RigidBodyName (int index)                                      #Returns RigidBody Name
+    bool   TT_RigidBodyName( int index, Py_UNICODE* buffer, int bufferSize );
+    #const char*  TT_RigidBodyName (int index)                                      #Returns RigidBody Name
     ##const wchar_t* TT_RigidBodyNameW(int index)
     void   TT_SetRigidBodyEnabled(int index, bool enabled)                         #Set Tracking
     bool   TT_RigidBodyEnabled(int index)                                          #Get Tracking
-    int    TT_RigidBodyTranslatePivot(int index, float x, float y, float z)
+    eMotiveAPIResult    TT_RigidBodyTranslatePivot(int index, float x, float y, float z)
     bool   TT_RigidBodyResetOrientation(int index)
     int    TT_RigidBodyMarkerCount(int index)                                      #Get marker count
     void   TT_RigidBodyMarker(int rigidIndex,                                      #Get RigidBody mrkr
@@ -171,7 +171,7 @@ cdef extern from "MotiveAPI.h":
     void   TT_RigidBodyPointCloudMarker(int rigidIndex,                            #Get corresponding point cloud marker
                                              int markerIndex, bool &tracked,            #If tracked is false, there is no
                                              float &x, float &y, float &z)              #corresponding point cloud marker.
-    int    TT_CreateRigidBody(const char* name, int id,                            #Create a rigid body based on the marker count and marker list provided.  The marker list is expected to contain of list of marker coordinates in the order: x1,y1,z1,x2,y2,z2,...xN,yN,zN.
+    int    TT_CreateRigidBody(const Py_UNICODE* name, int id,                            #Create a rigid body based on the marker count and marker list provided.  The marker list is expected to contain of list of marker coordinates in the order: x1,y1,z1,x2,y2,z2,...xN,yN,zN.
                                    int markerCount, float *markerList)
     ##cdef int TT_RigidBodySettings   (int index, cRigidBodySettings &settings)           #Get RigidBody Settings
     ##cdef int TT_SetRigidBodySettings(int index, cRigidBodySettings &settings)           #Set RigidBody Settings
