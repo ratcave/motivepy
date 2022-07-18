@@ -18,13 +18,13 @@ That function calls the C++ function declared in this module
 from libcpp cimport bool
 
 
-cdef extern from "NPTrackingTools.h" namespace "Core":
+cdef extern from "MotiveAPI.h" namespace "Core":
     cdef cppclass cUID:
         unsigned long long int LowBits()
         unsigned long long int HighBits()
 
 
-cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":  #can not define enum in class in cython yet
+cdef extern from "MotiveAPI.h" namespace "MotiveAPIProcessingSettings":  #can not define enum in class in cython yet
           cdef enum Setting:            #unsigned long long
             eResolvePointCloud,         #bool
             eShowCameras,               #bool
@@ -80,10 +80,10 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             eSettingsCount              # returns 1
 
 
-cdef extern from "NPTrackingTools.h":
+cdef extern from "MotiveAPI.h":
 
-    cdef cppclass cCameraGroupPointCloudSettings:
-        cCameraGroupPointCloudSettings() except +
+    cdef cppclass MotiveAPIProcessingSettings:
+        MotiveAPIProcessingSettings() except +
 
         #Set individual parameter values. Only values that are set will be changed when submitting
         #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
@@ -98,32 +98,44 @@ cdef extern from "NPTrackingTools.h":
         bool            DoubleParameter( Setting which , double & value) const
         bool            LongParameter( Setting which , long & value) const
 
+    cdef enum eMotiveAPIResult:
+        kApiResult_Success = 0,
+        kApiResult_Failed,
+        kApiResult_FileNotFound,
+        kApiResult_LoadFailed,
+        kApiResult_SaveFailed,
+        kApiResult_InvalidFile,
+        kApiResult_InvalidLicense,
+        kApiResult_NoFrameAvailable,
+        kApiResult_TooFewMarkers,
+        kApiResult_CouldNotFindGroundPlane,
+        kApiResult_UnableToAccessCameras
 
 #STARTUP / SHUTDOWN
-    int    TT_Initialize()                                                        #initialize library
-    int    TT_Shutdown()                                                          #shutdown library
+    eMotiveAPIResult    TT_Initialize()                                                        #initialize library
+    eMotiveAPIResult    TT_Shutdown()                                                          #shutdown library
 
 #RIGID BODY INTERFACE
-    int    TT_LoadCalibration(const char *filename)                                #load calibration
+    eMotiveAPIResult    TT_LoadCalibration(const char *filename)                                #load calibration
     ##int    TT_LoadCalibrationW(const wchar_t *filename)                          ##only necessary when not using english alphabet to name files
-    int    TT_LoadRigidBodies(const char *filename)                                #load rigid bodies
+    eMotiveAPIResult    TT_LoadRigidBodies(const char *filename)                                #load rigid bodies
     ##int    TT_LoadRigidBodiesW(const wchar_t *filename)
-    int    TT_SaveRigidBodies(const char *filename)                                #save rigid bodies
+    eMotiveAPIResult    TT_SaveRigidBodies(const char *filename)                                #save rigid bodies
     ##int    TT_SaveRigidBodiesW(const wchar_t *filename)
-    int    TT_AddRigidBodies(const char *filename)                                 #add rigid bodies
+    eMotiveAPIResult    TT_AddRigidBodies(const char *filename)                                 #add rigid bodies
     ##int    TT_AddRigidBodiesW (const wchar_t *filename)
-    int    TT_LoadProfile(const char *filename)                                    #load profile file
+    eMotiveAPIResult    TT_LoadProfile(const char *filename)                                    #load profile file
     ##int    TT_LoadProfileW(const wchar_t *filename)
-    int    TT_SaveProfile(const char *filename)                                    #save profile file
+    eMotiveAPIResult    TT_SaveProfile(const char *filename)                                    #save profile file
     ##int    TT_SaveProfileW(const wchar_t *filename)
-    int    TT_LoadCalibrationFromMemory(unsigned char* buffer, int bufferSize)
-    int    TT_Update()                                                             # Process incoming camera data
-    int    TT_UpdateSingleFrame()                                                  # Process incoming camera data
+    eMotiveAPIResult    TT_LoadCalibrationFromMemory(unsigned char* buffer, int bufferSize)
+    eMotiveAPIResult    TT_Update()                                                             # Process incoming camera data
+    eMotiveAPIResult    TT_UpdateSingleFrame()                                                  # Process incoming camera data
 
 #DATA STREAMING
-    int    TT_StreamTrackd(bool enabled)                                           #Start/stop Trackd Stream
-    int    TT_StreamVRPN(bool enabled, int port)                                   #Start/stop VRPN Stream
-    int    TT_StreamNP(bool enabled)                                               #Start/stop NaturalPoint Stream
+#    int    TT_StreamTrackd(bool enabled)                                           #Start/stop Trackd Stream
+#    int    TT_StreamVRPN(bool enabled, int port)                                   #Start/stop VRPN Stream
+#    int    TT_StreamNP(bool enabled)                                               #Start/stop NaturalPoint Stream
 
 #FRAME
     int    TT_FrameMarkerCount()                                                   #Returns Frame Markers Count
@@ -179,12 +191,12 @@ cdef extern from "NPTrackingTools.h":
     ##int  TT_SetCameraGroupFilterSettings(int groupIndex, cCameraGroupFilterSettings &settings)
 
 #POINT CLOUD RECONSTRUCTION SETTINGS
-    int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
-    int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
+#    int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
+#    int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
 
 #MARKER SIZE SETTINGS
-    ##int TT_CameraGroupMarkerSize   (int groupIndex, cCameraGroupMarkerSizeSettings &settings)
-    ##int TT_SetCameraGroupMarkerSize(int groupIndex, cCameraGroupMarkerSizeSettings &settings)
+    ##int TT_CameraMarkerSize   (int groupIndex, MotiveAPIMarkerSizeSettings &settings)
+    ##int TT_SetCameraMarkerSize(int groupIndex, MotiveAPIMarkerSizeSettings &settings)
     int  TT_SetCameraGroupReconstruction(int groupIndex, bool enable)
     int  TT_SetEnabledFilterSwitch(bool enabled)
     bool TT_IsFilterSwitchEnabled()

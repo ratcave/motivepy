@@ -24,17 +24,19 @@ def check_npresult(func):
     Note:
         Should decorate every Motive API function returning a NPResult type.
     """
-    error_dict = {NPRESULT_FILENOTFOUND:  (IOError, "File Not Found"),
-                  NPRESULT_LOADFAILED:  (Exception, "Load Failed"),
-                  NPRESULT_FAILED:  (Exception, "Failed"),
-                  NPRESULT_INVALIDFILE:  (IOError, "Invalid File"),
+    error_dict = {kApiResult_FileNotFound:  (IOError, "File Not Found"),
+                  kApiResult_LoadFailed:  (Exception, "Load Failed"),
+                  kApiResult_SaveFailed:  (Exception, "Save Failed"),
+                  kApiResult_Failed:  (Exception, "Failed"),
+                  kApiResult_InvalidFile:  (IOError, "Invalid File"),
                   NPRESULT_INVALIDCALFILE:  (IOError, "Invalid Calibration File"),
                   NPRESULT_UNABLETOINITIALIZE: (IOError, "Unable To Initialize"),
-                  NPRESULT_INVALIDLICENSE: (EnvironmentError, "Invalid License"),
-                  NPRESULT_NOFRAMEAVAILABLE: (RuntimeWarning, "No Frames Available")}
+                  kApiResult_InvalidLicense: (EnvironmentError, "Invalid License"),
+                  kApiResult_NoFrameAvailable: (RuntimeWarning, "No Frames Available"),
+                  kApiResult_TooFewMarkers: (RuntimeWarning, "Too Few Markers")}
     def wrapper(*args, **kwargs):
         npresult = func(*args, **kwargs)
-        if npresult != NPRESULT_SUCCESS:
+        if npresult != kApiResult_Success:
             error, msg = error_dict[npresult]
             raise error(msg)
     return wrapper
