@@ -111,7 +111,9 @@ class RigidBody(object):
     @convert_string_output
     def name(self):
         """str: Rigid body name"""
-        return TT_RigidBodyName(self.index)
+        cdef Py_UNICODE name[256]
+        return TT_RigidBodyName(self.index, name, 256)
+        return name
 
     @property
     def user_data(self):
