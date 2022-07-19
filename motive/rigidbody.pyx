@@ -21,6 +21,7 @@ include "cnative.pxd"
 from cpython cimport array
 cdef extern from *:
     wchar_t* PyUnicode_AsWideCharString(object, Py_ssize_t *size)
+    object PyUnicode_FromWideChar(const wchar_t *w, Py_ssize_t size)
 import array
 from . import native
 from .decorators import convert_string_output
@@ -111,12 +112,11 @@ class RigidBody(object):
         return {cls(idx).name: cls(idx) for idx in range(cls.count())}
 
     @property
-    @convert_string_output
     def name(self):
         """str: Rigid body name"""
         cdef wchar_t name[256]
-        return TT_RigidBodyName(self.index, name, 256)
-        return name
+        TT_RigidBodyName(self.index, name, 256)
+        return PyUnicode_FromWideChar(name, -1)
 
     @property
     def user_data(self):
