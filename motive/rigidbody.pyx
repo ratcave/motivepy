@@ -19,6 +19,8 @@ from __future__ import absolute_import
 include "cnative.pxd"
 
 from cpython cimport array
+cdef extern from *:
+    wchar_t* PyUnicode_AsWideCharString(object, Py_ssize_t *size)
 import array
 from . import native
 from .decorators import convert_string_output
@@ -54,16 +56,17 @@ def get_rigid_bodies():
 
 
 def create_rigid_body(str name, markerList):
-     """Creates a new rigid body
+    """Creates a new rigid body
 
-     Args:
+        Args:
         name(str): Name of the rigid body to be created
         markerList(List[float]): A list of marker coordinates in the order:  [[x1,y1,z1], [x2,y2,z2], ..., [xN,yN,zN]]
-     Note:
+        Note:
         For some reason a rigid body created via this API function is not tracked by Motive.
-     """
-     cdef array.array markerList_array = array.array('f', itertools.chain(*markerList))
-     return TT_CreateRigidBody(name.encode('UTF-8'), RigidBody.count() + 1, len(markerList), markerList_array.data.as_floats)
+    """
+    cdef array.array markerList_array = array.array('f', itertools.chain(*markerList))
+    cdef Py_ssize_t length
+    return TT_CreateRigidBody(PyUnicode_AsWideCharString(name, &length), RigidBody.count() + 1, len(markerList), markerList_array.data.as_floats)
 
 
 def remove_rigid_body(int rigidIndex):
@@ -111,7 +114,7 @@ class RigidBody(object):
     @convert_string_output
     def name(self):
         """str: Rigid body name"""
-        cdef Py_UNICODE name[256]
+        cdef wchar_t name[256]
         return TT_RigidBodyName(self.index, name, 256)
         return name
 

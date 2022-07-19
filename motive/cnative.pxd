@@ -16,7 +16,7 @@ That function calls the C++ function declared in this module
 """
 
 from libcpp cimport bool
-
+from libc.stddef cimport wchar_t
 
 cdef extern from "MotiveAPI.h" namespace "Core":
     cdef cppclass cUID:
@@ -116,17 +116,17 @@ cdef extern from "MotiveAPI.h":
     eMotiveAPIResult    TT_Shutdown()                                                          #shutdown library
 
 #RIGID BODY INTERFACE
-    eMotiveAPIResult    TT_LoadCalibration(const Py_UNICODE *filename, int *cameraCount)                                #load calibration
+    eMotiveAPIResult    TT_LoadCalibration(const wchar_t *filename, int *cameraCount)                                #load calibration
     ##int    TT_LoadCalibrationW(const wchar_t *filename)                          ##only necessary when not using english alphabet to name files
-    eMotiveAPIResult    TT_LoadRigidBodies(const Py_UNICODE *filename)                                #load rigid bodies
+    eMotiveAPIResult    TT_LoadRigidBodies(const wchar_t *filename)                                #load rigid bodies
     ##int    TT_LoadRigidBodiesW(const wchar_t *filename)
     eMotiveAPIResult    TT_SaveRigidBodies(const char *filename)                                #save rigid bodies
     ##int    TT_SaveRigidBodiesW(const wchar_t *filename)
     eMotiveAPIResult    TT_AddRigidBodies(const char *filename)                                 #add rigid bodies
     ##int    TT_AddRigidBodiesW (const wchar_t *filename)
-    eMotiveAPIResult    TT_LoadProfile(const Py_UNICODE *filename)                                    #load profile file
+    eMotiveAPIResult    TT_LoadProfile(const wchar_t *filename)                                    #load profile file
     ##int    TT_LoadProfileW(const wchar_t *filename)
-    eMotiveAPIResult    TT_SaveProfile(const Py_UNICODE *filename)                                    #save profile file
+    eMotiveAPIResult    TT_SaveProfile(const wchar_t *filename)                                    #save profile file
     ##int    TT_SaveProfileW(const wchar_t *filename)
     eMotiveAPIResult    TT_LoadCalibrationFromMemory(unsigned char* buffer, int bufferSize)
     eMotiveAPIResult    TT_Update()                                                             # Process incoming camera data
@@ -158,7 +158,7 @@ cdef extern from "MotiveAPI.h":
     int    TT_RigidBodyCount()                                                     #Returns number of rigid bodies
     int    TT_RigidBodyUserData(int index)                                         #Get RigidBodies User Data
     void   TT_SetRigidBodyUserData(int index, int ID)                              #Set RigidBodies User Data
-    bool   TT_RigidBodyName( int index, Py_UNICODE* buffer, int bufferSize );
+    bool   TT_RigidBodyName( int index, wchar_t* buffer, int bufferSize );
     #const char*  TT_RigidBodyName (int index)                                      #Returns RigidBody Name
     ##const wchar_t* TT_RigidBodyNameW(int index)
     void   TT_SetRigidBodyEnabled(int index, bool enabled)                         #Set Tracking
@@ -171,7 +171,7 @@ cdef extern from "MotiveAPI.h":
     void   TT_RigidBodyPointCloudMarker(int rigidIndex,                            #Get corresponding point cloud marker
                                              int markerIndex, bool &tracked,            #If tracked is false, there is no
                                              float &x, float &y, float &z)              #corresponding point cloud marker.
-    int    TT_CreateRigidBody(const Py_UNICODE* name, int id,                            #Create a rigid body based on the marker count and marker list provided.  The marker list is expected to contain of list of marker coordinates in the order: x1,y1,z1,x2,y2,z2,...xN,yN,zN.
+    int    TT_CreateRigidBody(const wchar_t* name, int id,                            #Create a rigid body based on the marker count and marker list provided.  The marker list is expected to contain of list of marker coordinates in the order: x1,y1,z1,x2,y2,z2,...xN,yN,zN.
                                    int markerCount, float *markerList)
     ##cdef int TT_RigidBodySettings   (int index, cRigidBodySettings &settings)           #Get RigidBody Settings
     ##cdef int TT_SetRigidBodySettings(int index, cRigidBodySettings &settings)           #Set RigidBody Settings

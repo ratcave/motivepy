@@ -17,6 +17,12 @@ include "cnative.pxd"
 
 from . import decorators, crash_avoidance
 
+from python_object cimport PyObject
+
+cdef extern from *:
+    wchar_t* PyUnicode_AsWideCharString(object, Py_ssize_t *size)
+
+   
 
 def check_npresult(func):
     """Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so
@@ -67,7 +73,7 @@ def update():
 
 #RIGID BODY INTERFACE FILES
 @decorators._save_backup
-def load_calibration(str file_name, int cameraCount):
+def load_calibration(str file_name):
     """Loads camera calibration data from a file
 
     Note:
@@ -76,12 +82,12 @@ def load_calibration(str file_name, int cameraCount):
         file_name(str): Name of the file
     """
     # raise NotImplementedError
-    cdef int* value = &cameraCount
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.cal')
-#    return check_npresult(TT_LoadCalibration)(file_name.encode('UTF-8'), value)
-    TT_LoadCalibration(file_name.encode('UTF-8'), value)
-
+    cdef int cameraCount = 0
+    cdef int* value = &cameraCount
+    cdef Py_ssize_t length
+    TT_LoadCalibration(PyUnicode_AsWideCharString(file_name, &length), value)
 
 @decorators._save_backup
 def load_rigid_bodies(str file_name):
@@ -95,7 +101,8 @@ def load_rigid_bodies(str file_name):
     # raise NotImplementedError
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.tra')
-    return check_npresult(TT_LoadRigidBodies)(file_name.encode('UTF-8'))
+    cdef Py_ssize_t length
+    return TT_LoadRigidBodies(PyUnicode_AsWideCharString(file_name, &length))
 
 
 @decorators._save_backup
@@ -146,10 +153,11 @@ def load_profile(str profile_file=crash_avoidance.backup_profile_filename):
     # Check File name and raise appropriate errors.
     crash_avoidance.check_file_exists(profile_file)
     crash_avoidance.check_file_extension(profile_file, '.motive')
-
+    
     # Load Profile File
-    return check_npresult(TT_LoadProfile)(profile_file.encode('UTF-8'))
-
+    #return check_npresult(TT_LoadProfile)(profile_file.encode('UTF-8'))
+    cdef Py_ssize_t length
+    TT_LoadProfile(PyUnicode_AsWideCharString(profile_file, &length))
 
 def _save_profile(str profile_file):
     """Saves profile file
@@ -166,7 +174,8 @@ def _save_profile(str profile_file):
     crash_avoidance.check_file_extension(profile_file, '.motive')
 
     # Save Profile File
-    return check_npresult(TT_SaveProfile)(profile_file.encode('UTF-8'))
+    cdef Py_ssize_t length
+    return TT_SaveProfile(PyUnicode_AsWideCharString(profile_file, &length))
 
 
 @decorators._save_backup
