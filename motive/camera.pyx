@@ -20,7 +20,9 @@ Examples::
 from __future__ import absolute_import
 
 include "cnative.pxd"
-
+cdef extern from *:
+    wchar_t* PyUnicode_AsWideCharString(object, Py_ssize_t *size)
+    object PyUnicode_FromWideChar(const wchar_t *w, Py_ssize_t size)
 
 from .decorators import convert_string_output
 cimport numpy as np
@@ -91,7 +93,9 @@ class Camera(object):
     @convert_string_output
     def name(self):
         """str: Camera name"""
-        return TT_CameraName(self.index)
+        cdef wchar_t name[256]
+        TT_RigidBodyName(self.index, name, 256)
+        return PyUnicode_FromWideChar(name, -1)
 
     @property
     def id(self):
@@ -227,27 +231,14 @@ class Camera(object):
             raise ValueError("Camera.image_gain must be between 0 and 8")
         TT_SetCameraImagerGain(self.index, value-1)
 
-    def is_continuous_ir_available(self):
-        """bool: Continuous IR illumination is available"""
-        return TT_IsContinuousIRAvailable(self.index)
-
     @property
-    def continuous_ir(self):
-        """bool: Continuous IR illumination is on"""
-        if not self.is_continuous_ir_available() or not TT_ContinuousIR(self.index):
-            return False
-        else:
-            return True
+    def ir_led_on(self):
+        """bool: IR illumination is on"""
+        return TT_CameraIRLedsOn(self.index):
 
-    @continuous_ir.setter
-    def continuous_ir(self, bool value):
-        if value and not self.is_continuous_ir_available():
-            raise ValueError("continouus_ir not available for this Camera")
-        TT_SetContinuousIR(self.index, value)
-
-    def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
-        raise NotImplementedError
-        TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
+    @ir_led_on.setter
+    def ir_led_on(self, bool value):
+        TT_SetCameraIRLedsOn(self.index, value)
 
     @property
     def pixel_resolution(self):
@@ -552,5 +543,5 @@ class Camera(object):
         Raises:
             Exception: If camera could not change quality
         """
-        if not TT_SetCameraMJPEGHighQuality(self.index, mjpegQuality):
+        if not TT_SetCameraMJPEGQuality(self.index, mjpegQuality):
             raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")

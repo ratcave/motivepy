@@ -207,7 +207,7 @@ cdef extern from "MotiveAPI.h":
     float  TT_CameraYLocation(int index)                                            #Returns Camera's Y Coord
     float  TT_CameraZLocation(int index)                                            #Returns Camera's Z Coord
     float  TT_CameraOrientationMatrix(int camera, int index)                        #Orientation
-    const char* TT_CameraName(int index)                                            #Returns Camera Name
+    bool   TT_CameraName(int cameraIndex, wchar_t* buffer, int bufferSize )         #Returns Camera Name
     int    TT_CameraMarkerCount(int cameraIndex)                                    #Camera's 2D Marker Count
     bool   TT_CameraMarker(int cameraIndex, int markerIndex, float &x, float &y)    #CameraMarker fetches the 2D centroid location of the marker as seen by the camera.
     bool   TT_CameraPixelResolution(int cameraIndex, int &width, int &height)
@@ -227,14 +227,12 @@ cdef extern from "MotiveAPI.h":
     bool   TT_SetCameraAGC(int cameraIndex, bool enableAutomaticGainControl)
     bool   TT_SetCameraAEC(int cameraIndex, bool enableAutomaticExposureControl)
     bool   TT_SetCameraHighPower(int cameraIndex, bool enableHighPowerMode)
-    bool   TT_SetCameraMJPEGHighQuality(int cameraIndex, int mjpegQuality)
+    bool   TT_SetCameraMJPEGQuality(int cameraIndex, int mjpegQuality)
     int    TT_CameraImagerGain(int cameraIndex)
     int    TT_CameraImagerGainLevels(int cameraIndex)
     void   TT_SetCameraImagerGain(int cameraIndex, int value)
-    bool   TT_IsContinuousIRAvailable(int cameraIndex)
-    void   TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(int cameraIndex, bool Enable)
-    bool   TT_ContinuousIR(int cameraIndex)
-    void   TT_SetContinuousIR(int cameraIndex, bool Enable)
+    bool   TT_SetCameraIRLedsOn( int cameraIndex, bool irLedsOn )
+    bool   TT_CameraIRLedsOn( int cameraIndex )
     bool   TT_ClearCameraMask(int cameraIndex)
     bool   TT_SetCameraMask(int cameraIndex, unsigned char * buffer, int bufferSize)
     bool   TT_CameraMask(int cameraIndex, unsigned char * buffer, int bufferSize)

@@ -50,6 +50,9 @@ def get_unident_markers():
             unimarkers.append(k)
     return tuple(unimarkers)
 
+def get_all_rigid_bodies_markers():
+    markers=[(TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount())]
+    return markers
 
 def get_rigid_bodies():
     """Returns a dictionary containing all rigid bodies."""
