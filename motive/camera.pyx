@@ -90,11 +90,10 @@ class Camera(object):
         return self.__str__()
 
     @property
-    @convert_string_output
     def name(self):
         """str: Camera name"""
         cdef wchar_t name[256]
-        TT_RigidBodyName(self.index, name, 256)
+        TT_CameraName(self.index, name, 256)
         return PyUnicode_FromWideChar(name, -1)
 
     @property
