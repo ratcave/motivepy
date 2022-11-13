@@ -111,6 +111,14 @@ cdef extern from "MotiveAPI.h":
         kApiResult_CouldNotFindGroundPlane,
         kApiResult_UnableToAccessCameras
 
+    cdef enum eMotiveAPIVideoType
+        kVideoType_Segment   = 0,
+        kVideoType_Grayscale = 1,
+        kVideoType_Object    = 2,
+        kVideoType_Precision = 4,
+        kVideoType_MJPEG     = 6,
+        kVideoType_ColorH264 = 9
+
 #STARTUP / SHUTDOWN
     eMotiveAPIResult    TT_Initialize()                                                        #initialize library
     eMotiveAPIResult    TT_Shutdown()                                                          #shutdown library
@@ -266,18 +274,18 @@ cdef extern from "MotiveAPI.h":
     ##void     TT_DetachListener(cTTAPIListener* listener)
 
 
-    int NPVIDEOTYPE_SEGMENT
-    int NPVIDEOTYPE_GRAYSCALE
-    int NPVIDEOTYPE_OBJECT
-    int NPVIDEOTYPE_PRECISION
-    int NPVIDEOTYPE_MJPEG
+#    int NPVIDEOTYPE_SEGMENT
+#    int NPVIDEOTYPE_GRAYSCALE
+#    int NPVIDEOTYPE_OBJECT
+#    int NPVIDEOTYPE_PRECISION
+#    int NPVIDEOTYPE_MJPEG
 
-    int NPRESULT_SUCCESS
-    int NPRESULT_FILENOTFOUND
-    int NPRESULT_LOADFAILED
-    int NPRESULT_FAILED
-    int NPRESULT_INVALIDFILE
-    int NPRESULT_INVALIDCALFILE
-    int NPRESULT_UNABLETOINITIALIZE
-    int NPRESULT_INVALIDLICENSE
-    int NPRESULT_NOFRAMEAVAILABLE
+#    int NPRESULT_SUCCESS
+#    int NPRESULT_FILENOTFOUND
+#    int NPRESULT_LOADFAILED
+#    int NPRESULT_FAILED
+#    int NPRESULT_INVALIDFILE
+#    int NPRESULT_INVALIDCALFILE
+#    int NPRESULT_UNABLETOINITIALIZE
+#    int NPRESULT_INVALIDLICENSE
+#    int NPRESULT_NOFRAMEAVAILABLE

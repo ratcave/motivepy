@@ -58,11 +58,11 @@ def get_cams():
 
 class Camera(object):
 
-    OBJECT_MODE = NPVIDEOTYPE_OBJECT
-    GRAYSCALE_MODE = NPVIDEOTYPE_GRAYSCALE
-    SEGMENT_MODE = NPVIDEOTYPE_SEGMENT
-    PRECISION_MODE = NPVIDEOTYPE_PRECISION
-    MJPEG_MODE = NPVIDEOTYPE_MJPEG
+    OBJECT_MODE = kVideoType_Object
+    GRAYSCALE_MODE = kVideoType_Grayscale
+    SEGMENT_MODE = kVideoType_Segment
+    PRECISION_MODE = kVideoType_Precision
+    MJPEG_MODE = kVideoType_MJPEG
 
     def __init__(self, index):
         """Returns a Camera object."""
