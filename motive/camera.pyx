@@ -105,11 +105,7 @@ class Camera(object):
     @property
     def group(self):
         """int: Camera's group index"""
-        return TT_CamerasGroup(self.index)
-
-    @group.setter
-    def group(self,value):
-        TT_SetCameraGroup(self.index, value)
+        return TT_CameraGroup(self.index)
 
     @property
     def video_mode(self):
@@ -138,15 +134,6 @@ class Camera(object):
     @threshold.setter
     def threshold(self, value):
         self.set_settings(video_mode=self.video_mode, exposure=self.exposure, threshold=value, intensity=self.intensity)
-
-    @property
-    def intensity(self):
-        """int: Camera IR LED brightness intensity level"""
-        return check_cam_setting(TT_CameraIntensity)(self.index)
-
-    @intensity.setter
-    def intensity(self, value):
-        self.set_settings(video_mode=self.video_mode, exposure=self.exposure, threshold=self.threshold, intensity=value)
 
     @property
     def settings(self):
@@ -193,16 +180,6 @@ class Camera(object):
             raise ValueError("Threshold Must Be In (0,255)")
 
         return TT_SetCameraSettings(self.index, video_mode, exposure, threshold, intensity)
-
-    @property
-    def frame_rate(self):
-        """int: Cameras frame rate in Hz. That is frames per second"""
-        return check_cam_setting(TT_CameraFrameRate)(self.index)
-
-    @frame_rate.setter
-    def frame_rate(self, value):
-        if not TT_SetCameraFrameRate(self.index, value):
-            raise Exception("Could Not Set Frame Rate.")
 
     @property
     def grayscale_decimation(self):

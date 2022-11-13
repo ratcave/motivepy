@@ -180,11 +180,7 @@ cdef extern from "MotiveAPI.h":
 
 #CAMERA GROUP SUPPORT
     int    TT_CameraGroupCount()                                                    #Returns number of camera groups
-    bool   TT_CreateCameraGroup()                                                   #Add an additional group
-    bool   TT_RemoveCameraGroup(int index)                                          #Remove a camera group (must be empty)
-    int    TT_CamerasGroup(int index)                                               #Returns Camera's camera group index
-    void   TT_SetGroupShutterDelay(int groupIndex, int microseconds)                #Set camera group's shutter delay
-    void   TT_SetCameraGroup(int cameraIndex, int cameraGroupIndex)                 #Move camera to camera group
+    int    TT_CameraGroup(int index)                                               #Returns Camera's camera group index
 
 #CAMERA GROUP FILTER SETTINGS
     ##int  TT_CameraGroupFilterSettings(int groupIndex, cCameraGroupFilterSettings &settings)
@@ -213,12 +209,11 @@ cdef extern from "MotiveAPI.h":
     bool   TT_CameraPixelResolution(int cameraIndex, int &width, int &height)
     bool   TT_SetCameraSettings(int cameraIndex, int videoType, int exposure,       #VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode. Exposure: Valid values are:  1-480. Threshold: Valid values are: 0-255. Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)
                                 int threshold, int intensity)
-    bool   TT_SetCameraFrameRate(int cameraIndex, int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()
+    bool   TT_SetCameraSystemFrameRate(int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()
     int    TT_CameraVideoType(int cameraIndex)
-    int    TT_CameraFrameRate(int cameraIndex)                                      #frames/sec
+    int    TT_CameraSystemFrameRate()                                               #frames/sec
     int    TT_CameraExposure(int cameraIndex)
     int    TT_CameraThreshold(int cameraIndex)
-    int    TT_CameraIntensity(int cameraIndex)
     float  TT_CameraTemperature(int cameraIndex)
     float  TT_CameraRinglightTemperature(int cameraIndex)
     int    TT_CameraGrayscaleDecimation(int cameraIndex)
@@ -240,7 +235,6 @@ cdef extern from "MotiveAPI.h":
     int    TT_CameraID(int cameraIndex)
     bool   TT_CameraFrameBuffer(int cameraIndex, int bufferPixelWidth, int bufferPixelHeight,      #Fetch the camera's frame buffer.  This function fills the provided buffer with an image of what is in the camera view. The resulting image depends on what video mode the camera is in.  If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
                                 int bufferByteSpan, int bufferPixelBitDepth, unsigned char *buffer)
-    bool   TT_CameraFrameBufferSaveAsBMP(int cameraIndex, const char *filename)                    #Save camera's frame buffer as a BMP image file
     void   TT_CameraBackproject(int cameraIndex, float x, float y, float z,                        #Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera, it will return where the point would land on the imager of that camera in to 2D space. This basically locates where in the camera's FOV a 3D point would be located.
                                 float &cameraX, float &cameraY)
     void   TT_CameraUndistort2DPoint(int cameraIndex, float &x, float &y)
