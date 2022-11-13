@@ -17,6 +17,12 @@ include "cnative.pxd"
 
 from . import decorators, crash_avoidance
 
+from python_object cimport PyObject
+
+cdef extern from *:
+    wchar_t* PyUnicode_AsWideCharString(object, Py_ssize_t *size)
+
+   
 
 def check_npresult(func):
     """Decorator that checks if the output of a function matches the Motive Error Values, and raises a Python error if so
@@ -24,17 +30,17 @@ def check_npresult(func):
     Note:
         Should decorate every Motive API function returning a NPResult type.
     """
-    error_dict = {NPRESULT_FILENOTFOUND:  (IOError, "File Not Found"),
-                  NPRESULT_LOADFAILED:  (Exception, "Load Failed"),
-                  NPRESULT_FAILED:  (Exception, "Failed"),
-                  NPRESULT_INVALIDFILE:  (IOError, "Invalid File"),
-                  NPRESULT_INVALIDCALFILE:  (IOError, "Invalid Calibration File"),
-                  NPRESULT_UNABLETOINITIALIZE: (IOError, "Unable To Initialize"),
-                  NPRESULT_INVALIDLICENSE: (EnvironmentError, "Invalid License"),
-                  NPRESULT_NOFRAMEAVAILABLE: (RuntimeWarning, "No Frames Available")}
+    error_dict = {kApiResult_FileNotFound:  (IOError, "File Not Found"),
+                  kApiResult_LoadFailed:  (Exception, "Load Failed"),
+                  kApiResult_SaveFailed:  (Exception, "Save Failed"),
+                  kApiResult_Failed:  (Exception, "Failed"),
+                  kApiResult_InvalidFile:  (IOError, "Invalid File"),
+                  kApiResult_InvalidLicense: (EnvironmentError, "Invalid License"),
+                  kApiResult_NoFrameAvailable: (RuntimeWarning, "No Frames Available"),
+                  kApiResult_TooFewMarkers: (RuntimeWarning, "Too Few Markers")}
     def wrapper(*args, **kwargs):
         npresult = func(*args, **kwargs)
-        if npresult != NPRESULT_SUCCESS:
+        if npresult != kApiResult_Success:
             error, msg = error_dict[npresult]
             raise error(msg)
     return wrapper
@@ -78,8 +84,10 @@ def load_calibration(str file_name):
     # raise NotImplementedError
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.cal')
-    return check_npresult(TT_LoadCalibration)(file_name.encode('UTF-8'))
-
+    cdef int cameraCount = 0
+    cdef int* value = &cameraCount
+    cdef Py_ssize_t length
+    TT_LoadCalibration(PyUnicode_AsWideCharString(file_name, &length), value)
 
 @decorators._save_backup
 def load_rigid_bodies(str file_name):
@@ -93,7 +101,8 @@ def load_rigid_bodies(str file_name):
     # raise NotImplementedError
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.tra')
-    return check_npresult(TT_LoadRigidBodies)(file_name.encode('UTF-8'))
+    cdef Py_ssize_t length
+    return TT_LoadRigidBodies(PyUnicode_AsWideCharString(file_name, &length))
 
 
 @decorators._save_backup
@@ -144,10 +153,11 @@ def load_profile(str profile_file=crash_avoidance.backup_profile_filename):
     # Check File name and raise appropriate errors.
     crash_avoidance.check_file_exists(profile_file)
     crash_avoidance.check_file_extension(profile_file, '.motive')
-
+    
     # Load Profile File
-    return check_npresult(TT_LoadProfile)(profile_file.encode('UTF-8'))
-
+    #return check_npresult(TT_LoadProfile)(profile_file.encode('UTF-8'))
+    cdef Py_ssize_t length
+    TT_LoadProfile(PyUnicode_AsWideCharString(profile_file, &length))
 
 def _save_profile(str profile_file):
     """Saves profile file
@@ -164,7 +174,8 @@ def _save_profile(str profile_file):
     crash_avoidance.check_file_extension(profile_file, '.motive')
 
     # Save Profile File
-    return check_npresult(TT_SaveProfile)(profile_file.encode('UTF-8'))
+    cdef Py_ssize_t length
+    return TT_SaveProfile(PyUnicode_AsWideCharString(profile_file, &length))
 
 
 @decorators._save_backup
@@ -185,35 +196,6 @@ def load_calibration_from_memory(buffer, int buffersize):
     cdef unsigned char * buff=buffer         #buffer should be an integer array. See get_frame_buffer() in camera.pyx for example
     return check_npresult(TT_LoadCalibrationFromMemory)(buff, buffersize)
 
-#DATA STREAMING
-def stream_trackd(bool enabled):
-    """Start/stop Trackd Stream
-
-    TrackD Streaming Engine: Streams rigid body data via the Trackd protocol.
-    Args:
-        enabled(bool): True to start Trackd Stream. False to stop it.
-    """
-    return check_npresult(TT_StreamTrackd)(enabled)
-
-def stream_vrpn(bool enabled, int port=3883):
-    """Start/stop VRPN Stream
-
-    VRPN Streaming Engine: Streams rigid body data via the VRPN protocol.
-    VRPN Broadcast Port: Specifies the broadcast port for VRPN streaming.
-
-    Args:
-        enabled(bool): True to start VRPN Stream. False to stop it.
-        port(Optional[int]): Encodes the broadcast port
-    """
-    return check_npresult(TT_StreamVRPN)(enabled, port)
-
-def stream_np(bool enabled):
-    """Start/stop NaturalPoint Stream
-
-    Args:
-        enabled(bool): True to start NaturalPoint Stream. False to stop it.
-    """
-    return check_npresult(TT_StreamNP)(enabled)
 
 
 #MARKERS
