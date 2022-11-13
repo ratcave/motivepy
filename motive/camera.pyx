@@ -234,7 +234,7 @@ class Camera(object):
     @property
     def ir_led_on(self):
         """bool: IR illumination is on"""
-        return TT_CameraIRLedsOn(self.index):
+        return TT_CameraIRLedsOn(self.index)
 
     @ir_led_on.setter
     def ir_led_on(self, bool value):
