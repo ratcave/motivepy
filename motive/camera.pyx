@@ -422,9 +422,10 @@ class Camera(object):
         """
         cdef float x=0, y=0
         if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
-            return x, y
+            return True, x, y
         else:
-            raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
+            return False, 0, 0
+            #raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
 
     @property
     def frame_buffer(self):
