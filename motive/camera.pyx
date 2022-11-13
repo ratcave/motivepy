@@ -457,16 +457,6 @@ class Camera(object):
 
         return frame
 
-    def frame_buffer_save_as_bmp(self, str filename):
-        """Saves camera's frame buffer as a BMP image file
-        Args:
-            filename(str): The name of the image file the buffer will be saved to
-        Raises:
-            IOError: If the buffer has not been succesfully saved
-        """
-        if not TT_CameraFrameBufferSaveAsBMP(self.index, filename.encode('UTF-8')):
-            raise IOError("Camera Frame Buffer Not Successfully Saved")
-
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
     def set_filter_switch(self, bool enableIRFilter):
         """Switch filter of camera
