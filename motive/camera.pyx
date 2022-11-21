@@ -107,6 +107,20 @@ class Camera(object):
         return TT_CameraGroup(self.index)
 
     @property
+    def enabled(self):
+        """boole: whether the camera is enabled"""
+        cdef eMotiveAPICameraStates currentState
+        TT_CameraState(self.index, currentState)
+        return currentState == Camera_Enabled
+
+    @enabled.setter
+    def enabled(self, value):
+        if value:
+            TT_SetCameraState(self.index, Camera_Enabled)
+        else:
+            TT_SetCameraState(self.index, Camera_Disabled)
+
+    @property
     def video_mode(self):
         """int: Integer encoding the actual video mode of the camera. See Camera.X_MODE"""
         return check_cam_setting(TT_CameraVideoType)(self.index)
