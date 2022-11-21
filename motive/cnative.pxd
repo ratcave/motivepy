@@ -119,6 +119,12 @@ cdef extern from "MotiveAPI.h":
         kVideoType_MJPEG     = 6,
         kVideoType_ColorH264 = 9
 
+    cdef enum eMotiveAPICameraStates:
+        Camera_Enabled = 0,
+        Camera_Disabled_For_Reconstruction = 1,
+        Camera_Disabled = 2,
+        CameraStatesCount = 3
+
 #STARTUP / SHUTDOWN
     eMotiveAPIResult    TT_Initialize()                                                        #initialize library
     eMotiveAPIResult    TT_Shutdown()                                                          #shutdown library
@@ -206,6 +212,10 @@ cdef extern from "MotiveAPI.h":
     bool TT_IsFilterSwitchEnabled()
 
 #POINT CLOUD INTERFACE
+
+    bool TT_SetCameraState( int cameraIndex, eMotiveAPICameraStates state )
+    bool TT_CameraState( int cameraIndex, eMotiveAPICameraStates& currentState )
+
     int    TT_CameraCount()                                                         #Returns Camera Count
     float  TT_CameraXLocation(int index)                                            #Returns Camera's X Coord
     float  TT_CameraYLocation(int index)                                            #Returns Camera's Y Coord
