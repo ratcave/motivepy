@@ -110,7 +110,7 @@ class Camera(object):
     def enabled(self):
         """boole: whether the camera is enabled"""
         cdef eMotiveAPICameraStates currentState
-        TT_CameraState(self.index, &currentState)
+        TT_CameraState(self.index, currentState)
         return currentState == Camera_Enabled
 
     @enabled.setter
