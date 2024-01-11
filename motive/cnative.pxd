@@ -16,15 +16,15 @@ That function calls the C++ function declared in this module
 """
 
 from libcpp cimport bool
+from libc.stddef cimport wchar_t
 
-
-cdef extern from "NPTrackingTools.h" namespace "Core":
+cdef extern from "MotiveAPI.h" namespace "Core":
     cdef cppclass cUID:
         unsigned long long int LowBits()
         unsigned long long int HighBits()
 
 
-cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":  #can not define enum in class in cython yet
+cdef extern from "MotiveAPI.h" namespace "MotiveAPIProcessingSettings":  #can not define enum in class in cython yet
           cdef enum Setting:            #unsigned long long
             eResolvePointCloud,         #bool
             eShowCameras,               #bool
@@ -80,10 +80,10 @@ cdef extern from "NPTrackingTools.h" namespace "cCameraGroupPointCloudSettings":
             eSettingsCount              # returns 1
 
 
-cdef extern from "NPTrackingTools.h":
+cdef extern from "MotiveAPI.h":
 
-    cdef cppclass cCameraGroupPointCloudSettings:
-        cCameraGroupPointCloudSettings() except +
+    cdef cppclass MotiveAPIProcessingSettings:
+        MotiveAPIProcessingSettings() except +
 
         #Set individual parameter values. Only values that are set will be changed when submitting
         #the settings block to TT_SetCameraGroupPointCloudSettings. These methods will return false
@@ -98,32 +98,58 @@ cdef extern from "NPTrackingTools.h":
         bool            DoubleParameter( Setting which , double & value) const
         bool            LongParameter( Setting which , long & value) const
 
+    cdef enum eMotiveAPIResult:
+        kApiResult_Success = 0,
+        kApiResult_Failed,
+        kApiResult_FileNotFound,
+        kApiResult_LoadFailed,
+        kApiResult_SaveFailed,
+        kApiResult_InvalidFile,
+        kApiResult_InvalidLicense,
+        kApiResult_NoFrameAvailable,
+        kApiResult_TooFewMarkers,
+        kApiResult_CouldNotFindGroundPlane,
+        kApiResult_UnableToAccessCameras
+
+    cdef enum eMotiveAPIVideoType:
+        kVideoType_Segment   = 0,
+        kVideoType_Grayscale = 1,
+        kVideoType_Object    = 2,
+        kVideoType_Precision = 4,
+        kVideoType_MJPEG     = 6,
+        kVideoType_ColorH264 = 9
+
+    cdef enum eMotiveAPICameraStates:
+        Camera_Enabled = 0,
+        Camera_Disabled_For_Reconstruction = 1,
+        Camera_Disabled = 2,
+        CameraStatesCount = 3
 
 #STARTUP / SHUTDOWN
-    int    TT_Initialize()                                                        #initialize library
-    int    TT_Shutdown()                                                          #shutdown library
+    eMotiveAPIResult    TT_Initialize()                                                        #initialize library
+    eMotiveAPIResult    TT_Shutdown()                                                          #shutdown library
 
 #RIGID BODY INTERFACE
-    int    TT_LoadCalibration(const char *filename)                                #load calibration
+    eMotiveAPIResult    TT_LoadCalibration(const wchar_t *filename, int *cameraCount)                                #load calibration
     ##int    TT_LoadCalibrationW(const wchar_t *filename)                          ##only necessary when not using english alphabet to name files
-    int    TT_LoadRigidBodies(const char *filename)                                #load rigid bodies
+    eMotiveAPIResult    TT_LoadRigidBodies(const wchar_t *filename)                                #load rigid bodies
     ##int    TT_LoadRigidBodiesW(const wchar_t *filename)
-    int    TT_SaveRigidBodies(const char *filename)                                #save rigid bodies
+    eMotiveAPIResult    TT_SaveRigidBodies(const char *filename)                                #save rigid bodies
     ##int    TT_SaveRigidBodiesW(const wchar_t *filename)
-    int    TT_AddRigidBodies(const char *filename)                                 #add rigid bodies
+    eMotiveAPIResult    TT_AddRigidBodies(const char *filename)                                 #add rigid bodies
     ##int    TT_AddRigidBodiesW (const wchar_t *filename)
-    int    TT_LoadProject(const char *filename)                                    #load project file
-    ##int    TT_LoadProjectW(const wchar_t *filename)
-    int    TT_SaveProject(const char *filename)                                    #save project file
-    ##int    TT_SaveProjectW(const wchar_t *filename)
-    int    TT_LoadCalibrationFromMemory(unsigned char* buffer, int bufferSize)
-    int    TT_Update()                                                             # Process incoming camera data
-    int    TT_UpdateSingleFrame()                                                  # Process incoming camera data
+    eMotiveAPIResult    TT_LoadProfile(const wchar_t *filename)                                    #load profile file
+    ##int    TT_LoadProfileW(const wchar_t *filename)
+    eMotiveAPIResult    TT_SaveProfile(const wchar_t *filename)                                    #save profile file
+    ##int    TT_SaveProfileW(const wchar_t *filename)
+    eMotiveAPIResult    TT_LoadCalibrationFromMemory(unsigned char* buffer, int bufferSize)
+    eMotiveAPIResult    TT_Update()                                                             # Process incoming camera data
+    eMotiveAPIResult    TT_UpdateSingleFrame()                                                  # Process incoming camera data
 
 #DATA STREAMING
-    int    TT_StreamTrackd(bool enabled)                                           #Start/stop Trackd Stream
-    int    TT_StreamVRPN(bool enabled, int port)                                   #Start/stop VRPN Stream
-    int    TT_StreamNP(bool enabled)                                               #Start/stop NaturalPoint Stream
+#    int    TT_StreamTrackd(bool enabled)                                           #Start/stop Trackd Stream
+#    int    TT_StreamVRPN(bool enabled, int port)                                   #Start/stop VRPN Stream
+#    int    TT_StreamNP(bool enabled)                                               #Start/stop NaturalPoint Stream
 
 #FRAME
     int    TT_FrameMarkerCount()                                                   #Returns Frame Markers Count
@@ -142,16 +168,16 @@ cdef extern from "NPTrackingTools.h":
                                      float *qx, float *qy, float *qz, float *qw,        #Orientation
                                      float *yaw, float *pitch, float *roll)             #Orientation
 
-    void   TT_ClearRigidBodyList()                                                 #Clear all rigid bodies
-    int    TT_RemoveRigidBody(int index)                                           #Remove single rigid body
+    eMotiveAPIResult    TT_RemoveRigidBody(int index)                                           #Remove single rigid body
     int    TT_RigidBodyCount()                                                     #Returns number of rigid bodies
     int    TT_RigidBodyUserData(int index)                                         #Get RigidBodies User Data
     void   TT_SetRigidBodyUserData(int index, int ID)                              #Set RigidBodies User Data
-    const char*  TT_RigidBodyName (int index)                                      #Returns RigidBody Name
+    bool   TT_RigidBodyName( int index, wchar_t* buffer, int bufferSize );
+    #const char*  TT_RigidBodyName (int index)                                      #Returns RigidBody Name
     ##const wchar_t* TT_RigidBodyNameW(int index)
     void   TT_SetRigidBodyEnabled(int index, bool enabled)                         #Set Tracking
     bool   TT_RigidBodyEnabled(int index)                                          #Get Tracking
-    int    TT_RigidBodyTranslatePivot(int index, float x, float y, float z)
+    eMotiveAPIResult    TT_RigidBodyTranslatePivot(int index, float x, float y, float z)
     bool   TT_RigidBodyResetOrientation(int index)
     int    TT_RigidBodyMarkerCount(int index)                                      #Get marker count
     void   TT_RigidBodyMarker(int rigidIndex,                                      #Get RigidBody mrkr
@@ -159,7 +185,7 @@ cdef extern from "NPTrackingTools.h":
     void   TT_RigidBodyPointCloudMarker(int rigidIndex,                            #Get corresponding point cloud marker
                                              int markerIndex, bool &tracked,            #If tracked is false, there is no
                                              float &x, float &y, float &z)              #corresponding point cloud marker.
-    int    TT_CreateRigidBody(const char* name, int id,                            #Create a rigid body based on the marker count and marker list provided.  The marker list is expected to contain of list of marker coordinates in the order: x1,y1,z1,x2,y2,z2,...xN,yN,zN.
+    int    TT_CreateRigidBody(const wchar_t* name, int id,                            #Create a rigid body based on the marker count and marker list provided.  The marker list is expected to contain of list of marker coordinates in the order: x1,y1,z1,x2,y2,z2,...xN,yN,zN.
                                    int markerCount, float *markerList)
     ##cdef int TT_RigidBodySettings   (int index, cRigidBodySettings &settings)           #Get RigidBody Settings
     ##cdef int TT_SetRigidBodySettings(int index, cRigidBodySettings &settings)           #Set RigidBody Settings
@@ -168,45 +194,44 @@ cdef extern from "NPTrackingTools.h":
 
 #CAMERA GROUP SUPPORT
     int    TT_CameraGroupCount()                                                    #Returns number of camera groups
-    bool   TT_CreateCameraGroup()                                                   #Add an additional group
-    bool   TT_RemoveCameraGroup(int index)                                          #Remove a camera group (must be empty)
-    int    TT_CamerasGroup(int index)                                               #Returns Camera's camera group index
-    void   TT_SetGroupShutterDelay(int groupIndex, int microseconds)                #Set camera group's shutter delay
-    void   TT_SetCameraGroup(int cameraIndex, int cameraGroupIndex)                 #Move camera to camera group
+    int    TT_CameraGroup(int index)                                               #Returns Camera's camera group index
 
 #CAMERA GROUP FILTER SETTINGS
     ##int  TT_CameraGroupFilterSettings(int groupIndex, cCameraGroupFilterSettings &settings)
     ##int  TT_SetCameraGroupFilterSettings(int groupIndex, cCameraGroupFilterSettings &settings)
 
 #POINT CLOUD RECONSTRUCTION SETTINGS
-    int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
-    int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
+#    int TT_CameraGroupPointCloudSettings   (int groupIndex, cCameraGroupPointCloudSettings &settings)
+#    int TT_SetCameraGroupPointCloudSettings(int groupIndex, cCameraGroupPointCloudSettings &settings)
 
 #MARKER SIZE SETTINGS
-    ##int TT_CameraGroupMarkerSize   (int groupIndex, cCameraGroupMarkerSizeSettings &settings)
-    ##int TT_SetCameraGroupMarkerSize(int groupIndex, cCameraGroupMarkerSizeSettings &settings)
+    ##int TT_CameraMarkerSize   (int groupIndex, MotiveAPIMarkerSizeSettings &settings)
+    ##int TT_SetCameraMarkerSize(int groupIndex, MotiveAPIMarkerSizeSettings &settings)
     int  TT_SetCameraGroupReconstruction(int groupIndex, bool enable)
     int  TT_SetEnabledFilterSwitch(bool enabled)
     bool TT_IsFilterSwitchEnabled()
 
 #POINT CLOUD INTERFACE
+
+    bool TT_SetCameraState( int cameraIndex, eMotiveAPICameraStates state )
+    bool TT_CameraState( int cameraIndex, eMotiveAPICameraStates& currentState )
+
     int    TT_CameraCount()                                                         #Returns Camera Count
     float  TT_CameraXLocation(int index)                                            #Returns Camera's X Coord
     float  TT_CameraYLocation(int index)                                            #Returns Camera's Y Coord
     float  TT_CameraZLocation(int index)                                            #Returns Camera's Z Coord
     float  TT_CameraOrientationMatrix(int camera, int index)                        #Orientation
-    const char* TT_CameraName(int index)                                            #Returns Camera Name
+    bool   TT_CameraName(int cameraIndex, wchar_t* buffer, int bufferSize )         #Returns Camera Name
     int    TT_CameraMarkerCount(int cameraIndex)                                    #Camera's 2D Marker Count
     bool   TT_CameraMarker(int cameraIndex, int markerIndex, float &x, float &y)    #CameraMarker fetches the 2D centroid location of the marker as seen by the camera.
     bool   TT_CameraPixelResolution(int cameraIndex, int &width, int &height)
     bool   TT_SetCameraSettings(int cameraIndex, int videoType, int exposure,       #VideoType: 0 = Segment Mode, 1 = Grayscale Mode, 2 = Object Mode, 4 = Precision Mode, 6 = MJPEG Mode. Exposure: Valid values are:  1-480. Threshold: Valid values are: 0-255. Intensity: Valid values are: 0-15  (This should be set to 15 for most situations)
                                 int threshold, int intensity)
-    bool   TT_SetCameraFrameRate(int cameraIndex, int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()
+    bool   TT_SetCameraSystemFrameRate(int frameRate)                    #Set the frame rate for the given zero based camera index. Returns true if the operation was successful and false otherwise. If the operation fails check that the camera index is valid and that devices have been initialized with TT_Initialize()
     int    TT_CameraVideoType(int cameraIndex)
-    int    TT_CameraFrameRate(int cameraIndex)                                      #frames/sec
+    int    TT_CameraSystemFrameRate()                                               #frames/sec
     int    TT_CameraExposure(int cameraIndex)
     int    TT_CameraThreshold(int cameraIndex)
-    int    TT_CameraIntensity(int cameraIndex)
     float  TT_CameraTemperature(int cameraIndex)
     float  TT_CameraRinglightTemperature(int cameraIndex)
     int    TT_CameraGrayscaleDecimation(int cameraIndex)
@@ -215,14 +240,12 @@ cdef extern from "NPTrackingTools.h":
     bool   TT_SetCameraAGC(int cameraIndex, bool enableAutomaticGainControl)
     bool   TT_SetCameraAEC(int cameraIndex, bool enableAutomaticExposureControl)
     bool   TT_SetCameraHighPower(int cameraIndex, bool enableHighPowerMode)
-    bool   TT_SetCameraMJPEGHighQuality(int cameraIndex, int mjpegQuality)
+    bool   TT_SetCameraMJPEGQuality(int cameraIndex, int mjpegQuality)
     int    TT_CameraImagerGain(int cameraIndex)
     int    TT_CameraImagerGainLevels(int cameraIndex)
     void   TT_SetCameraImagerGain(int cameraIndex, int value)
-    bool   TT_IsContinuousIRAvailable(int cameraIndex)
-    void   TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(int cameraIndex, bool Enable)
-    bool   TT_ContinuousIR(int cameraIndex)
-    void   TT_SetContinuousIR(int cameraIndex, bool Enable)
+    bool   TT_SetCameraIRLedsOn( int cameraIndex, bool irLedsOn )
+    bool   TT_CameraIRLedsOn( int cameraIndex )
     bool   TT_ClearCameraMask(int cameraIndex)
     bool   TT_SetCameraMask(int cameraIndex, unsigned char * buffer, int bufferSize)
     bool   TT_CameraMask(int cameraIndex, unsigned char * buffer, int bufferSize)
@@ -230,7 +253,6 @@ cdef extern from "NPTrackingTools.h":
     int    TT_CameraID(int cameraIndex)
     bool   TT_CameraFrameBuffer(int cameraIndex, int bufferPixelWidth, int bufferPixelHeight,      #Fetch the camera's frame buffer.  This function fills the provided buffer with an image of what is in the camera view. The resulting image depends on what video mode the camera is in.  If the camera is in grayscale mode, for example, a grayscale image is returned from this call.
                                 int bufferByteSpan, int bufferPixelBitDepth, unsigned char *buffer)
-    bool   TT_CameraFrameBufferSaveAsBMP(int cameraIndex, const char *filename)                    #Save camera's frame buffer as a BMP image file
     void   TT_CameraBackproject(int cameraIndex, float x, float y, float z,                        #Back-project from 3D space to 2D space.  If you give this function a 3D location and select a camera, it will return where the point would land on the imager of that camera in to 2D space. This basically locates where in the camera's FOV a 3D point would be located.
                                 float &cameraX, float &cameraY)
     void   TT_CameraUndistort2DPoint(int cameraIndex, float &x, float &y)
@@ -262,18 +284,18 @@ cdef extern from "NPTrackingTools.h":
     ##void     TT_DetachListener(cTTAPIListener* listener)
 
 
-    int NPVIDEOTYPE_SEGMENT
-    int NPVIDEOTYPE_GRAYSCALE
-    int NPVIDEOTYPE_OBJECT
-    int NPVIDEOTYPE_PRECISION
-    int NPVIDEOTYPE_MJPEG
+#    int NPVIDEOTYPE_SEGMENT
+#    int NPVIDEOTYPE_GRAYSCALE
+#    int NPVIDEOTYPE_OBJECT
+#    int NPVIDEOTYPE_PRECISION
+#    int NPVIDEOTYPE_MJPEG
 
-    int NPRESULT_SUCCESS
-    int NPRESULT_FILENOTFOUND
-    int NPRESULT_LOADFAILED
-    int NPRESULT_FAILED
-    int NPRESULT_INVALIDFILE
-    int NPRESULT_INVALIDCALFILE
-    int NPRESULT_UNABLETOINITIALIZE
-    int NPRESULT_INVALIDLICENSE
-    int NPRESULT_NOFRAMEAVAILABLE
+#    int NPRESULT_SUCCESS
+#    int NPRESULT_FILENOTFOUND
+#    int NPRESULT_LOADFAILED
+#    int NPRESULT_FAILED
+#    int NPRESULT_INVALIDFILE
+#    int NPRESULT_INVALIDCALFILE
+#    int NPRESULT_UNABLETOINITIALIZE
+#    int NPRESULT_INVALIDLICENSE
+#    int NPRESULT_NOFRAMEAVAILABLE

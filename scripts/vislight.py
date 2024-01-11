@@ -6,9 +6,9 @@ if __name__ == '__main__':
 
     root = Tkinter.Tk()
     root.withdraw()
-    project_file_u=tkFileDialog.askopenfilename(title='Choose a project file to load: ', filetypes=[('motive projectfiles', '*.ttp')])
-    project_file = project_file_u.encode("ascii")
-    m.load_project(project_file)
+    profile_file_u=tkFileDialog.askopenfilename(title='Choose a profile file to load: ', filetypes=[('motive profilefiles', '*.motive')])
+    profile_file = profile_file_u.encode("ascii")
+    m.load_profile(profile_file)
 
     for cam in m.get_cams():
         cam.frame_rate = 30
@@ -20,9 +20,9 @@ if __name__ == '__main__':
         else:
             cam.set_settings(0, cam.exposure, cam.threshold, cam.intensity)
 
-    directory, extension = path.splitext(project_file)
-    saved_project_pathname= ''.join([directory, '_vislight', extension])
-    m.save_project(saved_project_pathname)
+    directory, extension = path.splitext(profile_file)
+    saved_profile_pathname = ''.join([directory, '_vislight', extension])
+    m.save_profile(saved_profile_pathname)
     m.shutdown()
 
 
