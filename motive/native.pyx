@@ -17,7 +17,7 @@ include "cnative.pxd"
 
 from . import decorators, crash_avoidance
 
-from python_object cimport PyObject
+# from python_object cimport PyObject
 
 cdef extern from *:
     wchar_t* PyUnicode_AsWideCharString(object, Py_ssize_t *size)
