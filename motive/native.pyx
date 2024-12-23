@@ -50,17 +50,17 @@ def check_npresult(func):
 @check_npresult
 def initialize():
     """Initializes the connection to the cameras"""
-    return TT_Initialize()
+    return Initialize()
 
 @check_npresult
 def shutdown():
     """Closes the connection to the cameras"""
-    return TT_Shutdown()
+    Shutdown()
 
 @decorators.block_for_frame(secs_to_timeout=3)
 def update_single_frame():
     """Processes incoming camera data, grabs next frame in buffer"""
-    return check_npresult(TT_UpdateSingleFrame)()
+    return check_npresult(UpdateSingleFrame)()
 
 
 @decorators.block_for_frame(secs_to_timeout=3)
@@ -68,7 +68,7 @@ def update():
     """Processes incoming camera data. Grabs next frame in buffer if calling rate is similar to camera frame rate
 
     If calling rate is slower than camera frame rate, only grabs frames in intervals"""
-    return check_npresult(TT_Update)()
+    return check_npresult(Update)()
 
 
 #RIGID BODY INTERFACE FILES
@@ -87,7 +87,7 @@ def load_calibration(str file_name):
     cdef int cameraCount = 0
     cdef int* value = &cameraCount
     cdef Py_ssize_t length
-    TT_LoadCalibration(PyUnicode_AsWideCharString(file_name, &length), value)
+    LoadCalibration(PyUnicode_AsWideCharString(file_name, &length), value)
 
 @decorators._save_backup
 def load_rigid_bodies(str file_name):
@@ -102,7 +102,7 @@ def load_rigid_bodies(str file_name):
     crash_avoidance.check_file_exists(file_name)
     crash_avoidance.check_file_extension(file_name, '.tra')
     cdef Py_ssize_t length
-    return TT_LoadRigidBodies(PyUnicode_AsWideCharString(file_name, &length))
+    return LoadRigidBodies(PyUnicode_AsWideCharString(file_name, &length))
 
 
 @decorators._save_backup
@@ -118,7 +118,7 @@ def save_rigid_bodies(str file_name):
     """
     raise NotImplementedError
     crash_avoidance.check_file_extension(file_name, '.tra')
-    return check_npresult(TT_SaveRigidBodies)(file_name.encode('UTF-8'))
+    return check_npresult(SaveRigidBodies)(file_name.encode('UTF-8'))
 
 
 @check_npresult
@@ -135,7 +135,7 @@ def add_rigid_bodies(str file_name):
     raise NotImplementedError
     crash_avoidance.check_file_extension(file_name, '.tra')
     crash_avoidance.check_file_exists(file_name)
-    return TT_AddRigidBodies(file_name.encode('UTF-8'))
+    return AddRigidBodies(file_name.encode('UTF-8'))
 
 
 #@decorators._save_backup
@@ -155,9 +155,9 @@ def load_profile(str profile_file=crash_avoidance.backup_profile_filename):
     crash_avoidance.check_file_extension(profile_file, '.motive')
     
     # Load Profile File
-    #return check_npresult(TT_LoadProfile)(profile_file.encode('UTF-8'))
+    #return check_npresult(LoadProfile)(profile_file.encode('UTF-8'))
     cdef Py_ssize_t length
-    TT_LoadProfile(PyUnicode_AsWideCharString(profile_file, &length))
+    LoadProfile(PyUnicode_AsWideCharString(profile_file, &length))
 
 def _save_profile(str profile_file):
     """Saves profile file
@@ -175,7 +175,7 @@ def _save_profile(str profile_file):
 
     # Save Profile File
     cdef Py_ssize_t length
-    return TT_SaveProfile(PyUnicode_AsWideCharString(profile_file, &length))
+    return SaveProfile(PyUnicode_AsWideCharString(profile_file, &length))
 
 
 @decorators._save_backup
@@ -194,14 +194,22 @@ def load_calibration_from_memory(buffer, int buffersize):
     """Note: Not Implemented!"""
     raise NotImplementedError
     cdef unsigned char * buff=buffer         #buffer should be an integer array. See get_frame_buffer() in camera.pyx for example
-    return check_npresult(TT_LoadCalibrationFromMemory)(buff, buffersize)
+    return check_npresult(LoadCalibrationFromMemory)(buff, buffersize)
 
 
 
 #MARKERS
 def get_frame_markers():
     """Returns a tuple containing all tuples of 3D marker positions"""
-    return tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
+    cdef float x=0, y=0, z=0
+    cdef list coords = []
+    for i in range(MarkerCount()):
+        # Call the function; it returns True on success (assumes success for all)
+        MarkerXYZ(i, x, y, z)
+        coords.append((x, y, z))
+
+    return tuple(coords)
+    #return tuple((FrameMarkerX(i), FrameMarkerY(i), FrameMarkerZ(i)) for i in xrange(FrameMarkerCount()))
 
 cdef class _markID:
     cdef cUID *thisptr            # hold a C++ instance which we're wrapping
@@ -220,19 +228,10 @@ cdef class _markID:
         """19 digit integer number ending with a capital L(20 digits)"""
         return self.thisptr.HighBits()
 
-def frame_marker_label(marker_index):
-    """Returns marker label object
-
-    This object holds a unique ID for every marker.
-    """
-    ID=_markID()
-    cdef cUID label=TT_FrameMarkerLabel(marker_index)
-    ID.thisptr=&label
-    return ID
 
 def frame_time_stamp():
     """Returns time stamp of frame in seconds"""
-    return TT_FrameTimeStamp()
+    return FrameTimeStamp()
 
 def flush_camera_queues():
     """In the event that you are tracking a very high number of 2D and/or 3D markers (hundreds of 3D markers),
@@ -240,7 +239,7 @@ def flush_camera_queues():
     to catch up before calling update(). Ideally, after calling flush_camera_queues() you'll want to not
     call it again until after update() returns a frame again.
     """
-    TT_FlushCameraQueues()
+    FlushCameraQueues()
 
 
 #TODO: Check what the below functions actually do, then remove the not implemented error
@@ -248,37 +247,37 @@ def flush_camera_queues():
 def set_camera_group_reconstruction(int groupIndex, bool enable):
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return check_npresult(TT_SetCameraGroupReconstruction)(groupIndex, enable)
+    return check_npresult(SetCameraGroupReconstruction)(groupIndex, enable)
 
 def set_enabled_filter_switch(bool enabled):
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return check_npresult(TT_SetEnabledFilterSwitch)(enabled)
+    return check_npresult(SetEnabledFilterSwitch)(enabled)
 
 def is_filter_switch_enabled():
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return TT_IsFilterSwitchEnabled()
+    return IsFilterSwitchEnabled()
 
 
 #ADDITIONAL FUNCTIONALITY
 def set_frame_id_based_timing(bool enable):
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return TT_SetFrameIDBasedTiming(enable)
+    return SetFrameIDBasedTiming(enable)
 
 def set_suppress_out_of_order(bool enable):
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return TT_SetSuppressOutOfOrder(enable)
+    return SetSuppressOutOfOrder(enable)
 
 def orient_tracking_bar(float positionX, float positionY, float positionZ,
                         float orientationX, float orientationY, float orientationZ, float orientationW):
     """Note: Not Implemented!"""
     raise NotImplementedError
-    return check_npresult(TT_OrientTrackingBar)(positionX, positionY, positionZ,
+    return check_npresult(OrientTrackingBar)(positionX, positionY, positionZ,
                                 orientationX, orientationY, orientationZ, orientationW)
 
 def get_build_number():
     """Returns multiple digit integer number"""
-    return TT_BuildNumber()
+    return BuildNumber()

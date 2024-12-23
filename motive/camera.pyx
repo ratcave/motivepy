@@ -35,7 +35,7 @@ CameraSettings = namedtuple('CameraSettings', 'video_mode exposure threshold int
 
 
 def check_cam_setting(func):
-    """Decorator that checks if a TT_Camera function can be called correctly
+    """Decorator that checks if a Camera function can be called correctly
 
     Returns:
         check(int): An integer value encoding the camera setting (see camera.pyx)
@@ -76,7 +76,7 @@ class Camera(object):
 
     @staticmethod
     def count():
-        return TT_CameraCount()
+        return CameraCount()
 
     @classmethod
     def get_all(cls):
@@ -93,37 +93,37 @@ class Camera(object):
     def name(self):
         """str: Camera name"""
         cdef wchar_t name[256]
-        TT_CameraName(self.index, name, 256)
+        CameraName(self.index, name, 256)
         return PyUnicode_FromWideChar(name, -1)
 
     @property
     def id(self):
         "int: Camera ID number"
-        return check_cam_setting(TT_CameraID)(self.index)
+        return check_cam_setting(CameraID)(self.index)
 
     @property
     def group(self):
         """int: Camera's group index"""
-        return TT_CameraGroup(self.index)
+        return CameraGroup(self.index)
 
     @property
     def enabled(self):
         """boole: whether the camera is enabled"""
-        cdef eMotiveAPICameraStates currentState
-        TT_CameraState(self.index, currentState)
+        cdef eCameraState currentState
+        CameraState(self.index, currentState)
         return currentState == Camera_Enabled
 
     @enabled.setter
     def enabled(self, value):
         if value:
-            TT_SetCameraState(self.index, Camera_Enabled)
+            SetCameraState(self.index, Camera_Enabled)
         else:
-            TT_SetCameraState(self.index, Camera_Disabled)
+            SetCameraState(self.index, Camera_Disabled)
 
     @property
     def video_mode(self):
         """int: Integer encoding the actual video mode of the camera. See Camera.X_MODE"""
-        return check_cam_setting(TT_CameraVideoType)(self.index)
+        return check_cam_setting(CameraVideoType)(self.index)
 
     @video_mode.setter
     def video_mode(self, value):
@@ -132,17 +132,17 @@ class Camera(object):
     @property
     def exposure(self):
         """int: Camera exposure level"""
-        return check_cam_setting(TT_CameraExposure)(self.index)
+        return check_cam_setting(CameraExposure)(self.index)
 
     @exposure.setter
     def exposure(self, value):
         self.set_settings(video_mode=self.video_mode, exposure=value, threshold=self.threshold, intensity=self.intensity)
-        TT_SetCameraSettings(self.index, self.video_mode, value, self.threshold, self.intensity)
+        SetCameraSettings(self.index, self.video_mode, value, self.threshold, self.intensity)
 
     @property
     def threshold(self):
         """int: Camera threshold level for determining whether a pixel is bright enough to contain a reflective marker"""
-        return check_cam_setting(TT_CameraThreshold)(self.index)
+        return check_cam_setting(CameraThreshold)(self.index)
 
     @threshold.setter
     def threshold(self, value):
@@ -166,7 +166,7 @@ class Camera(object):
         if not (0 <= ss.threshold <= 255):
             raise ValueError("Threshold Must Be In (0,255)")
 
-        return TT_SetCameraSettings(self.index, ss.video_mode, ss.exposure, ss.threshold, ss.intensity)
+        return SetCameraSettings(self.index, ss.video_mode, ss.exposure, ss.threshold, ss.intensity)
 
 
     def set_settings(self, int video_mode, int exposure, int threshold, int intensity):
@@ -192,18 +192,18 @@ class Camera(object):
         if not (0 <= threshold <= 255):
             raise ValueError("Threshold Must Be In (0,255)")
 
-        return TT_SetCameraSettings(self.index, video_mode, exposure, threshold, intensity)
+        return SetCameraSettings(self.index, video_mode, exposure, threshold, intensity)
 
     @property
     def grayscale_decimation(self):
         """int: level of decimation of frame capture (how many frames to skip when getting video)"""
         raise NotImplementedError
-        return  check_cam_setting(TT_CameraGrayscaleDecimation)(self.index)
+        return  check_cam_setting(CameraGrayscaleDecimation)(self.index)
 
     @grayscale_decimation.setter
     def grayscale_decimation(self, value):
         raise NotImplementedError
-        if not TT_SetCameraGrayscaleDecimation(self.index, value):
+        if not SetCameraGrayscaleDecimation(self.index, value):
             raise Exception("Could Not Set Decimation")
 
     @property
@@ -213,22 +213,22 @@ class Camera(object):
         Raises:
             AssertionError: If setting values out of scope
         """
-        return  check_cam_setting(TT_CameraImagerGainLevels)(self.index)+1   #In the motive GUI values range from 1 to 8
+        return  check_cam_setting(CameraImagerGainLevels)(self.index)+1   #In the motive GUI values range from 1 to 8
 
     @image_gain.setter
     def image_gain(self, value):
         if not 0 <= value <= 8:
             raise ValueError("Camera.image_gain must be between 0 and 8")
-        TT_SetCameraImagerGain(self.index, value-1)
+        SetCameraImagerGain(self.index, value-1)
 
     @property
     def ir_led_on(self):
         """bool: IR illumination is on"""
-        return TT_CameraIRLedsOn(self.index)
+        return CameraIRLedsOn(self.index)
 
     @ir_led_on.setter
     def ir_led_on(self, bool value):
-        TT_SetCameraIRLedsOn(self.index, value)
+        SetCameraIRLedsOn(self.index, value)
 
     @property
     def pixel_resolution(self):
@@ -240,7 +240,7 @@ class Camera(object):
             Exception: If the resolution can not be found
         """
         cdef int width = 0, height = 0
-        if TT_CameraPixelResolution(self.index, width, height):
+        if CameraPixelResolution(self.index, width, height):
             return Resolution(width=width, height=height)
         else:
             raise Exception("Could Not Find Camera Resolution")
@@ -256,44 +256,44 @@ class Camera(object):
     @property
     def max_image_gain(self):
         """int: Maximum possible gain level of camera"""
-        return  check_cam_setting(TT_CameraImagerGain)(self.index)
+        return  check_cam_setting(CameraImagerGain)(self.index)
 
     @property
     def temperature(self):
         """float: Temperature of camera"""
-        return check_cam_setting(TT_CameraTemperature)(self.index)
+        return check_cam_setting(CameraTemperature)(self.index)
 
     @property
     def ring_light_temperature(self):
         """float: Temperature of the cameras LED ring"""
-        return  check_cam_setting(TT_CameraRinglightTemperature)(self.index)
+        return  check_cam_setting(CameraRinglightTemperature)(self.index)
 
     @property
     def marker_count(self):
         """int: Number of markers as seen by camera"""
-        return TT_CameraMarkerCount(self.index)
+        return CameraMarkerCount(self.index)
 
     @property
     def markers(self):
         """Tuple[float]: 2D centroid locations of all markers as seen by the camera"""
         cdef float x = 0., y = 0.
         markers = []
-        for markerIndex in xrange(TT_CameraMarkerCount(self.index)):
-            TT_CameraMarker(self.index, markerIndex, x, y)
+        for markerIndex in xrange(CameraMarkerCount(self.index)):
+            CameraMarker(self.index, markerIndex, x, y)
             markers.append((x, y))
         return tuple(markers)
 
     @property
     def location(self):
         """Tuple[float]: 3D camera location"""
-        return TT_CameraXLocation(self.index), TT_CameraYLocation(self.index), TT_CameraZLocation(self.index)
+        return CameraXLocation(self.index), CameraYLocation(self.index), CameraZLocation(self.index)
 
     @property
     def orientation_matrix(self):
         """Returns the Camera's 3x3 orientation matrix."""
         ori_mat = np.zeros(shape=(3, 3), dtype=float)
         for idx in range(9):
-            ori_mat[np.unravel_index(idx, ori_mat.shape)] = TT_CameraOrientationMatrix(self.index, idx)
+            ori_mat[np.unravel_index(idx, ori_mat.shape)] = CameraOrientationMatrix(self.index, idx)
         return ori_mat
 
     def model(self, float x, float y, float z,
@@ -327,7 +327,7 @@ class Camera(object):
         cdef float orientationp[9]
         for i in range(0,9):
             orientationp[i]=orientation[i]
-        if not TT_CameraModel(self.index, x, y, z, orientationp, principleX, principleY,
+        if not CameraModel(self.index, x, y, z, orientationp, principleX, principleY,
                               focalLengthX, focalLengthY, kc1, kc2, kc3, tangential0, tangential1):
             raise Exception("Could Not Set Parameters")
 
@@ -336,24 +336,24 @@ class Camera(object):
     def mask(self, buffer, int bufferSize):
         raise NotImplementedError
         cdef unsigned char * buffer=buffer          #buffer should be an integer array. See get_frame_buffer() below for example
-        return TT_CameraMask(self.index, buffer, bufferSize)
+        return CameraMask(self.index, buffer, bufferSize)
 
     def set_mask(self, buffer, int bufferSize):
         raise NotImplementedError
         cdef unsigned char * buffer = buffer
-        if not TT_SetCameraMask(self.index, buffer, bufferSize):
+        if not SetCameraMask(self.index, buffer, bufferSize):
             raise Exception("Could Not Set Mask")
 
     @property
     def mask_info(self):
         cdef int blockingMaskWidth=0, blockingMaskHeight=0, blockingMaskGrid=0
-        if TT_CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
+        if CameraMaskInfo(self.index, blockingMaskWidth, blockingMaskHeight, blockingMaskGrid):
             return Mask(width=blockingMaskWidth, height=blockingMaskHeight, grid=blockingMaskGrid)
         else:
             raise Exception("Possibly Camera {0} Has No Mask".format(self.index))
 
     def clear_mask(self):
-        if not TT_ClearCameraMask(self.index):
+        if not ClearCameraMask(self.index):
             raise Exception("Could Not Clear Mask")
 
     #CAMERA DISTORTION
@@ -369,7 +369,7 @@ class Camera(object):
         Returns:
             Tuple[float]: The undistorted point coordinates
         """
-        TT_CameraUndistort2DPoint(self.index, x, y)
+        CameraUndistort2DPoint(self.index, x, y)
         return x,y
 
     def distort_2d_point(self, float x, float y):
@@ -384,7 +384,7 @@ class Camera(object):
         Returns:
             Tuple[float]: The distorted point coordinates
         """
-        TT_CameraDistort2DPoint(self.index, x, y)
+        CameraDistort2DPoint(self.index, x, y)
         return x,y
 
     def backproject(self, float x, float y, float z):
@@ -402,7 +402,7 @@ class Camera(object):
             Tuple[float]: The x,y coordinates of a 3D point as seen by the camera
         """
         cdef float cameraX=0, cameraY=0
-        TT_CameraBackproject(self.index, x, y, z, cameraX, cameraY)
+        CameraBackproject(self.index, x, y, z, cameraX, cameraY)
         return cameraX, cameraY
 
     def ray(self, float x, float y):
@@ -418,7 +418,7 @@ class Camera(object):
             Exception: If the function transforming from centroid to ray fails
         """
         cdef float x0 = 0., y0 = 0., z0 = 0., x1 = 0., y1 = 0., z1 = 0.
-        if TT_CameraRay(self.index, x, y, x0, y0, z0, x1, y1, z1):
+        if CameraRay(self.index, x, y, x0, y0, z0, x1, y1, z1):
             return ((x0, y0, z0), (x1, y1, z1))
         else:
             raise Exception
@@ -435,7 +435,7 @@ class Camera(object):
             Exception: If the camera does not contribute to this marker
         """
         cdef float x=0, y=0
-        if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
+        if FrameCameraCentroid(markerIndex,self.index, x, y):
             return True, x, y
         else:
             return False, 0, 0
@@ -446,7 +446,7 @@ class Camera(object):
         """The Camera's frame buffer"""
         res = self.frame_resolution
         cdef np.ndarray[unsigned char, ndim=2] frame = np.empty((res.height, res.width), dtype='B')    #after this call frame is array with zeros
-        if not TT_CameraFrameBuffer(self.index, res.width, res.height, res.width, 8, &frame[0,0]):
+        if not CameraFrameBuffer(self.index, res.width, res.height, res.width, 8, &frame[0,0]):
             raise BufferError("Camera Frame Could Not Be Buffered")
 
         #When video mode is changed, it often takes a few frames before the data coming in is correct.
@@ -480,7 +480,7 @@ class Camera(object):
         Raises:
             Exception: If camera could not switch filter
         """
-        if not TT_SetCameraFilterSwitch(self.index, enableIRFilter):
+        if not SetCameraFilterSwitch(self.index, enableIRFilter):
             raise Exception("Could Not Switch Filter. Possibly Camera Has No IR Filter")
 
     def set_agc(self, bool enableAutomaticGainControl):
@@ -491,7 +491,7 @@ class Camera(object):
         Raises:
             Exception: If camera could not enable AGC
         """
-        if not TT_SetCameraAGC(self.index, enableAutomaticGainControl):
+        if not SetCameraAGC(self.index, enableAutomaticGainControl):
             raise Exception("Could Not Enable AGC. Possibly Camera Has No AGC")
 
     def set_aec(self, bool enableAutomaticExposureControl):
@@ -502,7 +502,7 @@ class Camera(object):
         Raises:
             Exception: If camera could not enable AEC
         """
-        if not TT_SetCameraAEC(self.index, enableAutomaticExposureControl):
+        if not SetCameraAEC(self.index, enableAutomaticExposureControl):
             raise Exception("Could Not Enable AEC. Possibly Camera Has No AEC")
 
     def set_high_power(self, bool enableHighPowerMode):
@@ -513,7 +513,7 @@ class Camera(object):
         Raises:
             Exception: If camera could not enable HPM
         """
-        if not TT_SetCameraHighPower(self.index, enableHighPowerMode):
+        if not SetCameraHighPower(self.index, enableHighPowerMode):
             raise Exception("Could Not Enable HighPowerMode. Possibly Camera Has No HighPowerMode")
 
     def set_mjpeg_high_quality(self, int mjpegQuality):                  #set to 8 minimum quality. set to 100 maximum quality. TODO: detailed range check
@@ -524,5 +524,5 @@ class Camera(object):
         Raises:
             Exception: If camera could not change quality
         """
-        if not TT_SetCameraMJPEGQuality(self.index, mjpegQuality):
+        if not SetCameraMJPEGQuality(self.index, mjpegQuality):
             raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")

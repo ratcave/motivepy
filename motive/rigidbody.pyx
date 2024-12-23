@@ -39,7 +39,15 @@ Location = namedtuple('Location', 'x y z')
 #FUNCTIONS
 def get_unident_markers():
     """Returns a tuple containing all tuples of 3D marker positions not part of rigid bodies"""
-    markers=tuple((TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount()))
+    cdef float x=0, y=0, z=0
+    cdef list coords = []
+    for i in range(MarkerCount()):
+        # Call the function; it returns True on success (assumes success for all)
+        MarkerXYZ(i, x, y, z)
+        coords.append((x, y, z))
+
+    markers=tuple(coords)
+#    markers=tuple((FrameMarkerX(i), FrameMarkerY(i), FrameMarkerZ(i)) for i in xrange(FrameMarkerCount()))
     rigs=get_rigid_bodies().values()
     imarkers=[]
     unimarkers=[]
@@ -51,7 +59,14 @@ def get_unident_markers():
     return tuple(unimarkers)
 
 def get_all_rigid_bodies_markers():
-    markers=[(TT_FrameMarkerX(i), TT_FrameMarkerY(i), TT_FrameMarkerZ(i)) for i in xrange(TT_FrameMarkerCount())]
+    cdef float x=0, y=0, z=0
+    cdef list coords = []
+    for i in range(MarkerCount()):
+        # Call the function; it returns True on success (assumes success for all)
+        MarkerXYZ(i, x, y, z)
+        coords.append((x, y, z))
+
+    markers=[coords]
     return markers
 
 def get_rigid_bodies():
@@ -70,7 +85,7 @@ def create_rigid_body(str name, markerList):
     """
     cdef array.array markerList_array = array.array('f', itertools.chain(*markerList))
     cdef Py_ssize_t length
-    return TT_CreateRigidBody(PyUnicode_AsWideCharString(name, &length), RigidBody.count() + 1, len(markerList), markerList_array.data.as_floats)
+    return CreateRigidBody(PyUnicode_AsWideCharString(name, &length), RigidBody.count() + 1, len(markerList), markerList_array.data.as_floats)
 
 
 def remove_rigid_body(int rigidIndex):
@@ -79,7 +94,7 @@ def remove_rigid_body(int rigidIndex):
     Args:
         rigidIndex(int): The index of the rigid body
     """
-    return native.check_npresult(TT_RemoveRigidBody)(rigidIndex)
+    return native.check_npresult(RemoveRigidBody)(rigidIndex)
 
 
 #CLASS
@@ -107,7 +122,7 @@ class RigidBody(object):
 
     @staticmethod
     def count():
-        return TT_RigidBodyCount()
+        return RigidBodyCount()
 
     @classmethod
     def get_all(cls):
@@ -118,31 +133,22 @@ class RigidBody(object):
     def name(self):
         """str: Rigid body name"""
         cdef wchar_t name[256]
-        TT_RigidBodyName(self.index, name, 256)
+        RigidBodyName(self.index, name, 256)
         return PyUnicode_FromWideChar(name, -1)
-
-    @property
-    def user_data(self):
-        """int: Rigid body user data"""
-        return "Rigid body ID: {0}".format(TT_RigidBodyUserData(self.index))
-
-    @user_data.setter
-    def user_data(self,value):
-        TT_SetRigidBodyUserData(self.index,value)
 
     @property
     def enabled(self):
         """bool: Rigid body tracking enabled"""
-        return TT_RigidBodyEnabled(self.index)
+        return RigidBodyEnabled(self.index)
 
     @enabled.setter
     def enabled(self, value):
-        TT_SetRigidBodyEnabled(self.index, value)
+        SetRigidBodyEnabled(self.index, value)
 
     @property
     def is_tracked(self):
         """bool: Rigid body is tracked"""
-        return TT_IsRigidBodyTracked(self.index)
+        return IsRigidBodyTracked(self.index)
 
     def get_all_spatial_data(self):
         """Returns spatial data of the rigid body
@@ -157,7 +163,7 @@ class RigidBody(object):
 
         """
         cdef float x = 0., y = 0., z = 0., qx = 0., qy = 0., qz = 0., qw = 0., yaw = 0., pitch = 0., roll = 0.
-        TT_RigidBodyLocation(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
+        RigidBodyTransform(self.index,  &x, &y, &z,  &qx, &qy, &qz, &qw, &yaw, &pitch, &roll)
         return {'location': Location(x, y, z), 'rotation': EulerRotation(yaw, pitch, roll),'rotation_quats': Quaternion(qx, qy, qz, qw)}
 
     @property
@@ -191,26 +197,11 @@ class RigidBody(object):
         """Tuple[float]: Rigid body's local 3D marker positions"""
         markers=[]
         cdef float x = 0, y = 0, z = 0
-        for i in range(0, TT_RigidBodyMarkerCount(self.index)):
-            TT_RigidBodyMarker(self.index, i, &x, &y, &z)
+        for i in range(0, RigidBodyMarkerCount(self.index)):
+            RigidBodyMarker(self.index, i, &x, &y, &z)
             markers.append((x, y, z))
         return tuple(markers)
 
-    @property
-    def point_cloud_markers(self):
-        """Tuple[float]:  Rigid body's global 3D marker positions."""
-        markers = []
-        cdef int markerIndex
-        cdef bool tracked = True
-        cdef float x = 0, y = 0, z = 0
-        for markerIndex in xrange(TT_RigidBodyMarkerCount(self.index)):
-            # Get marker position
-            TT_RigidBodyPointCloudMarker(self.index, markerIndex, tracked, x, y, z)
-            # Add the marker if one was found (tracked was True). Else, substitute by rigid body position to reduce error
-            marker = (x, y, z) if tracked else self.location
-            markers.append(marker)
-
-        return tuple(markers)               #Tuples for the location of each marker is good. But all locations together seems more feasible for list!
 
     #@native.check_npresult
     def translate_pivot(self, float x, float y, float z):
@@ -231,11 +222,11 @@ class RigidBody(object):
             warnings.warn('Negating X axis for pivot translation to counter Motive bug.  Not tested for the current build version--use with care.')
 
         x *= -1.
-        return native.check_npresult(TT_RigidBodyTranslatePivot)(self.index, x, y, z)
+        return native.check_npresult(RigidBodyTranslatePivot)(self.index, x, y, z)
 
     def reset_pivot_offset(self):
         self.location = np.mean(self.point_cloud_markers, axis=0)
 
     def reset_orientation(self):
         """Resets the rigid body's orientation to match its current tracked orientation"""
-        TT_RigidBodyResetOrientation(self.index)
+        RigidBodyResetOrientation(self.index)

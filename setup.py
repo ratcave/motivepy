@@ -20,6 +20,7 @@ native = Extension(
     sources=[path.join("motive", "native.pyx")],
     include_dirs=[MOTIVE_INC_DIR, "src"],
     library_dirs=[MOTIVE_LIB_DIR ],
+    extra_compile_args=["/std:c++17"],
     extra_link_args=[MOTIVE_LINK_ARG],
     language="c++"
 )
@@ -29,6 +30,7 @@ camera = Extension(
     sources=[path.join("motive", "camera.pyx")],
     include_dirs=[MOTIVE_INC_DIR, "src", numpy.get_include()],
     library_dirs=[MOTIVE_LIB_DIR ],
+    extra_compile_args=["/std:c++17"],
     extra_link_args=[MOTIVE_LINK_ARG],
     language="c++"
 )
@@ -38,6 +40,7 @@ rigidbody = Extension(
     sources=[path.join("motive", "rigidbody.pyx")],
     include_dirs=[MOTIVE_INC_DIR, "src"],
     library_dirs=[MOTIVE_LIB_DIR ],
+    extra_compile_args=["/std:c++17"],
     extra_link_args=[MOTIVE_LINK_ARG],
     language="c++"
 )
@@ -56,7 +59,8 @@ transformations  = Extension('_transformations', sources=['third_party/transform
 
 setup(
     name="motive",
-    ext_modules= cythonize([native, rigidbody, camera, transformations], language_level = "3"), # pointcloudgroup
+    ext_modules= cythonize([native, rigidbody, transformations], language_level = "3"), # pointcloudgroup
+#    ext_modules= cythonize([native, rigidbody, camera, transformations], language_level = "3"), # pointcloudgroup
     packages= find_packages(),
     scripts=['scripts/vislight.py', 'scripts/viewer.py', 'scripts/video.py'],
     install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph'], #, 'btk' ],

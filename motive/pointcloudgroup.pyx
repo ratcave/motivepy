@@ -24,7 +24,7 @@ from . import native
 #CAMERA GROUP SUPPORT
 def camera_group_count():
     """Returns number of camera groups"""
-    return TT_CameraGroupCount()
+    return CameraGroupCount()
 
 def create_camera_group():
     """Adds an additional camera group
@@ -32,7 +32,7 @@ def create_camera_group():
     Raises:
         Exception: If a new camera group could not be created
     """
-    if not TT_CreateCameraGroup():
+    if not CreateCameraGroup():
         raise Exception("Could Not Create Camera Group")
 
 def remove_camera_group(int groupIndex):
@@ -46,7 +46,7 @@ def remove_camera_group(int groupIndex):
     Raises:
         Exception: If the camera group could not be removed
     """
-    if not TT_RemoveCameraGroup(groupIndex):
+    if not RemoveCameraGroup(groupIndex):
         raise Exception("Could Not Remove. Check If Group Empty")
 
 
@@ -57,7 +57,7 @@ def set_group_shutter_delay(int groupIndex, int microseconds):
         groupIndex (int): The index of the camera group
         microseconds (int): The time between opening of shutter and capture of frame
     """
-    TT_SetGroupShutterDelay(groupIndex, microseconds)
+    SetGroupShutterDelay(groupIndex, microseconds)
 
 #TODO: Check if this actually works for a groupindex different from 0 or more than one group
 @native.check_npresult
@@ -68,7 +68,7 @@ def get_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSetti
         groupIndex (int): The index of the camera group to get settings from
         Settings (CameraGroupPointCloudSetting): The object in which the settings are to be set
     """
-    return TT_CameraGroupPointCloudSettings(groupIndex, Settings.obj[0])
+    return CameraGroupPointCloudSettings(groupIndex, Settings.obj[0])
 
 @native.check_npresult
 def set_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSettings Settings):
@@ -78,7 +78,7 @@ def set_camera_group_point_cloud_settings(groupIndex, CameraGroupPointCloudSetti
         groupIndex (int): The index of the camera group to set settings in
         Settings (CameraGroupPointCloudSetting): The object in which holds the settings are to be set
     """
-    return TT_SetCameraGroupPointCloudSettings(groupIndex, Settings.obj[0]) #Cannot assign type 'cCameraGroupPointCloudSettings *' to 'cCameraGroupPointCloudSettings'
+    return SetCameraGroupPointCloudSettings(groupIndex, Settings.obj[0]) #Cannot assign type 'cCameraGroupPointCloudSettings *' to 'cCameraGroupPointCloudSettings'
 
 
 cdef class CameraGroupPointCloudSettings:

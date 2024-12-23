@@ -67,7 +67,7 @@ motive.utils.decorators.block_for_frame(secs_to_timeout=3)
 
 motive.utils.decorators.check_cam_setting(func)
 
-   Decorator to check if calling a TT_Camera function returns an
+   Decorator to check if calling a Camera function returns an
    exception.
 
 motive.utils.decorators.check_npresult(func)
