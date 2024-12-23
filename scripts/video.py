@@ -7,12 +7,12 @@ import motive as m
 import Tkinter, tkFileDialog
 
 
-def gui_load_project_file():
+def gui_load_profile_file():
     root = Tkinter.Tk()
     root.withdraw()
-    project_file=(tkFileDialog.askopenfilename(title='Choose a project file to load: ', filetypes=[('motive projectfiles', '*.ttp')])).encode('ascii')
+    profile_file=(tkFileDialog.askopenfilename(title='Choose a profile file to load: ', filetypes=[('motive profilefiles', '*.motive')])).encode('ascii')
     root.quit()
-    return project_file
+    return profile_file
 
 def get_cam(camera_name="91"):
     for cam in m.get_cams():
@@ -115,7 +115,7 @@ def write_video(cam, writer, record_time, save_video=True):
         frame=cam.get_frame_buffer()
         #TODO: look at just having the video object
         cv2.imshow('Live Video. Framerate={0}Hz.        (Esc or q to exit)'.format(cam.frame_rate ), frame)
-        print fps
+        print(fps)
 
         #TODO: write video at higher speed than rendering it
         if save_video:
@@ -127,9 +127,9 @@ def write_video(cam, writer, record_time, save_video=True):
             break
 
     if save_video:
-        print "Wrote video to file"
+        print("Wrote video to file")
     else:
-        print "Did not write video to file"
+        print("Did not write video to file")
 
 
 if __name__ == '__main__':
@@ -137,7 +137,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="This is the motive camera video script. It can show and save the video data from any camera.",
                                      epilog="If no arguments are given, the script first opens a window to let you search for a project file to load. \n")
 
-    parser.add_argument('-p', action='store', dest='project_file', default='',
+    parser.add_argument('-p', action='store', dest='profile_file', default='',
                         help='Name of the project file to load.')
 
     parser.add_argument('-c', action='store', dest='camera_name', default='',
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
 
-    m.load_project(args.project_file) if args.project_file else m.load_project(gui_load_project_file())
+    m.load_project(args.profile_file) if args.profile_file else m.load_project(gui_load_profile_file())
 
     if args.camera_name:
         cam=get_cam(args.camera_name)

@@ -6,9 +6,9 @@ from os import path
 from warnings import warn
 
 
-MOTIVE_INC_DIR = path.join(r"C:\\", "Program Files", "OptiTrack", "Motive", "inc")
-MOTIVE_LIB_DIR = path.join(r"C:\\", "Program Files", "OptiTrack", "Motive", "lib")
-MOTIVE_LINK_ARG="/DEFAULTLIB:NPTrackingToolsx64"
+MOTIVE_INC_DIR = path.join("C:\\", "Program Files", "OptiTrack", "Motive", "inc")
+MOTIVE_LIB_DIR = path.join("C:\\", "Program Files", "OptiTrack", "Motive", "lib")
+MOTIVE_LINK_ARG="/DEFAULTLIB:MotiveAPI"
 
 #TODO: Link to correct path automatically
 if not os.path.exists(MOTIVE_INC_DIR):
@@ -56,7 +56,7 @@ transformations  = Extension('_transformations', sources=['third_party/transform
 
 setup(
     name="motive",
-    ext_modules= cythonize([native, rigidbody, camera, transformations]), # pointcloudgroup
+    ext_modules= cythonize([native, rigidbody, camera, transformations], language_level = "3"), # pointcloudgroup
     packages= find_packages(),
     scripts=['scripts/vislight.py', 'scripts/viewer.py', 'scripts/video.py'],
     install_requires=['cython', 'appdirs', 'numpy', 'pyqtgraph'], #, 'btk' ],

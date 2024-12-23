@@ -20,7 +20,9 @@ Examples::
 from __future__ import absolute_import
 
 include "cnative.pxd"
-
+cdef extern from *:
+    wchar_t* PyUnicode_AsWideCharString(object, Py_ssize_t *size)
+    object PyUnicode_FromWideChar(const wchar_t *w, Py_ssize_t size)
 
 from .decorators import convert_string_output
 cimport numpy as np
@@ -56,11 +58,11 @@ def get_cams():
 
 class Camera(object):
 
-    OBJECT_MODE = NPVIDEOTYPE_OBJECT
-    GRAYSCALE_MODE = NPVIDEOTYPE_GRAYSCALE
-    SEGMENT_MODE = NPVIDEOTYPE_SEGMENT
-    PRECISION_MODE = NPVIDEOTYPE_PRECISION
-    MJPEG_MODE = NPVIDEOTYPE_MJPEG
+    OBJECT_MODE = kVideoType_Object
+    GRAYSCALE_MODE = kVideoType_Grayscale
+    SEGMENT_MODE = kVideoType_Segment
+    PRECISION_MODE = kVideoType_Precision
+    MJPEG_MODE = kVideoType_MJPEG
 
     def __init__(self, index):
         """Returns a Camera object."""
@@ -88,10 +90,11 @@ class Camera(object):
         return self.__str__()
 
     @property
-    @convert_string_output
     def name(self):
         """str: Camera name"""
-        return TT_CameraName(self.index)
+        cdef wchar_t name[256]
+        TT_CameraName(self.index, name, 256)
+        return PyUnicode_FromWideChar(name, -1)
 
     @property
     def id(self):
@@ -101,11 +104,21 @@ class Camera(object):
     @property
     def group(self):
         """int: Camera's group index"""
-        return TT_CamerasGroup(self.index)
+        return TT_CameraGroup(self.index)
 
-    @group.setter
-    def group(self,value):
-        TT_SetCameraGroup(self.index, value)
+    @property
+    def enabled(self):
+        """boole: whether the camera is enabled"""
+        cdef eMotiveAPICameraStates currentState
+        TT_CameraState(self.index, currentState)
+        return currentState == Camera_Enabled
+
+    @enabled.setter
+    def enabled(self, value):
+        if value:
+            TT_SetCameraState(self.index, Camera_Enabled)
+        else:
+            TT_SetCameraState(self.index, Camera_Disabled)
 
     @property
     def video_mode(self):
@@ -134,15 +147,6 @@ class Camera(object):
     @threshold.setter
     def threshold(self, value):
         self.set_settings(video_mode=self.video_mode, exposure=self.exposure, threshold=value, intensity=self.intensity)
-
-    @property
-    def intensity(self):
-        """int: Camera IR LED brightness intensity level"""
-        return check_cam_setting(TT_CameraIntensity)(self.index)
-
-    @intensity.setter
-    def intensity(self, value):
-        self.set_settings(video_mode=self.video_mode, exposure=self.exposure, threshold=self.threshold, intensity=value)
 
     @property
     def settings(self):
@@ -191,16 +195,6 @@ class Camera(object):
         return TT_SetCameraSettings(self.index, video_mode, exposure, threshold, intensity)
 
     @property
-    def frame_rate(self):
-        """int: Cameras frame rate in Hz. That is frames per second"""
-        return check_cam_setting(TT_CameraFrameRate)(self.index)
-
-    @frame_rate.setter
-    def frame_rate(self, value):
-        if not TT_SetCameraFrameRate(self.index, value):
-            raise Exception("Could Not Set Frame Rate.")
-
-    @property
     def grayscale_decimation(self):
         """int: level of decimation of frame capture (how many frames to skip when getting video)"""
         raise NotImplementedError
@@ -227,27 +221,14 @@ class Camera(object):
             raise ValueError("Camera.image_gain must be between 0 and 8")
         TT_SetCameraImagerGain(self.index, value-1)
 
-    def is_continuous_ir_available(self):
-        """bool: Continuous IR illumination is available"""
-        return TT_IsContinuousIRAvailable(self.index)
-
     @property
-    def continuous_ir(self):
-        """bool: Continuous IR illumination is on"""
-        if not self.is_continuous_ir_available() or not TT_ContinuousIR(self.index):
-            return False
-        else:
-            return True
+    def ir_led_on(self):
+        """bool: IR illumination is on"""
+        return TT_CameraIRLedsOn(self.index)
 
-    @continuous_ir.setter
-    def continuous_ir(self, bool value):
-        if value and not self.is_continuous_ir_available():
-            raise ValueError("continouus_ir not available for this Camera")
-        TT_SetContinuousIR(self.index, value)
-
-    def set_continuous_camera_mjpeg_high_quality_ir(int cameraIndex, bool Enable):
-        raise NotImplementedError
-        TT_SetContinuousTT_SetCameraMJPEGHighQualityIR(cameraIndex, Enable)
+    @ir_led_on.setter
+    def ir_led_on(self, bool value):
+        TT_SetCameraIRLedsOn(self.index, value)
 
     @property
     def pixel_resolution(self):
@@ -455,9 +436,10 @@ class Camera(object):
         """
         cdef float x=0, y=0
         if TT_FrameCameraCentroid(markerIndex,self.index, x, y):
-            return x, y
+            return True, x, y
         else:
-            raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
+            return False, 0, 0
+            #raise Exception("Camera Not Contributing To 3D Position Of Marker {0}. \n Try Different Camera.".format(markerIndex))
 
     @property
     def frame_buffer(self):
@@ -488,16 +470,6 @@ class Camera(object):
         #
 
         return frame
-
-    def frame_buffer_save_as_bmp(self, str filename):
-        """Saves camera's frame buffer as a BMP image file
-        Args:
-            filename(str): The name of the image file the buffer will be saved to
-        Raises:
-            IOError: If the buffer has not been succesfully saved
-        """
-        if not TT_CameraFrameBufferSaveAsBMP(self.index, filename.encode('UTF-8')):
-            raise IOError("Camera Frame Buffer Not Successfully Saved")
 
 #Functions To Set Camera Property Value, But W\O Possibility To Get Value
     def set_filter_switch(self, bool enableIRFilter):
@@ -552,5 +524,5 @@ class Camera(object):
         Raises:
             Exception: If camera could not change quality
         """
-        if not TT_SetCameraMJPEGHighQuality(self.index, mjpegQuality):
+        if not TT_SetCameraMJPEGQuality(self.index, mjpegQuality):
             raise Exception("Could Not Enable HighQuality. Possibly Camera Has No HighQuality For MJPEG")
